@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stefan Aberer - Video Editor & AI Artist</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+  <style>
+    /* Grundlegende Einstellungen */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbalken ausblenden: Webkit-basierte Browser */
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Scrollbalken ausblenden: IE, Edge & Firefox */
+    body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @font-face {
+      font-family: 'Circular STD Bold';
+      src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
+      font-weight: bold;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Circular STD Medium';
+      src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: 'Circular STD Medium', sans-serif;
+    }
+
+    .bg-darker {
+      background-color: #121212;
+    }
+
+    .bg-dark {
+      background-color: #1e1e1e;
+    }
+
+    .bg-medium {
+      background-color: #2a2a2a;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Circular STD Bold', sans-serif;
+      font-weight: bold;
+    }
+
+    .mega-title {
+      font-size: 5rem;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    @media (min-width: 768px) {
+      .mega-title {
+        font-size: 7rem;
+      }
+    }
+
+    .super-title {
+      font-size: 3.5rem;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    @media (min-width: 768px) {
+      .super-title {
+        font-size: 5rem;
+      }
+    }
+
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Container für das Video und den Fallback */
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Fallback-Hintergrundbild als animiertes Pseudo-Element */
+    .video-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('I:\thumbnailsilvrettaclean.png') no-repeat center center;
+      background-size: cover;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 0.3s;
+      z-index: -2;
+    }
+
+    /* Styling für das Video (Vimeo iFrame) */
+    .video-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100vh;
+      transform: translate(-50%, -50%) scale(1.3);
+      pointer-events: none;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 0.3s;
+      z-index: -1;
+    }
+
+    .content-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(18, 18, 18, 0.5);
+      z-index: 0;
+    }
+
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      background-color: #1e1e1e;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio-item:hover {
+      transform: scale(1.02);
+    }
+
+    .portfolio-item img, .portfolio-item video {
+      transition: opacity 0.3s ease;
+    }
+
+    .portfolio-item:hover img, .portfolio-item:hover video {
+      opacity: 0.7;
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(to top, rgba(18, 18, 18, 0.9), transparent);
+    }
+
+    .service-card {
+      background-color: #1e1e1e;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      background-color: #2a2a2a;
+    }
+
+    .contact-input {
+      background-color: #2a2a2a;
+      border: none;
+      color: white;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .contact-input:focus {
+      background-color: #333333;
+    }
+
+    .btn {
+      transition: all 0.3s ease;
+    }
+
+    .social-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Animation für sanftes Einblenden (Fallback-Bild und Video) */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Animation für sanftes Einblenden von Text */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-white text-2xl font-bold">STEFAN ABERER</a>
+        <div class="hidden md:flex space-x-10">
+          <a href="#about" class="nav-link text-white text-lg">About</a>
+          <a href="#portfolio" class="nav-link text-white text-lg">Portfolio</a>
+          <a href="#services" class="nav-link text-white text-lg">Services</a>
+          <a href="#contact" class="nav-link text-white text-lg">Contact</a>
+        </div>
+        <div class="md:hidden">
+          <button class="text-white text-2xl focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="video-container">
+    <!-- Vimeo Background iFrame -->
+    <iframe class="video-background fade-in" src="https://player.vimeo.com/video/1073529831?background=1&autopause=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="content-overlay">
+      <div class="text-center px-4 fade-in-up">
+        <h1 class="mega-title mb-6">LETS MAKE IT COUNT.</h1>
+        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+          Creating visuals through the blend of traditional methods and cutting-edge AI technologies.
+        </p>
+        <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-none hover:bg-opacity-90 transition-all">
+          VIEW WORK
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 md:py-32 bg-darker">
+    <div class="container mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="super-title mb-8">ABOUT ME</h2>
+          <p class="text-xl mb-6">
+            My Name is Stefan, I'm 28 years old, based in Bregenz, Austria. My passion lies at the intersection of traditional video editing and artificial intelligence.
+          </p>
+          <p class="text-xl mb-6">
+            I create visually appealing content that pushes boundaries while maintaining cinematic quality. I specialize in short-form content such as advertisements, trailers, music videos, image videos, and social media content.
+          </p>
+          <p class="text-xl">
+            Rather than sticking to a conventional approach, I strive to stay current with the latest trends—merging technological advance with artistic vision.
+          </p>
+        </div>
+        <div class="bg-dark p-8">
+          <!-- Placeholder for profile image or additional content -->
+          <div class="h-96 flex items-center justify-center bg-medium">
+            <span class="text-2xl text-gray-400">Profile Image Placeholder</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-20 md:py-32 bg-dark">
+    <div class="container mx-auto px-6">
+      <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Featured Project: Porsche Spec Ad mit Vimeo-Video -->
+        <div class="portfolio-item md:col-span-3">
+          <!-- Responsiver Container im 16:9-Format -->
+          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+            <iframe 
+              src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" 
+              frameborder="0" 
+              allow="autoplay; fullscreen" 
+              allowfullscreen 
+              class="absolute top-0 left-0 w-full h-full"
+            ></iframe>
+          </div>
+          <div class="p-6 bg-darker">
+            <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
+            <p class="text-xl">This project serves as a first "Proof of Concept" and was eniterly created by using an Ai Image to Video Process in combination with traditional editing.</p>
+          </div>
+        </div>
+        
+        <!-- Portfolio Item: TYPOGRAPHY & MOTION -->
+        <div class="portfolio-item">
+          <!-- Responsiver 16:9-Container für das Video -->
+          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+            <iframe 
+              src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" 
+              frameborder="0" 
+              allow="autoplay; fullscreen" 
+              allowfullscreen 
+              class="absolute top-0 left-0 w-full h-full">
+            </iframe>
+          </div>
+          <div class="p-4 bg-darker">
+            <h3 class="text-2xl font-bold">TYPOGRAPHY & MOTION DESIGN</h3>
+            <p>Showcasing typography and motion design.</p>
+          </div>
+        </div>
+        
+        <!-- Portfolio Item: SHORT FILM TRAILER -->
+        <div class="portfolio-item">
+          <!-- Responsiver Container im 16:9-Verhältnis -->
+          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+            <iframe 
+              src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" 
+              frameborder="0" 
+              allow="autoplay; fullscreen" 
+              allowfullscreen 
+              class="absolute top-0 left-0 w-full h-full">
+            </iframe>
+          </div>
+          <div class="p-4 bg-darker">
+            <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3>
+            <p>Cinematic teaser trailer.</p>
+          </div>
+        </div>
+        
+        <!-- Portfolio Item: Schneider Mercedes. -->
+        <div class="portfolio-item">
+          <!-- Responsiver Container im 16:9-Verhältnis -->
+          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+            <iframe 
+              src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=0" 
+              frameborder="0" 
+              allow="autoplay; fullscreen" 
+              allowfullscreen 
+              class="absolute top-0 left-0 w-full h-full">
+            </iframe>
+          </div>
+          <div class="p-4 bg-darker">
+            <h3 class="text-2xl font-bold">G-CLASS</h3>
+            <p>Image / Advertising Clip.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section ohne Icons -->
+  <section id="services" class="py-20 md:py-32 bg-darker">
+    <div class="container mx-auto px-6">
+      <h2 class="super-title mb-16 text-center">SERVICES</h2>
+      
+      <div class="grid md:grid-cols-3 gap-12">
+        <!-- Post Production -->
+        <div class="service-card p-10">
+          <h3 class="text-3xl font-bold mb-6">POST PRODUCTION</h3>
+          <ul class="space-y-4 text-xl">
+            <li>• Concept & Video Editing</li>
+            <li>• Color Grading & Correction</li>
+            <li>• Motion Graphics, Animations, Compositing & VFX</li>
+            <li>• Sound Design & Mixing</li>
+          </ul>
+        </div>
+        
+        <!-- AI Expertise -->
+        <div class="service-card p-10">
+          <h3 class="text-3xl font-bold mb-6">AI EXPERTISE</h3>
+          <ul class="space-y-4 text-xl">
+            <li>• Creation of any type of Image & Video</li>
+            <li>• Upscaling and Enhancing Footage</li>
+            <li>• Deepfake & Lipsync Technology</li>
+            <li>• AI-Enhanced Editing Workflows</li>
+          </ul>
+        </div>
+        
+        <!-- AI Assisted Graphic Design -->
+        <div class="service-card p-10">
+          <h3 class="text-3xl font-bold mb-6">GRAPHIC DESIGN</h3>
+          <ul class="space-y-4 text-xl">
+            <li>• Posters & Illustrations</li>
+            <li>• Infographics & Social Media Posts</li>
+            <li>• Design & Development of Websites</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-20 text-center">
+        <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
+        <p class="text-xl max-w-4xl mx-auto">
+          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to enhance productivity, efficiency, and creativity—without replacing the human touch in creative decision-making.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 md:py-32 bg-dark">
+    <div class="container mx-auto px-6">
+      <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
+          <div class="space-y-6 text-xl">
+            <p>
+              <i class="fas fa-map-marker-alt mr-4"></i>
+              Bregenz, Austria
+            </p>
+            <p>
+              <i class="fas fa-envelope mr-4"></i>
+              stefan.aberer@hotmail.com
+            </p>
+            <p>
+              <i class="fas fa-phone mr-4"></i>
+              +43 699 1111 0970
+            </p>
+          </div>
+          
+          <div class="mt-12">
+            <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
+            <div class="flex space-x-6">
+              <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
+                <i class="fab fa-vimeo-v"></i>
+              </a>
+              <a href="#" class="social-icon text-3xl">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#" class="social-icon text-3xl">
+                <i class="fab fa-behance"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <form>
+            <div class="mb-6">
+              <input type="text" placeholder="Name" class="contact-input w-full p-4 text-lg">
+            </div>
+            <div class="mb-6">
+              <input type="email" placeholder="Email" class="contact-input w-full p-4 text-lg">
+            </div>
+            <div class="mb-6">
+              <input type="text" placeholder="Subject" class="contact-input w-full p-4 text-lg">
+            </div>
+            <div class="mb-6">
+              <textarea placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg"></textarea>
+            </div>
+            <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full hover:bg-opacity-90 transition-all">
+              SEND MESSAGE
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-darker">
+    <div class="container mx-auto px-6 text-center">
+      <p>© 2024 Stefan Aberer. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple scroll to section functionality
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
