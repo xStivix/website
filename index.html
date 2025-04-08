@@ -445,69 +445,74 @@
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="py-20 md:py-32 bg-dark">
-    <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
-      
-      <div class="grid md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-          <div class="space-y-6 text-xl">
-            <p>
-              <i class="fas fa-map-marker-alt mr-4"></i>
-              Bregenz, Austria
-            </p>
-            <p>
-              <i class="fas fa-envelope mr-4"></i>
-              stefan.aberer@hotmail.com
-            </p>
-            <p>
-              <i class="fas fa-phone mr-4"></i>
-              +43 699 1111 0970
-            </p>
-          </div>
-          
-          <div class="mt-12">
-            <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
-            <div class="flex space-x-6">
-              <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
-                <i class="fab fa-vimeo-v"></i>
-              </a>
-              <a href="#" class="social-icon text-3xl">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="#" class="social-icon text-3xl">
-                <i class="fab fa-behance"></i>
-              </a>
-            </div>
-          </div>
+<section id="contact" class="py-20 md:py-32 bg-dark">
+  <div class="container mx-auto px-6">
+    <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
+    
+    <div class="grid md:grid-cols-2 gap-12">
+      <div>
+        <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
+        <div class="space-y-6 text-xl">
+          <p>
+            <i class="fas fa-map-marker-alt mr-4"></i>
+            Bregenz, Austria
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-4"></i>
+            stefan.aberer@hotmail.com
+          </p>
+          <p>
+            <i class="fas fa-phone mr-4"></i>
+            +43 699 1111 0970
+          </p>
         </div>
         
-        <div>
-          <form>
-            <div class="mb-6">
-              <input type="text" placeholder="Name" class="contact-input w-full p-4 text-lg">
-            </div>
-            <div class="mb-6">
-              <input type="email" placeholder="Email" class="contact-input w-full p-4 text-lg">
-            </div>
-            <div class="mb-6">
-              <input type="text" placeholder="Subject" class="contact-input w-full p-4 text-lg">
-            </div>
-            <div class="mb-6">
-              <textarea placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg"></textarea>
-            </div>
-            <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full hover:bg-opacity-90 transition-all">
-              SEND MESSAGE
-            </button>
-          </form>
+        <div class="mt-12">
+          <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
+          <div class="flex space-x-6">
+            <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
+              <i class="fab fa-vimeo-v"></i>
+            </a>
+            <a href="#" class="social-icon text-3xl">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-icon text-3xl">
+              <i class="fab fa-behance"></i>
+            </a>
+          </div>
         </div>
       </div>
+      
+      <div>
+        <form action="https://formspree.io/f/myzebqyq" method="POST">
+          <div class="mb-6">
+            <input type="text" name="name" placeholder="Name" class="contact-input w-full p-4 text-lg" required>
+          </div>
+          <div class="mb-6">
+            <input type="email" name="_replyto" placeholder="Email" class="contact-input w-full p-4 text-lg" required>
+          </div>
+          <div class="mb-6">
+            <input type="text" name="subject" placeholder="Subject" class="contact-input w-full p-4 text-lg">
+          </div>
+          <div class="mb-6">
+            <textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea>
+          </div>
+          <!-- Optional: Weiterleitungs-URL nach der Einsendung -->
+          <!-- <input type="hidden" name="_next" value="https://xstivix.github.io/website/thankyou.html"> -->
+          <!-- Optional: Honeypot gegen Spam -->
+          <!-- <input type="text" name="_gotcha" style="display:none"> -->
+          <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full hover:bg-opacity-90 transition-all">
+            SEND MESSAGE
+          </button>
+        </form>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- Footer -->
   <footer class="py-8 bg-darker">
