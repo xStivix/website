@@ -95,7 +95,7 @@
       overflow: hidden;
     }
     
-    /* Styling für das Video (Vimeo iFrame) */
+    /* Standard-Video-Styles (Desktop) */
     .video-background {
       position: absolute;
       top: 50%;
@@ -105,6 +105,10 @@
       transform: translate(-50%, -50%) scale(1.3);
       pointer-events: none;
     }
+    
+    /* Desktop-iFrame sichtbar, Mobile-iFrame ausgeblendet */
+    .desktop-iframe { display: block; }
+    .mobile-iframe { display: none; }
     
     /* Content Overlay (enthält den Text) */
     .content-overlay {
@@ -121,8 +125,8 @@
       z-index: 3;
     }
     
-    /* Loading-Overlay: Animierte, solide Schicht (helleres Grau),
-       welche nach 3 Sekunden (statt 2) nach unten rausgleitet */
+    /* Loading-Overlay: Animierte, solide Schicht (helleres Grau), 
+       welche nach 2.5 Sekunden nach oben rausgleitet */
     .loading-overlay {
       position: absolute;
       top: 0;
@@ -131,13 +135,14 @@
       height: 100vh;
       background-color: #3a3a3a;
       z-index: 2;
-      animation: slideDown 0.8s ease-out forwards;
+      animation: slideUp 1.2s ease-out forwards;
       animation-delay: 2.5s;
     }
     
-    @keyframes slideDown {
+    /* Neues Keyframe: von 0 (sichtbar) zu -100% (nach oben ausgefahren) */
+    @keyframes slideUp {
       from { transform: translateY(0); }
-      to { transform: translateY(100%); }
+      to { transform: translateY(-100%); }
     }
     
     /* Animation für sanftes Einblenden */
@@ -149,7 +154,7 @@
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeInUp 1s ease-out forwards;
+      animation: fadeInUp 2s ease-out forwards;
     }
     
     @keyframes fadeInUp {
@@ -209,6 +214,45 @@
     
     .social-icon { transition: transform 0.3s ease; }
     .social-icon:hover { transform: translateY(-3px); }
+    
+    /* Mobile spezifische Anpassungen */
+    @media (max-width: 767px) {
+      .desktop-iframe { display: none; }
+      .mobile-iframe {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1.3);
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+      }
+      
+      /* Globale Anpassungen für mobile Darstellung */
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .mega-title { font-size: 3rem !important; }
+      .super-title { font-size: 2.5rem !important; }
+      .text-xl { font-size: 1.125rem !important; }
+      #about img { max-width: 100% !important; }
+      section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+      .btn { padding: 0.75rem 1rem !important; font-size: 1rem !important; }
+      .nav-link { font-size: 0.9rem !important; }
+      
+      /* Erhöhter Rand ab About bis Footer */
+      section:not(#home) .container {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+      }
+      
+      /* Kontakt Info kompakter gestalten */
+      #contact .contact-info {
+        /* Hier können bei Bedarf weitere mobile-spezifische Anpassungen erfolgen */
+      }
+    }
   </style>
 </head>
 <body>
@@ -217,33 +261,51 @@
     <div class="container mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
         <a href="#" class="text-white text-2xl font-bold">STEFAN ABERER</a>
+        <!-- Desktop-Navigation -->
         <div class="hidden md:flex space-x-10">
           <a href="#about" class="nav-link text-white text-lg">About</a>
           <a href="#portfolio" class="nav-link text-white text-lg">Portfolio</a>
           <a href="#services" class="nav-link text-white text-lg">Services</a>
           <a href="#contact" class="nav-link text-white text-lg">Contact</a>
         </div>
+        <!-- Hamburger-Button für Mobile -->
         <div class="md:hidden">
-          <button class="text-white text-2xl focus:outline-none">
+          <button id="mobileMenuButton" class="text-white text-2xl focus:outline-none">
             <i class="fas fa-bars"></i>
           </button>
         </div>
       </div>
     </div>
+    <!-- Mobile Dropdown Menü (nur auf mobilen Geräten sichtbar) -->
+    <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
+      <a href="#about" class="block text-white nav-link">About</a>
+      <a href="#portfolio" class="block text-white nav-link">Portfolio</a>
+      <a href="#services" class="block text-white nav-link">Services</a>
+      <a href="#contact" class="block text-white nav-link">Contact</a>
+    </div>
   </nav>
   
   <!-- Hero Section -->
   <section id="home" class="video-container">
-    <!-- Vimeo Background iFrame mit Autoplay, Muted und Inline-Wiedergabe -->
+    <!-- Desktop-Video iFrame -->
     <iframe 
-      class="video-background fade-in" 
+      class="video-background fade-in desktop-iframe" 
       src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0" 
       frameborder="0" 
       allow="autoplay; fullscreen" 
       allowfullscreen>
     </iframe>
     
-    <!-- Loading Overlay: Überbrückt die Video-Ladezeit -->
+    <!-- Mobile-Video iFrame -->
+    <iframe 
+      class="video-background fade-in mobile-iframe" 
+      src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1" 
+      frameborder="0" 
+      allow="autoplay; fullscreen" 
+      allowfullscreen>
+    </iframe>
+    
+    <!-- Loading Overlay -->
     <div class="loading-overlay"></div>
     
     <!-- Content Overlay (Text) -->
@@ -253,7 +315,7 @@
         <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.7s;">
           Creating visuals through the blend of traditional methods and cutting-edge AI technologies.
         </p>
-        <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay: 1.1s;">
+        <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay: 2.5s;">
           VIEW WORK
         </a>
       </div>
@@ -263,7 +325,8 @@
   <!-- About Section -->
   <section id="about" class="py-20 md:py-32 bg-darker">
     <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Desktop: 2-Spalten-Grid -->
+      <div class="hidden md:grid md:grid-cols-2 gap-12 items-center">
         <div>
           <h2 class="super-title mb-8">ABOUT ME</h2>
           <p class="text-xl mb-6">
@@ -282,10 +345,26 @@
                class="max-w-lg rounded-lg mx-auto">
         </div>
       </div>
+      <!-- Mobile: Drei Textabsätze, danach das Bild -->
+      <div class="md:hidden">
+        <h2 class="super-title mb-8">ABOUT ME</h2>
+        <p class="text-xl mb-6">
+          My Name is Stefan, I'm 28 years old, based in Bregenz, Austria. My passion lies at the intersection of traditional video editing and artificial intelligence.
+        </p>
+        <p class="text-xl mb-6">
+          I create visually appealing content that pushes boundaries while maintaining cinematic quality. I specialize in short-form content such as advertisements, trailers, music videos, image videos, and social media content.
+        </p>
+        <p class="text-xl mb-6">
+          Rather than sticking to a conventional approach, I strive to stay current with the latest trends—merging technological advance with artistic vision.
+        </p>
+        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/349fa959-1317-485b-aa04-68f621365224.png" 
+             alt="Profile Image" 
+             class="max-w-lg rounded-lg mx-auto">
+      </div>
     </div>
   </section>
   
-  <!-- Portfolio Section -->
+  <!-- Portfolio Section (unverändert) -->
   <section id="portfolio" class="py-20 md:py-32 bg-dark">
     <div class="container mx-auto px-6">
       <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
@@ -366,8 +445,9 @@
   <!-- Services Section -->
   <section id="services" class="py-20 md:py-32 bg-darker">
     <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">SERVICES</h2>
-      <div class="grid md:grid-cols-3 gap-12">
+      <!-- Desktop: SERVICES-Überschrift und Service-Cards beibehalten -->
+      <h2 class="super-title mb-16 text-center hidden md:block">SERVICES</h2>
+      <div class="hidden md:grid md:grid-cols-3 gap-12">
         <div class="service-card p-10">
           <h3 class="text-3xl font-bold mb-6">POST PRODUCTION</h3>
           <ul class="space-y-4 text-xl">
@@ -396,10 +476,14 @@
           </ul>
         </div>
       </div>
-      <div class="mt-20 text-center">
+      <!-- Mobile: Nur "MY APPROACH" Block – oberer Abstand reduziert und Text in Absätze formatiert -->
+      <div class="mt-8 md:mt-20 text-center">
         <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
-        <p class="text-xl max-w-4xl mx-auto">
-          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to enhance productivity, efficiency, and creativity—without replacing the human touch in creative decision-making.
+        <p class="text-xl mb-6">
+          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece.
+        </p>
+        <p class="text-xl">
+          With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to enhance productivity, efficiency, and creativity—without replacing the human touch in creative decision-making.
         </p>
       </div>
     </div>
@@ -412,7 +496,7 @@
       <div class="grid md:grid-cols-2 gap-12">
         <div>
           <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-          <div class="space-y-6 text-xl">
+          <div class="space-y-3 text-base md:text-xl">
             <p>
               <i class="fas fa-map-marker-alt mr-4"></i>
               Bregenz, Austria
@@ -482,6 +566,21 @@
         document.querySelector(this.getAttribute('href')).scrollIntoView({
           behavior: 'smooth'
         });
+      });
+    });
+    
+    // Mobile Dropdown Menu Toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Schließt das mobile Menü, wenn ein Link geklickt wird
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
       });
     });
   </script>
