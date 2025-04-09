@@ -137,13 +137,6 @@
       z-index: 2;
       animation: slideUp 1.2s ease-out forwards;
       animation-delay: 2.5s;
-      /* Animation zunächst anhalten */
-      animation-play-state: paused;
-    }
-    
-    /* Sobald die Klasse "loaded" gesetzt wird, läuft die Animation */
-    .loading-overlay.loaded {
-      animation-play-state: running;
     }
     
     /* Neues Keyframe: von 0 (sichtbar) zu -100% (nach oben ausgefahren) */
@@ -286,10 +279,6 @@
       .loading-overlay {
         animation: slideUp 1.5s ease-in-out forwards;
         animation-delay: 2.2s;
-        animation-play-state: paused;
-      }
-      .loading-overlay.loaded {
-        animation-play-state: running;
       }
     }
   </style>
@@ -599,22 +588,6 @@
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
       });
-    });
-
-    // ---------------------------
-    // Neues Script: Warte auf das Laden des sichtbaren iFrames,
-    // bevor das Loading-Overlay animiert wird.
-    // ---------------------------
-    document.addEventListener("DOMContentLoaded", function() {
-      // Wähle das iFrame basierend auf der aktuellen Fensterbreite (Desktop/Mobile)
-      const iframe = window.innerWidth >= 768 
-                        ? document.querySelector('.desktop-iframe') 
-                        : document.querySelector('.mobile-iframe');
-      if (iframe) {
-        iframe.addEventListener('load', function() {
-          document.querySelector('.loading-overlay').classList.add('loaded');
-        });
-      }
     });
   </script>
 </body>
