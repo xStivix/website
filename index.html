@@ -14,84 +14,84 @@
       padding: 0;
       overflow-x: hidden;
     }
-
+    
     /* Scrollbalken ausblenden: Webkit-basierte Browser */
     body::-webkit-scrollbar {
       display: none;
     }
-
+    
     /* Scrollbalken ausblenden: IE, Edge & Firefox */
     body {
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-
+    
     @font-face {
       font-family: 'Circular STD Bold';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
       font-weight: bold;
       font-style: normal;
     }
-
+    
     @font-face {
       font-family: 'Circular STD Medium';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
     }
-
+    
     body {
       background-color: #121212;
       color: white;
       font-family: 'Circular STD Medium', sans-serif;
     }
-
+    
     .bg-darker {
       background-color: #121212;
     }
-
+    
     .bg-dark {
       background-color: #1e1e1e;
     }
-
+    
     .bg-medium {
       background-color: #2a2a2a;
     }
-
+    
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Circular STD Bold', sans-serif;
       font-weight: bold;
     }
-
+    
     .mega-title {
       font-size: 5rem;
       line-height: 1;
       letter-spacing: -0.05em;
     }
-
+    
     @media (min-width: 768px) {
       .mega-title {
         font-size: 7rem;
       }
     }
-
+    
     .super-title {
       font-size: 3.5rem;
       line-height: 1;
       letter-spacing: -0.03em;
     }
-
+    
     @media (min-width: 768px) {
       .super-title {
         font-size: 5rem;
       }
     }
-
+    
     .nav-link {
       position: relative;
       transition: all 0.3s ease;
     }
-
+    
     .nav-link::after {
       content: '';
       position: absolute;
@@ -102,11 +102,11 @@
       background-color: white;
       transition: width 0.3s ease;
     }
-
+    
     .nav-link:hover::after {
       width: 100%;
     }
-
+    
     /* Container für das Video und den Fallback */
     .video-container {
       position: relative;
@@ -114,7 +114,7 @@
       height: 100vh;
       overflow: hidden;
     }
-
+    
     /* Fallback-Hintergrundbild als animiertes Pseudo-Element */
     .video-container::before {
       content: "";
@@ -123,14 +123,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('https://raw.githubusercontent.com/xStivix/website/refs/heads/main/thumbnailsilvrettaclean.png') no-repeat center center;
+      background: url('https://github.com/xStivix/website/blob/main/fallbackimg_00000.png?raw=true') no-repeat center center;
       background-size: cover;
       opacity: 0;
       animation: fadeIn 1s ease-out forwards;
       animation-delay: 0.3s;
       z-index: -2;
+      transform: scale(1.15);
+      transform-origin: center;
     }
-
+    
     /* Styling für das Video (Vimeo iFrame) */
     .video-background {
       position: absolute;
@@ -144,7 +146,7 @@
       animation-delay: 0.3s;
       z-index: -1;
     }
-
+    
     .content-overlay {
       position: absolute;
       top: 0;
@@ -158,26 +160,27 @@
       background-color: rgba(18, 18, 18, 0.5);
       z-index: 0;
     }
-
+    
     .portfolio-item {
       position: relative;
       overflow: hidden;
       background-color: #1e1e1e;
       transition: transform 0.3s ease;
+      border-radius: 0.5rem; /* Abgerundete Ecken */
     }
-
+    
     .portfolio-item:hover {
       transform: scale(1.02);
     }
-
+    
     .portfolio-item img, .portfolio-item video {
       transition: opacity 0.3s ease;
     }
-
+    
     .portfolio-item:hover img, .portfolio-item:hover video {
       opacity: 0.7;
     }
-
+    
     .portfolio-overlay {
       position: absolute;
       bottom: 0;
@@ -186,41 +189,43 @@
       padding: 1.5rem;
       background: linear-gradient(to top, rgba(18, 18, 18, 0.9), transparent);
     }
-
+    
     .service-card {
       background-color: #1e1e1e;
       transition: transform 0.3s ease;
+      border-radius: 0.5rem; /* Abgerundete Ecken */
     }
-
+    
     .service-card:hover {
       transform: translateY(-5px);
       background-color: #2a2a2a;
     }
-
+    
     .contact-input {
       background-color: #2a2a2a;
       border: none;
       color: white;
       outline: none;
       transition: all 0.3s ease;
+      border-radius: 0.5rem; /* Abgerundete Ecken */
     }
-
+    
     .contact-input:focus {
       background-color: #333333;
     }
-
+    
     .btn {
       transition: all 0.3s ease;
     }
-
+    
     .social-icon {
       transition: transform 0.3s ease;
     }
-
+    
     .social-icon:hover {
       transform: translateY(-3px);
     }
-
+    
     /* Animation für sanftes Einblenden (Fallback-Bild und Video) */
     @keyframes fadeIn {
       from {
@@ -230,15 +235,15 @@
         opacity: 1;
       }
     }
-
+    
     /* Animation für sanftes Einblenden von Text */
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 0.3s;
+      /* Die individuelle Verzögerung wird via Inline-Style definiert */
     }
-
+    
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -271,24 +276,27 @@
       </div>
     </div>
   </nav>
-
+  
   <!-- Hero Section -->
   <section id="home" class="video-container">
     <!-- Vimeo Background iFrame -->
     <iframe class="video-background fade-in" src="https://player.vimeo.com/video/1073580177?background=1&autopause=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     <div class="content-overlay">
-      <div class="text-center px-4 fade-in-up">
-        <h1 class="mega-title mb-6">LET'S MAKE IT COUNT.</h1>
-        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+      <div class="text-center px-4">
+        <!-- Erstes Element: Slogan -->
+        <h1 class="mega-title mb-6 fade-in-up" style="animation-delay: 0.3s;">LET'S MAKE IT COUNT.</h1>
+        <!-- Zweites Element: Begleittext -->
+        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.7s;">
           Creating visuals through the blend of traditional methods and cutting-edge AI technologies.
         </p>
-        <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-none hover:bg-opacity-90 transition-all">
+        <!-- Drittes Element: Button -->
+        <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay: 1.1s;">
           VIEW WORK
         </a>
       </div>
     </div>
   </section>
-
+  
   <!-- About Section -->
 <section id="about" class="py-20 md:py-32 bg-darker">
   <div class="container mx-auto px-6">
@@ -305,23 +313,19 @@
           Rather than sticking to a conventional approach, I strive to stay current with the latest trends—merging technological advance with artistic vision.
         </p>
       </div>
-      <div class="bg-dark p-8">
-        <!-- Profilbild: Das Bild füllt den gesamten Placeholder aus -->
-        <div class="h-96 w-full overflow-hidden">
-          <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/pexels-ron-lach-8102677.jpg" 
-               alt="Profile Image" 
-               class="w-full h-full object-cover">
-        </div>
+      <div>
+        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/349fa959-1317-485b-aa04-68f621365224.png" 
+             alt="Profile Image" 
+             class="max-w-lg rounded-lg mx-auto">
       </div>
     </div>
   </div>
 </section>
-
+  
   <!-- Portfolio Section -->
   <section id="portfolio" class="py-20 md:py-32 bg-dark">
     <div class="container mx-auto px-6">
       <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
-      
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Featured Project: Porsche Spec Ad mit Vimeo-Video -->
         <div class="portfolio-item md:col-span-3">
@@ -332,8 +336,8 @@
               frameborder="0" 
               allow="autoplay; fullscreen" 
               allowfullscreen 
-              class="absolute top-0 left-0 w-full h-full"
-            ></iframe>
+              class="absolute top-0 left-0 w-full h-full">
+            </iframe>
           </div>
           <div class="p-6 bg-darker">
             <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
@@ -377,7 +381,7 @@
           </div>
         </div>
         
-        <!-- Portfolio Item: Schneider Mercedes. -->
+        <!-- Portfolio Item: Schneider Mercedes -->
         <div class="portfolio-item">
           <!-- Responsiver Container im 16:9-Verhältnis -->
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
@@ -397,12 +401,11 @@
       </div>
     </div>
   </section>
-
+  
   <!-- Services Section ohne Icons -->
   <section id="services" class="py-20 md:py-32 bg-darker">
     <div class="container mx-auto px-6">
       <h2 class="super-title mb-16 text-center">SERVICES</h2>
-      
       <div class="grid md:grid-cols-3 gap-12">
         <!-- Post Production -->
         <div class="service-card p-10">
@@ -410,32 +413,31 @@
           <ul class="space-y-4 text-xl">
             <li>• Concept & Video Editing</li>
             <li>• Color Grading & Correction</li>
-            <li>• Motion Graphics, Animations, Compositing & VFX</li>
+            <li>• Motion Graphics, Animations, VFX & Compositing</li>
             <li>• Sound Design & Mixing</li>
           </ul>
         </div>
-        
         <!-- AI Expertise -->
         <div class="service-card p-10">
           <h3 class="text-3xl font-bold mb-6">AI EXPERTISE</h3>
           <ul class="space-y-4 text-xl">
-            <li>• Creation of any type of Image & Video</li>
-            <li>• Upscaling and Enhancing Footage</li>
+            <li>• AI Image Generation</li>
+            <li>• AI Video Generation</li>
+            <li>• Upscaling & Enhancing Footage</li>
+            <li>• Voice Cloning & Voiceovers</li>
             <li>• Deepfake & Lipsync Technology</li>
-            <li>• AI-Enhanced Editing Workflows</li>
           </ul>
         </div>
-        
         <!-- AI Assisted Graphic Design -->
         <div class="service-card p-10">
           <h3 class="text-3xl font-bold mb-6">GRAPHIC DESIGN</h3>
           <ul class="space-y-4 text-xl">
-            <li>• Posters & Illustrations</li>
-            <li>• Infographics & Social Media Posts</li>
+            <li>• Posters</li>
+            <li>• Infographics</li>
+            <li>• Illustrations</li>
           </ul>
         </div>
       </div>
-      
       <div class="mt-20 text-center">
         <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
         <p class="text-xl max-w-4xl mx-auto">
@@ -444,84 +446,80 @@
       </div>
     </div>
   </section>
-
+  
   <!-- Contact Section -->
-<section id="contact" class="py-20 md:py-32 bg-dark">
-  <div class="container mx-auto px-6">
-    <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
-    
-    <div class="grid md:grid-cols-2 gap-12">
-      <div>
-        <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-        <div class="space-y-6 text-xl">
-          <p>
-            <i class="fas fa-map-marker-alt mr-4"></i>
-            Bregenz, Austria
-          </p>
-          <p>
-            <i class="fas fa-envelope mr-4"></i>
-            stefan.aberer@hotmail.com
-          </p>
-          <p>
-            <i class="fas fa-phone mr-4"></i>
-            +43 699 1111 0970
-          </p>
-        </div>
-        
-        <div class="mt-12">
-          <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
-          <div class="flex space-x-6">
-            <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
-              <i class="fab fa-vimeo-v"></i>
-            </a>
-            <a href="#" class="social-icon text-3xl">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" class="social-icon text-3xl">
-              <i class="fab fa-behance"></i>
-            </a>
+  <section id="contact" class="py-20 md:py-32 bg-dark">
+    <div class="container mx-auto px-6">
+      <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
+          <div class="space-y-6 text-xl">
+            <p>
+              <i class="fas fa-map-marker-alt mr-4"></i>
+              Bregenz, Austria
+            </p>
+            <p>
+              <i class="fas fa-envelope mr-4"></i>
+              stefan.aberer@hotmail.com
+            </p>
+            <p>
+              <i class="fas fa-phone mr-4"></i>
+              +43 699 1111 0970
+            </p>
+          </div>
+          <div class="mt-12">
+            <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
+            <div class="flex space-x-6">
+              <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
+                <i class="fab fa-vimeo-v"></i>
+              </a>
+              <a href="#" class="social-icon text-3xl">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#" class="social-icon text-3xl">
+                <i class="fab fa-behance"></i>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      
-      <div>
-        <form action="https://formspree.io/f/myzebqyq" method="POST">
-          <div class="mb-6">
-            <input type="text" name="name" placeholder="Name" class="contact-input w-full p-4 text-lg" required>
-          </div>
-          <div class="mb-6">
-            <input type="email" name="_replyto" placeholder="Email" class="contact-input w-full p-4 text-lg" required>
-          </div>
-          <div class="mb-6">
-            <input type="text" name="subject" placeholder="Subject" class="contact-input w-full p-4 text-lg">
-          </div>
-          <div class="mb-6">
-            <textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea>
-          </div>
-          <!-- Optional: Weiterleitungs-URL nach der Einsendung -->
-          <!-- <input type="hidden" name="_next" value="https://xstivix.github.io/website/thankyou.html"> -->
-          <!-- Optional: Honeypot gegen Spam -->
-          <!-- <input type="text" name="_gotcha" style="display:none"> -->
-          <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full hover:bg-opacity-90 transition-all">
-            SEND MESSAGE
-          </button>
-        </form>
+        <div>
+          <form action="https://formspree.io/f/myzebqyq" method="POST">
+            <div class="mb-6">
+              <input type="text" name="name" placeholder="Name" class="contact-input w-full p-4 text-lg" required>
+            </div>
+            <div class="mb-6">
+              <input type="email" name="_replyto" placeholder="Email" class="contact-input w-full p-4 text-lg" required>
+            </div>
+            <div class="mb-6">
+              <input type="text" name="subject" placeholder="Subject" class="contact-input w-full p-4 text-lg">
+            </div>
+            <div class="mb-6">
+              <textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea>
+            </div>
+            <!-- Optional: Weiterleitungs-URL nach der Einsendung -->
+            <!-- <input type="hidden" name="_next" value="https://xstivix.github.io/website/thankyou.html"> -->
+            <!-- Optional: Honeypot gegen Spam -->
+            <!-- <input type="text" name="_gotcha" style="display:none"> -->
+            <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">
+              SEND MESSAGE
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-
+  </section>
+  
   <!-- Footer -->
   <footer class="py-8 bg-darker">
     <div class="container mx-auto px-6 text-center">
       <p>© 2024 Stefan Aberer. All Rights Reserved.</p>
     </div>
   </footer>
-
+  
   <script>
     // Simple scroll to section functionality
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
