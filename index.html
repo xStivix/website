@@ -125,7 +125,8 @@
       z-index: 3;
     }
     
-    /* Loading-Overlay Grund-Styles */
+    /* Loading-Overlay: Animierte, solide Schicht (helleres Grau), 
+       welche nach 2.5 Sekunden nach oben rausgleitet */
     .loading-overlay {
       position: absolute;
       top: 0;
@@ -134,27 +135,15 @@
       height: 100vh;
       background-color: #3a3a3a;
       z-index: 2;
+      animation: slideUp 1.2s ease-out forwards;
+      animation-delay: 2.5s;
+      /* Animation zunächst anhalten */
+      animation-play-state: paused;
     }
     
-    /* Desktop-spezifische Einstellungen */
-    @media (min-width: 768px) {
-      .loading-overlay {
-        animation: slideUp 1.2s ease-out forwards;
-        animation-delay: 2.5s;
-        animation-play-state: paused;
-      }
-      .loading-overlay.loaded {
-        animation-play-state: running;
-      }
-    }
-    
-    /* Mobile-spezifische Einstellungen: Einfacher 5s-Delay */
-    @media (max-width: 767px) {
-      .loading-overlay {
-        animation: slideUp 1.5s ease-in-out forwards;
-        animation-delay: 3s;
-        /* Keine "paused"-Steuerung – Animation läuft automatisch */
-      }
+    /* Sobald die Klasse "loaded" gesetzt wird, läuft die Animation */
+    .loading-overlay.loaded {
+      animation-play-state: running;
     }
     
     /* Neues Keyframe: von 0 (sichtbar) zu -100% (nach oben ausgefahren) */
@@ -186,7 +175,7 @@
       }
     }
     
-    /* Restliche Styles unverändert */
+    /* Restliche Styles (Portfolio, Services etc.) unverändert */
     .portfolio-item {
       position: relative;
       overflow: hidden;
@@ -247,6 +236,7 @@
         pointer-events: none;
       }
       
+      /* Globale Anpassungen für mobile Darstellung */
       .container {
         padding-left: 1rem;
         padding-right: 1rem;
@@ -259,24 +249,28 @@
       .btn { padding: 0.75rem 1rem !important; font-size: 1rem !important; }
       .nav-link { font-size: 0.9rem !important; }
       
-      /* Alle Sektionen werden in einer Spalte dargestellt */
+      /* Alle Sektionen (About, Portfolio, Services, Contact) werden als eine Spalte dargestellt */
       #about .grid,
       #portfolio .grid,
       #services .grid,
       #contact .grid {
         grid-template-columns: 1fr !important;
       }
+      
+      /* Erhöhte Abstände zwischen den Grid-Items für bessere Lesbarkeit und Touch-Bedienung */
       #portfolio .grid,
       #services .grid,
       #contact .grid {
         gap: 2rem !important;
       }
       
+      /* Größere Touch-Ziele im mobilen Dropdown-Menü */
       #mobileMenu a {
         padding: 1rem 0 !important;
         font-size: 1.25rem !important;
       }
       
+      /* Formularfelder und Buttons mit größeren Touch-Flächen */
       .contact-input {
         padding: 1.25rem !important;
         font-size: 1.125rem !important;
@@ -284,6 +278,18 @@
       button[type="submit"] {
         padding: 1.25rem !important;
         font-size: 1.125rem !important;
+      }
+    }
+    
+    /* Mobile spezifische Anpassung für die Loading-Overlay Animation */
+    @media (max-width: 767px) {
+      .loading-overlay {
+        animation: slideUp 1.5s ease-in-out forwards;
+        animation-delay: 2.2s;
+        animation-play-state: paused;
+      }
+      .loading-overlay.loaded {
+        animation-play-state: running;
       }
     }
   </style>
@@ -385,7 +391,7 @@
     <div class="container mx-auto px-6">
       <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <!-- Featured Project: Porsche Spec Ad -->
+        <!-- Featured Project: Porsche Spec Ad mit Vimeo-Video -->
         <div class="portfolio-item md:col-span-3">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
             <iframe 
@@ -404,7 +410,7 @@
           </div>
         </div>
         
-        <!-- Weitere Portfolio Items -->
+        <!-- Portfolio Item: TYPOGRAPHY & MOTION -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
             <iframe 
@@ -421,6 +427,7 @@
           </div>
         </div>
         
+        <!-- Portfolio Item: SHORT FILM TRAILER -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
             <iframe 
@@ -437,6 +444,7 @@
           </div>
         </div>
         
+        <!-- Portfolio Item: Schneider Mercedes -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
             <iframe 
@@ -592,16 +600,20 @@
         mobileMenu.classList.add('hidden');
       });
     });
-    
-    // Desktop: iFrame-Lade-Event abwarten und dann Animation triggern
+
+    // ---------------------------
+    // Neues Script: Warte auf das Laden des sichtbaren iFrames,
+    // bevor das Loading-Overlay animiert wird.
+    // ---------------------------
     document.addEventListener("DOMContentLoaded", function() {
-      if (window.innerWidth >= 768) {  // Nur für Desktop
-        const iframe = document.querySelector('.desktop-iframe');
-        if (iframe) {
-          iframe.addEventListener('load', function() {
-            document.querySelector('.loading-overlay').classList.add('loaded');
-          });
-        }
+      // Wähle das iFrame basierend auf der aktuellen Fensterbreite (Desktop/Mobile)
+      const iframe = window.innerWidth >= 768 
+                        ? document.querySelector('.desktop-iframe') 
+                        : document.querySelector('.mobile-iframe');
+      if (iframe) {
+        iframe.addEventListener('load', function() {
+          document.querySelector('.loading-overlay').classList.add('loaded');
+        });
       }
     });
   </script>
