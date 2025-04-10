@@ -590,23 +590,18 @@
       }
     }
 
-    // Verwende die Vimeo-Player API, um zu warten, bis der Player bereit ist
+    // Vimeo Player: Verwende den "play"-Event um sicherzustellen, dass das Video tatsächlich abgespielt wird.
     const iframe = getVisibleIframe();
     const player = new Vimeo.Player(iframe);
-    player.ready()
-      .then(() => {
-        // Sobald der Vimeo-Player signalisiert, dass das Video geladen und bereit ist,
-        // starten wir die Overlay-Slide-Up-Animation.
-        startLoadingAnimation();
-      })
-      .catch((error) => {
-        console.error('Vimeo player error:', error);
-        // Fallback: Starte die Animation trotzdem, wenn ein Fehler auftritt.
-        startLoadingAnimation();
-      });
 
-    // Zusätzlicher Fallback: Falls der Vimeo-Player aus irgendeinem Grund nicht lädt, 
-    // erzwingt ein Timeout nach 10 Sekunden den Start der Animation.
+    // Warte, bis das Video zu spielen beginnt, dann mit einer kurzen Verzögerung die Animation starten.
+    player.on('play', function() {
+      setTimeout(() => {
+        startLoadingAnimation();
+      }, 300); // 300ms Verzögerung
+    });
+
+    // Fallback: Falls das Video nicht innerhalb von 10 Sekunden startet, wird die Animation trotzdem angestoßen.
     setTimeout(() => {
       if (!animationStarted) {
         startLoadingAnimation();
