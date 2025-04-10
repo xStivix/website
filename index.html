@@ -16,7 +16,7 @@
       padding: 0;
       overflow-x: hidden;
     }
-    
+
     /* Scrollbalken ausblenden */
     body::-webkit-scrollbar {
       display: none;
@@ -25,36 +25,44 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-    
+
     @font-face {
       font-family: 'Circular STD Bold';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
       font-weight: bold;
       font-style: normal;
     }
-    
+
     @font-face {
       font-family: 'Circular STD Medium';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
     }
-    
+
+    /* NEU: Leichtere Circular-Variante für den Fließtext */
+    @font-face {
+      font-family: 'Circular STD Light';
+      src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Book.woff2') format('woff2');
+      font-weight: 300;
+      font-style: normal;
+    }
+
     body {
       background-color: #121212;
       color: white;
       font-family: 'Circular STD Medium', sans-serif;
     }
-    
+
     .bg-darker { background-color: #121212; }
     .bg-dark { background-color: #1e1e1e; }
     .bg-medium { background-color: #2a2a2a; }
-    
+
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Circular STD Bold', sans-serif;
       font-weight: bold;
     }
-    
+
     .mega-title {
       font-size: 5rem;
       line-height: 1;
@@ -63,7 +71,7 @@
     @media (min-width: 768px) {
       .mega-title { font-size: 7rem; }
     }
-    
+
     .super-title {
       font-size: 3.5rem;
       line-height: 1;
@@ -72,7 +80,7 @@
     @media (min-width: 768px) {
       .super-title { font-size: 5rem; }
     }
-    
+
     .nav-link {
       position: relative;
       transition: all 0.3s ease;
@@ -88,7 +96,7 @@
       transition: width 0.3s ease;
     }
     .nav-link:hover::after { width: 100%; }
-    
+
     /* Container für das Video */
     .video-container {
       position: relative;
@@ -96,7 +104,7 @@
       height: 100vh;
       overflow: hidden;
     }
-    
+
     /* Standard-Video-Styles (Desktop) */
     .video-background {
       position: absolute;
@@ -108,11 +116,11 @@
       pointer-events: none;
       z-index: 0; /* Video liegt hinter dem Overlay */
     }
-    
+
     /* Desktop-iFrame sichtbar, Mobile-iFrame ausgeblendet */
     .desktop-iframe { display: block; }
     .mobile-iframe { display: none; }
-    
+
     /* Content Overlay (enthält den Text) */
     .content-overlay {
       position: absolute;
@@ -127,9 +135,8 @@
       background-color: rgba(18, 18, 18, 0.5);
       z-index: 3;
     }
-    
-    /* Loading-Overlay: animierte, solide Schicht (helleres Grau)
-       Hinweis: Die Animation wird hier nicht automatisch gestartet */
+
+    /* Loading-Overlay: animierte, solide Schicht (helleres Grau) */
     .loading-overlay {
       position: absolute;
       top: 0;
@@ -139,13 +146,13 @@
       background-color: #3a3a3a;
       z-index: 2;
     }
-    
+
     /* Slide-Up Animation, die per JavaScript getriggert wird */
     .start-loading-animation {
       animation: slideUp 1.2s ease-out forwards;
-      animation-delay: 0.5s;
+      animation-delay: 0.1s;
     }
-    
+
     /* Mobile spezifischer Override für die Slide-Up Animation */
     @media (max-width: 767px) {
       .start-loading-animation {
@@ -153,25 +160,25 @@
         animation-delay: 1.0s;
       }
     }
-    
+
     /* Neues Keyframe: von 0 (sichtbar) zu -100% (nach oben ausgefahren) */
     @keyframes slideUp {
       from { transform: translateY(0); }
       to { transform: translateY(-100%); }
     }
-    
+
     /* Animation für sanftes Einblenden */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    
+
     .fade-in-up {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 2s ease-out forwards;
     }
-    
+
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -182,8 +189,27 @@
         transform: translateY(0);
       }
     }
-    
-    /* Restliche Styles (Portfolio, Services etc.) unverändert */
+
+    /* Intro-Overlay */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #111111; /* sehr dunkle Graufläche */
+      z-index: 99; /* oberhalb aller anderen Elemente */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1s ease;
+      transform: translateY(0);
+    }
+    .intro-overlay.slide-out {
+      transform: translateY(100%);
+    }
+
+    /* Portfolio-Items */
     .portfolio-item {
       position: relative;
       overflow: hidden;
@@ -204,7 +230,8 @@
       padding: 1.5rem;
       background: linear-gradient(to top, rgba(18, 18, 18, 0.9), transparent);
     }
-    
+
+    /* Service-Cards */
     .service-card {
       background-color: #1e1e1e;
       transition: transform 0.3s ease;
@@ -214,7 +241,16 @@
       transform: translateY(-5px);
       background-color: #2a2a2a;
     }
-    
+
+    /* NEU: Größere Subheadings und dünnerer Fließtext in Services */
+    .service-card h4 {
+      font-size: 1.875rem; /* entspricht ~text-3xl */
+    }
+    .service-card p {
+      font-family: 'Circular STD Light', sans-serif;
+      font-weight: 300; /* deutlich dünner */
+    }
+
     .contact-input {
       background-color: #2a2a2a;
       border: none;
@@ -224,12 +260,12 @@
       border-radius: 0.5rem;
     }
     .contact-input:focus { background-color: #333333; }
-    
+
     .btn { transition: all 0.3s ease; }
-    
+
     .social-icon { transition: transform 0.3s ease; }
     .social-icon:hover { transform: translateY(-3px); }
-    
+
     /* Mobile spezifische Anpassungen */
     @media (max-width: 767px) {
       .desktop-iframe { display: none; }
@@ -243,7 +279,7 @@
         height: 100vh;
         pointer-events: none;
       }
-      
+
       /* Globale Anpassungen für mobile Darstellung */
       .container {
         padding-left: 1rem;
@@ -256,7 +292,7 @@
       section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
       .btn { padding: 0.75rem 1rem !important; font-size: 1rem !important; }
       .nav-link { font-size: 0.9rem !important; }
-      
+
       /* Alle Sektionen (About, Portfolio, Services, Contact) als eine Spalte */
       #about .grid,
       #portfolio .grid,
@@ -264,20 +300,20 @@
       #contact .grid {
         grid-template-columns: 1fr !important;
       }
-      
+
       /* Erhöhte Abstände zwischen den Grid-Items für bessere Lesbarkeit und Touch-Bedienung */
       #portfolio .grid,
       #services .grid,
       #contact .grid {
         gap: 2rem !important;
       }
-      
+
       /* Größere Touch-Ziele im mobilen Dropdown-Menü */
       #mobileMenu a {
         padding: 1rem 0 !important;
         font-size: 1.25rem !important;
       }
-      
+
       /* Formularfelder und Buttons mit größeren Touch-Flächen */
       .contact-input {
         padding: 1.25rem !important;
@@ -291,6 +327,11 @@
   </style>
 </head>
 <body>
+  <!-- Intro Overlay (neuer Bereich) -->
+  <div class="intro-overlay">
+    <h1 class="text-2xl md:text-3xl font-bold text-white">STEFAN ABERER</h1>
+  </div>
+
   <!-- Navigation -->
   <nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
     <div class="container mx-auto px-6 py-4">
@@ -319,7 +360,7 @@
       <a href="#contact" class="block text-white nav-link">Contact</a>
     </div>
   </nav>
-  
+
   <!-- Hero Section -->
   <section id="home" class="video-container">
     <!-- Desktop-Video iFrame -->
@@ -330,7 +371,7 @@
       allow="autoplay; fullscreen" 
       allowfullscreen>
     </iframe>
-    
+
     <!-- Mobile-Video iFrame -->
     <iframe 
       class="video-background fade-in mobile-iframe" 
@@ -339,14 +380,14 @@
       allow="autoplay; fullscreen" 
       allowfullscreen>
     </iframe>
-    
+
     <!-- Loading Overlay -->
     <div class="loading-overlay"></div>
-    
+
     <!-- Content Overlay (Text) -->
     <div class="content-overlay">
       <div class="text-center px-4">
-        <h1 class="mega-title mb-6 fade-in-up" style="animation-delay: 0.3s;">LET'S MAKE IT COUNT.</h1>
+        <h1 class="mega-title mb-6 fade-in-up" style="animation-delay: 0.5s;">LET'S MAKE IT COUNT.</h1>
         <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.7s;">
           Creating visuals through the blend of traditional methods and cutting-edge AI technologies.
         </p>
@@ -356,7 +397,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- About Section -->
   <section id="about" class="py-20 md:py-32 bg-darker">
     <div class="container mx-auto px-6">
@@ -370,7 +411,7 @@
             I create visually appealing content that pushes boundaries while maintaining cinematic quality. I specialize in short-form content such as advertisements, trailers, music videos, image videos, and social media content.
           </p>
           <p class="text-xl">
-            Rather than sticking to a conventional approach, I strive to stay current with the latest trends—merging technological advance with artistic vision.
+            Rather than sticking to a conventional approach, I strive to stay current with the latest trends.
           </p>
         </div>
         <div>
@@ -381,7 +422,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Portfolio Section -->
   <section id="portfolio" class="py-20 md:py-32 bg-dark">
     <div class="container mx-auto px-6">
@@ -405,7 +446,7 @@
             </p>
           </div>
         </div>
-        
+
         <!-- Portfolio Item: TYPOGRAPHY & MOTION -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
@@ -422,7 +463,7 @@
             <p>Showcasing typography and motion design.</p>
           </div>
         </div>
-        
+
         <!-- Portfolio Item: SHORT FILM TRAILER -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
@@ -439,7 +480,7 @@
             <p>Cinematic teaser trailer.</p>
           </div>
         </div>
-        
+
         <!-- Portfolio Item: Schneider Mercedes -->
         <div class="portfolio-item">
           <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
@@ -459,49 +500,54 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Services Section -->
   <section id="services" class="py-20 md:py-32 bg-darker">
     <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">SERVICES</h2>
+      <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
+
+      <!-- Service-Cards -->
       <div class="grid md:grid-cols-3 gap-12">
+        <!-- Card 1 -->
         <div class="service-card p-10">
-          <h3 class="text-3xl font-bold mb-6">POST PRODUCTION</h3>
-          <ul class="space-y-4 text-xl">
-            <li>• Concept & Video Editing</li>
-            <li>• Color Grading & Correction</li>
-            <li>• Motion Graphics, Animations, VFX & Compositing</li>
-            <li>• Sound Design & Mixing</li>
-          </ul>
+          <h3 class="text-sm font-light mb-2">01</h3>
+          <!-- Überschrift jetzt etwas größer via CSS (.service-card h4) -->
+          <h4 class="mb-4">CONCEPTION</h4>
+          <!-- Fließtext dünner, Circular STD Light via CSS -->
+          <p class="text-base">
+            I specialize in short-form content — from advertisements and trailers to action edits and social media formats. Depending on the size and scale of the project, I collaborate closely with creatives and production teams to define the right visual direction and establish a foundation for the further process.
+          </p>
         </div>
+
+        <!-- Card 2 -->
         <div class="service-card p-10">
-          <h3 class="text-3xl font-bold mb-6">AI EXPERTISE</h3>
-          <ul class="space-y-4 text-xl">
-            <li>• AI Image Generation</li>
-            <li>• AI Video Generation</li>
-            <li>• Upscaling & Enhancing Footage</li>
-            <li>• Voice Cloning & Voiceovers</li>
-            <li>• Deepfake & Lipsync Technology</li>
-          </ul>
+          <h3 class="text-sm font-light mb-2">02</h3>
+          <h4 class="mb-4">POST PRODUCTION</h4>
+          <p class="text-base">
+            I cover the full post-production workflow – from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and simple VFX. Aswell as handle compositing, cleanup, retouching, and template-based animations if needed.
+          </p>
         </div>
+
+        <!-- Card 3 -->
         <div class="service-card p-10">
-          <h3 class="text-3xl font-bold mb-6">GRAPHIC DESIGN</h3>
-          <ul class="space-y-4 text-xl">
-            <li>• Posters</li>
-            <li>• Infographics</li>
-            <li>• Illustrations</li>
-          </ul>
+          <h3 class="text-sm font-light mb-2">03</h3>
+          <h4 class="mb-4">AI PRODUCTION</h4>
+          <p class="text-base">
+            I know the limits of today’s AI tools – and how to get the most out of them. I use AI to generate realistic or surreal images, videos, and effects; enhance footage through smart upscaling, refinement, and frame interpolation. From deepfake applications and lifelike virtual talking models to any visual concept imaginable.
+          </p>
         </div>
       </div>
+
+      <!-- "MY APPROACH"-Block -->
       <div class="mt-20 text-center">
         <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
-        <p class="text-xl max-w-4xl mx-auto">
-          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to enhance productivity, efficiency, and creativity—without replacing the human touch in creative decision-making.
+        <p class="text-xl max-w-4xl mx-auto font-light">
+          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to transform ideas into traditionally edited and refined AI-driven content with a human touch and creative intent.
         </p>
       </div>
     </div>
   </section>
-  
+
   <!-- Contact Section -->
   <section id="contact" class="py-20 md:py-32 bg-dark">
     <div class="container mx-auto px-6">
@@ -563,14 +609,14 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Footer -->
   <footer class="py-8 bg-darker">
     <div class="container mx-auto px-6 text-center">
-      <p>© 2024 Stefan Aberer. All Rights Reserved.</p>
+      <p>© 2025 Stefan Aberer. All Rights Reserved.</p>
     </div>
   </footer>
-  
+
   <script>
     // Ermittelt das aktuell sichtbare iFrame (Desktop oder Mobile)
     function getVisibleIframe() {
@@ -590,7 +636,7 @@
       }
     }
 
-    // Vimeo Player: Verwende den "play"-Event um sicherzustellen, dass das Video tatsächlich abgespielt wird.
+    // Vimeo Player: Verwende den "play"-Event, um sicherzustellen, dass das Video tatsächlich abgespielt wird.
     const iframe = getVisibleIframe();
     const player = new Vimeo.Player(iframe);
 
@@ -617,20 +663,30 @@
         });
       });
     });
-    
+
     // Mobile Dropdown Menü Toggle
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
-    
+
     mobileMenuButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
-    
+
     // Schließt das mobile Menü, wenn ein Link geklickt wird
     document.querySelectorAll('#mobileMenu a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
       });
+    });
+
+    // Neue Intro-Overlay Animation: Nach 1 Sekunde wird der Overlay smooth nach unten verschoben.
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const introOverlay = document.querySelector('.intro-overlay');
+        if (introOverlay) {
+          introOverlay.classList.add('slide-out');
+        }
+      }, 300); // 0.3 Sekunde Verzögerung
     });
   </script>
 </body>
