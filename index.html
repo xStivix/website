@@ -16,15 +16,9 @@
       padding: 0;
       overflow-x: hidden;
     }
-
     /* Scrollbalken ausblenden */
-    body::-webkit-scrollbar {
-      display: none;
-    }
-    body {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    body::-webkit-scrollbar { display: none; }
+    body { -ms-overflow-style: none; scrollbar-width: none; }
 
     @font-face {
       font-family: 'Circular STD Bold';
@@ -32,15 +26,12 @@
       font-weight: bold;
       font-style: normal;
     }
-
     @font-face {
       font-family: 'Circular STD Medium';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
     }
-
-    /* NEU: Leichtere Circular-Variante für den Fließtext */
     @font-face {
       font-family: 'Circular STD Light';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Book.woff2') format('woff2');
@@ -53,7 +44,6 @@
       color: white;
       font-family: 'Circular STD Medium', sans-serif;
     }
-
     .bg-darker { background-color: #121212; }
     .bg-dark { background-color: #1e1e1e; }
     .bg-medium { background-color: #2a2a2a; }
@@ -62,24 +52,18 @@
       font-family: 'Circular STD Bold', sans-serif;
       font-weight: bold;
     }
-
     .mega-title {
       font-size: 5rem;
       line-height: 1;
       letter-spacing: -0.05em;
     }
-    @media (min-width: 768px) {
-      .mega-title { font-size: 7rem; }
-    }
-
+    @media (min-width: 768px) { .mega-title { font-size: 7rem; } }
     .super-title {
       font-size: 3.5rem;
       line-height: 1;
       letter-spacing: -0.03em;
     }
-    @media (min-width: 768px) {
-      .super-title { font-size: 5rem; }
-    }
+    @media (min-width: 768px) { .super-title { font-size: 5rem; } }
 
     .nav-link {
       position: relative;
@@ -97,15 +81,13 @@
     }
     .nav-link:hover::after { width: 100%; }
 
-    /* Container für das Video */
+    /* Container für Videos (Hero) */
     .video-container {
       position: relative;
       width: 100%;
       height: 100vh;
       overflow: hidden;
     }
-
-    /* Standard-Video-Styles (Desktop) */
     .video-background {
       position: absolute;
       top: 50%;
@@ -114,14 +96,11 @@
       height: 100vh;
       transform: translate(-50%, -50%) scale(1.3);
       pointer-events: none;
-      z-index: 0; /* Video liegt hinter dem Overlay */
+      z-index: 0;
     }
-
-    /* Desktop-iFrame sichtbar, Mobile-iFrame ausgeblendet */
     .desktop-iframe { display: block; }
     .mobile-iframe { display: none; }
 
-    /* Content Overlay (enthält den Text) */
     .content-overlay {
       position: absolute;
       top: 0;
@@ -135,8 +114,6 @@
       background-color: rgba(18, 18, 18, 0.5);
       z-index: 3;
     }
-
-    /* Loading-Overlay: animierte, solide Schicht (helleres Grau) */
     .loading-overlay {
       position: absolute;
       top: 0;
@@ -146,39 +123,20 @@
       background-color: #3a3a3a;
       z-index: 2;
     }
-
-    /* Slide-Up Animation, die per JavaScript getriggert wird */
     .start-loading-animation {
       animation: slideUp 1.2s ease-out forwards;
       animation-delay: 0.1s;
     }
-
-    /* Mobile spezifischer Override für die Slide-Up Animation */
     @media (max-width: 767px) {
       .start-loading-animation {
         animation: slideUp 1.5s ease-in-out forwards;
         animation-delay: 1.0s;
       }
     }
-
-    /* Neues Keyframe: von 0 (sichtbar) zu -100% (nach oben ausgefahren) */
     @keyframes slideUp {
       from { transform: translateY(0); }
       to { transform: translateY(-100%); }
     }
-
-    /* Animation für sanftes Einblenden */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 2s ease-out forwards;
-    }
-
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -189,6 +147,11 @@
         transform: translateY(0);
       }
     }
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 2s ease-out forwards;
+    }
 
     /* Intro-Overlay */
     .intro-overlay {
@@ -197,19 +160,17 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      background-color: #111111; /* sehr dunkle Graufläche */
-      z-index: 99; /* oberhalb aller anderen Elemente */
+      background-color: #111111;
+      z-index: 99;
       display: flex;
       justify-content: center;
       align-items: center;
       transition: transform 1s ease;
       transform: translateY(0);
     }
-    .intro-overlay.slide-out {
-      transform: translateY(100%);
-    }
+    .intro-overlay.slide-out { transform: translateY(100%); }
 
-    /* Portfolio-Items */
+    /* Portfolio-/Images-Items */
     .portfolio-item {
       position: relative;
       overflow: hidden;
@@ -222,14 +183,6 @@
     .portfolio-item video { transition: opacity 0.3s ease; }
     .portfolio-item:hover img,
     .portfolio-item:hover video { opacity: 0.7; }
-    .portfolio-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem;
-      background: linear-gradient(to top, rgba(18, 18, 18, 0.9), transparent);
-    }
 
     /* Service-Cards */
     .service-card {
@@ -241,16 +194,11 @@
       transform: translateY(-5px);
       background-color: #2a2a2a;
     }
-
-    /* NEU: Größere Subheadings und dünnerer Fließtext in Services */
-    .service-card h4 {
-      font-size: 1.875rem; /* entspricht ~text-3xl */
-    }
+    .service-card h4 { font-size: 1.875rem; }
     .service-card p {
       font-family: 'Circular STD Light', sans-serif;
-      font-weight: 300; /* deutlich dünner */
+      font-weight: 300;
     }
-
     .contact-input {
       background-color: #2a2a2a;
       border: none;
@@ -260,13 +208,11 @@
       border-radius: 0.5rem;
     }
     .contact-input:focus { background-color: #333333; }
-
     .btn { transition: all 0.3s ease; }
-
     .social-icon { transition: transform 0.3s ease; }
     .social-icon:hover { transform: translateY(-3px); }
 
-    /* Mobile spezifische Anpassungen */
+    /* Mobile Anpassungen */
     @media (max-width: 767px) {
       .desktop-iframe { display: none; }
       .mobile-iframe {
@@ -279,12 +225,7 @@
         height: 100vh;
         pointer-events: none;
       }
-
-      /* Globale Anpassungen für mobile Darstellung */
-      .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
+      .container { padding-left: 1rem; padding-right: 1rem; }
       .mega-title { font-size: 3rem !important; }
       .super-title { font-size: 2.5rem !important; }
       .text-xl { font-size: 1.125rem !important; }
@@ -292,57 +233,152 @@
       section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
       .btn { padding: 0.75rem 1rem !important; font-size: 1rem !important; }
       .nav-link { font-size: 0.9rem !important; }
-
-      /* Alle Sektionen (About, Portfolio, Services, Contact) als eine Spalte */
       #about .grid,
       #portfolio .grid,
       #services .grid,
-      #contact .grid {
-        grid-template-columns: 1fr !important;
-      }
-
-      /* Erhöhte Abstände zwischen den Grid-Items für bessere Lesbarkeit und Touch-Bedienung */
+      #contact .grid { grid-template-columns: 1fr !important; }
       #portfolio .grid,
       #services .grid,
-      #contact .grid {
-        gap: 2rem !important;
-      }
+      #contact .grid { gap: 2rem !important; }
+      #mobileMenu a { padding: 1rem 0 !important; font-size: 1.25rem !important; }
+      .contact-input { padding: 1.25rem !important; font-size: 1.125rem !important; }
+      button[type="submit"] { padding: 1.25rem !important; font-size: 1.125rem !important; }
+    }
 
-      /* Größere Touch-Ziele im mobilen Dropdown-Menü */
-      #mobileMenu a {
-        padding: 1rem 0 !important;
-        font-size: 1.25rem !important;
-      }
+    /* ***************** MODIFIKATIONEN FÜR DIE IMAGES-SEITE ***************** */
 
-      /* Formularfelder und Buttons mit größeren Touch-Flächen */
-      .contact-input {
-        padding: 1.25rem !important;
-        font-size: 1.125rem !important;
-      }
-      button[type="submit"] {
-        padding: 1.25rem !important;
-        font-size: 1.125rem !important;
-      }
+    /* Blur Overlay, das den Hintergrund der Images-Seite abdunkelt und weichzeichnet */
+    #blur-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+      opacity: 1;
+      z-index: 30;
+    }
+    #blur-overlay.hide {
+      opacity: 0;
+      backdrop-filter: blur(0);
+    }
+
+    /* Popup Overlay, das die Box zentriert */
+    #popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 40;
+      opacity: 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #popup-overlay.hide {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    /* Popup Box – deutlich dunkler, nach Firebase Studio angelehnt – ohne Animationen */
+    #popup-box {
+      position: relative;
+      background: linear-gradient(135deg, #1a1a1a 0%, #232323 100%);
+      border-radius: 1rem;
+      border: 1px solid #2e2e2e;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      text-align: left;
+      font-family: 'Circular STD', sans-serif;
+      overflow: hidden;
+      transition: none;
+    }
+    
+    /* Continue Button */
+    #continue-btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #continue-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    /* Text im Popup */
+    #popup-box p {
+      margin: 0 0 1rem 0;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+    #popup-box p:last-child {
+      margin-bottom: 3rem;
+    }
+    
+    /* ***************** STYLES FÜR DEN IMAGE MODAL ***************** */
+    #image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    #image-modal.active {
+      display: flex;
+    }
+    #image-modal .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+    }
+    #image-modal .modal-image {
+      z-index: 110;
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
   </style>
 </head>
 <body>
-  <!-- Intro Overlay (neuer Bereich) -->
+  <!-- Intro Overlay -->
   <div class="intro-overlay">
     <h1 class="text-2xl md:text-3xl font-bold text-white">STEFAN ABERER</h1>
   </div>
 
-  <!-- Navigation -->
+  <!-- Navigation (bleibt immer oben) -->
   <nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
     <div class="container mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
-        <a href="#home" class="text-white text-2xl font-bold">STEFAN ABERER</a>
+        <!-- Logo als Home-Button: Beim Klick lädt die Seite neu -->
+        <a href="#" id="homeLink" class="text-white text-2xl font-bold">STEFAN ABERER</a>
         <!-- Desktop-Navigation -->
         <div class="hidden md:flex space-x-10">
-          <a href="#about" class="nav-link text-white text-lg">About</a>
-          <a href="#portfolio" class="nav-link text-white text-lg">Portfolio</a>
-          <a href="#services" class="nav-link text-white text-lg">Services</a>
-          <a href="#contact" class="nav-link text-white text-lg">Contact</a>
+          <a href="#about" class="nav-link text-white text-lg page-link" data-page="main">About</a>
+          <a href="#portfolio" class="nav-link text-white text-lg page-link" data-page="main">Portfolio</a>
+          <a href="#images" class="nav-link text-white text-lg page-link" data-page="images">Images</a>
+          <a href="#services" class="nav-link text-white text-lg page-link" data-page="main">Services</a>
+          <a href="#contact" class="nav-link text-white text-lg page-link" data-page="main">Contact</a>
         </div>
         <!-- Hamburger-Button für Mobile -->
         <div class="md:hidden">
@@ -352,338 +388,498 @@
         </div>
       </div>
     </div>
-    <!-- Mobile Dropdown Menü (nur auf mobilen Geräten sichtbar) -->
+    <!-- Mobile Dropdown Menü -->
     <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
-      <a href="#about" class="block text-white nav-link">About</a>
-      <a href="#portfolio" class="block text-white nav-link">Portfolio</a>
-      <a href="#services" class="block text-white nav-link">Services</a>
-      <a href="#contact" class="block text-white nav-link">Contact</a>
+      <a href="#about" class="block text-white nav-link page-link" data-page="main">About</a>
+      <a href="#portfolio" class="block text-white nav-link page-link" data-page="main">Portfolio</a>
+      <a href="#images" class="block text-white nav-link page-link" data-page="images">Images</a>
+      <a href="#services" class="block text-white nav-link page-link" data-page="main">Services</a>
+      <a href="#contact" class="block text-white nav-link page-link" data-page="main">Contact</a>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="video-container">
-    <!-- Desktop-Video iFrame -->
-    <iframe 
-      class="video-background fade-in desktop-iframe" 
-      src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0" 
-      frameborder="0" 
-      allow="autoplay; fullscreen" 
-      allowfullscreen>
-    </iframe>
-
-    <!-- Mobile-Video iFrame -->
-    <iframe 
-      class="video-background fade-in mobile-iframe" 
-      src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1" 
-      frameborder="0" 
-      allow="autoplay; fullscreen" 
-      allowfullscreen>
-    </iframe>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay"></div>
-
-<!-- Content Overlay (Text) -->
-<div class="content-overlay">
-  <div class="text-center px-4">
-    <h1 class="mega-title mb-6 fade-in-up" style="animation-delay: 0.5s;">LET'S MAKE IT COUNT.</h1>
-    <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.7s;">
-      Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.
-    </p>
-    <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay: 2.5s;">
-      VIEW WORK
-    </a>
-  </div>
-</div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="py-20 md:py-32 bg-darker">
-    <div class="container mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="super-title mb-8">ABOUT ME</h2>
-          <p class="text-xl mb-6">
-            My name is Stefan, I’m a 28-year-old video editor based near Bregenz, Austria. With over five years of experience in the industry, I’m passionate about content creation and exploring the potential of artificial intelligence.
+  <!-- Hauptinhalt der Main-Page -->
+  <div id="main-page">
+    <!-- Hero Section -->
+    <section id="home" class="video-container">
+      <!-- Desktop-Video iFrame -->
+      <iframe 
+        class="video-background fade-in desktop-iframe" 
+        src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        allowfullscreen>
+      </iframe>
+      <!-- Mobile-Video iFrame -->
+      <iframe 
+        class="video-background fade-in mobile-iframe" 
+        src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1" 
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        allowfullscreen>
+      </iframe>
+      <!-- Loading Overlay -->
+      <div class="loading-overlay"></div>
+      <!-- Content Overlay (Text) -->
+      <div class="content-overlay">
+        <div class="text-center px-4">
+          <h1 class="mega-title mb-6 fade-in-up" style="animation-delay: 0.5s;">LET'S MAKE IT COUNT.</h1>
+          <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.7s;">
+            Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.
           </p>
-          <p class="text-xl mb-6">
-           I focus on creating modern, visually appealing content. I mainly work on short-form content like ads, trailers, music videos, image videos, and social media content. I also design and develop websites when needed.
-          <p class="text-xl">
-            Rather than sticking to a conventional approach, I strive to stay current with the latest trends.
-          </p>
-        </div>
-        <div>
-          <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/349fa959-1317-485b-aa04-68f621365224.png" 
-               alt="Profile Image" 
-               class="max-w-lg rounded-lg mx-auto">
+          <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay: 2.5s;">
+            VIEW WORK
+          </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Portfolio Section -->
-  <section id="portfolio" class="py-20 md:py-32 bg-dark">
-    <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Featured Project: Porsche Spec Ad mit Vimeo-Video -->
-        <div class="portfolio-item md:col-span-3">
-          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
-            <iframe 
-              src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" 
-              frameborder="0" 
-              allow="autoplay; fullscreen" 
-              allowfullscreen 
-              class="absolute top-0 left-0 w-full h-full">
-            </iframe>
-          </div>
-          <div class="p-6 bg-darker">
-            <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
+    <!-- About Section -->
+    <section id="about" class="py-20 md:py-32 bg-darker">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="super-title mb-8">ABOUT ME</h2>
+            <p class="text-xl mb-6">
+              My name is Stefan, I’m a 28-year-old video editor based near Bregenz, Austria. With over five years of experience in the industry, I’m passionate about creating content and exploring the potential of artificial intelligence.
+            </p>
+            <p class="text-xl mb-6">
+              I focus on creating modern, visually appealing content. I mainly work on short-form content like ads, trailers, music videos, image videos, and social media content. I also design and develop websites when needed.
+            </p>
             <p class="text-xl">
-              This project serves as a first "Proof of Concept" and was entirely created by using an Ai Image to Video Process in combination with traditional editing.
+              Rather than sticking to only a conventional approach, I strive to stay current with the latest trends.
             </p>
           </div>
-        </div>
-
-        <!-- Portfolio Item: TYPOGRAPHY & MOTION -->
-        <div class="portfolio-item">
-          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
-            <iframe 
-              src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" 
-              frameborder="0" 
-              allow="autoplay; fullscreen" 
-              allowfullscreen 
-              class="absolute top-0 left-0 w-full h-full">
-            </iframe>
-          </div>
-          <div class="p-4 bg-darker">
-            <h3 class="text-2xl font-bold">Stay (TYPOGRAPHY)</h3>
-            <p>Showcasing Typography.</p>
-          </div>
-        </div>
-
-        <!-- Portfolio Item: SHORT FILM TRAILER -->
-        <div class="portfolio-item">
-          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
-            <iframe 
-              src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" 
-              frameborder="0" 
-              allow="autoplay; fullscreen" 
-              allowfullscreen 
-              class="absolute top-0 left-0 w-full h-full">
-            </iframe>
-          </div>
-          <div class="p-4 bg-darker">
-            <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3>
-            <p>Cinematic Teaser Trailer.</p>
-          </div>
-        </div>
-
-        <!-- Portfolio Item: Schneider Mercedes -->
-        <div class="portfolio-item">
-          <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
-            <iframe 
-              src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" 
-              frameborder="0" 
-              allow="autoplay; fullscreen" 
-              allowfullscreen 
-              class="absolute top-0 left-0 w-full h-full">
-            </iframe>
-          </div>
-          <div class="p-4 bg-darker">
-            <h3 class="text-2xl font-bold">G-Class</h3>
-            <p>Car Mood Film.</p>
+          <div>
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/349fa959-1317-485b-aa04-68f621365224.png" alt="Profile Image" class="max-w-lg rounded-lg mx-auto">
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Services Section -->
-  <section id="services" class="py-20 md:py-32 bg-darker">
-    <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
-
-      <!-- Service-Cards -->
-      <div class="grid md:grid-cols-3 gap-12">
-        <!-- Card 1 -->
-        <div class="service-card p-10">
-          <h3 class="text-sm font-light mb-2">01</h3>
-          <!-- Überschrift jetzt etwas größer via CSS (.service-card h4) -->
-          <h4 class="mb-4">CONCEPTION</h4>
-          <!-- Fließtext dünner, Circular STD Light via CSS -->
-          <p class="text-base">
-            Whether it's purely video content, concept development, images or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
-          </p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="service-card p-10">
-          <h3 class="text-sm font-light mb-2">02</h3>
-          <h4 class="mb-4">POST PRODUCTION</h4>
-          <p class="text-base">
-            I cover the full post-production workflow – from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and simple VFX. Aswell as handle compositing, cleanup, retouching, and template-based animations if needed.
-          </p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="service-card p-10">
-          <h3 class="text-sm font-light mb-2">03</h3>
-          <h4 class="mb-4">AI PRODUCTION</h4>
-          <p class="text-base">
-            I know the limits of today’s AI tools – and how to get the most out of them. I use AI to generate realistic or surreal images, videos, and effects; enhance footage through smart upscaling, refinement, and frame interpolation. From deepfake applications and lifelike virtual talking models to any visual concept imaginable.
-          </p>
-        </div>
-      </div>
-
-      <!-- "MY APPROACH"-Block -->
-      <div class="mt-20 text-center">
-        <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
-        <p class="text-xl max-w-4xl mx-auto font-light">
-          I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerfull tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 md:py-32 bg-dark">
-    <div class="container mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
-      <div class="grid md:grid-cols-2 gap-12">
-        <div>
-          <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-          <div class="space-y-6 text-xl">
-            <p>
-              <i class="fas fa-map-marker-alt mr-4"></i>
-              Bregenz, Austria
-            </p>
-            <p>
-              <i class="fas fa-envelope mr-4"></i>
-              stefan.aberer@hotmail.com
-            </p>
-            <p>
-              <i class="fas fa-phone mr-4"></i>
-              +43 699 1111 0970
-            </p>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 md:py-32 bg-dark">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Featured Project: Porsche Spec Ad -->
+          <div class="portfolio-item md:col-span-3">
+            <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+              <iframe 
+                src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen 
+                class="absolute top-0 left-0 w-full h-full">
+              </iframe>
+            </div>
+            <div class="p-6 bg-darker">
+              <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
+              <p class="text-xl">
+                This project serves as a first "Proof of Concept" and was entirely created by using an Ai Image to Video Process in combination with traditional editing.
+              </p>
+            </div>
           </div>
-          <div class="mt-12">
-            <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
-            <div class="flex space-x-6">
-              <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="https://vimeo.com/user77038892" class="social-icon text-3xl">
-                <i class="fab fa-vimeo-v"></i>
-              </a>
-              <a href="#" class="social-icon text-3xl">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a href="#" class="social-icon text-3xl">
-                <i class="fab fa-behance"></i>
-              </a>
+
+          <!-- Portfolio Item: TYPOGRAPHY & MOTION -->
+          <div class="portfolio-item">
+            <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+              <iframe 
+                src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen 
+                class="absolute top-0 left-0 w-full h-full">
+              </iframe>
+            </div>
+            <div class="p-4 bg-darker">
+              <h3 class="text-2xl font-bold">Stay (TYPOGRAPHY)</h3>
+              <p>Showcasing Typography.</p>
+            </div>
+          </div>
+
+          <!-- Portfolio Item: SHORT FILM TRAILER -->
+          <div class="portfolio-item">
+            <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+              <iframe 
+                src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen 
+                class="absolute top-0 left-0 w-full h-full">
+              </iframe>
+            </div>
+            <div class="p-4 bg-darker">
+              <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3>
+              <p>Cinematic Teaser Trailer.</p>
+            </div>
+          </div>
+
+          <!-- Portfolio Item: G-Class -->
+          <div class="portfolio-item">
+            <div class="relative w-full bg-medium overflow-hidden" style="padding-top: 56.25%;">
+              <iframe 
+                src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen 
+                class="absolute top-0 left-0 w-full h-full">
+              </iframe>
+            </div>
+            <div class="p-4 bg-darker">
+              <h3 class="text-2xl font-bold">G-Class</h3>
+              <p>Car Mood Film.</p>
             </div>
           </div>
         </div>
-        <div>
-          <form action="https://formspree.io/f/myzebqyq" method="POST">
-            <div class="mb-6">
-              <input type="text" name="name" placeholder="Name" class="contact-input w-full p-4 text-lg" required>
-            </div>
-            <div class="mb-6">
-              <input type="email" name="_replyto" placeholder="Email" class="contact-input w-full p-4 text-lg" required>
-            </div>
-            <div class="mb-6">
-              <input type="text" name="subject" placeholder="Subject" class="contact-input w-full p-4 text-lg">
-            </div>
-            <div class="mb-6">
-              <textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea>
-            </div>
-            <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">
-              SEND MESSAGE
-            </button>
-          </form>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 md:py-32 bg-darker">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
+        <div class="grid md:grid-cols-3 gap-12">
+          <!-- Card 1 -->
+          <div class="service-card p-10">
+            <h3 class="text-sm font-light mb-2">01</h3>
+            <h4 class="mb-4">CONCEPTION</h4>
+            <p class="text-base">
+              Whether it's purely video content, concept development, images or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
+            </p>
+          </div>
+          <!-- Card 2 -->
+          <div class="service-card p-10">
+            <h3 class="text-sm font-light mb-2">02</h3>
+            <h4 class="mb-4">POST PRODUCTION</h4>
+            <p class="text-base">
+              I cover the full post-production workflow – from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and simple VFX. As well as handle compositing, cleanup, retouching, and template-based animations if needed.
+            </p>
+          </div>
+          <!-- Card 3 -->
+          <div class="service-card p-10">
+            <h3 class="text-sm font-light mb-2">03</h3>
+            <h4 class="mb-4">AI PRODUCTION</h4>
+            <p class="text-base">
+              I know the limits of today’s AI tools – and how to get the most out of them. I use AI to generate realistic or surreal images, videos, and effects, and enhance footage through smart upscaling, refinement, and frame interpolation. From deepfake applications and lifelike virtual talking models to any visual concept imaginable – I can create fully individual and customizable visuals, tailored to any product.
+            </p>
+          </div>
+        </div>
+        <!-- "MY APPROACH"-Block -->
+        <div class="mt-20 text-center">
+          <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
+          <p class="text-xl max-w-4xl mx-auto font-light">
+            I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I use AI as a powerful tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="py-8 bg-darker">
-    <div class="container mx-auto px-6 text-center">
-      <p>© 2025 Stefan Aberer. All Rights Reserved.</p>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-32 bg-dark">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div>
+            <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
+            <div class="space-y-6 text-xl">
+              <p><i class="fas fa-map-marker-alt mr-4"></i> Bregenz, Austria</p>
+              <p><i class="fas fa-envelope mr-4"></i> stefan.aberer@hotmail.com</p>
+              <p><i class="fas fa-phone mr-4"></i> +43 699 1111 0970</p>
+            </div>
+            <div class="mt-12">
+              <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
+              <div class="flex space-x-6">
+                <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl"><i class="fab fa-instagram"></i></a>
+                <a href="https://vimeo.com/user77038892" class="social-icon text-3xl"><i class="fab fa-vimeo-v"></i></a>
+                <a href="#" class="social-icon text-3xl"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon text-3xl"><i class="fab fa-behance"></i></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <form action="https://formspree.io/f/myzebqyq" method="POST">
+              <div class="mb-6">
+                <input type="text" name="name" placeholder="Name" class="contact-input w-full p-4 text-lg" required>
+              </div>
+              <div class="mb-6">
+                <input type="email" name="_replyto" placeholder="Email" class="contact-input w-full p-4 text-lg" required>
+              </div>
+              <div class="mb-6">
+                <input type="text" name="subject" placeholder="Subject" class="contact-input w-full p-4 text-lg">
+              </div>
+              <div class="mb-6">
+                <textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea>
+              </div>
+              <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">
+                SEND MESSAGE
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-darker">
+      <div class="container mx-auto px-6 text-center">
+        <p>© 2025 Stefan Aberer. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </div>
+  <!-- Ende des main-page Containers -->
+
+  <!-- Separater "Images"-Seiteninhalt (initial ausgeblendet) -->
+  <div id="images-page" style="display: none; position: relative;">
+    <!-- Bildergalerie -->
+    <div id="images-background" class="transition-filter duration-500">
+      <section class="py-20 md:py-32 bg-black">
+        <div class="container mx-auto px-6">
+          <h2 class="super-title mb-16 text-center">IMAGES</h2>
+          <!-- Responsive Grid: 1 Spalte auf XS, 2 Spalten auf SM, 4 Spalten ab MD -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Bild 1 -->
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp" alt="Image 1" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp" alt="Image 2" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp" alt="Image 3" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp" alt="Image 4" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk7hgcaf9h9a2hwbvtac9k1_img_0.webp" alt="Image 5" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn659r4fjn8wshwwwyeb3cf_img_0.webp" alt="Image 12" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrkbjwrtfb6bkw5z93x1tq5v_img_0.webp" alt="Image 13" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn6gc77ehn9s87yjr9ztveq_img_0.webp" alt="Image 16" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn6yb30f5z8s2mj8jeq7s4w_img_0.webp" alt="Image 14" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn6j5z1ehwbw107wxe3wjth_img_0.webp" alt="Image 15" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn7mq2aey4stendsm32zg8g_img_0.webp" alt="Image 16" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp" alt="Image 17" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn7cehve1pt6yb22amtf1hj_img_0.webp" alt="Image 18" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp" alt="Image 19" class="w-full h-auto">
+            </div>
+
+            <!-- Neue Bilder -->
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk7nxyve1cbbes84r57p72v_img_0.webp" alt="New Image 1" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="http://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp" alt="New Image 2" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp" alt="New Image 3" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp" alt="New Image 4" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp" alt="New Image 5" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrn6aa9kfaqbwnw63sqxay5f_img_0.webp" alt="New Image 7" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk8psbdf0fvyf32gydvcbdc_img_0.webp" alt="New Image 8" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrk9zprff3xbh81npvcnx4h0_img_0.webp" alt="New Image 9" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrka3dc5eqsvj21k9zjvzpjy_img_0.webp" alt="New Image 10" class="w-full h-auto">
+            </div>
+            <div class="portfolio-item order-1">
+              <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Images/assets_task_01jrkb4zh9f45v6bw7b00acnwf_img_0.webp" alt="New Image 11" class="w-full h-auto">
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </footer>
+    <!-- Blur Overlay (initial aktiv, um den Hintergrund zu bluren und abzudunkeln) -->
+    <div id="blur-overlay"></div>
+    <!-- Popup Overlay (zentriert, mit neuer, dunklerer Box + Text + "Note"-Überschrift) -->
+    <div id="popup-overlay">
+      <div id="popup-box">
+        <div class="popup-content">
+          <!-- Überschrift "Note" -->
+          <h3 class="text-3xl font-bold mb-4">Note</h3>
+          <p>
+            Creating high-quality videos – whether traditional or AI-generated – still requires technical skill, experience, time, and creative direction.
+          </p>
+          <p>
+            In contrast, high-quality AI images are now much easier to produce than ever, often needing just one single well-crafted prompt. Flaws like inconsistent text, framing, or layout can be easily corrected with traditional editing techniques.
+          <p>
+            All following images were generated with AI using only prompt engineering, without any further traditional post production, showcasing just their raw potential for branding, social media, and web use.
+          </p>
+        </div>
+        <button id="continue-btn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div id="image-modal">
+    <div class="modal-overlay"></div>
+    <img src="" class="modal-image" alt="Vergrößertes Bild" />
+  </div>
 
   <script>
-    // Ermittelt das aktuell sichtbare iFrame (Desktop oder Mobile)
+    // Navigation: Umschalten zwischen Main-Page und Images-Page
+    const pageLinks = document.querySelectorAll('.page-link');
+    const mainPage = document.getElementById('main-page');
+    const imagesPage = document.getElementById('images-page');
+
+    pageLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const page = this.dataset.page;
+        if (page === "images") {
+          mainPage.style.display = "none";
+          imagesPage.style.display = "block";
+          setTimeout(() => {
+            imagesPage.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 200);
+        } else {
+          imagesPage.style.display = "none";
+          mainPage.style.display = "block";
+          const targetID = this.getAttribute('href');
+          const targetElement = document.querySelector(targetID);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+        document.getElementById('mobileMenu').classList.add('hidden');
+      });
+    });
+
+    // Logo ("STEFAN ABERER"): Beim Klick wird die Seite komplett neu geladen.
+    document.getElementById('homeLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      location.reload();
+    });
+
+    // Video Handling
     function getVisibleIframe() {
       const desktopIframe = document.querySelector('.desktop-iframe');
       const mobileIframe = document.querySelector('.mobile-iframe');
       return window.getComputedStyle(desktopIframe).display !== 'none' ? desktopIframe : mobileIframe;
     }
-
-    // Flag, damit die Animation nur einmal gestartet wird
     let animationStarted = false;
-
-    // Startet die Loading-Overlay-Animation
     function startLoadingAnimation() {
       if (!animationStarted) {
         animationStarted = true;
         document.querySelector('.loading-overlay').classList.add('start-loading-animation');
       }
     }
-
-    // Vimeo Player: Verwende den "play"-Event, um sicherzustellen, dass das Video tatsächlich abgespielt wird.
     const iframe = getVisibleIframe();
     const player = new Vimeo.Player(iframe);
-
-    // Warte, bis das Video zu spielen beginnt, dann mit einer kurzen Verzögerung die Animation starten.
     player.on('play', function() {
-      setTimeout(() => {
-        startLoadingAnimation();
-      }, 300); // 300ms Verzögerung
+      setTimeout(() => { startLoadingAnimation(); }, 300);
     });
-
-    // Fallback: Falls das Video nicht innerhalb von 10 Sekunden startet, wird die Animation trotzdem angestoßen.
     setTimeout(() => {
-      if (!animationStarted) {
-        startLoadingAnimation();
-      }
+      if (!animationStarted) { startLoadingAnimation(); }
     }, 10000);
 
-    // Smooth Scroll Funktionalität
+    // Smooth Scroll für alle internen Links, sofern nicht durch page-link bereits erledigt
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+        if (!this.classList.contains('page-link')) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        }
       });
     });
 
     // Mobile Dropdown Menü Toggle
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
-
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    // Schließt das mobile Menü, wenn ein Link geklickt wird
+    mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
     document.querySelectorAll('#mobileMenu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-      });
+      link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
     });
 
-    // Neue Intro-Overlay Animation: Nach 1 Sekunde wird der Overlay smooth nach unten verschoben.
+    // Intro-Overlay Animation
     window.addEventListener('load', function() {
       setTimeout(function() {
         const introOverlay = document.querySelector('.intro-overlay');
-        if (introOverlay) {
-          introOverlay.classList.add('slide-out');
-        }
-      }, 300); // 0.3 Sekunde Verzögerung
+        if (introOverlay) { introOverlay.classList.add('slide-out'); }
+      }, 300);
     });
+
+    // Continue-Button Funktionalität: Bei Klick blendet sich die Popup-Box aus und der Hintergrund wird entblurt
+    const continueBtn = document.getElementById('continue-btn');
+    if (continueBtn) {
+      const popupOverlay = document.getElementById('popup-overlay');
+      const blurOverlay = document.getElementById('blur-overlay');
+      continueBtn.addEventListener('click', function() {
+        popupOverlay.classList.add('hide');
+        blurOverlay.classList.add('hide');
+        setTimeout(() => {
+          popupOverlay.style.display = 'none';
+          blurOverlay.style.display = 'none';
+        }, 300);
+      });
+    }
+
+    // Image Modal Funktionalität
+    const imageModal = document.getElementById('image-modal');
+    const modalImage = imageModal.querySelector('.modal-image');
+
+    // Event-Listener auf alle Bilder in der Images-Seite
+    document.querySelectorAll('#images-page .portfolio-item img').forEach(img => {
+      img.addEventListener('click', (e) => {
+        modalImage.src = e.target.src;
+        imageModal.classList.add('active');
+      });
+    });
+
+    // Schließen des Modals bei Klick
+    imageModal.addEventListener('click', () => {
+      imageModal.classList.remove('active');
+    });
+
+    // Funktion zum Zufällig-Mischen der Bilder
+    function shuffleImages() {
+      // Wähle das Grid, in dem die Bilder liegen
+      const gridContainer = document.querySelector('#images-background .grid');
+      if (!gridContainer) return;
+
+      // Alle Elemente (Bilder) in ein Array umwandeln
+      const itemsArray = Array.from(gridContainer.children);
+
+      // Array zufällig sortieren
+      itemsArray.sort(() => Math.random() - 0.5);
+
+      // Elemente in der neuen Reihenfolge wieder ins Grid einfügen
+      itemsArray.forEach(item => gridContainer.appendChild(item));
+    }
+
+    // Ausführen, sobald der DOM vollständig geladen ist
+    document.addEventListener('DOMContentLoaded', shuffleImages);
   </script>
 </body>
 </html>
