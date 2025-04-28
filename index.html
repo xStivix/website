@@ -6,8 +6,8 @@
   <title>Stefan Aberer - Video Editor</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
-  <!-- Vimeo Player API -->
-  <script src="https://player.vimeo.com/api/player.js"></script>
+  <!-- Vimeo Player API - mit defer, damit es nicht-blockierend geladen wird -->
+  <script src="https://player.vimeo.com/api/player.js" defer></script>
 
   <!-- ===================================================== -->
   <!-- =======================  STYLES  ===================== -->
@@ -35,24 +35,27 @@
     body::-webkit-scrollbar { display: none; }
     body { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Fonts */
+    /* Fonts - Font-Display hinzugefügt für bessere Performance */
     @font-face {
       font-family: 'Circular STD Bold';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
       font-weight: bold;
       font-style: normal;
+      font-display: swap;
     }
     @font-face {
       font-family: 'Circular STD Medium';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
+      font-display: swap;
     }
     @font-face {
       font-family: 'Circular STD Light';
       src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Book.woff2') format('woff2');
       font-weight: 300;
       font-style: normal;
+      font-display: swap;
     }
 
     body             { background-color:#121212; color:#fff; font-family:'Circular STD Medium',sans-serif; }
@@ -80,8 +83,8 @@
 
     .content-overlay { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(18,18,18,.5); z-index:3; }
     .loading-overlay { position:absolute; top:0; left:0; width:100%; height:100vh; background:#3a3a3a; z-index:2; }
-    .start-loading-animation{ animation:slideUp 1.2s ease-out forwards; animation-delay:.1s; }
-    @media (max-width:767px){ .start-loading-animation{ animation:slideUp 1.5s ease-in-out forwards; animation-delay:1s; } }
+    .start-loading-animation{ animation:slideUp 0.9s ease-out forwards; animation-delay:.1s; }
+    @media (max-width:767px){ .start-loading-animation{ animation:slideUp 0.9s ease-in-out forwards; animation-delay:0.1s; } }
     @keyframes slideUp{ from{transform:translateY(0);} to{transform:translateY(-100%);} }
 
     @keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
@@ -194,12 +197,13 @@
   <div id="main-page">
     <!-- Hero -->
     <section id="home" class="video-container">
+      <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
       <iframe class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
       <iframe class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
 
       <div class="loading-overlay"></div>
       <div class="content-overlay">
@@ -211,22 +215,24 @@
       </div>
     </section>
 
-    <!-- About -->
+        <!-- About -->
     <section id="about" class="py-20 md:py-32 bg-darker">
       <div class="container mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 class="super-title mb-8">ABOUT ME</h2>
-            <p class="text-xl mb-6">My name is Stefan, I’m a 28-year-old video editor based near Bregenz, Austria, with over five years of experience in the industry.</p>
-            <p class="text-xl mb-6">I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. When needed, I also design and develop websites to support your digital presence.</p>
-            <p class="text-xl">I’m passionate about creating content and exploring the potential of artificial intelligence. Rather than sticking to only a conventional approach, I strive to stay current with the latest trends.</p>
+            <p class="text-xl mb-6">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content.</p>
+            <p class="text-xl mb-6">I believe in combining technical excellence with creative direction. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
+            <p class="text-xl">Rather than sticking to only a conventional approach, I strive to stay current with the latest trends. I use AI as a powerful tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.</p>
           </div>
           <div>
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="max-w-sm rounded-lg mx-auto parallax" data-speed="0.1">
+            <!-- loading="lazy" hinzugefügt für verzögertes Laden -->
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-sm rounded-lg mx-auto parallax" data-speed="0.1" loading="lazy" width="384" height="384">
           </div>
         </div>
       </div>
     </section>
+
 
     <!-- Portfolio -->
     <section id="portfolio" class="py-20 md:py-32 bg-dark">
@@ -236,7 +242,8 @@
           <!-- Featured Project -->
           <div class="portfolio-item md:col-span-3 reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <!-- loading="lazy" für verzögertes Laden -->
+              <iframe src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
             </div>
             <div class="p-6 bg-darker">
               <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
@@ -246,7 +253,7 @@
           <!-- Item 1 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">Stay (TYPOGRAPHY)</h3><p>Showcasing Typography.</p>
@@ -255,7 +262,7 @@
           <!-- Item 2 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3><p>Cinematic Teaser Trailer.</p>
@@ -264,7 +271,7 @@
           <!-- Item 3 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">G-Class</h3><p>Car Mood Film.</p>
@@ -284,20 +291,20 @@
             <p class="text-base">Whether it's purely video content or anything else – <br>I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.</p>
           </div>
           <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">02</h3><h4 class="mb-4">POST PRODUCTION</h4>
+            <h3 class="text-sm font-light mb-2">02</h3><h4 class="mb-4">VIDEO EDITING</h4>
             <p class="text-base">I cover the full post-production workflow – from <br>rough cut to final export. This includes selecting <br>and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and simple VFX. As well as handle compositing, cleanup, retouching, and template-based animations if needed.</p>
           </div>
           <div class="service-card p-10 reveal">
             <h3 class="text-sm font-light mb-2">03</h3><h4 class="mb-4">AI SPECALIST</h4>
-            <p class="text-base">I use artificial intelligence to create both realistic <br>and surreal images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I’ve developed a workflow that allows for fully customizable visuals — tailored to any product or individual.</p>
+            <p class="text-base">I use artificial intelligence to create both realistic <br>and surreal images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals — tailored to any product or individual.</p>
           </div>
         </div>
         <div class="mt-20 text-center reveal">
-          <h3 class="text-3xl font-bold mb-8">MY APPROACH</h3>
-          <p class="text-xl max-w-4xl mx-auto font-light">I believe in combining technical excellence with creative direction. Every project begins with understanding your goals and ends with a handcrafted piece. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project. I understand the capabilities and limitations of today’s AI tools – and how to push them to their full potential. I use it as a powerful tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.</p>
-        </div>
-      </div>
-    </section>
+          <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
+          <p class="text-l max-w-4xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic URSA (Film) and Sony FX6/FX9 (S-Log3). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I’m also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
+    </div>
+  </div>
+</section>
 
     <!-- Contact -->
     <section id="contact" class="py-20 md:py-32 bg-dark reveal">
@@ -344,31 +351,39 @@
         <div class="container mx-auto px-6">
           <h2 class="super-title mb-16 text-center">IMAGES</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- 24 Bilder exakt wie übergeben -->
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20of%20a%20quirky%20cartoon%20humanoid%20character%20with%20an%20oversized%20head%20and%20a%20glowing%20lightbu_.png" alt="Image 3" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png" alt="Image 4" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png" alt="Image 5" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20featuring%20a%20quirky%2C%20cartoonish%20humanoid%20character%20in%20black%20and%20white%2C%20matte%20textu_.png" alt="Image 6" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png" alt="Image 7" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp" alt="Image 8" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp" alt="Image 9" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp" alt="Image 10" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp" alt="Image 11" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp" alt="Image 12" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp" alt="Image 13" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp" alt="Image 14" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp" alt="Image 15" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp" alt="Image 16" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp" alt="Image 17" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp" alt="Image 18" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp" alt="Image 19" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png" alt="Image 20" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp" alt="Image 21" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp" alt="Image 22" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp" alt="Image 23" class="w-full h-auto"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn6yb30f5z8s2mj8jeq7s4w_img_0.webp" alt="Image 24" class="w-full h-auto"></div>
+            <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20of%20a%20quirky%20cartoon%20humanoid%20character%20with%20an%20oversized%20head%20and%20a%20glowing%20lightbu_.png" alt="Image 3" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png" alt="Image 4" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png" alt="Image 5" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20featuring%20a%20quirky%2C%20cartoonish%20humanoid%20character%20in%20black%20and%20white%2C%20matte%20textu_.png" alt="Image 6" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png" alt="Image 7" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp" alt="Image 8" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp" alt="Image 9" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp" alt="Image 10" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp" alt="Image 11" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp" alt="Image 12" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp" alt="Image 13" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp" alt="Image 14" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp" alt="Image 15" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp" alt="Image 16" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp" alt="Image 17" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp" alt="Image 18" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp" alt="Image 19" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png" alt="Image 20" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp" alt="Image 21" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp" alt="Image 22" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp" alt="Image 23" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn6yb30f5z8s2mj8jeq7s4w_img_0.webp" alt="Image 24" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png" alt="Image 25" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png" alt="Image 26" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png" alt="Image 27" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy6vvcyfv7am28t06499dn9_1745844382_img_0.webp" alt="Image 28" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp" alt="Image 29" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7mn8ff0ka37pkpdfd8yyq_1745845181_img_1.webp" alt="Image 30" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7tk82esq9b53btf1n8mqe_1745845383_img_0.webp" alt="Image 31" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp" alt="Image 32" class="w-full h-auto" loading="lazy" width="400" height="300"></div>  
           </div>
         </div>
       </section>
@@ -381,8 +396,8 @@
         <div class="popup-content">
           <h3 class="text-3xl font-bold mb-4">Note</h3>
           <p>Creating high-quality videos – whether traditional or AI-generated – still requires a lot of technical skill, experience, time, and creative direction.</p>
-          <p>However, depending on the complexity of the image, high-quality AI images are now much easier to produce than ever, often needing just one single well-crafted prompt.</p>
-          <p>I created these images entirely through AI using text prompts. They are intended for demonstration purposes and showcase how AI-generated content can serve as a compelling alternative to traditional methods in advertising, social media, and branding.</p>
+          <p>However, depending on the complexity of the image, high-quality AI images are now much easier to produce than ever.</p>
+          <p>I created these images entirely through AI using text prompts. They are intended for demonstration purposes and showcase that this workflow can serve as a compelling alternative to traditional methods in advertising, social media, and branding.</p>
         </div>
         <button id="continue-btn">Continue</button>
       </div>
@@ -397,139 +412,162 @@
 
   <!-- SCRIPTS -->
   <script>
-    /* Page-Switching & Active-Link */
-    const pageLinks = document.querySelectorAll('.page-link');
-    const mainPage  = document.getElementById('main-page');
-    const imagesPage= document.getElementById('images-page');
-    pageLinks.forEach(link=>{
-      link.addEventListener('click',function(e){
-        e.preventDefault();
-        document.querySelectorAll('.nav-link').forEach(nav=>nav.classList.remove('active'));
-        this.classList.add('active');
-        const page=this.dataset.page;
-        if(page==="images"){
-          mainPage.style.display="none";
-          imagesPage.style.display="block";
-          setTimeout(()=> imagesPage.scrollIntoView({behavior:'smooth',block:'start'}),200);
-        } else {
-          imagesPage.style.display="none";
-          mainPage.style.display="block";
-          const target=document.querySelector(this.getAttribute('href'));
-          if(target) target.scrollIntoView({behavior:'smooth'});
-        }
-        document.getElementById('mobileMenu').classList.add('hidden');
-      });
-    });
-
-    /* Logo reload */
-    document.getElementById('homeLink').addEventListener('click',e=>{ e.preventDefault(); location.reload(); });
-
-    /* Video Loading */
-    function getVisibleIframe(){
-      const d=document.querySelector('.desktop-iframe');
-      return window.getComputedStyle(d).display!=='none' ? d : document.querySelector('.mobile-iframe');
-    }
-    let animationStarted=false;
-    function startLoadingAnimation(){
-      if(!animationStarted){
-        animationStarted=true;
-        document.querySelector('.loading-overlay').classList.add('start-loading-animation');
-      }
-    }
-    const player = new Vimeo.Player(getVisibleIframe());
-    player.on('play',()=> setTimeout(startLoadingAnimation,300));
-    setTimeout(()=>{ if(!animationStarted) startLoadingAnimation(); },10000);
-
-    /* Smooth scroll for other anchors */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
-      if(!anchor.classList.contains('page-link')){
-        anchor.addEventListener('click',function(e){
+    /* JS bei DOMContentLoaded laden, um Render-Blocking zu reduzieren */
+    document.addEventListener('DOMContentLoaded', function() {
+      /* Page-Switching & Active-Link */
+      const pageLinks = document.querySelectorAll('.page-link');
+      const mainPage  = document.getElementById('main-page');
+      const imagesPage= document.getElementById('images-page');
+      pageLinks.forEach(link=>{
+        link.addEventListener('click',function(e){
           e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+          document.querySelectorAll('.nav-link').forEach(nav=>nav.classList.remove('active'));
+          this.classList.add('active');
+          const page=this.dataset.page;
+          if(page==="images"){
+            mainPage.style.display="none";
+            imagesPage.style.display="block";
+            setTimeout(()=> imagesPage.scrollIntoView({behavior:'smooth',block:'start'}),200);
+          } else {
+            imagesPage.style.display="none";
+            mainPage.style.display="block";
+            const target=document.querySelector(this.getAttribute('href'));
+            if(target) target.scrollIntoView({behavior:'smooth'});
+          }
+          document.getElementById('mobileMenu').classList.add('hidden');
+        });
+      });
+
+      /* Logo reload */
+      document.getElementById('homeLink').addEventListener('click',e=>{ e.preventDefault(); location.reload(); });
+
+      /* Video Loading - Optimiert */
+      function getVisibleIframe(){
+        const d=document.querySelector('.desktop-iframe');
+        return window.getComputedStyle(d).display!=='none' ? d : document.querySelector('.mobile-iframe');
+      }
+      let animationStarted=false;
+      function startLoadingAnimation(){
+        if(!animationStarted){
+          animationStarted=true;
+          document.querySelector('.loading-overlay').classList.add('start-loading-animation');
+        }
+      }
+      
+      /* Vimeo Player nur initialisieren, wenn notwendig */
+      if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
+        const player = new Vimeo.Player(getVisibleIframe());
+        player.on('play',()=> setTimeout(startLoadingAnimation,300));
+      }
+      
+      /* Fallback für Ladeanimation */
+      setTimeout(()=>{ if(!animationStarted) startLoadingAnimation(); },5000); // Von 10000 auf 5000 reduziert
+
+      /* Smooth scroll für Anker-Links */
+      document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+        if(!anchor.classList.contains('page-link')){
+          anchor.addEventListener('click',function(e){
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+          });
+        }
+      });
+
+      /* Mobile Menu */
+      const mobileMenuButton=document.getElementById('mobileMenuButton');
+      const mobileMenu=document.getElementById('mobileMenu');
+      mobileMenuButton.addEventListener('click',()=> mobileMenu.classList.toggle('hidden'));
+      document.querySelectorAll('#mobileMenu a').forEach(l=>l.addEventListener('click',()=> mobileMenu.classList.add('hidden')));
+
+      /* Intro Overlay */
+      window.addEventListener('load',()=> setTimeout(()=> document.querySelector('.intro-overlay')?.classList.add('slide-out'), 300));
+
+      /* Images Popup */
+      const continueBtn=document.getElementById('continue-btn');
+      if(continueBtn){
+        const popupOverlay=document.getElementById('popup-overlay');
+        const blurOverlay=document.getElementById('blur-overlay');
+        continueBtn.addEventListener('click',()=>{
+          popupOverlay.classList.add('hide');
+          blurOverlay.classList.add('hide');
+          setTimeout(()=>{
+            popupOverlay.style.display='none';
+            blurOverlay.style.display='none';
+          },300);
         });
       }
-    });
 
-    /* Mobile menu */
-    const mobileMenuButton=document.getElementById('mobileMenuButton');
-    const mobileMenu=document.getElementById('mobileMenu');
-    mobileMenuButton.addEventListener('click',()=> mobileMenu.classList.toggle('hidden'));
-    document.querySelectorAll('#mobileMenu a').forEach(l=>l.addEventListener('click',()=> mobileMenu.classList.add('hidden')));
-
-    /* Intro Overlay */
-    window.addEventListener('load',()=> setTimeout(()=> document.querySelector('.intro-overlay')?.classList.add('slide-out'), 300));
-
-    /* Images Popup */
-    const continueBtn=document.getElementById('continue-btn');
-    if(continueBtn){
-      const popupOverlay=document.getElementById('popup-overlay');
-      const blurOverlay=document.getElementById('blur-overlay');
-      continueBtn.addEventListener('click',()=>{
-        popupOverlay.classList.add('hide');
-        blurOverlay.classList.add('hide');
-        setTimeout(()=>{
-          popupOverlay.style.display='none';
-          blurOverlay.style.display='none';
-        },300);
+      /* Image Modal */
+      const imageModal=document.getElementById('image-modal');
+      const modalImage=imageModal.querySelector('.modal-image');
+      document.querySelectorAll('#images-page .portfolio-item img').forEach(img=>{
+        img.addEventListener('click',e=>{
+          modalImage.src=e.target.src;
+          imageModal.classList.add('active');
+        });
       });
-    }
+      imageModal.addEventListener('click',()=> imageModal.classList.remove('active'));
 
-    /* Image Modal */
-    const imageModal=document.getElementById('image-modal');
-    const modalImage=imageModal.querySelector('.modal-image');
-    document.querySelectorAll('#images-page .portfolio-item img').forEach(img=>{
-      img.addEventListener('click',e=>{
-        modalImage.src=e.target.src;
-        imageModal.classList.add('active');
+      /* Shuffle Images */
+      function shuffleImages(){
+        const grid=document.querySelector('#images-background .grid');
+        if(!grid) return;
+        Array.from(grid.children)
+             .sort(()=>Math.random()-.5)
+             .forEach(el=> grid.appendChild(el));
+      }
+      shuffleImages();
+
+      /* IntersectionObserver für Reveal-Effekte - effizienter als Scroll-Events */
+      const revealObserver=new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.1});
+      
+      document.querySelectorAll('#main-page section:not(#home), .reveal').forEach(el=>{
+        el.classList.add('reveal');
+        revealObserver.observe(el);
       });
-    });
-    imageModal.addEventListener('click',()=> imageModal.classList.remove('active'));
-
-    /* Shuffle Images */
-    function shuffleImages(){
-      const grid=document.querySelector('#images-background .grid');
-      if(!grid) return;
-      Array.from(grid.children)
-           .sort(()=>Math.random()-.5)
-           .forEach(el=> grid.appendChild(el));
-    }
-    document.addEventListener('DOMContentLoaded',shuffleImages);
-
-    /* Reveal + Parallax */
-    const revealObserver=new IntersectionObserver((entries,obs)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
+      
+      /* Optimierter Parallax-Effekt mit requestAnimationFrame */
+      const parallaxEls=document.querySelectorAll('.parallax');
+      let ticking = false;
+      let lastScrollY = window.pageYOffset;
+      
+      function updateParallax() {
+        parallaxEls.forEach(el=>{
+          const speed=parseFloat(el.dataset.speed)||0.2;
+          el.style.transform=`translateY(${lastScrollY*speed}px)`;
+        });
+        ticking = false;
+      }
+      
+      window.addEventListener('scroll',()=>{
+        lastScrollY = window.pageYOffset;
+        if (!ticking) {
+          window.requestAnimationFrame(updateParallax);
+          ticking = true;
         }
-      });
-    },{threshold:0.1});
-    document.querySelectorAll('#main-page section:not(#home), .reveal').forEach(el=>{
-      el.classList.add('reveal');
-      revealObserver.observe(el);
-    });
-    const parallaxEls=document.querySelectorAll('.parallax');
-    window.addEventListener('scroll',()=>{
-      const y=window.pageYOffset;
-      parallaxEls.forEach(el=>{
-        const speed=parseFloat(el.dataset.speed)||0.2;
-        el.style.transform=`translateY(${y*speed}px)`;
-      });
-    },{passive:true});
+      },{passive:true});
 
-    /* ScrollSpy für Main-Page (inkl. Selected Work / Portfolio) */
-    const mainSections = document.querySelectorAll('#main-page section[id]');
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          const id = entry.target.id;
-          document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-          const activeNav = document.querySelector(`.nav-link[href="#${id}"]`);
-          if(activeNav) activeNav.classList.add('active');
-        }
-      });
-    }, { threshold: 0.3 });
-    mainSections.forEach(sec => sectionObserver.observe(sec));
+      /* ScrollSpy für Main-Page */
+      const mainSections = document.querySelectorAll('#main-page section[id]');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            const id = entry.target.id;
+            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+            const activeNav = document.querySelector(`.nav-link[href="#${id}"]`);
+            if(activeNav) activeNav.classList.add('active');
+          }
+        });
+      }, { threshold: 0.3 });
+      mainSections.forEach(sec => sectionObserver.observe(sec));
+    });
   </script>
 </body>
 </html>
