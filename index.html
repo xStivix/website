@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -159,6 +159,30 @@
     #image-modal.active{ display:flex; }
     #image-modal .modal-overlay{ position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.7); backdrop-filter:blur(8px); }
     #image-modal .modal-image{ z-index:110; max-width:90%; max-height:90%; border-radius:.5rem; box-shadow:0 4px 20px rgba(0,0,0,.6); }
+
+    /* Footer Styles */
+    footer a:hover { text-decoration: underline; }
+    
+    /* Platzhalter-Seiten */
+    .placeholder-page {
+      display: none;
+      min-height: 100vh;
+      background-color: #000;
+    }
+    
+    .placeholder-content {
+      max-width: 800px;
+      margin-left: 2rem;
+      margin-right: auto;
+      padding: 0 1.5rem;
+    }
+    
+    .placeholder-content p {
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
@@ -200,10 +224,10 @@
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
       <iframe class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       <iframe class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
       <div class="loading-overlay"></div>
       <div class="content-overlay">
@@ -227,7 +251,7 @@
           </div>
           <div>
             <!-- loading="lazy" hinzugefügt für verzögertes Laden -->
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-sm rounded-lg mx-auto parallax" data-speed="0.1" loading="lazy" width="384" height="384">
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-sm rounded-lg mx-auto parallax" data-speed="0.1" width="384" height="384">
           </div>
         </div>
       </div>
@@ -243,7 +267,7 @@
           <div class="portfolio-item md:col-span-3 reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
               <!-- loading="lazy" für verzögertes Laden -->
-              <iframe src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
+              <iframe src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-6 bg-darker">
               <h3 class="text-3xl font-bold mb-2">PORSCHE 911 GT3 RS SPEC AD</h3>
@@ -253,7 +277,7 @@
           <!-- Item 1 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
+              <iframe src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">Stay (TYPOGRAPHY)</h3><p>Showcasing Typography.</p>
@@ -262,7 +286,7 @@
           <!-- Item 2 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
+              <iframe src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3><p>Cinematic Teaser Trailer.</p>
@@ -271,7 +295,7 @@
           <!-- Item 3 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full" loading="lazy"></iframe>
+              <iframe src="https://player.vimeo.com/video/1065380981?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">G-Class</h3><p>Car Mood Film.</p>
@@ -301,7 +325,7 @@
         </div>
         <div class="mt-20 text-center reveal">
           <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
-          <p class="text-l max-w-4xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic URSA (Film) and Sony FX6/FX9 (S-Log3). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I’m also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
+          <p class="text-l max-w-4xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic URSA (Film) and Sony FX6/FX9 (S-Log3). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
     </div>
   </div>
 </section>
@@ -339,8 +363,21 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-darker"><div class="container mx-auto px-6 text-center"><p>© 2025 Stefan Aberer. All Rights Reserved.</p></div></footer>
+    <!-- Footer - ERSETZT mit neuem Footer-Code -->
+    <footer class="py-8 bg-darker">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <!-- Urheberrecht -->
+          <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+          <!-- Rechtliche Links -->
+          <nav class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+            <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+            <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
   </div>
   <!-- /MAIN-PAGE -->
 
@@ -387,12 +424,28 @@
           </div>
         </div>
       </section>
+
+      <!-- Footer für Images-Page -->
+      <footer class="py-8 bg-darker">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <!-- Blur & Popup -->
     <div id="blur-overlay"></div>
     <div id="popup-overlay">
-      <div id="popup-box">
+      <div id="popup-box" style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
         <div class="popup-content">
           <h3 class="text-3xl font-bold mb-4">Note</h3>
           <p>Creating high-quality videos – whether traditional or AI-generated – still requires a lot of technical skill, experience, time, and creative direction.</p>
@@ -402,6 +455,136 @@
         <button id="continue-btn">Continue</button>
       </div>
     </div>
+  </div>
+
+  <!-- IMPRESSUM-PAGE -->
+  <div id="impressum-page" class="placeholder-page">
+    <section class="py-20 md:py-32 bg-black">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">IMPRESSUM</h2>
+        <div class="placeholder-content">
+ <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ANGABEN GEMÄSS § 5 ECG & § 24 MEDIENG</h3>
+<p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Stefan Aberer<br>
+    Musterstraße 123<br>
+    6900 Bregenz<br>
+    Österreich
+  </span><br>
+</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">UNTERNEHMENSGEGENSTAND</h3>
+          <p>Videoediting, Postproduktion, Mediengestaltung und kreative Dienstleistungen</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">Rechtliche Hinweise</h3>
+          <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">Bildrechte</h3>
+          <p>Die auf dieser Website verwendeten Bilder, Videos und Grafiken sind urheberrechtlich geschützt und dürfen ohne ausdrückliche Genehmigung nicht verwendet werden.</p>
+        </div>
+      </div>
+
+      <!-- Footer für Impressum-Page -->
+      <footer class="py-8 bg-darker fixed bottom-0 w-full">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <!-- AGB-PAGE -->
+  <div id="agb-page" class="placeholder-page">
+    <section class="py-20 md:py-32 bg-black">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">AGB</h2>
+        <div class="placeholder-content">
+          <h3 class="text-xl font-bold mt-8 mb-4">1. Geltungsbereich</h3>
+          <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge, die zwischen Stefan Aberer und seinen Kunden geschlossen werden.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">2. Leistungsbeschreibung</h3>
+          <p>Der Umfang der Leistungen ergibt sich aus der schriftlichen Auftragsbestätigung. Änderungen oder Erweiterungen des Auftrags bedürfen der Schriftform.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">3. Urheberrecht und Nutzungsrechte</h3>
+          <p>Alle erstellten Werke unterliegen dem Urheberrecht. Die Übertragung von Nutzungsrechten bedarf der schriftlichen Vereinbarung und bezieht sich nur auf die vereinbarte Nutzung.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">4. Vergütung und Zahlungsbedingungen</h3>
+          <p>Die vereinbarte Vergütung ist innerhalb von 14 Tagen nach Rechnungsstellung ohne Abzug zu zahlen. Bei Zahlungsverzug können Verzugszinsen berechnet werden.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">5. Schlussbestimmungen</h3>
+          <p>Es gilt österreichisches Recht. Gerichtsstand ist Bregenz, sofern keine zwingenden gesetzlichen Bestimmungen entgegenstehen.</p>
+        </div>
+      </div>
+
+      <!-- Footer für AGB-Page -->
+      <footer class="py-8 bg-darker fixed bottom-0 w-full">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+  <!-- DATENSCHUTZ-PAGE -->
+  <div id="datenschutz-page" class="placeholder-page">
+    <section class="py-20 md:py-32 bg-black">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">DATENSCHUTZ</h2>
+        <div class="placeholder-content">
+          <h3 class="text-xl font-bold mt-8 mb-4">Datenschutzerklärung</h3>
+          <p>Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Diese Datenschutzerklärung informiert Sie über die Art, den Umfang und Zweck der Verarbeitung personenbezogener Daten auf dieser Website.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">1. Verantwortlicher</h3>
+          <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br>
+          Stefan Aberer<br>
+          Musterstraße 123<br>
+          6900 Bregenz, Österreich<br>
+          E-Mail: stefan.aberer@hotmail.com</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">2. Erhebung und Speicherung personenbezogener Daten</h3>
+          <p>Beim Besuch dieser Website werden automatisch Informationen in Server-Log-Files gespeichert, wie Browser-Typ, Betriebssystem, Referrer-URL, IP-Adresse, Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar und werden nicht mit anderen Datenquellen zusammengeführt.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">3. Kontaktformular</h3>
+          <p>Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben inkl. Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+          
+          <h3 class="text-xl font-bold mt-8 mb-4">4. Ihre Rechte</h3>
+          <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Zudem haben Sie ein Beschwerderecht bei der zuständigen Aufsichtsbehörde.</p>
+        </div>
+      </div>
+
+      <!-- Footer für Datenschutz-Page -->
+      <footer class="py-8 bg-darker fixed bottom-0 w-full">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </section>
   </div>
 
   <!-- Image Modal -->
@@ -416,40 +599,69 @@
     document.addEventListener('DOMContentLoaded', function() {
       /* Page-Switching & Active-Link */
       const pageLinks = document.querySelectorAll('.page-link');
-      const mainPage  = document.getElementById('main-page');
-      const imagesPage= document.getElementById('images-page');
-      pageLinks.forEach(link=>{
-        link.addEventListener('click',function(e){
+      const mainPage = document.getElementById('main-page');
+      const imagesPage = document.getElementById('images-page');
+      const impressumPage = document.getElementById('impressum-page');
+      const agbPage = document.getElementById('agb-page');
+      const datenschutzPage = document.getElementById('datenschutz-page');
+      
+      const hideAllPages = () => {
+        mainPage.style.display = "none";
+        imagesPage.style.display = "none";
+        impressumPage.style.display = "none";
+        agbPage.style.display = "none";
+        datenschutzPage.style.display = "none";
+      };
+      
+      pageLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
           e.preventDefault();
-          document.querySelectorAll('.nav-link').forEach(nav=>nav.classList.remove('active'));
-          this.classList.add('active');
-          const page=this.dataset.page;
-          if(page==="images"){
-            mainPage.style.display="none";
-            imagesPage.style.display="block";
-            setTimeout(()=> imagesPage.scrollIntoView({behavior:'smooth',block:'start'}),200);
-          } else {
-            imagesPage.style.display="none";
-            mainPage.style.display="block";
-            const target=document.querySelector(this.getAttribute('href'));
-            if(target) target.scrollIntoView({behavior:'smooth'});
+          
+          document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+          if (this.classList.contains('nav-link')) {
+            this.classList.add('active');
           }
+          
+          const page = this.dataset.page;
+          hideAllPages();
+          
+          if (page === "images") {
+            imagesPage.style.display = "block";
+            setTimeout(() => imagesPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else if (page === "impressum") {
+            impressumPage.style.display = "block";
+            setTimeout(() => impressumPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else if (page === "agb") {
+            agbPage.style.display = "block";
+            setTimeout(() => agbPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else if (page === "datenschutz") {
+            datenschutzPage.style.display = "block";
+            setTimeout(() => datenschutzPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else {
+            mainPage.style.display = "block";
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({behavior:'smooth'});
+          }
+          
           document.getElementById('mobileMenu').classList.add('hidden');
         });
       });
 
       /* Logo reload */
-      document.getElementById('homeLink').addEventListener('click',e=>{ e.preventDefault(); location.reload(); });
+      document.getElementById('homeLink').addEventListener('click', e => { 
+        e.preventDefault(); 
+        location.reload(); 
+      });
 
       /* Video Loading - Optimiert */
       function getVisibleIframe(){
-        const d=document.querySelector('.desktop-iframe');
-        return window.getComputedStyle(d).display!=='none' ? d : document.querySelector('.mobile-iframe');
+        const d = document.querySelector('.desktop-iframe');
+        return window.getComputedStyle(d).display !== 'none' ? d : document.querySelector('.mobile-iframe');
       }
-      let animationStarted=false;
+      let animationStarted = false;
       function startLoadingAnimation(){
         if(!animationStarted){
-          animationStarted=true;
+          animationStarted = true;
           document.querySelector('.loading-overlay').classList.add('start-loading-animation');
         }
       }
@@ -457,16 +669,16 @@
       /* Vimeo Player nur initialisieren, wenn notwendig */
       if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
         const player = new Vimeo.Player(getVisibleIframe());
-        player.on('play',()=> setTimeout(startLoadingAnimation,300));
+        player.on('play', () => setTimeout(startLoadingAnimation, 300));
       }
       
       /* Fallback für Ladeanimation */
-      setTimeout(()=>{ if(!animationStarted) startLoadingAnimation(); },5000); // Von 10000 auf 5000 reduziert
+      setTimeout(() => { if(!animationStarted) startLoadingAnimation(); }, 5000);
 
       /* Smooth scroll für Anker-Links */
-      document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if(!anchor.classList.contains('page-link')){
-          anchor.addEventListener('click',function(e){
+          anchor.addEventListener('click', function(e){
             e.preventDefault();
             document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
           });
@@ -474,85 +686,85 @@
       });
 
       /* Mobile Menu */
-      const mobileMenuButton=document.getElementById('mobileMenuButton');
-      const mobileMenu=document.getElementById('mobileMenu');
-      mobileMenuButton.addEventListener('click',()=> mobileMenu.classList.toggle('hidden'));
-      document.querySelectorAll('#mobileMenu a').forEach(l=>l.addEventListener('click',()=> mobileMenu.classList.add('hidden')));
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+      document.querySelectorAll('#mobileMenu a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
       /* Intro Overlay */
-      window.addEventListener('load',()=> setTimeout(()=> document.querySelector('.intro-overlay')?.classList.add('slide-out'), 300));
+      window.addEventListener('load', () => setTimeout(() => document.querySelector('.intro-overlay')?.classList.add('slide-out'), 300));
 
       /* Images Popup */
-      const continueBtn=document.getElementById('continue-btn');
+      const continueBtn = document.getElementById('continue-btn');
       if(continueBtn){
-        const popupOverlay=document.getElementById('popup-overlay');
-        const blurOverlay=document.getElementById('blur-overlay');
-        continueBtn.addEventListener('click',()=>{
+        const popupOverlay = document.getElementById('popup-overlay');
+        const blurOverlay = document.getElementById('blur-overlay');
+        continueBtn.addEventListener('click', () => {
           popupOverlay.classList.add('hide');
           blurOverlay.classList.add('hide');
-          setTimeout(()=>{
-            popupOverlay.style.display='none';
-            blurOverlay.style.display='none';
-          },300);
+          setTimeout(() => {
+            popupOverlay.style.display = 'none';
+            blurOverlay.style.display = 'none';
+          }, 300);
         });
       }
 
       /* Image Modal */
-      const imageModal=document.getElementById('image-modal');
-      const modalImage=imageModal.querySelector('.modal-image');
-      document.querySelectorAll('#images-page .portfolio-item img').forEach(img=>{
-        img.addEventListener('click',e=>{
-          modalImage.src=e.target.src;
+      const imageModal = document.getElementById('image-modal');
+      const modalImage = imageModal.querySelector('.modal-image');
+      document.querySelectorAll('#images-page .portfolio-item img').forEach(img => {
+        img.addEventListener('click', e => {
+          modalImage.src = e.target.src;
           imageModal.classList.add('active');
         });
       });
-      imageModal.addEventListener('click',()=> imageModal.classList.remove('active'));
+      imageModal.addEventListener('click', () => imageModal.classList.remove('active'));
 
       /* Shuffle Images */
       function shuffleImages(){
-        const grid=document.querySelector('#images-background .grid');
+        const grid = document.querySelector('#images-background .grid');
         if(!grid) return;
         Array.from(grid.children)
-             .sort(()=>Math.random()-.5)
-             .forEach(el=> grid.appendChild(el));
+             .sort(() => Math.random() - .5)
+             .forEach(el => grid.appendChild(el));
       }
       shuffleImages();
 
       /* IntersectionObserver für Reveal-Effekte - effizienter als Scroll-Events */
-      const revealObserver=new IntersectionObserver((entries,obs)=>{
-        entries.forEach(entry=>{
+      const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
           if(entry.isIntersecting){
             entry.target.classList.add('visible');
             obs.unobserve(entry.target);
           }
         });
-      },{threshold:0.1});
+      }, {threshold: 0.1});
       
-      document.querySelectorAll('#main-page section:not(#home), .reveal').forEach(el=>{
+      document.querySelectorAll('#main-page section:not(#home), .reveal').forEach(el => {
         el.classList.add('reveal');
         revealObserver.observe(el);
       });
       
       /* Optimierter Parallax-Effekt mit requestAnimationFrame */
-      const parallaxEls=document.querySelectorAll('.parallax');
+      const parallaxEls = document.querySelectorAll('.parallax');
       let ticking = false;
       let lastScrollY = window.pageYOffset;
       
       function updateParallax() {
-        parallaxEls.forEach(el=>{
-          const speed=parseFloat(el.dataset.speed)||0.2;
-          el.style.transform=`translateY(${lastScrollY*speed}px)`;
+        parallaxEls.forEach(el => {
+          const speed = parseFloat(el.dataset.speed) || 0.2;
+          el.style.transform = `translateY(${lastScrollY * speed}px)`;
         });
         ticking = false;
       }
       
-      window.addEventListener('scroll',()=>{
+      window.addEventListener('scroll', () => {
         lastScrollY = window.pageYOffset;
         if (!ticking) {
           window.requestAnimationFrame(updateParallax);
           ticking = true;
         }
-      },{passive:true});
+      }, {passive: true});
 
       /* ScrollSpy für Main-Page */
       const mainSections = document.querySelectorAll('#main-page section[id]');
@@ -567,6 +779,23 @@
         });
       }, { threshold: 0.3 });
       mainSections.forEach(sec => sectionObserver.observe(sec));
+      
+      // URL-Hash Handling für direkte Links
+      if (location.hash) {
+        const hash = location.hash.substring(1);
+        if (hash === "impressum" || hash === "agb" || hash === "datenschutz" || hash === "images") {
+          hideAllPages();
+          if (hash === "images") {
+            imagesPage.style.display = "block";
+          } else if (hash === "impressum") {
+            impressumPage.style.display = "block";
+          } else if (hash === "agb") {
+            agbPage.style.display = "block";
+          } else if (hash === "datenschutz") {
+            datenschutzPage.style.display = "block";
+          }
+        }
+      }
     });
   </script>
 </body>
