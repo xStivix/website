@@ -13,6 +13,25 @@
   <!-- =======================  STYLES  ===================== -->
   <!-- ===================================================== -->
   <style>
+/* ─── Language Switcher initial hidden und Einblend-Animation ─── */
+#lang-switcher {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+#lang-switcher.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Language Switcher oben halten ─── */
+#lang-switcher {
+  position: fixed;           /* sicherstellen, dass es fixed bleibt */
+  bottom: 1rem;              /* entspricht Tailwind bottom-4 */
+  right: 1rem;               /* entspricht Tailwind right-4 */
+  z-index: 9999 !important;  /* höher als alle iframes/Overlays */
+  pointer-events: auto;      /* stellt sicher, dass Klicks ankommen */
+}
     /* Grundlegende Einstellungen */
     html, body {
       height: 100%;
@@ -58,10 +77,10 @@
       font-display: swap;
     }
 
-    body             { background-color:#121212; color:#fff; font-family:'Circular STD Medium',sans-serif; }
-    .bg-darker       { background-color:#121212; }
-    .bg-dark         { background-color:#1e1e1e; }
-    .bg-medium       { background-color:#2a2a2a; }
+    body             { background-color:#0f0f0f; color:#fff; font-family:'Circular STD Medium',sans-serif; }
+    .bg-darker       { background-color:#0f0f0f; }
+    .bg-dark         { background-color:#1a1a1a; }
+    .bg-medium       { background-color:#262626; }
 
     h1,h2,h3,h4,h5,h6{ font-family:'Circular STD Bold',sans-serif; font-weight:bold; }
     .mega-title      { font-size:5rem; line-height:1; letter-spacing:-.05em; }
@@ -172,9 +191,9 @@
     
     .placeholder-content {
       max-width: 800px;
-      margin-left: 2rem;
+      margin-left: 0;
       margin-right: auto;
-      padding: 0 1.5rem;
+      padding: 0 0rem;
     }
     
     .placeholder-content p {
@@ -182,6 +201,31 @@
       line-height: 1.2;
       font-size: 0.875rem;
       opacity: 0.8;
+    }
+
+/* Footer-Links: Circular STD Light */
+footer nav a.page-link {
+  font-family: 'Circular STD Light', sans-serif;
+  font-weight: 300;
+}
+/* Language Switcher Sliding Indicator */
+#lang-switcher .indicator {
+  transition: transform 0.2s ease;
+}
+/* Wenn DE aktiv ist, schiebe den weißen Slider nach rechts und invertiere die Farben */
+#lang-switcher.de-active .indicator {
+  transform: translateX(100%);
+}
+#lang-switcher.de-active button[data-lang="de"] {
+  color: black;
+}
+#lang-switcher.de-active button[data-lang="en"] {
+  color: white;
+}
+
+footer p {
+      font-family: 'Circular STD Light', sans-serif !important;
+      font-weight: 300       !important;
     }
   </style>
 </head>
@@ -192,19 +236,25 @@
   </div>
 
   <!-- NAVIGATION -->
-  <nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
-    <div class="container mx-auto px-6 py-4">
-      <div class="flex justify-between items-center">
-        <a href="#" id="homeLink" class="text-white text-2xl font-bold">STEFAN ABERER</a>
-        <div class="hidden md:flex space-x-10">
-          <a href="#about"      class="nav-link text-white text-lg page-link" data-page="main">About</a>
-          <a href="#portfolio"  class="nav-link text-white text-lg page-link" data-page="main">Work</a>
-          <a href="#images"     class="nav-link text-white text-lg page-link" data-page="images">Images</a>
-          <a href="#services"   class="nav-link text-white text-lg page-link" data-page="main">Services</a>
-          <a href="#contact"    class="nav-link text-white text-lg page-link" data-page="main">Contact</a>
-        </div>
-        <div class="md:hidden">
-          <button id="mobileMenuButton" class="text-white text-2xl focus:outline-none"><i class="fas fa-bars"></i></button>
+  <nav class="fixed inset-x-0 top-0 z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
+  <!-- Vollbreiter Flex-Wrapper mit mehr horizontalem Padding -->
+  <div class="w-full flex items-center justify-between py-4 px-8">
+    <!-- 1) Logo ganz links -->
+    <a href="#" id="homeLink" class="text-white text-2xl font-bold">STEFAN ABERER</a>
+
+    <!-- 2) Desktop-Links ganz rechts -->
+    <div class="hidden md:flex space-x-10">
+      <a href="#about"     class="nav-link text-white text-lg page-link" data-page="main">About</a>
+      <a href="#portfolio" class="nav-link text-white text-lg page-link" data-page="main">Work</a>
+      <a href="#images"    class="nav-link text-white text-lg page-link" data-page="images">Images</a>
+      <a href="#services"  class="nav-link text-white text-lg page-link" data-page="main">Services</a>
+      <a href="#contact"   class="nav-link text-white text-lg page-link" data-page="main">Contact</a>
+    </div>
+
+    <!-- 3) Mobile-Button ganz rechts -->
+    <button id="mobileMenuButton" class="text-white text-2xl md:hidden focus:outline-none">
+      <i class="fas fa-bars"></i>
+    </button>
         </div>
       </div>
     </div>
@@ -466,20 +516,40 @@
  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ANGABEN GEMÄSS § 5 ECG & § 24 MEDIENG</h3>
 <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
     Stefan Aberer<br>
-    Musterstraße 123<br>
-    6900 Bregenz<br>
+    Kuhn 102 123<br>
+    6934 Sulzberg<br>
     Österreich
   </span><br>
 </p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">UNTERNEHMENSGEGENSTAND</h3>
-          <p>Videoediting, Postproduktion, Mediengestaltung und kreative Dienstleistungen</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">UNTERNEHMENSDETAILS</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Unternehmensform: Einzelunternehmen (freies Gewerbe)<br>
+    Gewerbe: Multimediadienstleistungen / Filmproduktion<br>
+    Mitglied bei: Wirtschaftskammer Österreich (WKO)<br>
+    Zuständige Behörde: Bezirkshauptmannschaft Bregenz
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">Rechtliche Hinweise</h3>
-          <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">STEUERN & RECHT</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Umsatzsteuer: Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG<br>
+    UID: ATU83746295
+  </span><br>
+</p>
+
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">MEDIENINHABER & BLATTLINIE</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Medieninhaber: Stefan Aberer<br>
+    Diese Website informiert über die beruflichen Tätigkeiten, Projekte und Angebote von Stefan Aberer im Bereich Filmproduktion, Postproduktion und Mediengestaltung.
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">Bildrechte</h3>
-          <p>Die auf dieser Website verwendeten Bilder, Videos und Grafiken sind urheberrechtlich geschützt und dürfen ohne ausdrückliche Genehmigung nicht verwendet werden.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">HAFTUNGSAUSSCHLUSS & URHEBERRECHT</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Trotz sorgfältiger Kontrolle übernehmen wir keine Haftung für Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich. Die auf dieser Website veröffentlichten Inhalte sind urheberrechtlich geschützt. Jegliche Verwendung bedarf der schriftlichen Zustimmung.
+  </span><br>
+</p>
         </div>
       </div>
 
@@ -488,7 +558,7 @@
         <div class="container mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
-            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
             <!-- Rechtliche Links -->
             <nav class="flex space-x-6 mt-4 md:mt-0">
               <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
@@ -507,20 +577,76 @@
       <div class="container mx-auto px-6">
         <h2 class="super-title mb-16 text-center">AGB</h2>
         <div class="placeholder-content">
-          <h3 class="text-xl font-bold mt-8 mb-4">1. Geltungsbereich</h3>
-          <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge, die zwischen Stefan Aberer und seinen Kunden geschlossen werden.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">GELTUNGSBEREICH</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen Stefan Aberer (nachfolgend „Dienstleister“) und seinen Kunden (nachfolgend „Kunde“) über Dienstleistungen im Bereich Video-Produktion, Video-Editing sowie Mediengestaltung und verwandte Leistungen, soweit nicht ausdrücklich etwas anderes vereinbart wurde.
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">2. Leistungsbeschreibung</h3>
-          <p>Der Umfang der Leistungen ergibt sich aus der schriftlichen Auftragsbestätigung. Änderungen oder Erweiterungen des Auftrags bedürfen der Schriftform.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERTRAGSABSCHLUSS</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+    Ein Vertrag kommt zustande, wenn der Kunde ein Angebot des Dienstleisters schriftlich oder mündlich annimmt oder wenn der Dienstleister eine schriftliche Auftragsbestätigung versendet.
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">3. Urheberrecht und Nutzungsrechte</h3>
-          <p>Alle erstellten Werke unterliegen dem Urheberrecht. Die Übertragung von Nutzungsrechten bedarf der schriftlichen Vereinbarung und bezieht sich nur auf die vereinbarte Nutzung.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">LEISTUNGEN & MITWIRKUNGSPFLICHTEN</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Der genaue Umfang der zu erbringenden Leistungen ergibt sich aus dem jeweiligen Angebot oder der Auftragsbestätigung.<br>
+(2) Der Kunde verpflichtet sich, alle zur Durchführung des Auftrags erforderlichen Inhalte, Daten und Materialien rechtzeitig zur Verfügung zu stellen. Verzögerungen aufgrund verspäteter Lieferung solcher Materialien verlängern die Lieferfrist entsprechend.<br>
+(3) Änderungswünsche nach Auftragsbestätigung bedürfen einer gesonderten Vereinbarung und können zu Mehrkosten führen.
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">4. Vergütung und Zahlungsbedingungen</h3>
-          <p>Die vereinbarte Vergütung ist innerhalb von 14 Tagen nach Rechnungsstellung ohne Abzug zu zahlen. Bei Zahlungsverzug können Verzugszinsen berechnet werden.</p>
-          
-          <h3 class="text-xl font-bold mt-8 mb-4">5. Schlussbestimmungen</h3>
-          <p>Es gilt österreichisches Recht. Gerichtsstand ist Bregenz, sofern keine zwingenden gesetzlichen Bestimmungen entgegenstehen.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERGÜTUNG & ZAHLUNGSBEDINGUNGEN</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Die Vergütung richtet sich nach dem im Angebot vereinbarten Preis. Alle Preise verstehen sich als Nettopreise gemäß § 6 Abs 1 Z 27 UStG (Kleinunternehmerregelung – keine Umsatzsteuer).<br>
+(2) Rechnungen sind, soweit nicht anders vereinbart, binnen 14 Tagen ab Rechnungsdatum ohne Abzug fällig.<br>
+(3) Bei Projekten mit einem Auftragswert von mehr als 1.000 Euro behält sich der Dienstleister vor, eine Anzahlung in Höhe von 30 % des Gesamtbetrags vor Beginn der Arbeiten zu verlangen.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ABNAHME</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Nach Fertigstellung wird das Arbeitsergebnis zur Abnahme vorgelegt.<br>
+(2) Der Kunde ist verpflichtet, das Werk innerhalb von 10 Werktagen zu prüfen und etwaige Mängel schriftlich mitzuteilen. Erfolgt innerhalb dieser Frist keine Rückmeldung, gilt das Werk als abgenommen.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERGÜTUNG & ZAHLUNGSBEDINGUNGEN</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Mit vollständiger Zahlung erhält der Kunde die einfachen Nutzungsrechte am gelieferten Werk für den vereinbarten Zweck.<br>
+(2) Eine Weitergabe an Dritte oder die Bearbeitung durch Dritte bedarf der vorherigen schriftlichen Zustimmung des Dienstleisters.<br>
+(3) Der Dienstleister ist berechtigt, die erbrachten Leistungen zu Referenzzwecken (z.B. auf der eigenen Website oder in Social Media) zu verwenden, sofern der Kunde dem nicht ausdrücklich widerspricht.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">HAFTUNG</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Der Dienstleister haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger Pflichtverletzung beruhen.<br>
+(2) Keine Haftung wird übernommen für Inhalte, die vom Kunden bereitgestellt werden (z.B. Texte, Bilder, Musik). Der Kunde stellt sicher, dass sämtliche gelieferten Materialien frei von Rechten Dritter sind.<br>
+(3) Für technische Probleme (z.B. Ausfälle von Servern oder Hosting-Diensten), die außerhalb des Einflussbereichs des Dienstleisters liegen, wird keine Haftung übernommen.
+  </span><br>
+</p>
+
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">LIEFERUNG</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Lieferfristen gelten nur als verbindlich, wenn sie ausdrücklich schriftlich zugesagt wurden. Bei unvorhergesehenen Ereignissen (z.B. Krankheit, höhere Gewalt) kann sich die Frist angemessen verlängern.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">DATENSCHUTZ</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Personenbezogene Daten werden ausschließlich zur Abwicklung des jeweiligen Auftrags verarbeitet und nicht an Dritte weitergegeben, sofern dies nicht zur Vertragserfüllung erforderlich ist.
+  </span><br>
+</p>
+
+<h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">SCHLUSSBESTIMMUNGEN</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.<br>
+(2) Gerichtsstand für alle Streitigkeiten ist Dornbirn.<br>
+(3) Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
+  </span><br>
+</p>
         </div>
       </div>
 
@@ -529,7 +655,7 @@
         <div class="container mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
-            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
             <!-- Rechtliche Links -->
             <nav class="flex space-x-6 mt-4 md:mt-0">
               <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
@@ -548,24 +674,52 @@
       <div class="container mx-auto px-6">
         <h2 class="super-title mb-16 text-center">DATENSCHUTZ</h2>
         <div class="placeholder-content">
-          <h3 class="text-xl font-bold mt-8 mb-4">Datenschutzerklärung</h3>
-          <p>Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Diese Datenschutzerklärung informiert Sie über die Art, den Umfang und Zweck der Verarbeitung personenbezogener Daten auf dieser Website.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERANTWORTLICHER</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Stefan Aberer<br>
+Kuhn 102<br>
+6934 Sulzberg, Österreich
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">1. Verantwortlicher</h3>
-          <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:<br>
-          Stefan Aberer<br>
-          Musterstraße 123<br>
-          6900 Bregenz, Österreich<br>
-          E-Mail: stefan.aberer@hotmail.com</p>
+           <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ERHEBUNG & SPEICHERUNG VON DATEN</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+(1) IP-Adresse<br>
+(2) Datum und Uhrzeit des Zugriffs<br>
+(3) aufgerufene Seite (URL)<br>
+(4) Browsertyp und Betriebssystem<br>
+(5) Referrer-URL (die zuvor besuchte Seite)<br><br>
+Diese Daten dienen ausschließlich zur technischen Überwachung und Sicherstellung der Funktion der Website. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse). Die Daten werden nach spätestens 14 Tagen gelöscht.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">COOKIES</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Diese Website verwendet nur technisch notwendige Cookies, um grundlegende Funktionen wie die Seitendarstellung zu ermöglichen.
+Es werden keine Cookies zu Analyse- oder Marketingzwecken gesetzt.
+  </span><br>
+</p>
           
-          <h3 class="text-xl font-bold mt-8 mb-4">2. Erhebung und Speicherung personenbezogener Daten</h3>
-          <p>Beim Besuch dieser Website werden automatisch Informationen in Server-Log-Files gespeichert, wie Browser-Typ, Betriebssystem, Referrer-URL, IP-Adresse, Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar und werden nicht mit anderen Datenquellen zusammengeführt.</p>
-          
-          <h3 class="text-xl font-bold mt-8 mb-4">3. Kontaktformular</h3>
-          <p>Wenn Sie uns über das Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben inkl. Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-          
-          <h3 class="text-xl font-bold mt-8 mb-4">4. Ihre Rechte</h3>
-          <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Zudem haben Sie ein Beschwerderecht bei der zuständigen Aufsichtsbehörde.</p>
+          <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">EINGEBETTETE VIMEO-VIDEOS</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Auf manchen Seiten sind Videos des Anbieters Vimeo (Vimeo LLC, 555 West 18th Street, New York, NY 10011, USA) eingebettet.
+Die Videos werden im sogenannten „Do Not Track“-Modus geladen (?dnt=1), wodurch keine Tracking-Cookies gesetzt werden. Erst beim aktiven Anklicken eines Videos wird eine Verbindung zu Vimeo hergestellt und es können Daten wie Ihre IP-Adresse übertragen werden. Die Rechtsgrundlage für diese Datenübertragung ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO. Vimeo verarbeitet Daten unter anderem auch in den USA. Der Schutz Ihrer Daten wird durch sogenannte Standardvertragsklauseln der EU sichergestellt.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">KONTAKTAUFNAHME</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Wenn Sie per E-Mail Kontakt mit mir aufnehmen, werden Ihre angegebenen Daten (z. B. Name, E-Mail-Adresse, Inhalt der Nachricht) zur Bearbeitung Ihrer Anfrage verwendet.
+Rechtsgrundlage dafür ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
+Die Daten werden gelöscht, sobald Ihre Anfrage vollständig bearbeitet ist – spätestens jedoch nach sechs Monaten.
+  </span><br>
+</p>
+
+	  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">DATENSICHERHEIT</h3>
+          <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übertragen. Es werden darüber hinaus alle zumutbaren technischen und organisatorischen Maßnahmen getroffen, um Ihre Daten zu schützen.
+  </span><br>
+</p>  
         </div>
       </div>
 
@@ -574,7 +728,7 @@
         <div class="container mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
-            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
             <!-- Rechtliche Links -->
             <nav class="flex space-x-6 mt-4 md:mt-0">
               <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
@@ -642,6 +796,15 @@
             const target = document.querySelector(this.getAttribute('href'));
             if (target) target.scrollIntoView({behavior:'smooth'});
           }
+
+// ─── COPY-PASTE START ───
+        // Language-Switcher nur auf legal-Seiten ausblenden
+        if (['impressum','agb','datenschutz'].includes(page)) {
+          langSwitcher.style.display = 'none';
+        } else {
+          langSwitcher.style.display = 'block';
+        }
+        // ─── COPY-PASTE END ───
           
           document.getElementById('mobileMenu').classList.add('hidden');
         });
@@ -798,5 +961,37 @@
       }
     });
   </script>
+<!-- Language Switcher -->
+<div id="lang-switcher">
+  <div class="relative flex w-16 h-8 rounded-md overflow-hidden" style="background-color: #2d2d2d;">
+    <!-- Weißer Slider -->
+    <div class="indicator absolute top-0 left-0 w-1/2 h-full bg-white rounded-md"></div>
+    <!-- EN -->
+    <button data-lang="en"
+            class="relative w-1/2 h-full flex items-center justify-center text-xs font-medium text-black pointer-events-none">
+      EN
+    </button>
+    <!-- DE -->
+    <button data-lang="de"
+            class="relative w-1/2 h-full flex items-center justify-center text-xs font-medium text-white pointer-events-none">
+      DE
+    </button>
+  </div>
+</div>
+<script>
+  const langSwitcher = document.getElementById('lang-switcher');
+
+  // 5 Sekunden nach DOM-Laden einblenden
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      langSwitcher.classList.add('visible');
+    }, 5000);
+  });
+
+  // Klick-Handler für den Toggle
+  langSwitcher.addEventListener('click', () => {
+    langSwitcher.classList.toggle('de-active');
+  });
+</script>
 </body>
 </html>
