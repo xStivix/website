@@ -82,7 +82,7 @@
     .bg-dark         { background-color:#1a1a1a; }
     .bg-medium       { background-color:#262626; }
 
-    h1,h2,h3,h4,h5,h6{ font-family:'Circular STD Bold',sans-serif; font-weight:bold; }
+     h1,h2,h3,h4,h5,h6{ font-family:'Circular STD Bold',sans-serif; font-weight:bold; }
     .mega-title      { font-size:5rem; line-height:1; letter-spacing:-.05em; }
     @media (min-width:768px){ .mega-title{font-size:7rem;} }
     .super-title     { font-size:3.5rem; line-height:1; letter-spacing:-.03em; }
@@ -96,14 +96,13 @@
 
     /* Video-Hero */
     .video-container { position:relative; width:100%; height:100vh; overflow:hidden; }
-    .video-background{ position:absolute; top:50%; left:50%; width:100vw; height:100vh; transform:translate(-50%,-50%) scale(1.3); pointer-events:none; z-index:0; }
+    .video-background{ position:absolute; top:50%; left:50%; width:100vw; height:100vh; transform:translate(-50%,-50%); pointer-events:none; z-index:0; }
     .desktop-iframe  { display:block; }
     .mobile-iframe   { display:none; }
 
     .content-overlay { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(18,18,18,.5); z-index:3; }
     .loading-overlay { position:absolute; top:0; left:0; width:100%; height:100vh; background:#3a3a3a; z-index:2; }
     .start-loading-animation{ animation:slideUp 0.9s ease-in-out forwards; animation-delay:.1s; }
-    @media (max-width:767px){ .start-loading-animation{ animation:slideDown 0.9s ease-out forwards; animation-delay:0.1s; } }
     @keyframes slideUp{ from{transform:translateY(0);} to{transform:translateY(-100%);} }
 
     @keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
@@ -832,6 +831,39 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
           document.querySelector('.loading-overlay').classList.add('start-loading-animation');
         }
       }
+
+/* --------------------------------------------------
+   Overscan‑Steuerung fürs Desktop‑Iframe
+   -------------------------------------------------- */
+function updateDesktopIframeScale(){
+  const iframe = document.querySelector('.desktop-iframe');
+  if (!iframe) return;
+
+  /* Mobile‑Variante aktiv? → sofort raus */
+  if (getComputedStyle(iframe).display === 'none') return;
+
+  const VIDEO_RATIO = 16/9;   // Vimeo‑Video
+  const TOLERANCE   = 0.05;   // ±5 % ≈ Desktop‑16:9
+  const EXTRA       = 1.3;    // +30 % Overscan nur für „Zwischen‑Geräte“
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const r  = vw / vh;
+
+  const isNearly169 = Math.abs(r - VIDEO_RATIO) < VIDEO_RATIO * TOLERANCE;
+
+  if (isNearly169){
+    /* Klassischer Desktop → unverändert 1.3 */
+    iframe.style.transform = 'translate(-50%, -50%) scale(1.3)';
+  } else {
+    /* iPad / Surface / Ultra‑Wide → dynamisch + 30 % */
+    const baseScale = r > VIDEO_RATIO
+        ? r / VIDEO_RATIO          // zu breit
+        : VIDEO_RATIO / r;         // zu hoch
+    iframe.style.transform =
+        `translate(-50%, -50%) scale(${baseScale * EXTRA})`;
+  }
+}
       
       /* Vimeo Player nur initialisieren, wenn notwendig */
       if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
@@ -963,6 +995,10 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
           }
         }
       }
+      /* --- Desktop‑Iframe skalieren --- */
+      updateDesktopIframeScale();                                      // sofort ausführen
+      window.addEventListener('resize',            updateDesktopIframeScale, {passive:true});
+      window.addEventListener('orientationchange', updateDesktopIframeScale);
     });
   </script>
 <!-- Language Switcher -->
