@@ -103,14 +103,18 @@
     .mobile-iframe   { display:none; }
 
     .content-overlay { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(18,18,18,.5); z-index:3; }
-    .loading-overlay { position:absolute; top:0; left:0; width:100%; height:100vh; background:#3a3a3a; z-index:2; }
-    .start-loading-animation{ animation:slideUp 0.9s ease-in-out forwards; animation-delay:.1s; }
-    @keyframes slideUp{ from{transform:translateY(0);} to{transform:translateY(-100%);} }
-
+    
     @keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
     .fade-in-up{ opacity:0; transform:translateY(20px); animation:fadeInUp 2s ease-out forwards; }
 
-    .intro-overlay{ position:fixed; top:0; left:0; width:100%; height:100vh; background:#111; z-index:99; display:flex; justify-content:center; align-items:center; transition:transform 1s ease; transform:translateY(0); }
+    .intro-overlay{ position:fixed; top:0; left:0; width:100%; height:100vh; background:#111; z-index:99; display:flex; justify-content:center; align-items:center; 
+
+ /* NEU ↓ .................................................................. */
+  transition:transform 1.s cubic-bezier(0.77, 0, 0.175, 1);
+  /* ↑ Dauer 1.4 s + sanftere Ease; gern anpassen (z. B. 1.6 s)             */
+  /* ----------------------------------------------------------------------- */
+
+transition:transform 1s ease; transform:translateY(0); }
     .intro-overlay.slide-out{ transform:translateY(100%); }
 
     .portfolio-item{ position:relative; overflow:hidden; background:#1e1e1e; transition:transform .3s ease; border-radius:.5rem; }
@@ -228,13 +232,38 @@ footer p {
       font-family: 'Circular STD Light', sans-serif !important;
       font-weight: 300       !important;
     }
+
+/* ─── Name-Animation ─────────────────────────────────────────────── */
+.name-wrapper{
+  display:flex;
+  gap:0.35rem;          /* kleiner Abstand zwischen Vor- & Nachname */
+  overflow:hidden;      /* verhindert, dass der Start-Slide unten sichtbar ist */
+}
+.name-part{
+  display:inline-block;             /* nötig, damit transform wirkt  */
+  transform:translateY(110%);       /* Start: unterhalb, unsichtbar  */
+  opacity:0;
+  animation:slideUp .7s cubic-bezier(.25,.8,.25,1) forwards;
+}
+
+/* Verzögerungen – Vorname nach 0,2 s / Nachname 0,45 s */
+.name-part.first  { animation-delay:.2s; }
+.name-part.second { animation-delay:.5s; }
+
+/* Animation selbst */
+@keyframes slideUp{
+  to{ transform:translateY(0); opacity:1; }
+}
   </style>
 </head>
 <body>
   <!-- Intro Overlay -->
-  <div class="intro-overlay">
-    <h1 class="text-2xl md:text-3xl font-bold text-white">STEFAN ABERER</h1>
+<div class="intro-overlay">
+  <div class="name-wrapper text-2xl md:text-3xl font-bold text-white leading-tight">
+    <span class="name-part first">STEFAN</span>
+    <span class="name-part second">ABERER</span>
   </div>
+</div>
 
   <!-- NAVIGATION -->
   <nav class="fixed inset-x-0 top-0 z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
@@ -282,12 +311,16 @@ footer p {
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
-      <div class="loading-overlay"></div>
-      <div class="content-overlay">
+            <div class="content-overlay">
         <div class="text-center px-4">
-          <h1 class="mega-title mb-6 fade-in-up" style="animation-delay:.5s;">LET'S MAKE IT COUNT.</h1>
-          <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay:.7s;">Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.</p>
-          <a href="#portfolio" class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all fade-in-up" style="animation-delay:2.5s;">VIEW WORK</a>
+          <h1 class="mega-title mb-6">LET'S MAKE IT COUNT.</h1>
+<p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+  Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.</p>
+</p>
+<a href="#portfolio"
+   class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all">
+  VIEW WORK
+</a>
         </div>
       </div>
     </section>
@@ -1128,14 +1161,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
         const d = document.querySelector('.desktop-iframe');
         return window.getComputedStyle(d).display !== 'none' ? d : document.querySelector('.mobile-iframe');
       }
-      let animationStarted = false;
-      function startLoadingAnimation(){
-        if(!animationStarted){
-          animationStarted = true;
-          document.querySelector('.loading-overlay').classList.add('start-loading-animation');
-        }
-      }
-
+     
 /* --------------------------------------------------
    Overscan‑Steuerung fürs Desktop‑Iframe
    -------------------------------------------------- */
@@ -1165,15 +1191,6 @@ function updateDesktopIframeScale(){
       `translate(-50%, -50%) scale(${baseScale * EXTRA})`;
   }
 }
-      
-      /* Vimeo Player nur initialisieren, wenn notwendig */
-      if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
-        const player = new Vimeo.Player(getVisibleIframe());
-        player.on('play', () => setTimeout(startLoadingAnimation, 300));
-      }
-      
-      /* Fallback für Ladeanimation */
-      setTimeout(() => { if(!animationStarted) startLoadingAnimation(); }, 5000);
 
       /* Smooth scroll für Anker-Links */
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1190,9 +1207,6 @@ function updateDesktopIframeScale(){
       const mobileMenu = document.getElementById('mobileMenu');
       mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
       document.querySelectorAll('#mobileMenu a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
-      /* Intro Overlay */
-      window.addEventListener('load', () => setTimeout(() => document.querySelector('.intro-overlay')?.classList.add('slide-out'), 300));
 
       /* Images Popup */
       const continueBtn = document.getElementById('continue-btn');
@@ -1339,6 +1353,49 @@ function updateDesktopIframeScale(){
   langSwitcher.addEventListener('click', () => {
     langSwitcher.classList.toggle('de-active');
   });
+</script>
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const introOverlay = document.querySelector('.intro-overlay');
+  const textEls = [
+    document.querySelector('.mega-title'),
+    document.querySelector('.content-overlay p'),
+    document.querySelector('.content-overlay a')
+  ];
+
+  // Texte sofort verbergen
+  textEls.forEach(el => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(20px)';
+  });
+
+  function revealContent() {
+    introOverlay.classList.add('slide-out');
+
+
+    // Sofort einblenden – keine Wartezeit
+    const delays = ['0s', '0.0s', '1.2s'];   // wenn du wieder Staffelung willst, hier ändern
+    textEls.forEach((el, i) => {
+      el.style.animationDelay = delays[i];
+      el.classList.add('fade-in-up');
+    });
+  }
+
+  // Welches Iframe gerade sichtbar ist
+  const desktop = document.querySelector('.desktop-iframe');
+  const bgIframe = window.getComputedStyle(desktop).display !== 'none'
+                   ? desktop
+                   : document.querySelector('.mobile-iframe');
+
+  const player = new Vimeo.Player(bgIframe);
+  let didReveal = false;
+  player.on('play', () => {
+    if (!didReveal) {
+      didReveal = true;
+      revealContent();
+    }
+  });
+});
 </script>
 </body>
 </html>
