@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -110,11 +109,11 @@
     .intro-overlay{ position:fixed; top:0; left:0; width:100%; height:100vh; background:#111; z-index:99; display:flex; justify-content:center; align-items:center; 
 
  /* NEU ↓ .................................................................. */
-  transition:transform 1.s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
   /* ↑ Dauer 1.4 s + sanftere Ease; gern anpassen (z. B. 1.6 s)             */
   /* ----------------------------------------------------------------------- */
 
-transition:transform 1s ease; transform:translateY(0); }
+transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
     .intro-overlay.slide-out{ transform:translateY(100%); }
 
     .portfolio-item{ position:relative; overflow:hidden; background:#1e1e1e; transition:transform .3s ease; border-radius:.5rem; }
@@ -276,7 +275,7 @@ footer p {
     <div class="hidden md:flex space-x-10">
       <a href="#about"     class="nav-link text-white text-lg page-link" data-page="main">About</a>
       <a href="#portfolio" class="nav-link text-white text-lg page-link" data-page="main">Work</a>
-      <a href="#ai-video"   class="nav-link text-white text-lg page-link" data-page="main">Ai</a>
+      <a href="#ai-video"   class="nav-link text-white text-lg page-link" data-page="main">AI</a>
       <a href="#images"    class="nav-link text-white text-lg page-link" data-page="images">Images</a>
       <a href="#services"  class="nav-link text-white text-lg page-link" data-page="main">Services</a>
       <a href="#contact"   class="nav-link text-white text-lg page-link" data-page="main">Contact</a>
@@ -331,9 +330,8 @@ footer p {
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 class="super-title mb-8">ABOUT ME</h2>
-            <p class="text-xl mb-6 font light">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content.</p>
-            <p class="text-xl mb-6 font light">I believe in combining technical excellence with creative direction. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
-            <p class="text-xl font light">Rather than sticking to only a conventional approach, I strive to stay current with the latest trends. I use AI as a powerful tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.</p>
+            <p class="text-mb mb-6 font light">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. I believe in combining technical excellence with creative direction. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
+            <p class="text-mb font light">Rather than sticking to only a conventional approach, I strive to stay current with the latest trends. I use AI as a powerful tool to turn ideas into individual, traditionally edited, AI-enhanced visuals – always refined with a human touch and creative intent.</p>
           </div>
           <div>
             <!-- loading="lazy" hinzugefügt für verzögertes Laden -->
@@ -403,20 +401,8 @@ footer p {
       01. AI Video Production
     </h3>
 
-    <p class="text-xl font-light max-w-8xl mb-16 reveal parallax" data-speed="0.1">
-      This approach currently provides maximum creative control while using AI for Video Production. It enables customizable visuals for any product, individual, or creative use case. Below is a simple example to demonstrate my workflow.
-      <br><br>
-      The process begins with a source image – either AI-generated or photographed. I then manipulate this image into the desired foundation, using sketches, rough 3D models, images or additional assets to define the composition. Once the base is established, I apply a style reference image alongside a well crafted prompt, to guide the AI toward the intended look and composition. This step transforms my mash-up into the first high-quality image.
-      <br><br>
-      Afterwards, I refine and enhance the generated image through further editing, custom color grading, and detail adjustments. Once the image meets my vision, I feed it into an AI image-to-video model, combining it with custom crafted prompts.
-      <br><br>
-      For this specific example I used:
-      <em>"Photo-real cinematic shot of two F-16 fighter jets flying side by side.  
-      Camera smoothly tracks the jets from the side, keeping them perfectly framed while they fly realistically with small, subtle adjustments to their flight path.  
-      Cloudy sky, cold atmosphere, cinematic lighting, 4K detail, 24 fps, subtle motion blur, highly realistic, dramatic yet natural."</em>
-      <br><br>
-      I then select the strongest AI-generated video output and complete the process with a final round of manual refinements – including final color grading adjustments, and subtle visual effects.
-    </p>
+    <p class="text-xb font-light max-w-4xl mb-16 reveal parallax" data-speed="0.1">
+      This approach offers maximum creative control while using AI for video production, enabling customizable visuals for any product, individual, or creative project. My workflow starts with a source image—AI-generated or photographed—which I shape into a foundation using sketches, rough 3D models, images, or assets to define the composition. I then apply a style reference and a tailored prompt to guide the AI toward the desired look, transforming the draft into a high-quality image.<br> Next, I refine the image through editing, color grading, and detail adjustments. Once it aligns with my vision, I input it into an AI image-to-video model with custom prompts, select the best video output,<br> and finalize it with manual refinements, color grading, and subtle effects.</p>
 
     <!-- ############################################################# -->
     <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
@@ -616,17 +602,8 @@ footer p {
       02.&nbsp;AI Image Production
     </h3>
 
-    <p class="text-xl font-light max-w-8xl mb-16 reveal parallax" data-speed="0.1">
-      Creating high-quality and coherent videos – whether through traditional production methods or by leveraging AI-generated content – continues to require a high degree of technical expertise, practical experience, significant time investment, and a well-defined creative vision.
-      <br><br>
-      At the same time, the generation of AI-based images has become more accessible than ever, particularly for simpler visual outputs. Nonetheless, achieving truly professional and compelling results still benefits from careful guidance and refinement throughout the creative process. In many cases, the workflow is relatively straightforward: with a well-crafted prompt, it is possible to obtain highly specific and desirable outcomes.
-      <br><br>
-      For example <em>(Image #1)</em>, a detailed prompt might read:<br><br>
-      <em>"A low-angle, wide-angle analogue photograph of a woman posing playfully on a sunlit pier, against a clear blue sky. The photo is taken at an angle. The sun is behind the model, creating a glow. She has dark brown hair worn loose; she looks cool and beautiful. She’s wearing a simple white Nike T-shirt, as seen in the reference image, denim cut-off shorts with a few loose threads, and the white Nike Dunks from the reference image, along with Nike socks from the second reference image. The image has a raw, unpolished look—shot on 35mm film with a grungy, analogue aesthetic, using flash. No digital retouching; natural lighting and imperfections are preserved. There are subtle flecks of grain and scratches, contributing naturally to the image. The photo feels spontaneous, carefree, and candid, evoking a nostalgic 90s summer vibe. Harsh sunlight creates subtle lens flare and dramatic shadows. The model wears minimal accessories, emphasizing a natural, authentic look. The background includes a white wooden fence and distant hills by the ocean.”</em>
-      <br><br>
-      I created these images specifically to highlight the potential of artificial intelligence in visual production. They illustrate how AI can be integrated into creative workflows, providing an innovative and efficient alternative for applications in advertising, social media content, and branding.
-      <br><br>
-    </p>
+    <p class="text-mb font-light max-w-4xl mb-16 reveal parallax" data-speed="0.1">
+      Creating high-quality, coherent videos—whether traditionally or with AI—still demands technical expertise, experience, time, and a clear creative vision. While AI image generation is now more accessible, professional, compelling results still require careful guidance and refinement. With a well-crafted prompt, highly specific outcomes are achievable. I created these images to showcase AI’s potential in visual production, illustrating how it can enhance creative workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
