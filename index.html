@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -81,6 +82,7 @@
     .bg-darker       { background-color:#0f0f0f; }
     .bg-dark         { background-color:#1a1a1a; }
     .bg-medium       { background-color:#262626; }
+.bg-blacksolid       { background-color: #000000 }
 
      h1,h2,h3,h4,h5,h6{ font-family:'Circular STD Bold',sans-serif; font-weight:bold; }
     .mega-title      { font-size:5rem; line-height:1; letter-spacing:-.05em; }
@@ -245,6 +247,7 @@ footer p {
     <div class="hidden md:flex space-x-10">
       <a href="#about"     class="nav-link text-white text-lg page-link" data-page="main">About</a>
       <a href="#portfolio" class="nav-link text-white text-lg page-link" data-page="main">Work</a>
+      <a href="#ai-video"   class="nav-link text-white text-lg page-link" data-page="main">Ai</a>
       <a href="#images"    class="nav-link text-white text-lg page-link" data-page="images">Images</a>
       <a href="#services"  class="nav-link text-white text-lg page-link" data-page="main">Services</a>
       <a href="#contact"   class="nav-link text-white text-lg page-link" data-page="main">Contact</a>
@@ -260,6 +263,7 @@ footer p {
     <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
       <a href="#about"     class="block text-white nav-link page-link" data-page="main">About</a>
       <a href="#portfolio" class="block text-white nav-link page-link" data-page="main">Work</a>
+      <a href="#ai-video"   class="block text-white nav-link page-link" data-page="main">AI Workflow</a>
       <a href="#images"    class="block text-white nav-link page-link" data-page="images">Images</a>
       <a href="#services"  class="block text-white nav-link page-link" data-page="main">Services</a>
       <a href="#contact"   class="block text-white nav-link page-link" data-page="main">Contact</a>
@@ -353,6 +357,294 @@ footer p {
         </div>
       </div>
     </section>
+
+<section
+  id="ai-video"
+  class="py-20 md:py-32 bg-blacksolid reveal parallax"
+  data-speed="0.2"
+>
+  <div class="container mx-auto px-6">
+    <!-- Content bleibt unverändert -->
+    <h2 class="super-title mb-8 font-bold">AI WORKFLOW</h2>
+    <h3 class="text-2xl md:text-3xl font-bold mb-6">
+      01. AI Video Production
+    </h3>
+
+    <p class="text-xl font-light max-w-8xl mb-16 reveal parallax" data-speed="0.1">
+      This approach currently provides maximum creative control while using AI for Video Production. It enables customizable visuals for any product, individual, or creative use case. Below is a simple example to demonstrate my workflow.
+      <br><br>
+      The process begins with a source image – either AI-generated or photographed. I then manipulate this image into the desired foundation, using sketches, rough 3D models, images or additional assets to define the composition. Once the base is established, I apply a style reference image alongside a well crafted prompt, to guide the AI toward the intended look and composition. This step transforms my mash-up into the first high-quality image.
+      <br><br>
+      Afterwards, I refine and enhance the generated image through further editing, custom color grading, and detail adjustments. Once the image meets my vision, I feed it into an AI image-to-video model, combining it with custom crafted prompts.
+      <br><br>
+      For this specific example I used:
+      <em>"Photo-real cinematic shot of two F-16 fighter jets flying side by side.  
+      Camera smoothly tracks the jets from the side, keeping them perfectly framed while they fly realistically with small, subtle adjustments to their flight path.  
+      Cloudy sky, cold atmosphere, cinematic lighting, 4K detail, 24 fps, subtle motion blur, highly realistic, dramatic yet natural."</em>
+      <br><br>
+      I then select the strongest AI-generated video output and complete the process with a final round of manual refinements – including final color grading adjustments, and subtle visual effects.
+    </p>
+
+    <!-- ############################################################# -->
+    <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
+    <!-- ############################################################# -->
+
+    <!-- PASS 1 ------------------------------------------------------->
+    <div class="grid md:grid-cols-4 gap-8 mb-24">
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1_00000.png"
+          alt="Pass 1 – Raw output"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Starting Frame</h4>
+          <p class="text-sm font-light">Initial Background Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/2.2_00000.png"
+          alt="Pass 1 – Refinement"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Additional Content</h4>
+          <p class="text-sm font-light">Adding 3D Mesh / Drawing</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sgfsg_00000.png"
+          alt="Pass 1 – Color pass"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Reference Image (Google)</h4>
+          <p class="text-sm font-light">Including Prompt for the Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/3_00125.png"
+          alt="Pass 1 – Final still"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Final Still</h4>
+          <p class="text-sm font-light">Fully Color Graded</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASS 2 ------------------------------------------------------->
+    <div class="grid md:grid-cols-4 gap-8 mb-24">
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/2finall/sdfsdsf_00000.png"
+          alt="Pass 2 – Storyboard"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">First Frame</h4>
+          <p class="text-sm font-light">Background Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/2finall/1.2_00000.png"
+          alt="Pass 2 – img1rw"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Additional Content</h4>
+          <p class="text-sm font-light">3D Mesh / Drawing</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/2finall/sdgfsfdgfgf_00000.png"
+          alt="Pass 2 – Compositing"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Reference Image (Google)</h4>
+          <p class="text-sm font-light">Including Prompt for the Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/2finall/2_00058.png"
+          alt="Pass 2 – Final still"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Final Still</h4>
+          <p class="text-sm font-light">Fully Color Graded</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASS 3 ------------------------------------------------------->
+    <div class="grid md:grid-cols-4 gap-8 mb-24">
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/3final/1_00000.png"
+          alt="Pass 3 – Final grade A"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">First Frame</h4>
+          <p class="text-sm font-light">Initial Background Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/3final/3.1_00000.png"
+          alt="Pass 3 – Final grade B"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Additional Content</h4>
+          <p class="text-sm font-light">Adding 3D Mesh / Drawing</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/3final/3_00000_00000.png"
+          alt="Pass 3 – Social crop"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Reference Image (TopGun)</h4>
+          <p class="text-sm font-light">Including Prompt for the Image</p>
+        </div>
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/3final/3_00000.png"
+          alt="Pass 3 – Final still"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+        <div class="p-4 bg-darker">
+          <h4 class="text-lg font-bold">Final Still</h4>
+          <p class="text-sm font-light">Fully Color Graded</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL PRODUCT -------------------------------------------------->
+    <h3 class="text-2xl md:text-3xl font-bold mb-6 reveal parallax" data-speed="0.2">
+      FINAL VERSION
+    </h3>
+
+    <div class="w-full mb-12 overflow-hidden rounded-lg group reveal parallax" data-speed="0.15">
+      <div class="relative" style="padding-top:56.25%;">
+        <iframe
+          id="finalVideo"
+          src="https://player.vimeo.com/video/1082247370?h=98745941f3&title=0&byline=0&portrait=0&loop=1&autoplay=0&muted=1"
+          class="absolute inset-0 w-full h-full pointer-events-none parallax"
+          data-speed="0.2"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- HOVER-PLAY SCRIPT -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const iframe  = document.getElementById('finalVideo');
+        if(!iframe) return;
+        const player  = new Vimeo.Player(iframe);
+        const wrapper = iframe.closest('.group');
+        wrapper.addEventListener('mouseenter', () => player.play());
+        wrapper.addEventListener('mouseleave', () => player.pause());
+      });
+    </script>
+
+    <!-- ===================================================== -->
+    <!--  02 · AI Image Production – neuer Unterabschnitt      -->
+    <!-- ===================================================== -->
+    <h3 class="text-2xl md:text-3xl font-bold mb-6 mt-16 reveal parallax" data-speed="0.2">
+      02.&nbsp;AI Image Production
+    </h3>
+
+    <p class="text-xl font-light max-w-8xl mb-16 reveal parallax" data-speed="0.1">
+      Creating high-quality and coherent videos – whether through traditional production methods or by leveraging AI-generated content – continues to require a high degree of technical expertise, practical experience, significant time investment, and a well-defined creative vision.
+      <br><br>
+      At the same time, the generation of AI-based images has become more accessible than ever, particularly for simpler visual outputs. Nonetheless, achieving truly professional and compelling results still benefits from careful guidance and refinement throughout the creative process. In many cases, the workflow is relatively straightforward: with a well-crafted prompt, it is possible to obtain highly specific and desirable outcomes.
+      <br><br>
+      For example <em>(Image #1)</em>, a detailed prompt might read:<br><br>
+      <em>"A low-angle, wide-angle analogue photograph of a woman posing playfully on a sunlit pier, against a clear blue sky. The photo is taken at an angle. The sun is behind the model, creating a glow. She has dark brown hair worn loose; she looks cool and beautiful. She’s wearing a simple white Nike T-shirt, as seen in the reference image, denim cut-off shorts with a few loose threads, and the white Nike Dunks from the reference image, along with Nike socks from the second reference image. The image has a raw, unpolished look—shot on 35mm film with a grungy, analogue aesthetic, using flash. No digital retouching; natural lighting and imperfections are preserved. There are subtle flecks of grain and scratches, contributing naturally to the image. The photo feels spontaneous, carefree, and candid, evoking a nostalgic 90s summer vibe. Harsh sunlight creates subtle lens flare and dramatic shadows. The model wears minimal accessories, emphasizing a natural, authentic look. The background includes a white wooden fence and distant hills by the ocean.”</em>
+      <br><br>
+      I created these images specifically to highlight the potential of artificial intelligence in visual production. They illustrate how AI can be integrated into creative workflows, providing an innovative and efficient alternative for applications in advertising, social media content, and branding.
+      <br><br>
+    </p>
+
+    <!-- Mini-Gallery für AI-Image-Production ----------------------------->
+
+    <div class="grid md:grid-cols-4 gap-8 mb-24">
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp"
+          alt="Abstract 3-D swirl"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png"
+          alt="Stylized humanoid character"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp"
+          alt="Colorful abstract poster"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+      </div>
+      <div class="portfolio-item reveal parallax" data-speed="0.1">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png"
+          alt="Surreal asteroid field"
+          class="w-full h-auto parallax"
+          data-speed="0.1"
+        >
+      </div>
+    </div>
+
+    <div class="text-center mb-24 reveal">
+      <a
+        href="#images"
+        data-page="images"
+        class="page-link underline text-gray-300 hover:text-white transition-colors"
+      >
+        View More
+      </a>
+    </div>
+
+  </div> <!-- ← Ende .container -->
+</section> <!-- ← Ende AI-Workflow -->
+
 
     <!-- Services -->
     <section id="services" class="py-20 md:py-32 bg-darker">
@@ -850,30 +1142,27 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
 function updateDesktopIframeScale(){
   const iframe = document.querySelector('.desktop-iframe');
   if (!iframe) return;
-
-  /* Mobile‑Variante aktiv? → sofort raus */
   if (getComputedStyle(iframe).display === 'none') return;
 
-  const VIDEO_RATIO = 16/9;   // Vimeo‑Video
-  const TOLERANCE   = 0.05;   // ±5 % ≈ Desktop‑16:9
-  const EXTRA       = 1.3;    // +30 % Overscan nur für „Zwischen‑Geräte“
+  const VIDEO_RATIO = 16/9;
+  const TOLERANCE   = 0.05;
+  const EXTRA       = 1.3;    // 30% für Tablets/Ultra-Wide
 
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const r  = vw / vh;
-
   const isNearly169 = Math.abs(r - VIDEO_RATIO) < VIDEO_RATIO * TOLERANCE;
 
-  if (isNearly169){
-    /* Klassischer Desktop → unverändert 1.2 */
+  if (isNearly169) {
+    // Desktop (16:9 ±5%) jetzt mit 20% Overscan
     iframe.style.transform = 'translate(-50%, -50%) scale(1.2)';
   } else {
-    /* iPad / Surface / Ultra‑Wide → dynamisch + 30 % */
+    // Alle anderen Geräte weiterhin „dynamisch +30%“
     const baseScale = r > VIDEO_RATIO
-        ? r / VIDEO_RATIO          // zu breit
-        : VIDEO_RATIO / r;         // zu hoch
+      ? r / VIDEO_RATIO
+      : VIDEO_RATIO / r;
     iframe.style.transform =
-        `translate(-50%, -50%) scale(${baseScale * EXTRA})`;
+      `translate(-50%, -50%) scale(${baseScale * EXTRA})`;
   }
 }
       
@@ -955,6 +1244,7 @@ function updateDesktopIframeScale(){
         el.classList.add('reveal');
         revealObserver.observe(el);
       });
+
       
       /* Optimierter Parallax-Effekt mit requestAnimationFrame */
       const parallaxEls = document.querySelectorAll('.parallax');
@@ -977,19 +1267,24 @@ function updateDesktopIframeScale(){
         }
       }, {passive: true});
 
-      /* ScrollSpy für Main-Page */
-      const mainSections = document.querySelectorAll('#main-page section[id]');
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting){
-            const id = entry.target.id;
-            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-            const activeNav = document.querySelector(`.nav-link[href="#${id}"]`);
-            if(activeNav) activeNav.classList.add('active');
-          }
-        });
-      }, { threshold: 0.3 });
-      mainSections.forEach(sec => sectionObserver.observe(sec));
+        /* ScrollSpy für Main-Page mit rootMargin, damit AI Workflow sauber aktiv wird */
+  const mainSections = document.querySelectorAll('#main-page section[id]');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // alle Nav-Links zurücksetzen
+        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+        // passenden Link finden und markieren
+        const activeNav = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (activeNav) activeNav.classList.add('active');
+      }
+    });
+  }, {
+    rootMargin: '-50% 0px -50% 0px',  // feuert, wenn Section in der Mitte des Viewports ist
+    threshold: 0                     // keine genaue Sichtbarkeits-% nötig
+  });
+  mainSections.forEach(sec => sectionObserver.observe(sec));
+
       
       // URL-Hash Handling für direkte Links
       if (location.hash) {
