@@ -865,8 +865,8 @@ function updateDesktopIframeScale(){
   const isNearly169 = Math.abs(r - VIDEO_RATIO) < VIDEO_RATIO * TOLERANCE;
 
   if (isNearly169){
-    /* Klassischer Desktop → unverändert 1.3 */
-    iframe.style.transform = 'translate(-50%, -50%) scale(1.3)';
+    /* Klassischer Desktop → unverändert 1.2 */
+    iframe.style.transform = 'translate(-50%, -50%) scale(1.2)';
   } else {
     /* iPad / Surface / Ultra‑Wide → dynamisch + 30 % */
     const baseScale = r > VIDEO_RATIO
