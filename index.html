@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="preconnect" href="https://player.vimeo.com" crossorigin>
 <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+<link rel="dns-prefetch" href="https://f.vimeocdn.com">
+<link rel="dns-prefetch" href="https://i.vimeocdn.com">
+<link rel="preconnect" href="https://f.vimeocdn.com" crossorigin>
   <title>Stefan Aberer - Video Editor</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
   <!-- Vimeo Player API - mit defer, damit es nicht-blockierend geladen wird -->
-  <script src="https://player.vimeo.com/api/player.js" defer></script>
+  <script src="https://player.vimeo.com/api/player.js" defer importance="high"></script>
 
   <!-- ===================================================== -->
   <!-- =======================  STYLES  ===================== -->
@@ -343,10 +346,10 @@ footer p {
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
-      <iframe loading "eager" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
+      <iframe loading="eager" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe loading "eager" class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
+      <iframe loading="eager" class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
@@ -1370,8 +1373,11 @@ function updateDesktopIframeScale(){
     langSwitcher.classList.toggle('de-active');
   });
 </script>
- <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
+  // Globale Variable, damit andere Funktionen darauf zugreifen können
+  let didReveal = false;
+  
   const introOverlay = document.querySelector('.intro-overlay');
   const textEls = [
     document.querySelector('.mega-title'),
@@ -1381,45 +1387,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Texte sofort verbergen
   textEls.forEach(el => {
-    el.style.opacity   = '0';
-    el.style.transform = 'translateY(20px)';
+    if (el) { // Sicherheitscheck hinzugefügt
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+    }
   });
 
+  // Funktion, die die Animation startet
   function revealContent() {
-    introOverlay.classList.add('slide-out');
+    // Vermeide doppelte Animation
+    if (didReveal) return;
+    didReveal = true;
+    
+    // Animation starten
+    if (introOverlay) introOverlay.classList.add('slide-out');
 
-
-    // Sofort einblenden – keine Wartezeit
-    const delays = ['0s', '0.0s', '1.2s'];   // wenn du wieder Staffelung willst, hier ändern
+    // Text-Elemente animieren
+    const delays = ['0s', '0.0s', '1.2s'];
     textEls.forEach((el, i) => {
-      el.style.animationDelay = delays[i];
-      el.classList.add('fade-in-up');
+      if (el) {
+        el.style.animationDelay = delays[i];
+        el.classList.add('fade-in-up');
+      }
     });
   }
 
-  // Welches Iframe gerade sichtbar ist
-  const desktop = document.querySelector('.desktop-iframe');
-  const bgIframe = window.getComputedStyle(desktop).display !== 'none'
-                   ? desktop
-                   : document.querySelector('.mobile-iframe');
-
-  const player = new Vimeo.Player(bgIframe);
-  let didReveal = false;
-  player.on('play', () => {
-    if (!didReveal) {
-      didReveal = true;
-      revealContent();
-    }
-  });
-/* ───── NEU: automatische & Fehler-Fallbacks ───── */
-  const FALLBACK_MS = 5000;                       // 5-Sekunden-Timer
-  setTimeout(() => {                              // ❶ Timeout
+  // WICHTIG: Immer einen Fallback-Timer setzen
+  const FALLBACK_MS = 5000;
+  setTimeout(() => {
     if (!didReveal) revealContent();
   }, FALLBACK_MS);
 
-  player.on('error', () => {                      // ❷ Vimeo-Fehler
-    if (!didReveal) revealContent();
-  });
+  // Verzögerte Vimeo-Initialisierung, um sicherzustellen, dass das DOM bereit ist
+  setTimeout(() => {
+    try {
+      // Bestimme, welches iframe aktiv ist
+      const desktop = document.querySelector('.desktop-iframe');
+      if (!desktop) throw new Error('Desktop iframe nicht gefunden');
+      
+      const bgIframe = window.getComputedStyle(desktop).display !== 'none'
+                     ? desktop
+                     : document.querySelector('.mobile-iframe');
+      
+      if (!bgIframe) throw new Error('Kein aktives iframe gefunden');
+      
+      // Vimeo Player initialisieren
+      const player = new Vimeo.Player(bgIframe);
+      
+      // Event-Listener für Play-Event
+      player.on('play', () => {
+        if (!didReveal) revealContent();
+      });
+      
+      // Event-Listener für Error-Event
+      player.on('error', () => {
+        console.log('Vimeo-Player Fehler aufgetreten');
+        if (!didReveal) revealContent();
+      });
+      
+    } catch (e) {
+      console.error('Fehler bei der Vimeo-Initialisierung:', e);
+      // Bei Fehlern trotzdem die Animation starten
+      if (!didReveal) revealContent();
+    }
+  }, 300); // 300ms Verzögerung für die Vimeo-Initialisierung
 });
 </script>
 </body>
