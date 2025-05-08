@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://player.vimeo.com" crossorigin>
+<link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
   <title>Stefan Aberer - Video Editor</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
@@ -106,15 +108,27 @@
     @keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
     .fade-in-up{ opacity:0; transform:translateY(20px); animation:fadeInUp 2s ease-out forwards; }
 
-    .intro-overlay{ position:fixed; top:0; left:0; width:100%; height:100vh; background:#111; z-index:99; display:flex; justify-content:center; align-items:center; 
+ .intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #111;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
- /* NEU ↓ .................................................................. */
-  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-  /* ↑ Dauer 1.4 s + sanftere Ease; gern anpassen (z. B. 1.6 s)             */
-  /* ----------------------------------------------------------------------- */
+  /* expliziter Start‑Zustand für die Transition */
+  transform: translateY(0);
+  /* nur eine, klare transition‑Definition */
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
 
-transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
-    .intro-overlay.slide-out{ transform:translateY(100%); }
+.intro-overlay.slide-out {
+  transform: translateY(100%);
+}
 
     .portfolio-item{ position:relative; overflow:hidden; background:#1e1e1e; transition:transform .3s ease; border-radius:.5rem; }
     .portfolio-item:hover{ transform:scale(1.02); }
@@ -253,6 +267,32 @@ footer p {
 @keyframes slideUp{
   to{ transform:translateY(0); opacity:1; }
 }
+/* Überschreibe das Abdunkeln */
+.portfolio-item:hover img,
+.portfolio-item:hover video {
+  opacity: 1 !important;
+}
+
+/* Stärkere Skalierung des gesamten Elements */
+.portfolio-item {
+  /* verlängere die Dauer, damit es sanfter wirkt */
+  transition: transform 0.3s ease;
+  /* damit gleichmäßig um die Mitte skaliert wird */
+  transform-origin: center center;
+}
+/* im Selected‑Work-Teil wieder nur leicht skalieren */
+#portfolio .portfolio-item:hover {
+  transform: scale(1.02) !important;
+}
+.portfolio-item:hover {
+  /* hier den Wert nach Wunsch anpassen: 
+     1.1 = +10 %, 1.2 = +20 % usw. */
+  transform: scale(1.05);
+}
+/* 1) zeige Pointer an, damit Klickbarkeit deutlich wird */
+#ai-video .portfolio-item img {
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -264,49 +304,49 @@ footer p {
   </div>
 </div>
 
-  <!-- NAVIGATION -->
-  <nav class="fixed inset-x-0 top-0 z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
-  <!-- Vollbreiter Flex-Wrapper mit mehr horizontalem Padding -->
-  <div class="w-full flex items-center justify-between py-4 px-8">
-    <!-- 1) Logo ganz links -->
-    <a href="#" id="homeLink" class="text-white text-2xl font-bold">STEFAN ABERER</a>
-
-    <!-- 2) Desktop-Links ganz rechts -->
-    <div class="hidden md:flex space-x-10">
-      <a href="#about"     class="nav-link text-white text-lg page-link" data-page="main">ABOUT</a>
-      <a href="#portfolio" class="nav-link text-white text-lg page-link" data-page="main">WORK</a>
-      <a href="#ai-video"   class="nav-link text-white text-lg page-link" data-page="main">AI</a>
-      <a href="#images"    class="nav-link text-white text-lg page-link" data-page="images">IMAGES</a>
-      <a href="#services"  class="nav-link text-white text-lg page-link" data-page="main">SERVICES</a>
-      <a href="#contact"   class="nav-link text-white text-lg page-link" data-page="main">CONTACT</a>
-    </div>
-
-    <!-- 3) Mobile-Button ganz rechts -->
-    <button id="mobileMenuButton" class="text-white text-2xl md:hidden focus:outline-none">
-      <i class="fas fa-bars"></i>
-    </button>
-        </div>
+<!-- NAVIGATION -->
+<nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
+  <div class="container mx-auto px-8 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo links (bold, 2xl) -->
+      <a href="#" id="homeLink" class="text-white text-xl font-bold">STEFAN ABERER</a>
+      <!-- Desktop-Links (base size, medium) -->
+      <div class="hidden md:flex space-x-8">
+        <a href="#about"     class="nav-link text-white text-base font-medium page-link" data-page="main">About</a>
+        <a href="#portfolio" class="nav-link text-white text-base font-medium page-link" data-page="main">Work</a>
+        <a href="#ai-video"  class="nav-link text-white text-base font-medium page-link" data-page="main">AI</a>
+        <a href="#images"    class="nav-link text-white text-base font-medium page-link" data-page="images">Images</a>
+        <a href="#services"  class="nav-link text-white text-base font-medium page-link" data-page="main">Services</a>
+        <a href="#contact"   class="nav-link text-white text-base font-medium page-link" data-page="main">Contact</a>
+      </div>
+      <!-- Mobile-Button -->
+      <div class="md:hidden">
+        <button id="mobileMenuButton" class="text-white text-2xl focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
-      <a href="#about"     class="block text-white nav-link page-link" data-page="main">About</a>
-      <a href="#portfolio" class="block text-white nav-link page-link" data-page="main">Work</a>
-      <a href="#ai-video"   class="block text-white nav-link page-link" data-page="main">AI Workflow</a>
-      <a href="#images"    class="block text-white nav-link page-link" data-page="images">Images</a>
-      <a href="#services"  class="block text-white nav-link page-link" data-page="main">Services</a>
-      <a href="#contact"   class="block text-white nav-link page-link" data-page="main">Contact</a>
-    </div>
-  </nav>
+  </div>
+  <!-- Mobile-Links (base size, bold) -->
+  <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
+    <a href="#about"      class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">About</a>
+    <a href="#portfolio"  class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Work</a>
+    <a href="#ai-video"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">AI</a>
+    <a href="#images"     class="block text-white nav-link text-base font-bold page-link py-2" data-page="images">Images</a>
+    <a href="#services"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Services</a>
+    <a href="#contact"    class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Contact</a>
+  </div>
+</nav>
 
   <!-- MAIN-PAGE -->
   <div id="main-page">
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
-      <iframe class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
+      <iframe loading "eager" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
+      <iframe loading "eager" class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
@@ -395,12 +435,12 @@ footer p {
 >
   <div class="container mx-auto px-6">
     <!-- Content bleibt unverändert -->
-    <h2 class="super-title mb-8 font-bold">AI WORKFLOW</h2>
-    <h3 class="text-2xl md:text-3xl font-bold mb-6">
-      01. AI Video Production
-    </h3>
+    <h2 class="super-title mb-16 font-bold text-center">AI ASSISTED WORKFLOW</h2>
+    <h3 class="text-base md:text-xl font-bold mb-3 max-w-2xl mx-auto text-left">
+ 1. AI Video Production
+</h3>
 
-    <p class="text-xb ml-12 font-light max-w-4xl mb-16 reveal parallax" data-speed="0.1">
+    <p class="text-xb mx-auto font-light max-w-2xl mb-16 reveal parallax" data-speed="0.1">
       I find that an image to video approach currently offers the maximum amount of creative control while using AI for video production. It enables customizable visuals for any product, individual, or creative project. My workflow always starts with a source image—AI-generated or photographed—which I shape into a foundation using sketches, rough 3D models, images, or assets to define the composition. I then apply a style reference and a tailored prompt to guide the AI toward the desired look, transforming the draft into a high-quality image. Next, I refine the image through editing, color grading, and detail adjustments. Once it aligns with my vision, I input it into an AI image-to-video model with custom prompts, select the best video output, and finalize it with manual refinements, color grading, and subtle effects.</p>
 
     <!-- ############################################################# -->
@@ -564,8 +604,8 @@ footer p {
     </div>
 
     <!-- FINAL PRODUCT -------------------------------------------------->
-    <h3 class="text-2xl md:text-3xl font-bold mb-6 reveal parallax" data-speed="0.2">
-      FINAL VERSION
+    <h3 class="text-xl md:text-2xl mx-auto text-center font-bold mb-6 reveal parallax" data-speed="0.2">
+      FINAL RESULT
     </h3>
 
     <div class="w-full mb-12 overflow-hidden rounded-lg group reveal parallax" data-speed="0.15">
@@ -597,11 +637,11 @@ footer p {
     <!-- ===================================================== -->
     <!--  02 · AI Image Production – neuer Unterabschnitt      -->
     <!-- ===================================================== -->
-    <h3 class="text-2xl md:text-3xl font-bold mb-6 mt-16 reveal parallax" data-speed="0.2">
-      02.&nbsp;AI Image Production
+    <h3 class="text-base md:text-xl font-bold mb-3 mt-16 max-w-2xl mx-auto text-left reveal parallax" data-speed="0.2">
+      2.&nbsp;AI Image Production
     </h3>
 
-    <p class="text-mb ml-12 font-light max-w-4xl mb-16 reveal parallax" data-speed="0.1">
+    <p class="text-xb mx-auto font-light max-w-2xl mb-16 reveal parallax" data-speed="0.1">
       Creating high-quality and coherent videos—whether traditionally or with AI—still demands alot of technical expertise, experience, time, and a clear creative vision. On the other hand AI image generation is now more accessible than ever. Professional and compelling results still benefit from a careful guidance and refinement, but often all it takes is just a well-crafted prompt, and fully customizable outcomes are achievable. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
@@ -645,9 +685,9 @@ footer p {
       <a
         href="#images"
         data-page="images"
-        class="page-link underline text-gray-300 hover:text-white transition-colors"
+        class="page-link underline text-gray-300 hover:text-white transition-colors text-sm px-3 py-1"
       >
-        View More
+        view more
       </a>
     </div>
 
