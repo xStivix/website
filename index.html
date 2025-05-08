@@ -3,11 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="preconnect" href="https://player.vimeo.com" crossorigin>
-<link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
-<link rel="dns-prefetch" href="https://f.vimeocdn.com">
-<link rel="dns-prefetch" href="https://i.vimeocdn.com">
-<link rel="preconnect" href="https://f.vimeocdn.com" crossorigin>
   <title>Stefan Aberer - Video Editor</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
@@ -346,10 +341,10 @@ footer p {
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
-      <iframe loading="eager" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
+      <iframe loading="eager" fetchpriority="high" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe loading="eager" class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
+      <iframe loading="eager" fetchpriority="high"  class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
@@ -372,12 +367,12 @@ footer p {
       <div class="container mx-auto px-6">
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 class="super-title mb-8">ABOUT ME</h2>
-            <p class="text-mb mb-6 max-w-2xl font light">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. I believe in combining technical excellence with creative direction.<br> With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
+            <h2 class=" ml-36 super-title mb-8">ABOUT ME</h2>
+            <p class="text-base ml-36 mb-6 max-w-2xl font light">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. I believe in combining technical excellence with creative direction. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
           </div>
           <div>
             <!-- loading="lazy" hinzugefügt für verzögertes Laden -->
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-sm rounded-lg mx-auto parallax" data-speed="0.1" width="384" height="384">
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-xs rounded-lg mx-auto parallax" data-speed="0.1" width="384" height="384">
           </div>
         </div>
       </div>
@@ -393,7 +388,7 @@ footer p {
           <div class="portfolio-item md:col-span-3 reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
               <!-- loading="lazy" für verzögertes Laden -->
-              <iframe src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe loading="lazy" src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-6 bg-darker">
               <h3 class="text-3xl font-bold mb-2">PORSCHE GT3 RS</h3>
@@ -403,7 +398,7 @@ footer p {
           <!-- Item 1 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe loading="lazy" src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">Stay (TYPOGRAPHY)</h3><p>Showcasing Typography.</p>
@@ -412,7 +407,7 @@ footer p {
           <!-- Item 2 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe loading="lazy" src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3><p>Cinematic Teaser Trailer.</p>
@@ -421,7 +416,7 @@ footer p {
           <!-- Item 3 -->
           <div class="portfolio-item reveal">
             <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe src="https://player.vimeo.com/video/1073580177?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+              <iframe loading="lazy" src="https://player.vimeo.com/video/1073580177?title=0&byline=0&portrait=" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
             </div>
             <div class="p-4 bg-darker">
               <h3 class="text-2xl font-bold">Automotive Showreel 2022</h3><p>Various automotive focused projects.</p>
@@ -438,12 +433,12 @@ footer p {
 >
   <div class="container mx-auto px-6">
     <!-- Content bleibt unverändert -->
-    <h2 class="super-title mb-16 font-bold text-center">AI ASSISTED WORKFLOW</h2>
+    <h2 class="super-title mb-16 font-bold text-center">AI WORKFLOW</h2>
     <h3 class="text-base md:text-xl font-bold mb-3 max-w-2xl mx-auto text-left">
  1. AI Video Production
 </h3>
 
-    <p class="text-xb mx-auto font-light max-w-2xl mb-16 reveal parallax" data-speed="0.1">
+    <p class="text-xb mx-auto font-light max-w-2xl mb-24 reveal parallax" data-speed="0.1">
       I find that an image to video approach currently offers the maximum amount of creative control while using AI for video production. It enables customizable visuals for any product, individual, or creative project. My workflow always starts with a source image—AI-generated or photographed—which I shape into a foundation using sketches, rough 3D models, images, or assets to define the composition. I then apply a style reference and a tailored prompt to guide the AI toward the desired look, transforming the draft into a high-quality image. Next, I refine the image through editing, color grading, and detail adjustments. Once it aligns with my vision, I input it into an AI image-to-video model with custom prompts, select the best video output, and finalize it with manual refinements, color grading, and subtle effects.</p>
 
     <!-- ############################################################# -->
@@ -644,7 +639,7 @@ footer p {
       2.&nbsp;AI Image Production
     </h3>
 
-    <p class="text-xb mx-auto font-light max-w-2xl mb-16 reveal parallax" data-speed="0.1">
+    <p class="text-xb mx-auto font-light max-w-2xl mb-24 reveal parallax" data-speed="0.1">
       Creating high-quality and coherent videos—whether traditionally or with AI—still demands alot of technical expertise, experience, time, and a clear creative vision. On the other hand AI image generation is now more accessible than ever. Professional and compelling results still benefit from a careful guidance and refinement, but often all it takes is just a well-crafted prompt, and fully customizable outcomes are achievable. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
@@ -718,7 +713,7 @@ footer p {
         </div>
         <div class="mt-20 text-center reveal">
           <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
-          <p class="text-l max-w-4xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic RAW, Film and all major Sony Cameras (S-Log). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
+          <p class="text-sm max-w-2xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic RAW, Film and all major Sony Cameras (S-Log). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
     </div>
   </div>
 </section>
@@ -1245,7 +1240,7 @@ function updateDesktopIframeScale(){
       /* Image Modal */
       const imageModal = document.getElementById('image-modal');
       const modalImage = imageModal.querySelector('.modal-image');
-      document.querySelectorAll('#images-page .portfolio-item img').forEach(img => {
+      document.querySelectorAll('#images-page, #ai-video .portfolio-item img').forEach(img => {
         img.addEventListener('click', e => {
           modalImage.src = e.target.src;
           imageModal.classList.add('active');
