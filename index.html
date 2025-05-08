@@ -1371,6 +1371,15 @@ document.addEventListener('DOMContentLoaded', () => {
       revealContent();
     }
   });
+/* ───── NEU: automatische & Fehler-Fallbacks ───── */
+  const FALLBACK_MS = 5000;                       // 5-Sekunden-Timer
+  setTimeout(() => {                              // ❶ Timeout
+    if (!didReveal) revealContent();
+  }, FALLBACK_MS);
+
+  player.on('error', () => {                      // ❷ Vimeo-Fehler
+    if (!didReveal) revealContent();
+  });
 });
 </script>
 </body>
