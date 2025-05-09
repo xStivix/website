@@ -438,6 +438,31 @@ footer p {
       </div>
     </section>
 
+    <!-- Services -->
+    <section id="services" class="py-20 md:py-32 bg-darker">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
+        <div class="grid md:grid-cols-3 gap-12">
+          <div class="service-card p-10 reveal">
+            <h3 class="text-sm font-light mb-2">01</h3><h4 class="mb-4">CONCEPTION</h4>
+            <p class="text-base">Whether it's purely video content or anything else – <br>I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.</p>
+          </div>
+          <div class="service-card p-10 reveal">
+            <h3 class="text-sm font-light mb-2">02</h3><h4 class="mb-4">VIDEO EDITING</h4>
+            <p class="text-base">I cover the full post-production workflow – from <br>rough cut to final export. This includes selecting <br>and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup, retouching, and template-based animations if needed.</p>
+          </div>
+          <div class="service-card p-10 reveal">
+            <h3 class="text-sm font-light mb-2">03</h3><h4 class="mb-4">AI SPECALIST</h4>
+            <p class="text-base">I use artificial intelligence to create both realistic <br>and surreal images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals — tailored to any product or individual.</p>
+          </div>
+        </div>
+        <div class="mt-20 text-center reveal">
+          <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
+          <p class="text-sm max-w-2xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic RAW, Film and all major Sony Cameras (S-Log). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
+    </div>
+  </div>
+</section>
+
 <section
   id="ai-video"
   class="py-20 md:py-32 bg-blacksolid reveal parallax"
@@ -704,31 +729,6 @@ footer p {
   </div> <!-- ← Ende .container -->
 </section> <!-- ← Ende AI-Workflow -->
 
-
-    <!-- Services -->
-    <section id="services" class="py-20 md:py-32 bg-darker">
-      <div class="container mx-auto px-6">
-        <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
-        <div class="grid md:grid-cols-3 gap-12">
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">01</h3><h4 class="mb-4">CONCEPTION</h4>
-            <p class="text-base">Whether it's purely video content or anything else – <br>I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.</p>
-          </div>
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">02</h3><h4 class="mb-4">VIDEO EDITING</h4>
-            <p class="text-base">I cover the full post-production workflow – from <br>rough cut to final export. This includes selecting <br>and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup, retouching, and template-based animations if needed.</p>
-          </div>
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">03</h3><h4 class="mb-4">AI SPECALIST</h4>
-            <p class="text-base">I use artificial intelligence to create both realistic <br>and surreal images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals — tailored to any product or individual.</p>
-          </div>
-        </div>
-        <div class="mt-20 text-center reveal">
-          <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
-          <p class="text-sm max-w-2xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic RAW, Film and all major Sony Cameras (S-Log). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
-    </div>
-  </div>
-</section>
 
     <!-- Contact -->
     <section id="contact" class="py-20 md:py-32 bg-dark reveal">
@@ -1420,7 +1420,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // WICHTIG: Immer einen Fallback-Timer setzen
-  const FALLBACK_MS = 5000;
+  const FALLBACK_MS = 3000;
   setTimeout(() => {
     if (!didReveal) revealContent();
   }, FALLBACK_MS);
