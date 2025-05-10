@@ -18,9 +18,6 @@
   <!-- =======================  STYLES  ===================== -->
   <!-- ===================================================== -->
   <style>
-.nav-link {
-  font-weight: 500;   /* Tailwind “font-medium” entspricht 500 */
-}
 /* ─── Language Switcher initial hidden und Einblend-Animation ─── */
 #lang-switcher {
   opacity: 0;
@@ -325,12 +322,12 @@ footer p {
       <a href="#" id="homeLink" class="text-white text-xl font-bold">STEFAN ABERER</a>
       <!-- Desktop-Links (base size, medium) -->
       <div class="hidden md:flex space-x-8">
-        <a href="#about"     class="nav-link text-white text-base font-medium page-link" data-page="main">About</a>
-        <a href="#portfolio" class="nav-link text-white text-base font-medium page-link" data-page="main">Work</a>
-        <a href="#ai"        class="nav-link text-white text-base font-medium page-link" data-page="ai">AI</a>
-        <a href="#images"    class="nav-link text-white text-base font-medium page-link" data-page="images">Images</a>
-        <a href="#services"  class="nav-link text-white text-base font-medium page-link" data-page="main">Services</a>
-        <a href="#contact"   class="nav-link text-white text-base font-medium page-link" data-page="main">Contact</a>
+        <a href="#about"     class="nav-link text-white text-base font-bold page-link" data-page="main">About</a>
+        <a href="#portfolio" class="nav-link text-white text-base font-bold page-link" data-page="main">Work</a>
+        <a href="#ai"        class="nav-link text-white text-base font-bold page-link" data-page="ai">AI</a>
+        <a href="#images"    class="nav-link text-white text-base font-bold page-link" data-page="images">Images</a>
+        <a href="#services"  class="nav-link text-white text-base font-bold page-link" data-page="main">Services</a>
+        <a href="#contact"   class="nav-link text-white text-base font-bold page-link" data-page="main">Contact</a>
       </div>
       <!-- Mobile-Button -->
       <div class="md:hidden">
@@ -1427,7 +1424,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // WICHTIG: Immer einen Fallback-Timer setzen
-  const FALLBACK_MS = 3000;
+  const FALLBACK_MS = 5000;
   setTimeout(() => {
     if (!didReveal) revealContent();
   }, FALLBACK_MS);
