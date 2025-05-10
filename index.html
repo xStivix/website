@@ -18,6 +18,9 @@
   <!-- =======================  STYLES  ===================== -->
   <!-- ===================================================== -->
   <style>
+.nav-link {
+  font-weight: 500;   /* Tailwind “font-medium” entspricht 500 */
+}
 /* ─── Language Switcher initial hidden und Einblend-Animation ─── */
 #lang-switcher {
   opacity: 0;
@@ -53,7 +56,7 @@
     /* Parallax Helper */
     .parallax       { will-change: transform; }
 
-    #main-page p { font-family: 'Circular STD Light', sans-serif; font-weight: 300; }
+    p { font-family: 'Circular STD Light', sans-serif; font-weight: 300; }
 
     /* Scrollbalken ausblenden */
     body::-webkit-scrollbar { display: none; }
@@ -324,7 +327,7 @@ footer p {
       <div class="hidden md:flex space-x-8">
         <a href="#about"     class="nav-link text-white text-base font-medium page-link" data-page="main">About</a>
         <a href="#portfolio" class="nav-link text-white text-base font-medium page-link" data-page="main">Work</a>
-        <a href="#ai-video"  class="nav-link text-white text-base font-medium page-link" data-page="main">AI</a>
+        <a href="#ai"        class="nav-link text-white text-base font-medium page-link" data-page="ai">AI</a>
         <a href="#images"    class="nav-link text-white text-base font-medium page-link" data-page="images">Images</a>
         <a href="#services"  class="nav-link text-white text-base font-medium page-link" data-page="main">Services</a>
         <a href="#contact"   class="nav-link text-white text-base font-medium page-link" data-page="main">Contact</a>
@@ -341,7 +344,7 @@ footer p {
   <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
     <a href="#about"      class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">About</a>
     <a href="#portfolio"  class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Work</a>
-    <a href="#ai-video"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">AI</a>
+    <a href="#ai"         class="block text-white nav-link text-base font-bold page-link py-2" data-page="ai">AI</a>
     <a href="#images"     class="block text-white nav-link text-base font-bold page-link py-2" data-page="images">Images</a>
     <a href="#services"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Services</a>
     <a href="#contact"    class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Contact</a>
@@ -463,15 +466,157 @@ footer p {
   </div>
 </section>
 
-<section
-  id="ai-video"
-  class="py-20 md:py-32 bg-blacksolid reveal parallax"
-  data-speed="0.2"
->
-  <div class="container mx-auto px-6">
-    <!-- Content bleibt unverändert -->
-    <h2 class="super-title mb-16 font-bold text-center">AI</h2>
-    <h3 class="text-base md:text-xl font-bold mb-3 max-w-2xl mx-auto text-left">
+    <!-- Contact -->
+    <section id="contact" class="py-20 md:py-32 bg-dark reveal">
+      <div class="container mx-auto px-6">
+        <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div>
+            <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
+            <div class="space-y-6 text-xl">
+              <p><i class="fas fa-map-marker-alt mr-4"></i> Bregenz, Austria</p>
+              <p><i class="fas fa-envelope mr-4"></i> stefan.aberer@hotmail.com</p>
+              <p><i class="fas fa-phone mr-4"></i> +43 699 1111 0970</p>
+            </div>
+            <div class="mt-12">
+              <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
+              <div class="flex space-x-6">
+                <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl"><i class="fab fa-instagram"></i></a>
+                <a href="https://vimeo.com/user77038892" class="social-icon text-3xl"><i class="fab fa-vimeo-v"></i></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <form action="https://formspree.io/f/myzebqyq" method="POST">
+              <div class="mb-6"><input type="text"      name="name"     placeholder="Name"    class="contact-input w-full p-4 text-lg" required></div>
+              <div class="mb-6"><input type="email"     name="_replyto" placeholder="Email"   class="contact-input w-full p-4 text-lg" required></div>
+              <div class="mb-6"><input type="text"      name="subject"  placeholder="Subject" class="contact-input w-full p-4 text-lg"></div>
+              <div class="mb-6"><textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea></div>
+              <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">SEND MESSAGE</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer - ERSETZT mit neuem Footer-Code -->
+    <footer class="py-8 bg-darker">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <!-- Urheberrecht -->
+          <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+          <!-- Rechtliche Links -->
+          <nav class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+            <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+            <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- /MAIN-PAGE -->
+
+  <!-- IMAGES-PAGE -->
+  <div id="images-page" style="display:none; position:relative;">
+    <div id="images-background" class="transition-filter duration-500">
+      <section class="py-20 md:py-32 bg-black">
+        <div class="container mx-auto px-6">
+          <h2 class="super-title mb-16 text-center">IMAGES</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20of%20a%20quirky%20cartoon%20humanoid%20character%20with%20an%20oversized%20head%20and%20a%20glowing%20lightbu_.png" alt="Image 3" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png" alt="Image 4" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png" alt="Image 5" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20featuring%20a%20quirky%2C%20cartoonish%20humanoid%20character%20in%20black%20and%20white%2C%20matte%20textu_.png" alt="Image 6" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png" alt="Image 7" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp" alt="Image 8" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp" alt="Image 9" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp" alt="Image 10" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp" alt="Image 11" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp" alt="Image 12" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp" alt="Image 13" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp" alt="Image 14" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp" alt="Image 15" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp" alt="Image 16" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp" alt="Image 17" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp" alt="Image 18" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp" alt="Image 19" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png" alt="Image 20" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp" alt="Image 21" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp" alt="Image 22" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp" alt="Image 23" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn6yb30f5z8s2mj8jeq7s4w_img_0.webp" alt="Image 24" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png" alt="Image 25" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png" alt="Image 26" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png" alt="Image 27" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy6vvcyfv7am28t06499dn9_1745844382_img_0.webp" alt="Image 28" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp" alt="Image 29" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7mn8ff0ka37pkpdfd8yyq_1745845181_img_1.webp" alt="Image 30" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/Comp%201_00000.png" alt="Image 31" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp" alt="Image 32" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png" alt="Image 33" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/3_00000.png" alt="Image 34" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/4_00000.png" alt="Image 35" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/max-err-7-0a-prompt-oref-sref-in-the-comments-v0-pg0fccjn7fye1.webp" alt="Image 36" class="w-full h-auto" loading="lazy" width="400" height="300"></div>  
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/earth.png" alt="Image 36" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/fragments.png" alt="Image 37" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-160-Create%20a%20colorful%20poster%20for%20a%20children%E2%80%99s%20arts%20festival%20titled%20_KUNSTFUNKEL_.U_.png" alt="Image 38" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-161-Design%20a%20dark%20poster%20with%20deep%20purple%20and%20black%20gradient%20for%20a%20club%20night%20titl_.png" alt="Image 39" class="w-full h-auto" loading="lazy" width="400" height="300"></div>  
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-162-Create%20a%20poster%20with%20a%20black%20background%20and%20a%20central%20image%20of%20a%20glowing%20plane_.png" alt="Image 40" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-163-Design%20a%20gritty%20urban%20poster%20with%20a%20concrete%20wall%20texture%20as%20background.%20Event_.png" alt="Image 41" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-169-Create%20a%20warm%2C%20inviting%20poster%20with%20a%20dark%20red_burgundy%20background.%20Centerpiec_.png" alt="Image 42" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/meisterkonzerte1.png" alt="Image 43" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/meisterkonzerte2.png" alt="Image 44" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/premiere2.png" alt="Image 45" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png" alt="Image 46" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-172-Create%20a%20black%20poster%20with%20white%20chalkboard%20texture%20and%20scattered%20handwritten_.png" alt="Image 47" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+	  </div>
+        </div>
+      </section>
+
+      <!-- Footer für Images-Page -->
+      <footer class="py-8 bg-darker">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+
+
+    <!-- Blur & Popup -->
+    <div id="blur-overlay"></div>
+    <div id="popup-overlay">
+      <div id="popup-box" style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+        <div class="popup-content">
+          <h3 class="text-3xl font-bold mb-4">Note</h3>
+          <p>Creating high-quality videos – whether traditional or AI-generated – still requires a lot of technical skill, experience, time, and creative direction.</p>
+          <p>However, AI images are now easier to produce than ever, depending on complexity. These examples, created without manual retouching, highlight raw AI potential. They can be further refined using simple traditional steps.</p>
+          <p>I created these images for demonstration purposes, showing how an AI-assisted workflow can be a strong alternative for advertising, social media, and branding.</p>
+        </div>
+        <button id="continue-btn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+<!-- AI‑PAGE (neu) -->
+<div id="ai-page" class="placeholder-page">
+  <section class="py-20 md:py-32 bg-black">
+    <div class="container mx-auto px-6">
+      <h2 class="super-title mb-16 text-center">AI</h2>
+      <h3 class="text-base md:text-xl font-bold mb-3 max-w-2xl mx-auto text-left reveal parallax" data-speed="0.1">
  1. AI Video Production
 </h3>
 
@@ -728,150 +873,7 @@ footer p {
 
   </div> <!-- ← Ende .container -->
 </section> <!-- ← Ende AI-Workflow -->
-
-
-    <!-- Contact -->
-    <section id="contact" class="py-20 md:py-32 bg-dark reveal">
-      <div class="container mx-auto px-6">
-        <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
-        <div class="grid md:grid-cols-2 gap-12">
-          <div>
-            <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-            <div class="space-y-6 text-xl">
-              <p><i class="fas fa-map-marker-alt mr-4"></i> Bregenz, Austria</p>
-              <p><i class="fas fa-envelope mr-4"></i> stefan.aberer@hotmail.com</p>
-              <p><i class="fas fa-phone mr-4"></i> +43 699 1111 0970</p>
-            </div>
-            <div class="mt-12">
-              <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
-              <div class="flex space-x-6">
-                <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl"><i class="fab fa-instagram"></i></a>
-                <a href="https://vimeo.com/user77038892" class="social-icon text-3xl"><i class="fab fa-vimeo-v"></i></a>
-              </div>
-            </div>
-          </div>
-          <div>
-            <form action="https://formspree.io/f/myzebqyq" method="POST">
-              <div class="mb-6"><input type="text"      name="name"     placeholder="Name"    class="contact-input w-full p-4 text-lg" required></div>
-              <div class="mb-6"><input type="email"     name="_replyto" placeholder="Email"   class="contact-input w-full p-4 text-lg" required></div>
-              <div class="mb-6"><input type="text"      name="subject"  placeholder="Subject" class="contact-input w-full p-4 text-lg"></div>
-              <div class="mb-6"><textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea></div>
-              <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">SEND MESSAGE</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer - ERSETZT mit neuem Footer-Code -->
-    <footer class="py-8 bg-darker">
-      <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row items-center justify-between">
-          <!-- Urheberrecht -->
-          <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
-          <!-- Rechtliche Links -->
-          <nav class="flex space-x-6 mt-4 md:mt-0">
-            <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
-            <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
-            <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <!-- /MAIN-PAGE -->
-
-  <!-- IMAGES-PAGE -->
-  <div id="images-page" style="display:none; position:relative;">
-    <div id="images-background" class="transition-filter duration-500">
-      <section class="py-20 md:py-32 bg-black">
-        <div class="container mx-auto px-6">
-          <h2 class="super-title mb-16 text-center">IMAGES</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20of%20a%20quirky%20cartoon%20humanoid%20character%20with%20an%20oversized%20head%20and%20a%20glowing%20lightbu_.png" alt="Image 3" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png" alt="Image 4" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png" alt="Image 5" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20featuring%20a%20quirky%2C%20cartoonish%20humanoid%20character%20in%20black%20and%20white%2C%20matte%20textu_.png" alt="Image 6" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png" alt="Image 7" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp" alt="Image 8" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp" alt="Image 9" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp" alt="Image 10" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp" alt="Image 11" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp" alt="Image 12" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp" alt="Image 13" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp" alt="Image 14" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp" alt="Image 15" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp" alt="Image 16" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp" alt="Image 17" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp" alt="Image 18" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp" alt="Image 19" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png" alt="Image 20" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp" alt="Image 21" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp" alt="Image 22" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp" alt="Image 23" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn6yb30f5z8s2mj8jeq7s4w_img_0.webp" alt="Image 24" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png" alt="Image 25" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png" alt="Image 26" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png" alt="Image 27" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy6vvcyfv7am28t06499dn9_1745844382_img_0.webp" alt="Image 28" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp" alt="Image 29" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7mn8ff0ka37pkpdfd8yyq_1745845181_img_1.webp" alt="Image 30" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/Comp%201_00000.png" alt="Image 31" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp" alt="Image 32" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png" alt="Image 33" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/3_00000.png" alt="Image 34" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/4_00000.png" alt="Image 35" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/max-err-7-0a-prompt-oref-sref-in-the-comments-v0-pg0fccjn7fye1.webp" alt="Image 36" class="w-full h-auto" loading="lazy" width="400" height="300"></div>  
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/earth.png" alt="Image 36" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/fragments.png" alt="Image 37" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-160-Create%20a%20colorful%20poster%20for%20a%20children%E2%80%99s%20arts%20festival%20titled%20_KUNSTFUNKEL_.U_.png" alt="Image 38" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-161-Design%20a%20dark%20poster%20with%20deep%20purple%20and%20black%20gradient%20for%20a%20club%20night%20titl_.png" alt="Image 39" class="w-full h-auto" loading="lazy" width="400" height="300"></div>  
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-162-Create%20a%20poster%20with%20a%20black%20background%20and%20a%20central%20image%20of%20a%20glowing%20plane_.png" alt="Image 40" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-163-Design%20a%20gritty%20urban%20poster%20with%20a%20concrete%20wall%20texture%20as%20background.%20Event_.png" alt="Image 41" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-169-Create%20a%20warm%2C%20inviting%20poster%20with%20a%20dark%20red_burgundy%20background.%20Centerpiec_.png" alt="Image 42" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/meisterkonzerte1.png" alt="Image 43" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/meisterkonzerte2.png" alt="Image 44" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/premiere2.png" alt="Image 45" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png" alt="Image 46" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-172-Create%20a%20black%20poster%20with%20white%20chalkboard%20texture%20and%20scattered%20handwritten_.png" alt="Image 47" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-	  </div>
-        </div>
-      </section>
-
-      <!-- Footer für Images-Page -->
-      <footer class="py-8 bg-darker">
-        <div class="container mx-auto px-6">
-          <div class="flex flex-col md:flex-row items-center justify-between">
-            <!-- Urheberrecht -->
-            <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
-            <!-- Rechtliche Links -->
-            <nav class="flex space-x-6 mt-4 md:mt-0">
-              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
-              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
-              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
-            </nav>
-          </div>
-        </div>
-      </footer>
-    </div>
-
-    <!-- Blur & Popup -->
-    <div id="blur-overlay"></div>
-    <div id="popup-overlay">
-      <div id="popup-box" style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
-        <div class="popup-content">
-          <h3 class="text-3xl font-bold mb-4">Note</h3>
-          <p>Creating high-quality videos – whether traditional or AI-generated – still requires a lot of technical skill, experience, time, and creative direction.</p>
-          <p>However, AI images are now easier to produce than ever, depending on complexity. These examples, created without manual retouching, highlight raw AI potential. They can be further refined using simple traditional steps.</p>
-          <p>I created these images for demonstration purposes, showing how an AI-assisted workflow can be a strong alternative for advertising, social media, and branding.</p>
-        </div>
-        <button id="continue-btn">Continue</button>
-      </div>
-    </div>
-  </div>
+</div>
 
   <!-- IMPRESSUM-PAGE -->
   <div id="impressum-page" class="placeholder-page">
@@ -1124,10 +1126,12 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       const impressumPage = document.getElementById('impressum-page');
       const agbPage = document.getElementById('agb-page');
       const datenschutzPage = document.getElementById('datenschutz-page');
+      const aiPage          = document.getElementById('ai-page');
       
       const hideAllPages = () => {
         mainPage.style.display = "none";
         imagesPage.style.display = "none";
+        aiPage.style.display          = "none";
         impressumPage.style.display = "none";
         agbPage.style.display = "none";
         datenschutzPage.style.display = "none";
@@ -1148,6 +1152,9 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
           if (page === "images") {
             imagesPage.style.display = "block";
             setTimeout(() => imagesPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else if (page === "ai") {
+            aiPage.style.display = "block";
+            setTimeout(() => aiPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
           } else if (page === "impressum") {
             impressumPage.style.display = "block";
             setTimeout(() => impressumPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
@@ -1252,12 +1259,12 @@ function updateDesktopIframeScale(){
       /* Image Modal */
       const imageModal = document.getElementById('image-modal');
       const modalImage = imageModal.querySelector('.modal-image');
-      document.querySelectorAll('#images-page, #ai-video .portfolio-item img').forEach(img => {
-        img.addEventListener('click', e => {
-          modalImage.src = e.target.src;
-          imageModal.classList.add('active');
-        });
-      });
+      document.querySelectorAll('#images-page .portfolio-item img, #ai-page .portfolio-item img').forEach(img => {
+  img.addEventListener('click', e => {
+    modalImage.src = e.target.src;
+    imageModal.classList.add('active');
+  });
+});
       imageModal.addEventListener('click', () => imageModal.classList.remove('active'));
 
       /* Shuffle Images */
