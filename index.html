@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="dns-prefetch" href="https://player.vimeo.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet"/>
   <link rel="dns-prefetch" href="https://i.vimeocdn.com">
   <link rel="preconnect" href="https://player.vimeo.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
@@ -27,6 +28,10 @@
 #lang-switcher.visible {
   opacity: 1;
   pointer-events: auto;
+}
+
+.font-mono-custom {
+  font-family: 'Roboto Mono', monospace;
 }
 
 /* ─── Language Switcher oben halten ─── */
@@ -82,11 +87,11 @@
       font-display: swap;
     }
 
-    body             { background-color:#0f0f0f; color:#fff; font-family:'Circular STD Medium',sans-serif; }
+    body             { background-color:#000000; color:#fff; font-family:'Circular STD Medium',sans-serif; }
     .bg-darker       { background-color:#0f0f0f; }
-    .bg-dark         { background-color:#1a1a1a; }
+    .bg-white        { background-color:#FFFFFF; }
     .bg-medium       { background-color:#262626; }
-.bg-blacksolid       { background-color: #000000 }
+.bg-blacksolid       { background-color:#000000 }
 
      h1,h2,h3,h4,h5,h6{ font-family:'Circular STD Bold',sans-serif; font-weight:bold; }
     .mega-title      { font-size:5rem; line-height:1; letter-spacing:-.05em; }
@@ -296,41 +301,87 @@ footer p {
 #ai-video .portfolio-item img {
   cursor: pointer;
 }
-  </style>
-<style>
   /* Note-Popup und Blur-Overlay permanent ausblenden */
-  #popup-overlay,
-  #blur-overlay {
-    display: none !important;
-  }
+ #popup-overlay,
+#blur-overlay {
+  display: none !important;
+}
 #lang-switcher {
   display: none !important;
+}
+ /* VIDEO WRAPPER */
+  .video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 17,5%;            /* <-- hier auf 25% ändern für echtes 16:4 */
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 225%;                /* bleibt 225% */
+  transform: translateY(-27.778%); /* bleibt gleich */
+  border: 0;
+}
+/* === Portfolio-Lightbox =============================== */
+#video-lightbox{
+  position:fixed; inset:0;
+  display:none; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.85); z-index:1000;
+}
+#video-lightbox.show{display:flex;}
+#video-lightbox iframe{
+  width:80vw; height:45vw;            /* 16 : 9 */
+  max-width:1280px; max-height:720px;
+  border:0; border-radius:.5rem;
+}
+#video-lightbox .close-btn{
+  position:absolute; top:1.5rem; right:1.5rem;
+  font-size:2rem; color:#fff; cursor:pointer;
+}
+@media (max-width:767px){
+  #video-lightbox iframe{width:90vw; height:56.25vw;}
+}
+/* iframe klick-durchlässig machen  */
+#portfolio iframe{pointer-events:none;}
+/* Lightbox-Player sauber einblenden */
+#lightbox-player{
+  background:#000;          /* verhindert Transparent-Blitz */
+  opacity:0;                /* Start unsichtbar */
+  transition:opacity .3s ease;
+}
+#lightbox-player.ready{opacity:1;}
+/* Close-Icon im Lightbox-Overlay ausblenden */
+#video-lightbox .close-btn{
+  display:none !important;
 }
 </style>
 </head>
 <body>
   <!-- Intro Overlay -->
 <div class="intro-overlay">
-  <div class="name-wrapper text-2xl md:text-3xl font-bold text-white leading-tight">
-    <span class="name-part first">STEFAN</span>
-    <span class="name-part second">ABERER</span>
+  <div class="name-wrapper text-2xl md:text-3xl font-medium text-white leading-tight">
+    <span class="name-part first">stefan</span>
+    <span class="name-part second">aberer</span>
   </div>
 </div>
 
 <!-- NAVIGATION -->
-<nav class="fixed w-full z-50 bg-darker bg-opacity-90 backdrop-filter backdrop-blur-sm">
-  <div class="container mx-auto px-8 py-4">
+<nav class="fixed w-full z-50 bg-black bg-opacity-100 backdrop-filter backdrop-blur-sm">
+  <div class="mx-auto max-w-7xl px-6 py-3">
     <div class="flex justify-between items-center">
       <!-- Logo links (bold, 2xl) -->
-      <a href="#" id="homeLink" class="text-white text-2xl font-bold">STEFAN ABERER</a>
+      <a href="#" id="homeLink" class="text-white text-2xl font-medium">stefan aberer</a>
       <!-- Desktop-Links (base size, medium) -->
       <div class="hidden md:flex space-x-8">
-        <a href="#about"     class="nav-link text-white text-md font-base page-link" data-page="main">About</a>
-        <a href="#portfolio" class="nav-link text-white text-md font-base page-link" data-page="main">Work</a>
-        <a href="#ai"        class="nav-link text-white text-md font-base page-link" data-page="ai">AI</a>
-        <a href="#images"    class="nav-link text-white text-md font-base page-link" data-page="images">Images</a>
-        <a href="#services"  class="nav-link text-white text-md font-base page-link" data-page="main">Services</a>
-        <a href="#contact"   class="nav-link text-white text-md font-base page-link" data-page="main">Contact</a>
+        <a href="#about"     class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">ABOUT</a>
+        <a href="#portfolio" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">WORK</a>
+        <a href="#ai"        class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="ai">AI</a>
+        <a href="#images"    class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="images">IMAGES</a>
+        <a href="#services"  class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">SERVICES</a>
+        <a href="#contact"   class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">CONTACT</a>
       </div>
       <!-- Mobile-Button -->
       <div class="md:hidden">
@@ -341,7 +392,7 @@ footer p {
     </div>
   </div>
   <!-- Mobile-Links (base size, bold) -->
-  <div id="mobileMenu" class="hidden md:hidden bg-darker px-6 pb-4">
+  <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
     <a href="#about"      class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">About</a>
     <a href="#portfolio"  class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Work</a>
     <a href="#ai"         class="block text-white nav-link text-base font-bold page-link py-2" data-page="ai">AI</a>
@@ -365,148 +416,273 @@ footer p {
 
             <div class="content-overlay">
         <div class="text-center px-4">
-          <h1 class="mega-title mb-6">LET'S MAKE IT COUNT.</h1>
+          <h1 class="mega-title mb-6">Let's make it count.</h1>
 <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
   Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.</p>
 </p>
 <a href="#portfolio"
-   class="px-8 py-3 bg-white text-black text-lg font-bold rounded-lg hover:bg-opacity-90 transition-all">
+   class="px-4 py-2 bg-white text-black text-sm font-mono-custom rounded-md hover:bg-opacity-90 transition-all">
   VIEW WORK
 </a>
         </div>
       </div>
     </section>
 
-        <!-- About -->
-    <section id="about" class="py-20 md:py-32 bg-darker">
-      <div class="container mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 class=" ml-36 super-title mb-8">ABOUT ME</h2>
-            <p class="text-base ml-36 mb-6 max-w-2xl font light">I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. I believe in combining technical excellence with creative direction. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.</p>
-<a href="#ai" 
-   data-page="ai"
-   class="page-link ml-36 mt-2 inline-block text-sm font-light underline hover:text-gray-400 transition-colors">
-  Read More ...
+        <!-- About / Hero Section -->
+<section id="about" class="py-20 md:py-32 bg-blacksolid text-white">
+  <div class="container mx-auto max-w-7xl px-6 reveal">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      
+      <!-- Text-Column -->
+      <div>
+        <!-- kleine Monospace-Überschrift -->
+        <p class="font-mono uppercase text-xs tracking-widest mb-4">
+          ABOUT ME
+        </p>
+
+        <!-- große Headlines -->
+        <h1 class="text-3xl md:text-6xl leading-tight font-light mb-2">
+          Sharp Cuts.
+        </h1>
+        <h1 class="text-3xl md:text-6xl leading-tight font-light mb-2">
+          Smooth Flow.
+        </h1>
+        <h1 class="text-3xl md:text-6xl leading-tight font-bold mb-6">
+          AI Enhanced.
+        </h1>
+
+        <!-- Fließtext -->
+        <p class="text-base md:text-lg max-w-2xl font-light mb-4">
+          I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.
+        </p>
+
+        <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
+        <a
+  href="#ai"
+  data-page="ai"
+  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-sm tracking-widest px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+>
+  READ MORE ABOUT AI
+  <span class="inline-block ml-2 align-middle">→</span>
 </a>
-          </div>
-          <div>
-            <!-- loading="lazy" hinzugefügt für verzögertes Laden -->
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png" alt="Profile Image" class="profile-pic max-w-xs rounded-lg mx-auto parallax" data-speed="0.1" width="384" height="384">
-          </div>
-        </div>
       </div>
-    </section>
 
-
-    <!-- Portfolio -->
-    <section id="portfolio" class="py-20 md:py-32 bg-dark">
-      <div class="container mx-auto px-6">
-        <h2 class="super-title mb-16 text-center">SELECTED WORK</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Featured Project -->
-          <div class="portfolio-item md:col-span-3 reveal">
-            <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <!-- loading="lazy" für verzögertes Laden -->
-              <iframe loading="eager" src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
-            </div>
-            <div class="p-6 bg-darker">
-              <h3 class="text-3xl font-bold mb-2">THE ULTIMATE DRIVE</h3>
-              <p class="text-mb">This project serves as a first Proof of Concept and was created by using an early AI Image to Video Process in combination with traditional editing.</p>
-            </div>
-          </div>
-          <!-- Item 1 -->
-          <div class="portfolio-item reveal">
-            <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe loading="lazy" src="https://player.vimeo.com/video/1043677704?title=0&byline=0&portrait=0&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
-            </div>
-            <div class="p-4 bg-darker">
-              <h3 class="text-2xl font-bold">STAY (TYPOGRAPHY)</h3><p>Showcasing Typography.</p>
-            </div>
-          </div>
-          <!-- Item 2 -->
-          <div class="portfolio-item reveal">
-            <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe loading="lazy" src="https://player.vimeo.com/video/843986777?title=0&byline=0&portrait=0&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
-            </div>
-            <div class="p-4 bg-darker">
-              <h3 class="text-2xl font-bold">SHORT FILM TRAILER</h3><p>Teaser Trailer.</p>
-            </div>
-          </div>
-          <!-- Item 3 -->
-          <div class="portfolio-item reveal">
-            <div class="relative w-full bg-medium overflow-hidden" style="padding-top:56.25%;">
-              <iframe loading="lazy" src="https://player.vimeo.com/video/1073580177?title=0&byline=0&portrait=0&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
-            </div>
-            <div class="p-4 bg-darker">
-              <h3 class="text-2xl font-bold">AUTOMOTIVE SHOWREEL 2022</h3><p>Various snippets of car related projects.</p>
-            </div>
-          </div>
-        </div>
+      <!-- Dein Bild -->
+      <div class="flex justify-center">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
+          alt="Mein Profilbild"
+          class="max-w-md w-full h-auto rounded-lg"
+          loading="lazy"
+        >
       </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="py-20 md:py-32 bg-darker">
-      <div class="container mx-auto px-6">
-        <h2 class="super-title mb-16 text-center font-bold">SERVICES</h2>
-        <div class="grid md:grid-cols-3 gap-12">
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">01</h3><h4 class="mb-4">CONCEPTION</h4>
-            <p class="text-base">Whether it's purely video content or anything else – <br>I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.</p>
-          </div>
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">02</h3><h4 class="mb-4">VIDEO EDITING</h4>
-            <p class="text-base">I cover the full post-production workflow – from <br>rough cut to final export. This includes selecting <br>and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup, retouching, and template-based animations if needed.</p>
-          </div>
-          <div class="service-card p-10 reveal">
-            <h3 class="text-sm font-light mb-2">03</h3><h4 class="mb-4">AI SPECALIST</h4>
-            <p class="text-base">I use artificial intelligence to create both realistic <br>and surreal images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals — tailored to any product or individual.</p>
-          </div>
-        </div>
-        <div class="mt-20 text-center reveal">
-          <h3 class="text-3xl font-bold mb-8">TECHNICAL SPECS</h3>
-          <p class="text-sm max-w-2xl mx-auto font-light">I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo &amp; DSMC2 (REDCODE RAW/Log3G10), Blackmagic RAW, Film and all major Sony Cameras (S-Log). My color pipeline is centered around Rec.709 (Log-to-Rec.709 conversion), but I'm also comfortable delivering in Rec.2020 and DCI-P3 workflows if needed. My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).</p>
+      
     </div>
   </div>
 </section>
 
-    <!-- Contact -->
-    <section id="contact" class="py-20 md:py-32 bg-dark reveal">
-      <div class="container mx-auto px-6">
-        <h2 class="super-title mb-16 text-center">GET IN TOUCH</h2>
-        <div class="grid md:grid-cols-2 gap-12">
-          <div>
-            <h3 class="text-3xl font-bold mb-6">CONTACT INFO</h3>
-            <div class="space-y-6 text-xl">
-              <p><i class="fas fa-map-marker-alt mr-4"></i> Bregenz, Austria</p>
-              <p><i class="fas fa-envelope mr-4"></i> stefan.aberer@hotmail.com</p>
-              <p><i class="fas fa-phone mr-4"></i> +43 699 1111 0970</p>
-            </div>
-            <div class="mt-12">
-              <h4 class="text-2xl font-bold mb-4">FOLLOW ME</h4>
-              <div class="flex space-x-6">
-                <a href="https://www.instagram.com/i12b0kay" class="social-icon text-3xl"><i class="fab fa-instagram"></i></a>
-                <a href="https://vimeo.com/user77038892" class="social-icon text-3xl"><i class="fab fa-vimeo-v"></i></a>
-              </div>
-            </div>
-          </div>
-          <div>
-            <form action="https://formspree.io/f/myzebqyq" method="POST">
-              <div class="mb-6"><input type="text"      name="name"     placeholder="Name"    class="contact-input w-full p-4 text-lg" required></div>
-              <div class="mb-6"><input type="email"     name="_replyto" placeholder="Email"   class="contact-input w-full p-4 text-lg" required></div>
-              <div class="mb-6"><input type="text"      name="subject"  placeholder="Subject" class="contact-input w-full p-4 text-lg"></div>
-              <div class="mb-6"><textarea name="message" placeholder="Message" rows="6" class="contact-input w-full p-4 text-lg" required></textarea></div>
-              <button type="submit" class="px-8 py-3 bg-white text-black text-lg font-bold w-full rounded-lg hover:bg-opacity-90 transition-all">SEND MESSAGE</button>
-            </form>
+<!-- Portfolio -->
+<section id="portfolio" class="py-20 bg-white">
+  <!-- Titel -->
+  <div class="container mx-auto max-w-7xl px-6 text-center mb-12 reveal">
+    <h2 class="super-title text-black">Featured Work</h2>
+      </div>
+
+  <!-- Erstes Video -->
+  <div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
+    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+      <iframe
+        loading="eager"
+        src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=1&title=0&byline=0&portrait=0"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        data-vimeo-id="1043117915"
+        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+      ></iframe>
+      <!-- Overlay Texte -->
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="font-mono text-sm uppercase mb-1">Proof of concept</p>
+        <h3 class="text-3xl font-bold">The Ultimate Drive</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Zweites Video (ohne Autoplay) -->
+  <div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
+    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+      <iframe
+        loading="eager"
+        src="https://player.vimeo.com/video/843986777?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        data-vimeo-id="843986777"
+        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+      ></iframe>
+      <!-- Overlay Texte -->
+      <div class="absolute bottom-6 left-6 text-white">
+        <p class="font-mono text-sm uppercase mb-1">Shortfilm Trailer</p>
+        <h3 class="text-3xl font-bold">One Last time</h3>
+      </div>
+    </div>
+  </div>
+
+<!-- Dritt­es Video (ohne Autoplay) -->
+<div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+    <iframe
+      loading="eager"
+      src="https://player.vimeo.com/video/1073580177?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      data-vimeo-id="1073580177"
+      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-6 left-6 text-white">
+      <p class="font-mono text-sm uppercase mb-1">Snippets of Automotive Projects</p>
+      <h3 class="text-3xl font-bold">Automotive Showreel 2022</h3>
+    </div>
+  </div>
+</div>
+
+<!-- Viertes Video (ohne Autoplay) -->
+<div class="container mx-auto max-w-8xl px-6 video-hover reveal">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+    <iframe
+      loading="eager"
+      src="https://player.vimeo.com/video/1043677704?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      data-vimeo-id="1043677704"
+      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-6 left-6 text-white">
+      <p class="font-mono text-sm uppercase mb-1">Animation & Typography</p>
+      <h3 class="text-3xl font-bold">Stay (Typography)</h3>
+    </div>
+  </div>
+</div>
+<!-- Trennlinie nach dem letzten Video -->
+<div class="container mx-auto max-w-8xl px-6">
+  <!-- z. B. 90 % Breite -->
+  <hr class="border-t border-black w-11/12 mx-auto mt-12 md:mt-20" />
+</div>
+</section>
+
+   <!-- Services -->
+<section id="services" class="pt-12 md:pt-0 pb-20 md:pb-28 bg-white">
+  <div class="container mx-auto max-w-7xl px-6 text-center mb-12 reveal">
+    <!-- intro -->
+    <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
+      more about me
+    </p>
+    <h2 class="super-title mb-12 text-black">Services</h2>
+
+    <!-- service cards -->
+    <div class="grid gap-12 md:grid-cols-3 text-left">
+      <!-- card 01 -->
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
+        <div class="relative h-56 bg-black overflow-hidden">
+          <img
+            src="https://placehold.co/600x400?text=IMAGE+01"
+            alt="Service 01 placeholder"
+            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+        </div>
+
+        <!-- hellgrauer Textbereich -->
+        <div class="flex flex-col p-8 flex-1 bg-gray-100">
+          <span class="font-mono text-sm text-gray-500 mb-2">01</span>
+          <h3 class="text-xl font-semibold text-black mb-4">CONCEPTION</h3>
+          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
+            Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
+          </p>
+
+          <!-- schwarzer Button -->
+          <div class="mt-8">
+            <button
+              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
+              READ MORE
+            </button>
           </div>
         </div>
-      </div>
-    </section>
+      </article>
+
+      <!-- card 02 -->
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
+        <div class="relative h-56 bg-black overflow-hidden">
+          <img
+            src="https://placehold.co/600x400?text=IMAGE+02"
+            alt="Service 02 placeholder"
+            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+        </div>
+
+        <div class="flex flex-col p-8 flex-1 bg-gray-100">
+          <span class="font-mono text-sm text-gray-500 mb-2">02</span>
+          <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
+         <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
+            I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
+          </p>
+
+          <div class="mt-8">
+            <button
+              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
+              READ MORE
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- card 03 -->
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
+        <div class="relative h-56 bg-black overflow-hidden">
+          <img
+            src="https://placehold.co/600x400?text=IMAGE+03"
+            alt="Service 03 placeholder"
+            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+        </div>
+
+        <div class="flex flex-col p-8 flex-1 bg-gray-100">
+          <span class="font-mono text-sm text-gray-500 mb-2">03</span>
+          <h3 class="text-xl font-semibold text-black mb-4">AI SPECIALIST</h3>
+          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
+            I use AI to create images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.
+          </p>
+
+          <div class="mt-8">
+            <button
+              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
+              Tech insights
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- technical specs -->
+    <div class="mt-16 md:mt-20 text-black text-center reveal">
+<p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
+      technical specs
+    </p>
+      <h3 class="text-3xl font-bold mb-8">My Workflow & Tools</h3>
+      <p class="text-sm max-w-2xl mx-auto text-black font-light">
+        I work with After Effects, Premiere, Photoshop, Topaz Video Enhance, and AI tools like Midjourney, Runway, Kling, and more. My main OS is Windows, but I’m also comfortable working on macOS. I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo & DSMC2
+        (REDCODE RAW / Log3G10), Blackmagic RAW, film, and all major Sony cameras (S-Log).
+        My colour pipeline is centred around Rec. 709 (Log-to-Rec. 709 conversion),
+        but I'm also comfortable delivering in Rec. 2020 and DCI-P3 workflows if needed.
+        My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).
+      </p>
+    </div>
+  </div>
+</section>
 
     <!-- Footer - ERSETZT mit neuem Footer-Code -->
     <footer class="py-8 bg-darker">
-      <div class="container mx-auto px-6">
+      <div class="container max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row items-center justify-between">
           <!-- Urheberrecht -->
           <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -526,7 +702,7 @@ footer p {
   <div id="images-page" style="display:none; position:relative;">
     <div id="images-background" class="transition-filter duration-500">
       <section class="py-20 md:py-32 bg-black">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl mx-auto px-6">
           <h2 class="super-title mb-16 text-center">IMAGES</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
@@ -584,7 +760,7 @@ footer p {
 
       <!-- Footer für Images-Page -->
       <footer class="py-8 bg-darker">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
             <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -619,7 +795,7 @@ footer p {
 <!-- AI‑PAGE (neu) -->
 <div id="ai-page" class="placeholder-page">
   <section class="py-20 md:py-32 bg-black">
-    <div class="container mx-auto px-6">
+    <div class="container max-w-7xl mx-auto px-6">
       <h2 class="super-title mb-16 text-center">AI</h2>
       <h3 class="text-base md:text-3xl font-bold mb-3 max-w-2xl mx-auto text-left reveal parallax" data-speed="0.1">
  1. AI Video Production
@@ -801,7 +977,7 @@ footer p {
 </section> <!-- ← Ende AI-Workflow -->
 <!-- Footer für Ai-Page -->
       <footer class="py-8 bg-darker">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
             <p class="text-sm text-gray-300">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -820,7 +996,7 @@ footer p {
   <!-- IMPRESSUM-PAGE -->
   <div id="impressum-page" class="placeholder-page">
     <section class="py-20 md:py-32 bg-black">
-      <div class="container mx-auto px-6">
+      <div class="container max-w-7xl mx-auto px-6">
         <h2 class="super-title mb-16 text-center">IMPRESSUM</h2>
         <div class="placeholder-content">
  <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ANGABEN GEMÄSS § 5 ECG & § 24 MEDIENG</h3>
@@ -865,7 +1041,7 @@ footer p {
 
       <!-- Footer für Impressum-Page -->
       <footer class="py-8 bg-darker fixed bottom-0 w-full">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
             <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -884,7 +1060,7 @@ footer p {
   <!-- AGB-PAGE -->
   <div id="agb-page" class="placeholder-page">
     <section class="py-20 md:py-32 bg-black">
-      <div class="container mx-auto px-6">
+      <div class="container max-w-7xl mx-auto px-6">
         <h2 class="super-title mb-16 text-center">AGB</h2>
         <div class="placeholder-content">
           <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">GELTUNGSBEREICH</h3>
@@ -962,7 +1138,7 @@ Personenbezogene Daten werden ausschließlich zur Abwicklung des jeweiligen Auft
 
       <!-- Footer für AGB-Page -->
       <footer class="py-8 bg-darker fixed bottom-0 w-full">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl max-w-7xl mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
             <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -981,7 +1157,7 @@ Personenbezogene Daten werden ausschließlich zur Abwicklung des jeweiligen Auft
   <!-- DATENSCHUTZ-PAGE -->
   <div id="datenschutz-page" class="placeholder-page">
     <section class="py-20 md:py-32 bg-black">
-      <div class="container mx-auto px-6">
+      <div class="container max-w-7xl mx-auto px-6">
         <h2 class="super-title mb-16 text-center">DATENSCHUTZ</h2>
         <div class="placeholder-content">
           <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERANTWORTLICHER</h3>
@@ -1035,7 +1211,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
 
       <!-- Footer für Datenschutz-Page -->
       <footer class="py-8 bg-darker fixed bottom-0 w-full">
-        <div class="container mx-auto px-6">
+        <div class="container max-w-7xl max-w-7xl mx-auto px-6">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <!-- Urheberrecht -->
             <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
@@ -1056,6 +1232,13 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
     <div class="modal-overlay"></div>
     <img src="" class="modal-image" alt="Vergrößertes Bild">
   </div>
+
+<!-- Video Lightbox -->
+<div id="video-lightbox">
+  <span class="close-btn">&times;</span>
+  <iframe id="lightbox-player"
+          src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+</div>
 
   <!-- SCRIPTS -->
   <script>
@@ -1229,11 +1412,9 @@ function updateDesktopIframeScale(){
         });
       }, {threshold: 0.1});
       
-      document.querySelectorAll('#main-page section:not(#home), .reveal').forEach(el => {
-        el.classList.add('reveal');
-        revealObserver.observe(el);
-      });
-
+     document
+  .querySelectorAll('.reveal')   // nur noch echte Reveal-Elemente
+  .forEach(el => revealObserver.observe(el));
       
       /* Optimierter Parallax-Effekt mit requestAnimationFrame */
       const parallaxEls = document.querySelectorAll('.parallax');
@@ -1407,6 +1588,51 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!didReveal) revealContent();
     }
   }, 300); // 300ms Verzögerung für die Vimeo-Initialisierung
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const box   = document.getElementById('video-lightbox');
+  const close = box.querySelector('.close-btn');
+  const plyr  = document.getElementById('lightbox-player');
+
+  /* Vimeo-Iframe nach Ladung einblenden */
+  plyr.addEventListener('load', () => plyr.classList.add('ready'));
+
+  /* === Klick- & Hover-Layer über jedes Portfolio-Video === */
+  document.querySelectorAll('#portfolio .video-hover > div').forEach(wrapper => {
+    const frame = wrapper.querySelector('iframe');
+    if (!frame) return;
+
+    /* 1) Vimeo-Player instanziieren */
+    const player = new Vimeo.Player(frame);
+    player.setVolume(0);            // immer stumm
+
+    /* 2) transparente Schicht erzeugen */
+    const layer = document.createElement('div');
+    layer.style.cssText = 'position:absolute;inset:0;cursor:pointer;';
+    wrapper.appendChild(layer);
+
+    /* --- Hover: abspielen / pausieren ------------------- */
+    layer.addEventListener('mouseenter', () => player.play());
+    layer.addEventListener('mouseleave', () => player.pause());
+
+    /* --- Klick: Lightbox öffnen ------------------------- */
+    const id = frame.dataset.vimeoId || frame.src.split('/').pop().split('?')[0];
+    layer.addEventListener('click', () => {
+      plyr.classList.remove('ready');
+      plyr.src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+      box.classList.add('show');
+    });
+  });
+
+  /* Lightbox schließen */
+  function closeBox(){
+    box.classList.remove('show');
+    plyr.src = '';
+  }
+  close.addEventListener('click', closeBox);
+  box.addEventListener('click', e => { if (e.target === box) closeBox(); });
 });
 </script>
 </body>
