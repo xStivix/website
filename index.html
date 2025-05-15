@@ -357,6 +357,10 @@ footer p {
 #video-lightbox .close-btn{
   display:none !important;
 }
+/* Oder nur für Services */
+#services {
+  scroll-margin-top: 80px;
+}
 </style>
 </head>
 <body>
@@ -430,7 +434,7 @@ footer p {
 
         <!-- About / Hero Section -->
 <section id="about" class="py-20 md:py-32 bg-blacksolid text-white">
-  <div class="container mx-auto max-w-7xl px-6 reveal">
+  <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6 reveal">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       
       <!-- Text-Column -->
@@ -441,13 +445,13 @@ footer p {
         </p>
 
         <!-- große Headlines -->
-        <h1 class="text-3xl md:text-6xl leading-tight font-light mb-2">
+        <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
           Sharp Cuts.
         </h1>
-        <h1 class="text-3xl md:text-6xl leading-tight font-light mb-2">
+        <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
           Smooth Flow.
         </h1>
-        <h1 class="text-3xl md:text-6xl leading-tight font-bold mb-6">
+        <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
           AI Enhanced.
         </h1>
 
@@ -460,7 +464,7 @@ footer p {
         <a
   href="#ai"
   data-page="ai"
-  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-sm tracking-widest px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-sm tracking-widest px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
 >
   READ MORE ABOUT AI
   <span class="inline-block ml-2 align-middle">→</span>
@@ -594,7 +598,6 @@ footer p {
             class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
         </div>
 
-        <!-- hellgrauer Textbereich -->
         <div class="flex flex-col p-8 flex-1 bg-gray-100">
           <span class="font-mono text-sm text-gray-500 mb-2">01</span>
           <h3 class="text-xl font-semibold text-black mb-4">CONCEPTION</h3>
@@ -602,7 +605,6 @@ footer p {
             Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
           </p>
 
-          <!-- schwarzer Button -->
           <div class="mt-8">
             <button
               class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
@@ -612,30 +614,32 @@ footer p {
         </div>
       </article>
 
-      <!-- card 02 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
-        <div class="relative h-56 bg-black overflow-hidden">
-          <img
-            src="https://placehold.co/600x400?text=IMAGE+02"
-            alt="Service 02 placeholder"
-            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
-        </div>
+     <!-- in deiner Services-Section (Card 02) -->
+<article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
+  <div class="relative h-56 bg-black overflow-hidden">
+    <img
+      src="https://placehold.co/600x400?text=IMAGE+02"
+      alt="Service 02 placeholder"
+      class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+  </div>
 
-        <div class="flex flex-col p-8 flex-1 bg-gray-100">
-          <span class="font-mono text-sm text-gray-500 mb-2">02</span>
-          <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
-         <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
-            I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
-          </p>
+  <div class="flex flex-col p-8 flex-1 bg-gray-100">
+    <span class="font-mono text-sm text-gray-500 mb-2">02</span>
+    <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
+    <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
+      I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
+    </p>
 
-          <div class="mt-8">
-            <button
-              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
-              READ MORE
-            </button>
-          </div>
-        </div>
-      </article>
+    <div class="mt-8">
+      <a
+        href="#video-editing"
+        data-page="videoEditing"
+        class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
+        READ MORE
+      </a>
+    </div>
+  </div>
+</article>
 
       <!-- card 03 -->
       <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
@@ -654,10 +658,12 @@ footer p {
           </p>
 
           <div class="mt-8">
-            <button
-              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
+            <a
+              href="#ai"
+              data-page="ai"
+              class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
               Tech insights
-            </button>
+            </a>
           </div>
         </div>
       </article>
@@ -665,9 +671,9 @@ footer p {
 
     <!-- technical specs -->
     <div class="mt-16 md:mt-20 text-black text-center reveal">
-<p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
-      technical specs
-    </p>
+      <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
+        technical specs
+      </p>
       <h3 class="text-3xl font-bold mb-8">My Workflow & Tools</h3>
       <p class="text-sm max-w-2xl mx-auto text-black font-light">
         I work with After Effects, Premiere, Photoshop, Topaz Video Enhance, and AI tools like Midjourney, Runway, Kling, and more. My main OS is Windows, but I’m also comfortable working on macOS. I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo & DSMC2
@@ -679,6 +685,8 @@ footer p {
     </div>
   </div>
 </section>
+
+
 
     <!-- Footer - ERSETZT mit neuem Footer-Code -->
     <footer class="py-8 bg-darker">
@@ -703,7 +711,7 @@ footer p {
     <div id="images-background" class="transition-filter duration-500">
       <section class="py-20 md:py-32 bg-black">
         <div class="container max-w-7xl mx-auto px-6">
-          <h2 class="super-title mb-16 text-center">IMAGES</h2>
+          <h2 class="super-title mb-16 text-center">Images</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
@@ -794,121 +802,170 @@ footer p {
 
 <!-- AI‑PAGE (neu) -->
 <div id="ai-page" class="placeholder-page">
-  <section class="py-20 md:py-32 bg-black">
-    <div class="container max-w-7xl mx-auto px-6">
-      <h2 class="super-title mb-16 text-center">AI</h2>
-      <h3 class="text-base md:text-3xl font-bold mb-3 max-w-2xl mx-auto text-left reveal parallax" data-speed="0.1">
- 1. AI Video Production
-</h3>
+ <!-- Intro-Block wie bei About & Video Editing -->
+  <section id="ai-intro" class="py-20 md:py-32 bg-blacksolid text-white">
+    <div class="container mx-auto max-w-7xl px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="font-mono uppercase text-xs tracking-widest mb-4">
+            AI INSIGHTS
+          </p>
+          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+            Cutting-Edge
+          </h1>
+          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+            Intelligent
+          </h1>
+          <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+            Solutions
+          </h1>
+          <p class="text-base md:text-lg max-w-2xl font-light mb-4">
+            I leverage the latest AI tools—Midjourney, Runway, custom pipelines—to
+            elevate your visuals from static images to dynamic narratives. Discover
+            how generative models can accelerate and enrich your creative workflow.
+          </p>
+        </div>
+        <div class="flex justify-center">
+          <img
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
+            alt="Mein Profilbild"
+            class="max-w-md w-full h-auto rounded-lg"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <p class="text-xb mx-auto font-light max-w-2xl mb-24 reveal parallax" data-speed="0.1">
-      When working with generative AI for video production, I find that an image to video approach currently offers the maximum amount of creative control. It enables customizable visuals for any product, individual, or creative project. The current workflow with most control usually starts with a source image, AI-generated or photographed, which I shape into a foundation using sketches, 3D models, images, or assets to define the composition. I then apply a style reference and or a tailored prompt to guide the AI toward the desired look, transforming the draft into a high-quality image. Next, I refine the image through editing, color grading, and detail adjustments. Once it aligns with my vision, I input it into an AI image-to-video model with custom prompts, select the best video output, and finalize it with manual refinements.</p>
+  <section class="py-20 md:py-32 bg-white">
+    <div class="container max-w-7xl mx-auto px-6">
+<p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
+      AI WORKFLOW
+    </p>
+      <h2 class="super-title mb-8 text-black text-center">Generative AI</h2>
+    <p class="text-xb mx-auto font-light text-black  max-w-2xl mb-12">
+      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content.
+I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
 
     <!-- ############################################################# -->
     <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
     <!-- ############################################################# -->
 
-    <!-- PASS 1 – AI-Workflow (alle Slots) -->
-<div class="grid md:grid-cols-4 gap-8 mb-24">
-  <!-- Slot 1 -->
-  <div class="portfolio-item reveal parallax" data-speed="0.1">
+    <div class="grid grid-cols-3 gap-4 mb-4">
+
+  <!-- Bild 1 -->
+  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/2.2_00000.png"
-      alt="Pass 1 – Refinement"
-      class="w-full h-auto parallax"
-      data-speed="0.1"
+      alt="Initital Still – Adding 3D Mesh / Drawing"
+      class="w-full h-full object-cover"
     />
-    <div class="p-4 bg-darker">
-      <h4 class="text-lg font-bold">Initital Still</h4>
-      <p class="text-sm font-light">Adding 3D Mesh / Drawing</p>
+    <div class="absolute bottom-2 left-4 text-white pointer-events-none">
+      <p class="font-mono text-xs uppercase mb-0">01 Initial Image</p>
+      <h4 class="text-lg font-bold">Adding Content</h4>
     </div>
   </div>
 
-  <!-- Slot 2 -->
-  <div class="portfolio-item reveal parallax" data-speed="0.1">
+  <!-- Bild 2 -->
+  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sgfsg_00000.png"
-      alt="Pass 1 – Color pass"
-      class="w-full h-auto parallax"
-      data-speed="0.1"
+      alt="Reference Image (Google) – Including Prompt for the Image"
+      class="w-full h-full object-cover"
     />
-    <div class="p-4 bg-darker">
-      <h4 class="text-lg font-bold">Reference Image (Google)</h4>
-      <p class="text-sm font-light">Including Prompt for the Image</p>
+    <div class="absolute bottom-2 left-4 text-white pointer-events-none">
+      <p class="font-mono text-xs uppercase mb-0">02 Reference</p>
+      <h4 class="text-lg font-bold">Google Image</h4>
     </div>
   </div>
 
-  <!-- Slot 3 -->
-  <div class="portfolio-item reveal parallax" data-speed="0.1">
+  <!-- Bild 3 -->
+  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/3_00125.png"
-      alt="Pass 1 – Final still"
-      class="w-full h-auto parallax"
-      data-speed="0.1"
+      alt="Final Still – First Color Grading"
+      class="w-full h-full object-cover"
     />
-    <div class="p-4 bg-darker">
-      <h4 class="text-lg font-bold">Final Still</h4>
-      <p class="text-sm font-light">Fist Color Grading</p>
+    <div class="absolute bottom-2 left-4 text-white pointer-events-none">
+      <p class="font-mono text-xs uppercase mb-0">03 Final Still</p>
+      <h4 class="text-lg font-bold">Fully Color Graded & Edited</h4>
     </div>
   </div>
 
-  <!-- Slot 4: Video im Portfolio-Container -->
-  <div class="portfolio-item group reveal parallax" data-speed="0.1">
-    <div class="relative overflow-hidden rounded-lg" style="padding-top:56.25%;">
-      <iframe
-        id="finalVideo"
-        src="https://player.vimeo.com/video/1082247370?h=98745941f3&title=0&byline=0&portrait=0&loop=1&autoplay=0&muted=1"
-        class="absolute inset-0 w-full h-full"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </div>
-    <div class="p-4 bg-darker">
-      <h4 class="text-lg font-bold">Final Result (Fully Edited)</h4>
-      <p class="text-sm font-light">Hover to play, double klick for fullscreen.</p>
+</div>
+
+ <!-- Erstes Video – jetzt im gleichen Container wie die Bilder -->
+<div class="mb-12 video-hover">
+  <div
+    id="video-wrapper"
+    style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;"
+  >
+    <iframe
+      id="vimeo-player"
+      loading="eager"
+      src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+    <div class="absolute bottom-6 left-6 text-white pointer-events-none">
+      <p class="font-mono text-sm uppercase mb-1">04 Final Result</p>
+      <h3 class="text-3xl font-bold">Hover to play</h3>
     </div>
   </div>
 </div>
 
-<!-- Hover-Play Script -->
+<!-- Vimeo Player SDK -->
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const iframe  = document.getElementById('finalVideo');
-    if (!iframe) return;
+  document.addEventListener('DOMContentLoaded', function() {
+    const iframe  = document.getElementById('vimeo-player');
+    const wrapper = document.getElementById('video-wrapper');
     const player  = new Vimeo.Player(iframe);
-    const wrapper = iframe.closest('.group');
-    wrapper.addEventListener('mouseenter', () => player.play());
-    wrapper.addEventListener('mouseleave', () => player.pause());
+
+    wrapper.addEventListener('mouseenter', () => {
+      player.play().catch(() => {
+        player.setVolume(0).then(() => player.play());
+      });
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      player.pause();
+    });
   });
 </script>
 
-<!-- Hover-Play Script -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const iframe  = document.getElementById('finalVideo');
-    if (!iframe) return;
-    const player  = new Vimeo.Player(iframe);
-    const wrapper = iframe.closest('.group');
-    wrapper.addEventListener('mouseenter', () => player.play());
-    wrapper.addEventListener('mouseleave', () => player.pause());
-  });
-</script>
-
-<h3 class="text-xl md:text-2xl mx-auto text-center font-bold mb-6 reveal parallax" data-speed="0.2">
-  DIABLO X MIDJOURNEY
+<h3 class="text-xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
+  More AI Projects
 </h3>
 
-<p class="text-xb mx-auto font-light max-w-2xl mb-12 reveal parallax" data-speed="0.1">
-  This following project is a cinematic, AI-driven unofficial trailer for the game Diablo. It utilizes the latest version of MidJourney (v.7) combined with a straightforward, minimalist AI image-to-video pipeline, requiring only minimal manual retouching. Despite its simplicity, this approach to AI video production can already deliver nice results when complemented by a professional editing process — including custom music mixing, sound and color grading.
+<p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
+  This was my first project where I used AI entirely for the core footage. Although created in late 2024 using an early image-to-video process, the workflow already aligns closely with today's best practices for working with generative AI and is very similar to the approach described above. Over 80 hours went into crafting this 45-second clip — including editing, sound design, visual effects, Color Grading and prompt engineering. The images were created using MidJourney 6.1 and edited & enhanced with Photoshop & Magnific AI, animated with Kling 1.6 AI & Veo2, and finally edited in After Effects with manual VFX like flares, flames, lighting effects, camera shake, and 3D Porsche logo re-insertion for realism. Additional upscaling and polishing were done using Topaz AI.
 </p>
 
-<div class="w-full mb-12 overflow-hidden rounded-lg reveal parallax" data-speed="0.15">
+<!-- Zweites Video -->
+<div class="w-full mb-12 overflow-hidden rounded-lg">
+  <div class="relative" style="padding-top:56.25%;">
+    <iframe
+      src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0&loop=1"
+      class="absolute inset-0 w-full h-full"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+<p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
+  This following project is a cinematic, AI-driven unofficial trailer for the game Diablo. It utilizes the latest version of MidJourney (v.7) combined with a straightforward, minimalist AI image-to-video pipeline, requiring only minimal manual retouching. Approaches like these are often seen on Social Media. Despite its simplicity, this approach to AI video production can already deliver nice results when complemented by a traditional editing process — including custom music & sound mixing as well as simple color adjustments.
+</p>
+
+<div class="w-full mb-12 overflow-hidden rounded-lg">
   <div class="relative" style="padding-top:56.25%;">
     <iframe
       src="https://player.vimeo.com/video/1083828549?title=0&byline=0&portrait=0&loop=1"
-      class="absolute inset-0 w-full h-full parallax"
-      data-speed="0.2"
+      class="absolute inset-0 w-full h-full"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -919,17 +976,17 @@ footer p {
     <!-- ===================================================== -->
     <!--  02 · AI Image Production – neuer Unterabschnitt      -->
     <!-- ===================================================== -->
-    <h3 class="text-base md:text-3xl font-bold mb-3 mt-16 max-w-2xl mx-auto text-left reveal parallax" data-speed="0.2">
-      2. AI Image Production
+    <h3 class="text-base text-center text-black  md:text-4xl font-bold mb-4 mt-12 max-w-2xl mx-auto text-left">
+   Image Production
     </h3>
 
-    <p class="text-xb mx-auto font-light max-w-2xl mb-24 reveal parallax" data-speed="0.1">
-      Creating high-quality and coherent videos—whether traditionally or with AI—still demands alot of technical expertise, experience, time, and a clear creative vision. On the other hand AI image generation is now more accessible than ever. Professional and compelling results still benefit from a careful guidance and refinement, but often all it takes is just a well-crafted prompt, and fully customizable outcomes are achievable. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
+    <p class="text-xb  text-black mx-auto font-light max-w-2xl mb-12">
+      While creating high-quality and coherent videos, whether traditionally or with AI, still requires a lot of technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. Professional and compelling results still benefit from careful guidance and refinement, but often all it takes is a well-crafted prompt to achieve fully customizable outcomes. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
     <div class="grid md:grid-cols-4 gap-8 mb-24">
-      <div class="portfolio-item reveal parallax" data-speed="0.1">
+      <div class="portfolio-item">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp"
           alt="Abstract 3-D swirl"
@@ -937,7 +994,7 @@ footer p {
           data-speed="0.1"
         >
       </div>
-      <div class="portfolio-item reveal parallax" data-speed="0.1">
+      <div class="portfolio-item">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png"
           alt="Stylized humanoid character"
@@ -945,7 +1002,7 @@ footer p {
           data-speed="0.1"
         >
       </div>
-      <div class="portfolio-item reveal parallax" data-speed="0.1">
+      <div class="portfolio-item">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp"
           alt="Colorful abstract poster"
@@ -953,7 +1010,7 @@ footer p {
           data-speed="0.1"
         >
       </div>
-      <div class="portfolio-item reveal parallax" data-speed="0.1">
+      <div class="portfolio-item">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png"
           alt="Surreal asteroid field"
@@ -963,11 +1020,11 @@ footer p {
       </div>
     </div>
 
-    <div class="text-center mb-24 reveal">
+    <div class="text-center mb-24">
       <a
         href="#images"
         data-page="images"
-        class="page-link underline text-gray-300 hover:text-white transition-colors text-sm px-3 py-1"
+        class="page-link underline text-gray-700 hover:text-black transition-colors text-sm px-3 py-1"
       >
         View More
       </a>
@@ -975,6 +1032,7 @@ footer p {
 
   </div> <!-- ← Ende .container -->
 </section> <!-- ← Ende AI-Workflow -->
+
 <!-- Footer für Ai-Page -->
       <footer class="py-8 bg-darker">
         <div class="container max-w-7xl mx-auto px-6">
@@ -1227,6 +1285,68 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
     </section>
   </div>
 
+<!-- NEUE PAGE: Video Editing -->
+<div id="video-editing-page" class="placeholder-page">
+  <!-- Section 1: wie About -->
+  <section id="video-editing" class="py-20 md:py-32 bg-blacksolid text-white">
+    <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="font-mono uppercase text-xs tracking-widest mb-4">
+            VIDEO EDITING
+          </p>
+          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+            Sharp Cuts.
+          </h1>
+          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+            Smooth Flow.
+          </h1>
+          <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+            AI Enhanced.
+          </h1>
+          <p class="text-base md:text-lg max-w-2xl font-light mb-4">
+            I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.
+          </p>
+        </div>
+        <div class="flex justify-center">
+          <img
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
+            alt="Mein Profilbild"
+            class="max-w-md w-full h-auto rounded-lg"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </div>
+   </section>
+
+<!-- Section 2: weißer Hintergrund -->
+  <section class="py-20 bg-white text-black">
+    <div class="container mx-auto max-w-7xl px-6">
+      <h2 class="super-title text-black mb-6">Platzhalter-Überschrift</h2>
+      <p class="text-base md:text-lg max-w-2xl font-light">
+        Hier steht dein Fließtext als Platzhalter. Ersetze diesen Text durch beliebige Inhalte – z. B. Details zu deinem Video-Editing-Angebot, Preisinformationen oder Arbeitsproben.
+      </p>
+    </div>
+
+  <!-- Footer für VideoEditing-Page -->
+      <footer class="py-8 bg-darker fixed bottom-0 w-full">
+        <div class="container max-w-7xl max-w-7xl mx-auto px-6">
+          <div class="flex flex-col md:flex-row items-center justify-between">
+            <!-- Urheberrecht -->
+            <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+            <!-- Rechtliche Links -->
+            <nav class="flex space-x-6 mt-4 md:mt-0">
+              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+            </nav>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </div>
+
   <!-- Image Modal -->
   <div id="image-modal">
     <div class="modal-overlay"></div>
@@ -1252,6 +1372,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       const agbPage = document.getElementById('agb-page');
       const datenschutzPage = document.getElementById('datenschutz-page');
       const aiPage          = document.getElementById('ai-page');
+      const videoEditingPage = document.getElementById('video-editing-page');
       
       const hideAllPages = () => {
         mainPage.style.display = "none";
@@ -1260,7 +1381,8 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
         impressumPage.style.display = "none";
         agbPage.style.display = "none";
         datenschutzPage.style.display = "none";
-      };
+        videoEditingPage.style.display = "none";
+       };
       
       pageLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -1289,11 +1411,14 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
           } else if (page === "datenschutz") {
             datenschutzPage.style.display = "block";
             setTimeout(() => datenschutzPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
+          } else if (page === "videoEditing") {
+             videoEditingPage.style.display = "block";
+            setTimeout(() => videoEditingPage.scrollIntoView({ behavior:'smooth', block:'start' }), 200);
           } else {
             mainPage.style.display = "block";
             const target = document.querySelector(this.getAttribute('href'));
             if (target) target.scrollIntoView({behavior:'smooth'});
-          }
+          } 
 
 // ─── COPY-PASTE START ───
         // Language-Switcher nur auf legal-Seiten ausblenden
