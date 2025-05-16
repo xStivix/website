@@ -373,7 +373,7 @@ footer p {
 </div>
 
 <!-- NAVIGATION -->
-<nav class="fixed w-full z-50 bg-black bg-opacity-100 backdrop-filter backdrop-blur-sm">
+<nav class="fixed w-full z-50 bg-darker bg-opacity-100 backdrop-filter backdrop-blur-sm">
   <div class="mx-auto max-w-7xl px-6 py-3">
     <div class="flex justify-between items-center">
       <!-- Logo links (bold, 2xl) -->
@@ -590,12 +590,12 @@ footer p {
     <!-- service cards -->
     <div class="grid gap-12 md:grid-cols-3 text-left">
       <!-- card 01 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
-        <div class="relative h-56 bg-black overflow-hidden">
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
+        <div class="relative h-56 overflow-hidden">
           <img
-            src="https://placehold.co/600x400?text=IMAGE+01"
-            alt="Service 01 placeholder"
-            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/misc_00000_00000.png"
+            alt="Service 01 Miscellaneous"
+            class="absolute inset-0 w-full h-full object-cover" />
         </div>
 
         <div class="flex flex-col p-8 flex-1 bg-gray-100">
@@ -614,40 +614,40 @@ footer p {
         </div>
       </article>
 
-     <!-- in deiner Services-Section (Card 02) -->
-<article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
-  <div class="relative h-56 bg-black overflow-hidden">
-    <img
-      src="https://placehold.co/600x400?text=IMAGE+02"
-      alt="Service 02 placeholder"
-      class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
-  </div>
+      <!-- card 02 -->
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/video%20editing_00000_00000.png"
+            alt="Service 02 Video Editing"
+            class="absolute inset-0 w-full h-full object-cover" />
+        </div>
 
-  <div class="flex flex-col p-8 flex-1 bg-gray-100">
-    <span class="font-mono text-sm text-gray-500 mb-2">02</span>
-    <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
-    <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
-      I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
-    </p>
+        <div class="flex flex-col p-8 flex-1 bg-gray-100">
+          <span class="font-mono text-sm text-gray-500 mb-2">02</span>
+          <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
+          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
+            I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
+          </p>
 
-    <div class="mt-8">
-      <a
-        href="#video-editing"
-        data-page="videoEditing"
-        class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
-        READ MORE
-      </a>
-    </div>
-  </div>
-</article>
+          <div class="mt-8">
+            <a
+              href="#video-editing"
+              data-page="videoEditing"
+              class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
+              Tech insights
+            </a>
+          </div>
+        </div>
+      </article>
 
       <!-- card 03 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200">
-        <div class="relative h-56 bg-black overflow-hidden">
+      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
+        <div class="relative h-56 overflow-hidden">
           <img
-            src="https://placehold.co/600x400?text=IMAGE+03"
-            alt="Service 03 placeholder"
-            class="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-75" />
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/ai_00000_00000.png"
+            alt="Service 03 AI Specialist"
+            class="absolute inset-0 w-full h-full object-cover" />
         </div>
 
         <div class="flex flex-col p-8 flex-1 bg-gray-100">
@@ -662,7 +662,7 @@ footer p {
               href="#ai"
               data-page="ai"
               class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
-              Tech insights
+              ai workflow
             </a>
           </div>
         </div>
@@ -685,7 +685,6 @@ footer p {
     </div>
   </div>
 </section>
-
 
 
     <!-- Footer - ERSETZT mit neuem Footer-Code -->
@@ -802,8 +801,8 @@ footer p {
 
 <!-- AI‑PAGE (neu) -->
 <div id="ai-page" class="placeholder-page">
- <!-- Intro-Block wie bei About & Video Editing -->
-  <section id="ai-intro" class="py-20 md:py-32 bg-blacksolid text-white">
+  <!-- Intro-Block wie bei About & Video Editing -->
+  <section id="ai-intro" class="py-16 md:py-24 bg-blacksolid text-white">
     <div class="container mx-auto max-w-7xl px-6">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
@@ -813,22 +812,17 @@ footer p {
           <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
             Cutting-Edge
           </h1>
-          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
-            Intelligent
-          </h1>
-          <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
-            Solutions
+<h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+            Solutions.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            I leverage the latest AI tools—Midjourney, Runway, custom pipelines—to
-            elevate your visuals from static images to dynamic narratives. Discover
-            how generative models can accelerate and enrich your creative workflow.
+            Whether it’s images, videos, code, or text — if it can be done with publicly available AI, I can make it happen. For me, it’s not just about chasing trends, but about using these tools in a smart and practical way: to work more efficiently, discover new creative approaches, and most importantly, stay current in a fast-moving field. 
           </p>
         </div>
         <div class="flex justify-center">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
-            alt="Mein Profilbild"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201_00000.png"
+            alt="AI Visualisierung"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
           >
@@ -836,6 +830,7 @@ footer p {
       </div>
     </div>
   </section>
+
 
   <section class="py-20 md:py-32 bg-white">
     <div class="container max-w-7xl mx-auto px-6">
@@ -937,34 +932,60 @@ I find that an image-to-video approach currently offers the highest level of cre
 </script>
 
 <h3 class="text-xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
-  More AI Projects
+  Production Breakdown
 </h3>
 
 <p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
-  This was my first project where I used AI entirely for the core footage. Although created in late 2024 using an early image-to-video process, the workflow already aligns closely with today's best practices for working with generative AI and is very similar to the approach described above. Over 80 hours went into crafting this 45-second clip — including editing, sound design, visual effects, Color Grading and prompt engineering. The images were created using MidJourney 6.1 and edited & enhanced with Photoshop & Magnific AI, animated with Kling 1.6 AI & Veo2, and finally edited in After Effects with manual VFX like flares, flames, lighting effects, camera shake, and 3D Porsche logo re-insertion for realism. Additional upscaling and polishing were done using Topaz AI.
+  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. While AI tools have advanced since then and the initial output has gotten alot better and controlable, high-quality results still profit clear guidance, know-how and fine-tuning.<br><br> This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo. Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
 </p>
+
+ <!-- Zweites Video – jetzt im gleichen Container wie die Bilder -->
+<div class="mb-12 video-hover">
+  <div
+    id="video-wrapper2"
+    style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;"
+  >
+    <iframe
+      id="vimeo-player2"
+      loading="lazy"
+      src="https://player.vimeo.com/video/1067746530?h=fe2796adb1&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+    <div class="absolute bottom-6 left-6 text-white pointer-events-none">
+      <p class="font-mono text-sm uppercase mb-1">Breakdown</p>
+      <h3 class="text-3xl font-bold">Ultimate Drive</h3>
+    </div>
+  </div>
+</div>
+
+<!-- Vimeo Player SDK -->
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const iframe  = document.getElementById('vimeo-player2');
+    const wrapper = document.getElementById('video-wrapper2');
+    const player  = new Vimeo.Player(iframe);
+
+    wrapper.addEventListener('mouseenter', () => {
+      player.play().catch(() => {
+        player.setVolume(0).then(() => player.play());
+      });
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      player.pause();
+    });
+  });
+</script>
 
 <!-- Zweites Video -->
 <div class="w-full mb-12 overflow-hidden rounded-lg">
   <div class="relative" style="padding-top:56.25%;">
     <iframe
       src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0&loop=1"
-      class="absolute inset-0 w-full h-full"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-  </div>
-</div>
-
-<p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
-  This following project is a cinematic, AI-driven unofficial trailer for the game Diablo. It utilizes the latest version of MidJourney (v.7) combined with a straightforward, minimalist AI image-to-video pipeline, requiring only minimal manual retouching. Approaches like these are often seen on Social Media. Despite its simplicity, this approach to AI video production can already deliver nice results when complemented by a traditional editing process — including custom music & sound mixing as well as simple color adjustments.
-</p>
-
-<div class="w-full mb-12 overflow-hidden rounded-lg">
-  <div class="relative" style="padding-top:56.25%;">
-    <iframe
-      src="https://player.vimeo.com/video/1083828549?title=0&byline=0&portrait=0&loop=1"
       class="absolute inset-0 w-full h-full"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
@@ -1021,14 +1042,14 @@ I find that an image-to-video approach currently offers the highest level of cre
     </div>
 
     <div class="text-center mb-24">
-      <a
-        href="#images"
-        data-page="images"
-        class="page-link underline text-gray-700 hover:text-black transition-colors text-sm px-3 py-1"
-      >
-        View More
-      </a>
-    </div>
+  <a
+    href="#images"
+    data-page="images"
+    class="page-link inline-block px-3 py-1 text-sm font-medium bg-black text-white rounded-md border border-transparent transition-colors duration-200 hover:bg-white hover:text-black hover:border-black"
+  >
+    View More
+  </a>
+</div>
 
   </div> <!-- ← Ende .container -->
 </section> <!-- ← Ende AI-Workflow -->
@@ -1288,39 +1309,33 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
 <!-- NEUE PAGE: Video Editing -->
 <div id="video-editing-page" class="placeholder-page">
   <!-- Section 1: wie About -->
-  <section id="video-editing" class="py-20 md:py-32 bg-blacksolid text-white">
+  <section id="Workflow & Tools" class="py-8 md:py-16 bg-blacksolid text-white">
     <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
-            VIDEO EDITING
+            Workflow & Tools
           </p>
-          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
-            Sharp Cuts.
-          </h1>
-          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
-            Smooth Flow.
-          </h1>
           <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
-            AI Enhanced.
+            Video Editing.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            I'm a 28-year-old video editor based near Bregenz, Austria, with 5+ years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With expertise in both traditional editing and AI technologies, I bring a unique perspective to every project.
+            My workflow is built around industry-standard tools like After Effects, Premiere, Photoshop, and Topaz Video Enhance. For AI-assisted tasks, I use Midjourney, Runway, ChatGPT, Kling, and more. My main Operating System is Windows, but I’m also comfortable working on macOS.
           </p>
         </div>
         <div class="flex justify-center">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
-            alt="Mein Profilbild"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/videoediting_00000_00000.png"
+            alt="Video Editing Vorschaubild"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
           >
         </div>
       </div>
     </div>
-   </section>
+  </section>
 
-<!-- Section 2: weißer Hintergrund -->
+  <!-- Section 2: weißer Hintergrund -->
   <section class="py-20 bg-white text-black">
     <div class="container mx-auto max-w-7xl px-6">
       <h2 class="super-title text-black mb-6">Platzhalter-Überschrift</h2>
@@ -1329,23 +1344,23 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       </p>
     </div>
 
-  <!-- Footer für VideoEditing-Page -->
-      <footer class="py-8 bg-darker fixed bottom-0 w-full">
-        <div class="container max-w-7xl max-w-7xl mx-auto px-6">
-          <div class="flex flex-col md:flex-row items-center justify-between">
-            <!-- Urheberrecht -->
-            <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
-            <!-- Rechtliche Links -->
-            <nav class="flex space-x-6 mt-4 md:mt-0">
-              <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
-              <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
-              <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
-            </nav>
-          </div>
+    <!-- Footer für VideoEditing-Page -->
+    <footer class="py-8 bg-darker fixed bottom-0 w-full">
+      <div class="container max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <!-- Urheberrecht -->
+          <p class="text-sm text-gray-300 font-light">&copy; 2025 Stefan Aberer. All Rights Reserved.</p>
+          <!-- Rechtliche Links -->
+          <nav class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#impressum" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="impressum">Impressum</a>
+            <a href="#agb" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="agb">AGB</a>
+            <a href="#datenschutz" class="text-sm text-gray-300 hover:text-white transition-colors page-link" data-page="datenschutz">Datenschutz</a>
+          </nav>
         </div>
-      </footer>
-    </section>
-  </div>
+      </div>
+    </footer>
+  </section>
+</div>
 
   <!-- Image Modal -->
   <div id="image-modal">
