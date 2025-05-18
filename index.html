@@ -116,7 +116,7 @@
     .content-overlay { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background:rgba(18,18,18,.5); z-index:3; }
     
     @keyframes fadeInUp{0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
-    .fade-in-up{ opacity:0; transform:translateY(20px); animation:fadeInUp 2s ease-out forwards; }
+    .fade-in-up{ opacity:0; transform:translateY(20px); animation:fadeInUp 1.0s ease-out forwards; }
 
  .intro-overlay {
   position: fixed;
@@ -362,6 +362,12 @@ footer p {
 /* Oder nur für Services */
 #services {
   scroll-margin-top: 80px;
+}
+@media (min-width: 768px) {
+  /* Skaliert rem-basierte Abstände und Schrift proportional */
+  html {
+    font-size: min(1vw, 1.7777777778vh);
+  }
 }
 </style>
 </head>
@@ -883,7 +889,7 @@ footer p {
       <h2 class="super-title mb-8 text-black text-center">Generative AI</h2>
     <p class="text-xb mx-auto font-light text-black  max-w-2xl mb-12">
       When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content.
-I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image,<br> AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
+I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image,<br> AI-generated or photographed, I define the composition using sketches, 3D models, or images.<br>I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an<br> AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
 
     <!-- ############################################################# -->
     <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
@@ -1806,6 +1812,22 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Vimeo Player initialisieren
       const player = new Vimeo.Player(bgIframe);
+
+// Wenn Video bereit ist, Overlay weg
+player.on('loaded', () => {
+  triggerOverlaySlideOut();
+});
+
+// oder sobald es abspielt
+player.on('play', () => {
+  triggerOverlaySlideOut();
+});
+
+// und auch bei Fehler
+player.on('error', () => {
+  triggerOverlaySlideOut();
+});
+
       
       // Event-Listener für Play-Event
       player.on('play', () => {
