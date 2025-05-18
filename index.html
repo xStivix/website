@@ -8,8 +8,10 @@
   <link rel="dns-prefetch" href="https://i.vimeocdn.com">
   <link rel="preconnect" href="https://player.vimeo.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
-  <link rel="preload"    href="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"as="document"crossorigin>
+  <link rel="preload" href="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"as="document"crossorigin>
   <title>Stefan Aberer - Video Editor</title>
+  <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
   <!-- Vimeo Player API - mit defer, damit es nicht-blockierend geladen wird -->
@@ -383,7 +385,6 @@ footer p {
         <a href="#about"     class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">ABOUT</a>
         <a href="#portfolio" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">WORK</a>
         <a href="#ai"        class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="ai">AI</a>
-        <a href="#images"    class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="images">IMAGES</a>
         <a href="#services"  class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">SERVICES</a>
         <a href="#contact"   class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">CONTACT</a>
       </div>
@@ -400,7 +401,6 @@ footer p {
     <a href="#about"      class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">About</a>
     <a href="#portfolio"  class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Work</a>
     <a href="#ai"         class="block text-white nav-link text-base font-bold page-link py-2" data-page="ai">AI</a>
-    <a href="#images"     class="block text-white nav-link text-base font-bold page-link py-2" data-page="images">Images</a>
     <a href="#services"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Services</a>
     <a href="#contact"    class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Contact</a>
   </div>
@@ -414,7 +414,7 @@ footer p {
       <iframe loading="eager" class="video-background fade-in desktop-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe loading="lazy"  class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
+      <iframe loading="eager"  class="video-background fade-in mobile-iframe parallax" data-speed="0.3"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
@@ -425,9 +425,16 @@ footer p {
   Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.</p>
 </p>
 <a href="#portfolio"
-   class="px-4 py-2 bg-white text-black text-sm font-mono-custom rounded-md hover:bg-opacity-90 transition-all">
+   class="px-4 py-2
+          bg-white text-black
+          border border-white
+          rounded-md
+          font-mono
+          transition-colors duration-300 ease-in-out
+          hover:bg-black hover:text-white hover:border-white">
   VIEW WORK
 </a>
+
         </div>
       </div>
     </section>
@@ -476,7 +483,7 @@ footer p {
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
           alt="Mein Profilbild"
-          class="max-w-md w-full h-auto rounded-lg"
+          class="max-w-sm w-full h-auto rounded-lg"
           loading="lazy"
         >
       </div>
@@ -593,14 +600,14 @@ footer p {
       <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
         <div class="relative h-56 overflow-hidden">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/misc_00000_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/misc_00000.png"
             alt="Service 01 Miscellaneous"
             class="absolute inset-0 w-full h-full object-cover" />
         </div>
 
         <div class="flex flex-col p-8 flex-1 bg-gray-100">
           <span class="font-mono text-sm text-gray-500 mb-2">01</span>
-          <h3 class="text-xl font-semibold text-black mb-4">CONCEPTION</h3>
+          <h3 class="text-xl font-semibold text-black mb-4">MISCELLANEOUS</h3>
           <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
             Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
           </p>
@@ -608,7 +615,7 @@ footer p {
           <div class="mt-8">
             <button
               class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
-              READ MORE
+              COMING SOON
             </button>
           </div>
         </div>
@@ -618,7 +625,7 @@ footer p {
       <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
         <div class="relative h-56 overflow-hidden">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/video%20editing_00000_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/videoediting_00000.png"
             alt="Service 02 Video Editing"
             class="absolute inset-0 w-full h-full object-cover" />
         </div>
@@ -645,14 +652,14 @@ footer p {
       <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
         <div class="relative h-56 overflow-hidden">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/AI/ai_00000_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/Comp%2010_00000.png"
             alt="Service 03 AI Specialist"
             class="absolute inset-0 w-full h-full object-cover" />
         </div>
 
         <div class="flex flex-col p-8 flex-1 bg-gray-100">
           <span class="font-mono text-sm text-gray-500 mb-2">03</span>
-          <h3 class="text-xl font-semibold text-black mb-4">AI SPECIALIST</h3>
+          <h3 class="text-xl font-semibold text-black mb-4">AI EXPERTISE</h3>
           <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
             I use AI to create images, graphics, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.
           </p>
@@ -668,24 +675,71 @@ footer p {
         </div>
       </article>
     </div>
+</section>
 
-    <!-- technical specs -->
-    <div class="mt-16 md:mt-20 text-black text-center reveal">
-      <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
-        technical specs
-      </p>
-      <h3 class="text-3xl font-bold mb-8">My Workflow & Tools</h3>
-      <p class="text-sm max-w-2xl mx-auto text-black font-light">
-        I work with After Effects, Premiere, Photoshop, Topaz Video Enhance, and AI tools like Midjourney, Runway, Kling, and more. My main OS is Windows, but I’m also comfortable working on macOS. I can work with all major camera systems — ARRI Alexa (Log C), RED Komodo & DSMC2
-        (REDCODE RAW / Log3G10), Blackmagic RAW, film, and all major Sony cameras (S-Log).
-        My colour pipeline is centred around Rec. 709 (Log-to-Rec. 709 conversion),
-        but I'm also comfortable delivering in Rec. 2020 and DCI-P3 workflows if needed.
-        My delivery formats are ProRes 422 HQ, ProRes 4444, or H.264/HEVC (up to 4K).
-      </p>
+<!-- Contact -->
+<section id="contact" class="py-20 md:py-32 bg-blacksolid reveal">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Bild links -->
+      <div class="flex justify-center">
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/contact2_00000.png"
+          alt="Contact"
+          class="max-w-md h-auto rounded-lg"
+          loading="lazy"
+        />
+      </div>
+      <!-- Text rechts -->
+      <div>
+        <p class="font-mono-custom uppercase text-xs tracking-widest mb-4 text-gray-400">
+          Reach out anytime
+        </p>
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">
+          Let’s Stay Connected
+        </h2>
+        <p class="text-base md:text-lg font-light mb-8 max-w-lg">
+          Got questions or want to collaborate? Feel free to reach out. I’m open to new projects or just a casual chat!
+        </p>
+        <a
+          href="mailto:stefan.aberer@hotmail.com"
+          class="inline-block px-6 py-3 border-2 border-white bg-black text-white rounded-md font-mono-custom uppercase text-sm mb-8 transition-colors hover:bg-white hover:text-black hover:border-black"
+        >
+          Contact Me
+        </a>
+        <div class="flex space-x-6 mb-4 text-white text-2xl">
+          <a
+            href="https://vimeo.com/user77038892"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-gray-400 transition"
+          >
+            <i class="fab fa-vimeo"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/i12b0kay"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-gray-400 transition"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://wa.me/4369911110970"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-gray-400 transition"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+        <p class="text-sm font-light">
+          stefan.aberer@hotmail.com
+        </p>
+      </div>
     </div>
   </div>
 </section>
-
 
     <!-- Footer - ERSETZT mit neuem Footer-Code -->
     <footer class="py-8 bg-darker">
@@ -816,12 +870,12 @@ footer p {
             Solutions.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            Whether it’s images, videos, code, or text — if it can be done with publicly available AI, I can make it happen. For me, it’s not just about chasing trends, but about using these tools in a smart and practical way: to work more efficiently, discover new creative approaches, and most importantly, stay current in a fast-moving field. 
+            Whether it’s images, videos, code, or text — if it can be done with publicly available AI tools, I can make it happen. For me, it’s not just about chasing trends, but about using these tools in a smart and practical way: to work more efficiently, discover new creative approaches, and most importantly, stay current in a fast-moving field. 
           </p>
         </div>
         <div class="flex justify-center">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/ai_00000.png"
             alt="AI Visualisierung"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
@@ -936,7 +990,7 @@ I find that an image-to-video approach currently offers the highest level of cre
 </h3>
 
 <p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
-  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. While AI tools have advanced since then and the initial output has gotten alot better and controlable, high-quality results still profit clear guidance, know-how and fine-tuning.<br><br> This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo. Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
+  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo.<br>Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
 </p>
 
  <!-- Zweites Video – jetzt im gleichen Container wie die Bilder -->
@@ -1308,24 +1362,24 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
 
 <!-- NEUE PAGE: Video Editing -->
 <div id="video-editing-page" class="placeholder-page">
-  <!-- Section 1: Workflow & Tools -->
+  <!-- Section 1: Technical specs -->
   <section id="Workflow & Tools" class="py-8 md:py-16 bg-blacksolid text-white">
     <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
-            Workflow & Tools
+            TEch insights
           </p>
           <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
             Video Editing.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            My workflow is built around industry-standard tools like After Effects, Premiere, Photoshop, and Topaz Video Enhance. For AI-assisted tasks, I use Midjourney, Runway, ChatGPT, Kling, and more. My main OS is Windows, but I’m also comfortable on macOS.
+            My workflow is built around industry-standard Adobe Programs.<br> For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Runway, ChatGPT and more. My main OS is Windows, but I’m also comfortable on macOS.
           </p>
         </div>
         <div class="flex justify-center">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/videoeditniggg_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/videoediting_00000_00000.png"
             alt="Video Editing Vorschaubild"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
@@ -1338,7 +1392,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
   <section class="py-20 md:py-32 bg-white">
   <div class="container text-black max-w-7xl mx-auto px-6">
     <p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
-      how i work
+      Workflow & Tools
     </p>
     <!-- Hier: mb-12 → mb-6 -->
     <h2 class="super-title text-black text-center mb-6">Technical Specs</h2>
@@ -1348,7 +1402,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       <div>
         <h3 class="text-xl font-bold mb-4">Color Management</h3>
         <p class="text-base md:text-md font-light">
-          I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW, film, und Sony S-Log. Meine Pipeline ist auf Rec. 709 ausgelegt; auf Wunsch liefere ich auch in Rec. 2020 oder DCI-P3.
+          I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW, film, und Sony S-Log. My pipeline is designed around Rec. 709 (Log to Rec 709 conversion); upon request,<br> I can also deliver in Rec. 2020 or DCI-P3.
         </p>
       </div>
       <div class="flex justify-center">
@@ -1365,7 +1419,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div class="flex justify-center">
           <img
-            src="https://via.placeholder.com/400x300"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
             alt="Programs & Tools Vorschaubild"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
@@ -1374,7 +1428,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
         <div>
           <h3 class="text-xl font-bold mb-4">Programs & Tools</h3>
           <p class="text-base md:text-md font-light">
-            I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Topaz Video Enhance AI. In addition, I use a range of AI tools, including ChatGPT, Midjourney, Runway, Kling, and others.
+            I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Topaz Video Enhance AI. In addition, I use a range of AI tools, including ChatGPT, Midjourney, Runway, Kling, Google AI and others.
           </p>
         </div>
       </div>
@@ -1382,14 +1436,14 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
       <!-- Dritte Reihe: Text links, Bild rechts (wie Erste Reihe) -->
       <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
         <div>
-          <h3 class="text-xl font-bold mb-4">Drittes Feature</h3>
+          <h3 class="text-xl font-bold mb-4">Delivery Formats</h3>
           <p class="text-base md:text-md font-light">
-            I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom outputs for social media platforms, web use.
+            I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom outputs for social media platforms and web use.
           </p>
         </div>
         <div class="flex justify-center">
           <img
-            src="https://via.placeholder.com/400x300"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
             alt="Platzhalter Bild für drittes Feature"
             class="max-w-md w-full h-auto rounded-lg"
             loading="lazy"
