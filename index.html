@@ -14,6 +14,8 @@
   <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
+  <!-- swipper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
   <!-- Vimeo Player API - mit defer, damit es nicht-blockierend geladen wird -->
   <script src="https://player.vimeo.com/api/player.js" defer importance="high"></script>
 
@@ -149,32 +151,62 @@
     .service-card:hover{ transform:translateY(-5px); background:#2a2a2a; }
     .service-card h4{ font-size:1.875rem; }
     .service-card p { font-family:'Circular STD Light',sans-serif; font-weight:300; }
-
+    .swiper-pagination-bullet {width: 10px;height: 10px;background-color: #A0A0A0;border-radius: 50%;margin: 0 4px;display: inline-block;}
+    .swiper-pagination-bullet-active {background-color: #000000 !important;}
     .contact-input   { background:#2a2a2a; border:none; color:#fff; outline:none; transition:.3s ease; border-radius:.5rem; }
     .contact-input:focus{ background:#333; }
     .btn            { transition:.3s ease; }
     .social-icon    { transition:transform .3s ease; }
     .social-icon:hover{ transform:translateY(-3px); }
-
+.tech-text{max-width: 36rem;}
     /* Mobile-Styles */
+    .swiper-slide .p-8{
+      padding: 1.5rem 1rem;
+    }
+          #services .text-base {min-height:12rem!important;}
+.ai-text{max-width: 42rem;}
+.tech-mob{display: none;}
     @media (max-width:767px){
+         .nav-link:hover::after{ display: none; }
+    .nav-link.active::after { display: none;}
+      .nav-link::after {bottom: 0px;}
+      .tech-specs img{width: 35%;}
       .desktop-iframe{ display:none; }
-      .mobile-iframe { display:block; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(1.3); width:100vw; height:100vh; pointer-events:none; }
+      .mobile-iframe { display:block; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(1.3); width:100vw; height:100vh; pointer-events:none; z-index:1; }
       .container     { padding-left:1rem; padding-right:1rem; }
       .mega-title    { font-size:3rem !important; }
       .super-title   { font-size:2.5rem !important; }
       .text-xl       { font-size:1.125rem !important; }
-      #about img     { max-width:100% !important; }
+      #about img     { max-width:100% !important; display: none!Important;}
       section        { padding-top:3.5rem; padding-bottom:3.5rem; }
+      #ai-page{padding-bottom: 0!important;}
       .btn           { padding:.75rem 1rem !important; font-size:1rem !important; }
       .nav-link      { font-size:.9rem !important; }
       #about .grid, #portfolio .grid, #services .grid, #contact .grid{ grid-template-columns:1fr !important; }
-      #portfolio .grid, #services .grid, #contact .grid{ gap:2rem !important; }
+      #portfolio .grid, #services .grid, #contact .grid{ gap:1rem !important; }
       #mobileMenu a  { padding:1rem 0 !important; font-size:1.25rem !important; }
       .contact-input { padding:1.25rem !important; font-size:1.125rem !important; }
       button[type="submit"]{ padding:1.25rem !important; font-size:1.125rem !important; }
+      #portfolio  .container{padding-left: 0!Important;padding-right: 0!Important;}
+       #portfolio  .left-6,  #ai-page  .left-6 {left: 1rem!important;}
+       #portfolio  .text-sm,  #ai-page .absolute .text-sm {font-size: .5rem!Important;line-height: 0!important;}
+       #portfolio .text-xl ,   #ai-page .absolute .text-xl{font-size: 1rem !important;}
+       #contact .desktop-icon{display: none;}
+       .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction{bottom: -40px;}
+       .visualisierung-img{display: none;}
+       .switch-posi{-webkit-box-ordinal-group: 2; -moz-box-ordinal-group: 2; -ms-flex-order: 2;-webkit-order: 2; order: 2;}
+        .video-editing-img{display: none;}
+        .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {bottom: -2rem!important;}
+    #services .text-base {min-height: 10.5rem !important;}
+     .nav-link:hover::after{ width:13%; }
+ 
+    .nav-link.active::after { width:13%; }
+    .footer-main{display: flex;flex-direction: column;justify-content: center;align-items: center; text-align:center;}
+    .tech-desk{display: none;}
+    .tech-mob{display: block;}
+    .break-sm{display: none!Important;}
     }
-
+    
     /* IMAGES-Seite */
     #blur-overlay{ position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.4); backdrop-filter:blur(8px); transition:opacity .5s ease, backdrop-filter .5s ease; opacity:1; z-index:30; }
     #blur-overlay.hide{ opacity:0; backdrop-filter:blur(0); }
@@ -287,7 +319,7 @@ footer p {
 .portfolio-item {
   /* verlängere die Dauer, damit es sanfter wirkt */
   transition: transform 0.3s ease;
-  /* damit gleichmäßig um die Mitte skaliert wird */
+  /* damit gleichmäßig um die Mitte skaliezrt wird */
   transform-origin: center center;
 }
 /* im Selected‑Work-Teil wieder nur leicht skalieren */
@@ -344,10 +376,21 @@ footer p {
   font-size:2rem; color:#fff; cursor:pointer;
 }
 @media (max-width:767px){
-  #video-lightbox iframe{width:90vw; height:56.25vw;}
+  #video-lightbox iframe{width:90vw; height:56.25vw; }
+  .nav-link:hover::after {width: 13%;}
+  #about .page-link { padding-left: 0.5rem!Important; padding-right: 0.5rem!Important;}
+}
+@media(max-width: 1024px){
+  #portfolio .max-w-8xl,   #ai-page .max-w-8xl{max-width: 100%!Important;}
+  .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: -46px!Important;
+  }
+  .about-us img{ display: none!important;}
+  .about-us{display: flex!important;}
+  .break-sm{display: none!Important;}
 }
 /* iframe klick-durchlässig machen  */
-#portfolio iframe{pointer-events:none;}
+#portfolio iframe, #ai-page iframe{pointer-events:none;}
 /* Lightbox-Player sauber einblenden */
 #lightbox-player{
   background:#000;          /* verhindert Transparent-Blitz */
@@ -363,18 +406,71 @@ footer p {
 #services {
   scroll-margin-top: 80px;
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   /* Skaliert rem-basierte Abstände und Schrift proportional */
-  html {
+  /* html {
     font-size: min(1vw, 1.7777777778vh);
-  }
+  } */
 }
+@media (max-width: 450px) {
+    .mega-title {font-size: 2rem!important;}
+    #home .text-xl {font-size: 0.8rem !important;}
+    .text-base {font-size: 14px;line-height: 1.5rem;}
+        #services .text-base { min-height: 14.5rem!important; }
+           .tech-specs img{width: 45%;}
+
+/* #portfolio iframe , #ai-page iframe{
+      transform: translateY(-38.778%)!important;
+          height: 300%!important;
+} */
+}
+.mobile-hero__title{
+  font-family:'Circular STD Bold',sans-serif;
+  font-size:clamp(4rem, 18vw, 7rem); /* 64 px → 7 rem (≈112 px) */
+  line-height:0.9;
+  letter-spacing:-.04em;
+}
+
+/* Subtext ggf. etwas nach unten schieben */
+.mobile-hero__sub{ margin-top:0.75rem; }
+  font-family:'Circular STD Light',sans-serif;
+  font-size:1rem;
+  max-width:4rem;
+}
+
+/* Noch größer auf sehr kleinen Geräten anpassen */
+@media (max-width:450px){
+  .mobile-hero__title{font-size:2.75rem;}  /* ≈ 44 px */
+}
+/* ==============================
+   Mobile-Fallback für Hero-Video
+   ============================== */
+.mobile-fallback{
+  /* Standard: nichts anzeigen */
+  display:none;
+}
+
+@media (max-width:767px){
+  /* nur Smartphones */
+  .mobile-fallback{
+    display:block;
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100vw;
+    height:100vh;
+    transform:translate(-50%,-50%) scale(1.07); width:100vw; height:100vh;  /* exakt wie dein .mobile-iframe */
+    object-fit:cover;           /* füllt lückenlos */
+    pointer-events:none;        /* nichts klickbar machen */
+    z-index:0;                  /* liegt hinter .content-overlay (z-index:3) */
+  }
+ }
 </style>
 </head>
 <body>
   <!-- Intro Overlay -->
 <div class="intro-overlay">
-  <div class="name-wrapper text-2xl md:text-3xl font-medium text-white leading-tight">
+  <div class="name-wrapper text-2xl md:text-3xl font-bold text-white leading-tight">
     <span class="name-part first">stefan</span>
     <span class="name-part second">aberer</span>
   </div>
@@ -390,7 +486,7 @@ footer p {
       <div class="hidden md:flex space-x-8">
         <a href="#about"     class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">ABOUT</a>
         <a href="#portfolio" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">WORK</a>
-        <a href="#ai"        class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="ai">AI</a>
+        <a href="#ai" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="ai">AI</a>
         <a href="#services"  class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">SERVICES</a>
         <a href="#contact"   class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">CONTACT</a>
       </div>
@@ -413,31 +509,59 @@ footer p {
 </nav>
 
   <!-- MAIN-PAGE -->
-  <div id="main-page">
+  <div id="main-page" data-page="main">
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
       <iframe loading="eager" class="video-background fade-in desktop-iframe"
-              src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
+              src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe loading="eager"  class="video-background fade-in mobile-iframe"
+      <iframe loading="lazy"  class="video-background fade-in mobile-iframe"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
-            <div class="content-overlay">
-        <div class="text-center px-4">
-          <h1 class="mega-title mb-6">Let's make it count.</h1>
-<p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
-  Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.</p>
-</p>
-        </div>
-      </div>
+ <!-- 🔥 Mobile-Fallback-Bild (nur Smartphones sichtbar) -->
+  <img
+    src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/fallbackmobile_00000.png"
+    alt="Video-Fallback"
+    class="mobile-fallback"
+    loading="eager" />
+
+<iframe class="video-background desktop-iframe" …></iframe>
+<img
+  src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/fallbackimg_00000.png"
+  alt="Video-Fallback Desktop"
+  class="desktop-fallback"
+  loading="eager" />
+
+             <div class="content-overlay">
+  <!-- Desktop-Variante -->
+  <div class="text-center px-4 hidden md:block">      <!-- 👈 jetzt nur noch ≥ 768 px -->
+    <h1 class="mega-title mb-6">Let's make it count.</h1>
+    <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+      Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.
+    </p>
+  </div>
+
+  <!-- 🌟 Mobile-Variante -->
+  <div class="mobile-hero md:hidden absolute bottom-6 left-4 text-left">
+    <h1 class="mobile-hero__title leading-none">
+      <span class="block">Let’s</span>
+      <span class="block">Make&nbsp;it</span>
+      <span class="block">Count.</span>
+    </h1>
+
+    <p class="mobile-hero__sub mt-2">
+      Creating visuals by combining traditional editing<br>with cutting-edge&nbsp;AI technologies.
+    </p>
+  </div>
+</div>
     </section>
 
         <!-- About / Hero Section -->
-<section id="about" class="py-20 md:py-32 bg-blacksolid text-white">
-  <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6 reveal">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
+<section id="about" class="py-8 md:py-32 bg-blacksolid text-white" data-page="about">
+  <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6 ">
+    <div class="grid md:grid-cols-2 gap-0 items-center about-us">
       
       <!-- Text-Column -->
       <div>
@@ -469,12 +593,12 @@ footer p {
   class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-sm tracking-widest px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
 >
   READ MORE ABOUT AI
-  <span class="inline-block ml-2 align-middle">→</span>
+  <span class="inline-block ml-0 md:ml-2 lg:ml-2 align-middle">→</span>
 </a>
       </div>
 
       <!-- Dein Bild -->
-      <div class="flex justify-center">
+      <div class="flex justify-center about-us">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/profilepic_0000033.png"
           alt="Mein Profilbild"
@@ -488,15 +612,15 @@ footer p {
 </section>
 
 <!-- Portfolio -->
-<section id="portfolio" class="py-20 bg-white">
+<section id="portfolio" class="py-8 md:py-20  bg-white" >
   <!-- Titel -->
-  <div class="container mx-auto max-w-7xl px-6 text-center mb-12 reveal">
+  <div class="container mx-auto max-w-7xl px-6 text-center mb-4 md:mb-12 lg:mb-12 ">
     <h2 class="super-title text-black">Featured Work</h2>
       </div>
 
   <!-- Erstes Video -->
-  <div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
-    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+  <div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
+    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer; background-color: rgba(0, 0, 0, .3)!Important;">
       <iframe
         loading="eager"
         src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=1&title=0&byline=0&portrait=0"
@@ -506,16 +630,17 @@ footer p {
         data-vimeo-id="1043117915"
         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
       ></iframe>
+      <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
       <!-- Overlay Texte -->
-      <div class="absolute bottom-6 left-6 text-white">
+      <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1] ">
         <p class="font-mono text-sm uppercase mb-1">Proof of concept</p>
-        <h3 class="text-3xl font-bold">The Ultimate Drive</h3>
+        <h3 class="text-xl :text-3xl lg:text-3xl font-bold">The Ultimate Drive</h3>
       </div>
     </div>
   </div>
 
   <!-- Zweites Video (ohne Autoplay) -->
-  <div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
+  <div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
       <iframe
         loading="eager"
@@ -526,16 +651,17 @@ footer p {
         data-vimeo-id="843986777"
         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
       ></iframe>
+      <div style="position: absolute; inset: 0px; cursor: pointer; "></div>
       <!-- Overlay Texte -->
-      <div class="absolute bottom-6 left-6 text-white">
+      <div class="absolute  bottom-2 md:bottom-6 left-6 text-white z-[1]">
         <p class="font-mono text-sm uppercase mb-1">Shortfilm Trailer</p>
-        <h3 class="text-3xl font-bold">One Last time</h3>
+        <h3 class="text-xl :text-3xl lg:text-3xl font-bold">One Last time</h3>
       </div>
     </div>
   </div>
 
 <!-- Dritt­es Video (ohne Autoplay) -->
-<div class="container mx-auto max-w-8xl px-6 mb-12 video-hover reveal">
+<div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
     <iframe
       loading="eager"
@@ -546,17 +672,19 @@ footer p {
       data-vimeo-id="1073580177"
       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
+      <div style="position: absolute; inset: 0px; cursor: pointer; "></div>
     <!-- Overlay Texte -->
-    <div class="absolute bottom-6 left-6 text-white">
+    <div class="absolute  bottom-2 md:bottom-6  left-6 text-white z-[1]">
       <p class="font-mono text-sm uppercase mb-1">Snippets of Automotive Projects</p>
-      <h3 class="text-3xl font-bold">Automotive Showreel 2022</h3>
+      <h3 class="text-xl :text-3xl lg:text-3xl font-bold">Automotive Showreel 2022</h3>
     </div>
   </div>
 </div>
 
 <!-- Viertes Video (ohne Autoplay) -->
-<div class="container mx-auto max-w-8xl px-6 video-hover reveal">
+<div class="container mx-auto max-w-8xl px-6 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
+
     <iframe
       loading="eager"
       src="https://player.vimeo.com/video/1043677704?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
@@ -566,114 +694,183 @@ footer p {
       data-vimeo-id="1043677704"
       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
+  
     <!-- Overlay Texte -->
-    <div class="absolute bottom-6 left-6 text-white">
+    <div class="absolute  bottom-2 md:bottom-6  left-6 text-white z-[1]">
       <p class="font-mono text-sm uppercase mb-1">Animation & Typography</p>
-      <h3 class="text-3xl font-bold">Stay (Typography)</h3>
+      <h3 class="text-xl :text-3xl lg:text-3xl font-bold">Stay (Typography)</h3>
     </div>
   </div>
 </div>
 <!-- Trennlinie nach dem letzten Video -->
 <div class="container mx-auto max-w-8xl px-6">
   <!-- z. B. 90 % Breite -->
-  <hr class="border-t border-black w-11/12 mx-auto mt-12 md:mt-20" />
-</div>
+  <!-- <hr class="border-t border-black w-11/12 mx-auto mt-4 md:mt-12" />
+</div> -->
 </section>
 
-   <!-- Services -->
-<section id="services" class="pt-12 md:pt-0 pb-20 md:pb-28 bg-white">
-  <div class="container mx-auto max-w-7xl px-6 text-center mb-12 reveal">
-    <!-- intro -->
-    <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">
-      more about me
-    </p>
-    <h2 class="super-title mb-12 text-black">Services</h2>
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
-    <!-- service cards -->
-    <div class="grid gap-12 md:grid-cols-3 text-left">
-      <!-- card 01 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
-        <div class="relative h-56 overflow-hidden">
-          <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/misc_00000.png"
-            alt="Service 01 Miscellaneous"
-            class="absolute inset-0 w-full h-full object-cover" />
-        </div>
+<style>
+  /* Custom dot styles */
+  .swiper-pagination-bullet {
+    background: #d1d5db; /* Tailwind gray-300 */
+    opacity: 1;
+  }
 
-        <div class="flex flex-col p-8 flex-1 bg-gray-100">
-          <span class="font-mono text-sm text-gray-500 mb-2">01</span>
-          <h3 class="text-xl font-semibold text-black mb-4">MISCELLANEOUS</h3>
-          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
-            Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.
-          </p>
+  .swiper-pagination-bullet-active {
+    background: #000; /* black */
+  }
+/* =========================================
+   Mobile-Cropping nur für AI-Workflow-Bilder
+   ========================================= */
+@media (max-width: 767px){
 
-          <div class="mt-8">
-            <button
-              class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded">
-              COMING SOON
-            </button>
-          </div>
-        </div>
-      </article>
+  /* Wrapper – flacher machen ⇒ oben/unten Crop */
+  .ai-img{
+    padding-top:30% !important;   /* ← Fein-Tuning! 30 % ≈ Video-Höhe */
+    height:auto;                  /* ignoriere max-h */
+  }
 
-      <!-- card 02 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
-        <div class="relative h-56 overflow-hidden">
-          <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/videoediting_ss00000.png"
-            alt="Service 02 Video Editing"
-            class="absolute inset-0 w-full h-full object-cover" />
-        </div>
+  /* Bild absolut in den Wrapper setzen */
+  .ai-img img{
+    position:absolute;
+    inset:0;                      /* top:0 right:0 bottom:0 left:0 */
+    width:100%;
+    height:100%;
+    object-fit:cover;             /* schneidet proportional */
+    object-position:center;       /* zentriert bleiben */
+  }
 
-        <div class="flex flex-col p-8 flex-1 bg-gray-100">
-          <span class="font-mono text-sm text-gray-500 mb-2">02</span>
-          <h3 class="text-xl font-semibold text-black mb-4">VIDEO EDITING</h3>
-          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
-            I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.
-          </p>
+  /* Overlay braucht jetzt volle Breite, bleibt aber korrekt unten */
+  .ai-img .absolute{
+    left:1rem;  /* wie bisher left-4 */
+    bottom:0.5rem;  /* passt sich der neuen Höhe an */
+  }
+}
+/* ---------  HERO-TEXT: ALLE ANIMATIONEN ABSCHALTEN  --------- */
+.mega-title,
+.content-overlay p,
+.content-overlay a{
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Desktop-Fallback (standard versteckt) */
+.desktop-fallback {
+  display: none;
+}
 
-          <div class="mt-8">
-            <a
-              href="#video-editing"
-              data-page="videoEditing"
-              class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
-              Tech insights
-            </a>
-          </div>
-        </div>
-      </article>
+/* ab 768px: Fallback unter das Video legen und auf 1.3 skalieren */
+@media (min-width: 768px) {
+  .desktop-fallback {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(1.3); /* hier dein 1.3 */
+    object-fit: cover;
+    filter: brightness(100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .video-background {
+    z-index: 1; /* Video bleibt oben */
+  }
+}
+</style>
 
-      <!-- card 03 -->
-      <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
-        <div class="relative h-56 overflow-hidden">
-          <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/Comp%2010_00000.png"
-            alt="Service 03 AI Specialist"
-            class="absolute inset-0 w-full h-full object-cover" />
-        </div>
+<section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
+  <div class="container mx-auto max-w-7xl px-6 text-center mb-12">
+    <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">more about me</p>
+    <h2 class="super-title text-3xl font-bold text-black mb-4 md:mb-12">Services</h2>
 
-        <div class="flex flex-col p-8 flex-1 bg-gray-100">
-          <span class="font-mono text-sm text-gray-500 mb-2">03</span>
-          <h3 class="text-xl font-semibold text-black mb-4">AI EXPERTISE</h3>
-          <p class="text-base text-black md:text-lg max-w-2xl font-light mb-4">
-            I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.
-          </p>
+    <!-- Mobile: Swiper -->
+    <div class="block lg:hidden relative  text-left">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="swiper-wrapper"></div>
+      </div>
+              <div class="swiper-pagination mt-6"></div>
 
-          <div class="mt-8">
-            <a
-              href="#ai"
-              data-page="ai"
-              class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">
-              ai workflow
-            </a>
-          </div>
-        </div>
-      </article>
     </div>
+
+    <!-- Desktop: Grid -->
+    <div class="hidden lg:grid lg:grid-cols-3 gap-4 md:gap-4 lg:gap-12 text-left" id="grid-wrapper"></div>
+  </div>
 </section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+<script>
+  const services = [
+    {
+      number: '01',
+      title: 'MISCELLANEOUS',
+      text: "Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.",
+      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/misc_00000.png',
+      button: '<button class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">COMING SOON</button>'
+    },
+    {
+      number: '02',
+      title: 'VIDEO EDITING',
+      text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.',
+      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/videoediting_ss00000.png',
+      button: '<a href="#video-editing" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="videoEditing">Tech insights</a>'
+    },
+    {
+      number: '03',
+      title: 'AI EXPERTISE',
+      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
+      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/Comp%2010_00000.png',
+      button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI workflow</a>'
+    }
+  ];
+
+  const renderCard = (service) => `
+    <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
+      <div class="relative h-56 overflow-hidden">
+        <img src="${service.image}" alt="${service.title}" class="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <div class="p-8 md:p-4 lg:p-8 flex-1 bg-gray-100">
+        <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
+        <h3 class="text-xl font-semibold text-black mb-4">${service.title}</h3>
+        <p class="text-base text-black font-light mb-4">${service.text}</p>
+        <div class="mt-8">${service.button}</div>
+      </div>
+    </article>
+  `;
+
+  const swiperWrapper = document.getElementById('swiper-wrapper');
+  const gridWrapper = document.getElementById('grid-wrapper');
+
+  services.forEach(service => {
+    const swiperSlide = document.createElement('div');
+    swiperSlide.className = 'swiper-slide';
+    swiperSlide.innerHTML = renderCard(service);
+    swiperWrapper.appendChild(swiperSlide);
+
+    const gridCard = document.createElement('div');
+    gridCard.innerHTML = renderCard(service);
+    gridWrapper.appendChild(gridCard.firstElementChild);
+  });
+
+  new Swiper(".mySwiper", {
+    slidesPerView: 1.1,
+    spaceBetween: 16,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true
+    }
+  });
+</script>
 
 <!-- Contact -->
-<section id="contact" class="py-20 md:py-32 bg-blacksolid reveal">
+<section id="contact" class="py-8 md:py-32 bg-blacksolid" data-page="contact">
   <div class="container mx-auto px-6">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Bild links -->
@@ -681,20 +878,21 @@ footer p {
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/conncedted_00000_00000.png"
           alt="Contact"
-          class="max-w-sm h-auto rounded-lg"
+          class="max-w-sm h-auto rounded-lg desktop-icon"
           loading="lazy"
-        />
+        /> 
+</a>
       </div>
       <!-- Text rechts -->
-      <div>
+      <div class="footer-main">
         <p class="font-mono-custom uppercase text-xs tracking-widest mb-4 text-gray-400">
           Reach out anytime
         </p>
-        <h2 class="text-3xl md:text-5xl font-bold mb-6">
+           <h2 class="text-3xl md:text-5xl font-bold mb-6">
           Let’s Stay Connected
         </h2>
         <p class="text-base md:text-lg font-light mb-8 max-w-lg">
-          Got questions or want to collaborate? Feel free to reach out.<br>I’m open to new projects or just a casual chat!
+          Got questions or want to collaborate? Feel free to reach out.<br class="break-sm">I’m open to new projects or just a casual chat!
         </p>
         <a
           href="mailto:stefan.aberer@hotmail.com"
@@ -759,8 +957,8 @@ footer p {
     <div id="images-background" class="transition-filter duration-500">
       <section class="py-20 md:py-32 bg-black">
         <div class="container max-w-7xl mx-auto px-6">
-          <h2 class="super-title mb-16 text-center">Images</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <h2 class="super-title mb-8 md:mb-16 lg:mb-16 text-center">Images</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 lg:gap-8">
             <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
@@ -849,12 +1047,12 @@ footer p {
   </div>
 
 <!-- AI‑PAGE (neu) -->
-<div id="ai-page" class="placeholder-page">
+<section id="ai-page" class="placeholder-page">
   <!-- Intro-Block wie bei About & Video Editing -->
-  <section id="ai-intro" class="py-16 md:py-24 bg-blacksolid text-white">
-    <div class="container mx-auto max-w-7xl px-6">
+  <section id="ai-intro" class="py-8 pb-0 md:pb-24 md:py-24 bg-blacksolid text-white">
+    <div class=" mx-auto max-w-7xl px-6 container">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
+        <div class="pt-8 md:pt-0 ">
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             AI INSIGHTS
           </p>
@@ -865,73 +1063,75 @@ footer p {
             Solutions.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            Whether it’s images, videos, code, or text — if it can be done with publicly available AI tools, I can make it happen. For me, it’s not just about chasing trends, but about using these tools in a smart and practical way: to work more efficiently, discover new creative approaches, and most importantly, stay current in a fast-moving field. 
+            Whether it’s images, videos, code, or text, if it can be done with publicly available AI tools, I can make it happen. For me, it’s not just about chasing trends, but about using these tools in a smart and practical way: to work more efficiently, discover new creative approaches, and most importantly, stay current in a fast-moving field. 
           </p>
         </div>
-        <div class="flex justify-center">
+        <div class="flex justify-center relative">
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/ai_00000.png"
             alt="AI Visualisierung"
-            class="max-w-md w-full h-auto rounded-lg"
+            class="max-w-md w-full h-auto rounded-lg visualisierung-img "
             loading="lazy"
-          >
+          >             
         </div>
       </div>
     </div>
   </section>
 
 
-  <section class="py-20 md:py-32 bg-white">
-    <div class="container max-w-7xl mx-auto px-6">
+  <section class="py-8 md:py-32 bg-white">
+    <div class=" max-w-7xl mx-auto ">
 <p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
       AI WORKFLOW
     </p>
-      <h2 class="super-title mb-8 text-black text-center">Generative AI</h2>
-    <p class="text-xb mx-auto font-light text-black  max-w-2xl mb-12">
-      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content.
-I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image,<br> AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
+      <h2 class="super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
+    <p class="container text-xb mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
+      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
 
     <!-- ############################################################# -->
     <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
     <!-- ############################################################# -->
 
-    <div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
 
   <!-- Bild 1 -->
-  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
+  <div class="relative w-full ai-img overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/2.2_00000.png"
       alt="Initital Still – Adding 3D Mesh / Drawing"
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover object-center"
     />
+              <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
     <div class="absolute bottom-2 left-4 text-white pointer-events-none">
-      <p class="font-mono text-xs uppercase mb-0">01 Initial Image</p>
+           <p class="font-mono text-xs uppercase mb-0">01 Initial Image</p>
       <h4 class="text-lg font-bold">Adding Content</h4>
     </div>
   </div>
 
   <!-- Bild 2 -->
-  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
+  <div class="relative w-full ai-img overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sgfsg_00000.png"
       alt="Reference Image (Google) – Including Prompt for the Image"
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover object-center"
     />
+              <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
     <div class="absolute bottom-2 left-4 text-white pointer-events-none">
-      <p class="font-mono text-xs uppercase mb-0">02 Reference</p>
+           <p class="font-mono text-xs uppercase mb-0">02 Reference</p>
       <h4 class="text-lg font-bold">Google Image</h4>
     </div>
   </div>
 
   <!-- Bild 3 -->
-  <div class="relative w-full h-auto max-h-[350px] overflow-hidden">
+  <div class="relative w-full ai-img overflow-hidden">
     <img
       src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/1finall/3_00125.png"
       alt="Final Still – First Color Grading"
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover object-center"
     />
+              <div style="position: absolute; inset: 0px; cursor: pointer; ;"></div>
     <div class="absolute bottom-2 left-4 text-white pointer-events-none">
-      <p class="font-mono text-xs uppercase mb-0">03 Final Still</p>
+           <p class="font-mono text-xs uppercase mb-0">03 Final Still</p>
       <h4 class="text-lg font-bold">Fully Color Graded & Edited</h4>
     </div>
   </div>
@@ -939,123 +1139,92 @@ I find that an image-to-video approach currently offers the highest level of cre
 </div>
 
  <!-- Erstes Video – jetzt im gleichen Container wie die Bilder -->
-<div class="mb-12 video-hover">
-  <div
-    id="video-wrapper"
-    style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;"
-  >
+
+<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      id="vimeo-player"
       loading="eager"
-      src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+     src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+ data-vimeo-id="1082247370?h=98745941f3&"
+       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
-    <div class="absolute bottom-6 left-6 text-white pointer-events-none">
-      <p class="font-mono text-sm uppercase mb-1">04 Final Result</p>
-      <h3 class="text-3xl font-bold">Topgun</h3>
+   <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+      <p class="font-mono text-xs uppercase mb-0">04 Final Result</p>
+      <h3 class="text-lg font-bold">Hover or Click to Play</h3>
     </div>
   </div>
 </div>
 
 <!-- Vimeo Player SDK -->
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const iframe  = document.getElementById('vimeo-player');
-    const wrapper = document.getElementById('video-wrapper');
-    const player  = new Vimeo.Player(iframe);
 
-    wrapper.addEventListener('mouseenter', () => {
-      player.play().catch(() => {
-        player.setVolume(0).then(() => player.play());
-      });
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-      player.pause();
-    });
-  });
-</script>
-
-<h3 class="text-xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
+<h3 class="text-xl md:text-4xl text-black mx-auto text-center font-bold mb-4
+           mt-10 md:mt-0">
   Production Breakdown
 </h3>
 
-<p class="text-xb mx-auto text-black font-light max-w-2xl mb-12">
-  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo.<br>Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
+<p class="container text-xb mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo.Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
 </p>
 
  <!-- Zweites Video – jetzt im gleichen Container wie die Bilder -->
-<div class="mb-12 video-hover">
-  <div
-    id="video-wrapper2"
-    style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;"
-  >
+<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      id="vimeo-player2"
-      loading="lazy"
-      src="https://player.vimeo.com/video/1067746530?h=fe2796adb1&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      loading="eager"
+     src="https://player.vimeo.com/video/1067746530?h=fe2796adb1&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+ data-vimeo-id="1067746530?h=fe2796adb1&"
+       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
-    <div class="absolute bottom-6 left-6 text-white pointer-events-none">
-      <p class="font-mono text-sm uppercase mb-1">Breakdown</p>
-      <h3 class="text-3xl font-bold">Ultimate Drive</h3>
+   <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+      <p class="font-mono text-xs uppercase mb-0">Editing Breakdown</p>
+      <h3 class="text-lg font-bold">Hover or Click to Play</h3>
     </div>
   </div>
 </div>
-
-<!-- Vimeo Player SDK -->
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const iframe  = document.getElementById('vimeo-player2');
-    const wrapper = document.getElementById('video-wrapper2');
-    const player  = new Vimeo.Player(iframe);
-
-    wrapper.addEventListener('mouseenter', () => {
-      player.play().catch(() => {
-        player.setVolume(0).then(() => player.play());
-      });
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-      player.pause();
-    });
-  });
-</script>
-
 <!-- Zweites Video -->
-<div class="w-full mb-12 overflow-hidden rounded-lg">
-  <div class="relative" style="padding-top:56.25%;">
+ <div class=" mx-auto max-w-7xl  mb-4 md:mb-12 lg:mb-12 video-hover ">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      src="https://player.vimeo.com/video/1043117915?title=0&byline=0&portrait=0&loop=1"
-      class="absolute inset-0 w-full h-full"
+      loading="eager"
+     src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
+ data-vimeo-id="1043117915"
+       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
+   <div style="position: absolute; inset: 0px; cursor: pointer; "></div>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+      <p class="font-mono text-xs uppercase mb-0">Final Result</p>
+      <h3 class="text-lg font-bold">The Ultimate Drive</h3>
+    </div>
   </div>
 </div>
-
     <!-- ===================================================== -->
     <!--  02 · AI Image Production – neuer Unterabschnitt      -->
     <!-- ===================================================== -->
-    <h3 class="text-base text-center text-black  md:text-4xl font-bold mb-4 mt-12 max-w-2xl mx-auto text-left">
-   Image Production
-    </h3>
+    <h3 class="text-xl text-center text-black md:text-4xl font-bold mb-4
+           mt-10 md:mt-12 lg:mt-12 max-w-2xl mx-auto">
+  Image Production
+</h3>
 
-    <p class="text-xb  text-black mx-auto font-light max-w-2xl mb-12">
-      While creating high-quality and coherent videos, whether traditionally or with AI, still requires<br> a lot of technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. Professional and compelling results still benefit from careful guidance and refinement, but often all it takes is a well-crafted prompt to achieve fully customizable outcomes. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
+    <p class=" container text-base  text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
+      While creating high-quality and coherent videos, whether traditionally or with AI, still requiresa lot of technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. Professional and compelling results still benefit from careful guidance and refinement, but often all it takes is a well-crafted prompt to achieve fully customizable outcomes. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
-    <div class="grid md:grid-cols-4 gap-8 mb-24">
+    <div class="container grid grid-cols-2 md:grid-cols-4 gap-4 m-auto md:gap-8 mb-8 md:mb-24 lg:mb-24">
       <div class="portfolio-item">
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp"
@@ -1090,7 +1259,7 @@ I find that an image-to-video approach currently offers the highest level of cre
       </div>
     </div>
 
-    <div class="text-center mb-24">
+    <div class="text-center">
   <a
     href="#images"
     data-page="images"
@@ -1118,8 +1287,7 @@ I find that an image-to-video approach currently offers the highest level of cre
           </div>
         </div>
       </footer>
-</div>
-
+</section>
 
   <!-- IMPRESSUM-PAGE -->
   <div id="impressum-page" class="placeholder-page">
@@ -1356,27 +1524,28 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
   </div>
 
 <!-- NEUE PAGE: Video Editing -->
-<div id="video-editing-page" class="placeholder-page">
+<div id="video-editing-page" class="placeholder-page " >
   <!-- Section 1: Technical specs -->
-  <section id="Workflow & Tools" class="py-8 md:py-16 bg-blacksolid text-white">
-    <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6">
+  <section id="Workflow & Tools" class="py-16 pb-0 md:py-24 bg-blacksolid text-white">
+    <div class="container mx-auto max-w-7xl px-6">
       <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
+        <div class="pt-8 md:pt-0">
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             TEch insights
           </p>
           <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
             Video Editing.
           </h1>
-          <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            My workflow is built around industry-standard Adobe Programs.<br>For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Runway, ChatGPT and more.
+          <p class="text-base md:text-lg max-w-2xl font-light mb-4"  style="max-width: 37rem;">
+            My workflow is built around industry-standard Adobe Programs. <br class="break-sm">
+For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Runway, ChatGPT and more. My main OS is Windows, but I’m also comfortable on macOS.
           </p>
         </div>
         <div class="flex justify-center">
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/videoediting_00000_00000.png"
             alt="Video Editing Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg"
+            class="max-w-md w-full h-auto rounded-lg video-editing-img"
             loading="lazy"
           >
         </div>
@@ -1384,7 +1553,7 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
     </div>
   </section>
 
-  <section class="py-20 md:py-32 bg-white">
+  <section class="py-8 md:py-32 bg-white tech-specs">
   <div class="container text-black max-w-7xl mx-auto px-6">
     <p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
       Workflow & Tools
@@ -1393,54 +1562,72 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
     <h2 class="super-title text-black text-center mb-6">Technical Specs</h2>
 
     <!-- Erste Reihe: Text links, Bild rechts -->
-    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+    <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
       <div>
         <h3 class="text-xl font-bold mb-4">Color Management</h3>
-        <p class="text-base md:text-md font-light">
-          I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW, film, und Sony S-Log.<br> My pipeline is designed around Rec. 709 (Log to Rec 709 conversion); upon request, I can also deliver in Rec. 2020 or DCI-P3.
+        <p class="text-base md:text-md font-light tech-text">
+          I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW, film, und Sony S-Log.My pipeline is designed around Rec. 709 (Log to Rec 709 conversion); upon request, I can also deliver in Rec. 2020 or DCI-P3.
         </p>
       </div>
       <div class="flex justify-center">
-        <img
+             <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/new_00000.png"
           alt="Color Management Vorschaubild"
-          class="max-w-md w-full h-auto rounded-lg"
+          class="max-w-md w-full h-auto rounded-lg tech-desk"
+          loading="lazy"
+        >
+        <img
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/colormanagement_00000.png"
+          alt="Color Management Vorschaubild"
+          class="max-w-md w-full h-auto rounded-lg tech-mob"
           loading="lazy"
         >
       </div>
     </div>
 
       <!-- Zweite Reihe: Bild links, Text rechts -->
-      <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
-        <div class="flex justify-center">
-          <img
+      <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
+        <div class="flex justify-center switch-posi">
+              <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
             alt="Programs & Tools Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg"
+            class="max-w-md w-full h-auto rounded-lg tech-desk"
+            loading="lazy"
+          >
+          <img
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/Programs&tools_00000.png"
+            alt="Programs & Tools Vorschaubild"
+            class="max-w-md w-full h-auto rounded-lg tech-mob"
             loading="lazy"
           >
         </div>
         <div>
           <h3 class="text-xl font-bold mb-4">Programs & Tools</h3>
-          <p class="text-base md:text-md font-light">
+          <p class="text-base md:text-md font-light tech-text">
             I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Topaz Video Enhance AI. In addition, I use a wide range of AI tools, including ChatGPT, Midjourney, Runway, Kling, Google AI and others.
           </p>
         </div>
       </div>
 
       <!-- Dritte Reihe: Text links, Bild rechts (wie Erste Reihe) -->
-      <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+      <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
         <div>
           <h3 class="text-xl font-bold mb-4">Delivery Formats</h3>
-          <p class="text-base md:text-md font-light">
+          <p class="text-base md:text-md font-light tech-text">
             I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom outputs for social media platforms and web use.
           </p>
         </div>
         <div class="flex justify-center">
           <img
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/DeliveryFormats_00000.png"
+            alt="Platzhalter Bild für drittes Feature"
+            class="max-w-md w-full h-auto rounded-lg tech-mob"
+            loading="lazy"
+          >
+                 <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
             alt="Platzhalter Bild für drittes Feature"
-            class="max-w-md w-full h-auto rounded-lg"
+            class="max-w-md w-full h-auto rounded-lg tech-desk"
             loading="lazy"
           >
         </div>
@@ -1681,6 +1868,8 @@ function updateDesktopIframeScale(){
 
         /* ScrollSpy für Main-Page mit rootMargin, damit AI Workflow sauber aktiv wird */
   const mainSections = document.querySelectorAll('#main-page section[id]');
+    // const mainSections = document.querySelectorAll(' section[id]');
+
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1695,9 +1884,9 @@ function updateDesktopIframeScale(){
     rootMargin: '-50% 0px -50% 0px',  // feuert, wenn Section in der Mitte des Viewports ist
     threshold: 0                     // keine genaue Sichtbarkeits-% nötig
   });
+ 
   mainSections.forEach(sec => sectionObserver.observe(sec));
 
-      
       // URL-Hash Handling für direkte Links
       if (location.hash) {
         const hash = location.hash.substring(1);
@@ -1791,11 +1980,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // WICHTIG: Immer einen Fallback-Timer setzen
-  const FALLBACK_MS = 4000;
-  setTimeout(() => {
-    if (!didReveal) revealContent();
-  }, FALLBACK_MS);
+  // detect mobile
+const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+// fallback-Zeit mobil/kontainer
+const FALLBACK_MS_DESKTOP = 2500;
+const FALLBACK_MS_MOBILE  = 1200; // z.B. 1,5s auf Mobil
+
+const FALLBACK_MS = isMobile ? FALLBACK_MS_MOBILE : FALLBACK_MS_DESKTOP;
+
+setTimeout(() => {
+  if (!didReveal) revealContent();
+}, FALLBACK_MS);
 
   // Verzögerte Vimeo-Initialisierung, um sicherzustellen, dass das DOM bereit ist
   setTimeout(() => {
@@ -1858,7 +2054,7 @@ document.addEventListener('DOMContentLoaded', () => {
   plyr.addEventListener('load', () => plyr.classList.add('ready'));
 
   /* === Klick- & Hover-Layer über jedes Portfolio-Video === */
-  document.querySelectorAll('#portfolio .video-hover > div').forEach(wrapper => {
+  document.querySelectorAll('#portfolio .video-hover > div, #ai-page .video-hover > div').forEach(wrapper => {
     const frame = wrapper.querySelector('iframe');
     if (!frame) return;
 
@@ -1893,5 +2089,9 @@ document.addEventListener('DOMContentLoaded', () => {
   box.addEventListener('click', e => { if (e.target === box) closeBox(); });
 });
 </script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 </body>
 </html>
