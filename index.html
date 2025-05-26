@@ -544,7 +544,7 @@ footer p {
   </div>
 
   <!-- 🌟 Mobile-Variante -->
-  <div class="mobile-hero md:hidden absolute bottom-6 left-4 text-left">
+  <div class="mobile-hero md:hidden absolute bottom-16 left-4 text-left">
     <h1 class="mobile-hero__title leading-none">
       <span class="block">Let’s</span>
       <span class="block">Make&nbsp;it</span>
@@ -590,7 +590,7 @@ footer p {
         <a
   href="#ai"
   data-page="ai"
-  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-sm tracking-widest px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
+  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-xs md:text-sm tracking-widest px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
 >
   READ MORE ABOUT AI
   <span class="inline-block ml-0 md:ml-2 lg:ml-2 align-middle">→</span>
@@ -1674,73 +1674,93 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
     /* JS bei DOMContentLoaded laden, um Render-Blocking zu reduzieren */
     document.addEventListener('DOMContentLoaded', function() {
       /* Page-Switching & Active-Link */
-      const pageLinks = document.querySelectorAll('.page-link');
-      const mainPage = document.getElementById('main-page');
-      const imagesPage = document.getElementById('images-page');
-      const impressumPage = document.getElementById('impressum-page');
-      const agbPage = document.getElementById('agb-page');
-      const datenschutzPage = document.getElementById('datenschutz-page');
-      const aiPage          = document.getElementById('ai-page');
-      const videoEditingPage = document.getElementById('video-editing-page');
-      
-      const hideAllPages = () => {
-        mainPage.style.display = "none";
-        imagesPage.style.display = "none";
-        aiPage.style.display          = "none";
-        impressumPage.style.display = "none";
-        agbPage.style.display = "none";
-        datenschutzPage.style.display = "none";
-        videoEditingPage.style.display = "none";
-       };
-      
-      pageLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-          if (this.classList.contains('nav-link')) {
-            this.classList.add('active');
-          }
-          
-          const page = this.dataset.page;
-          hideAllPages();
-          
-          if (page === "images") {
-            imagesPage.style.display = "block";
-            setTimeout(() => imagesPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-          } else if (page === "ai") {
-            aiPage.style.display = "block";
-            setTimeout(() => aiPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-          } else if (page === "impressum") {
-            impressumPage.style.display = "block";
-            setTimeout(() => impressumPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-          } else if (page === "agb") {
-            agbPage.style.display = "block";
-            setTimeout(() => agbPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-          } else if (page === "datenschutz") {
-            datenschutzPage.style.display = "block";
-            setTimeout(() => datenschutzPage.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-          } else if (page === "videoEditing") {
-             videoEditingPage.style.display = "block";
-            setTimeout(() => videoEditingPage.scrollIntoView({ behavior:'smooth', block:'start' }), 200);
-          } else {
-            mainPage.style.display = "block";
+     const pageLinks = document.querySelectorAll('.page-link');
+    const mainPage = document.getElementById('main-page');
+    const imagesPage = document.getElementById('images-page');
+    const impressumPage = document.getElementById('impressum-page');
+    const agbPage = document.getElementById('agb-page');
+    const datenschutzPage = document.getElementById('datenschutz-page');
+    const aiPage = document.getElementById('ai-page');
+    const videoEditingPage = document.getElementById('video-editing-page');
+    
+    const hideAllPages = () => {
+      mainPage.style.display = "none";
+      imagesPage.style.display = "none";
+      aiPage.style.display = "none";
+      impressumPage.style.display = "none";
+      agbPage.style.display = "none";
+      datenschutzPage.style.display = "none";
+      videoEditingPage.style.display = "none";
+    };
+    
+    // ─── COPY-PASTE ab hier ───────────────────────────────────────
+    pageLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // aktive Nav-Links updaten
+        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+        if (this.classList.contains('nav-link')) {
+          this.classList.add('active');
+        }
+        
+        // Seiten aus-/einblenden
+        const page = this.dataset.page;
+        hideAllPages();
+        switch(page) {
+          case 'images':
+            imagesPage.style.display = 'block';
+            break;
+          case 'ai':
+            aiPage.style.display = 'block';
+            break;
+          case 'impressum':
+            impressumPage.style.display = 'block';
+            break;
+          case 'agb':
+            agbPage.style.display = 'block';
+            break;
+          case 'datenschutz':
+            datenschutzPage.style.display = 'block';
+            break;
+          case 'videoEditing':
+            videoEditingPage.style.display = 'block';
+            break;
+          default:
+            mainPage.style.display = 'block';
             const target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({behavior:'smooth'});
-          } 
-
-// ─── COPY-PASTE START ───
-        // Language-Switcher nur auf legal-Seiten ausblenden
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Language-Switcher auf Legal-Seiten ausblenden
         if (['impressum','agb','datenschutz'].includes(page)) {
           langSwitcher.style.display = 'none';
         } else {
           langSwitcher.style.display = 'block';
         }
-        // ─── COPY-PASTE END ───
-          
-          document.getElementById('mobileMenu').classList.add('hidden');
-        });
+        
+        // History-API: neuen Eintrag mit Hash anlegen
+        history.pushState(null, '', this.getAttribute('href'));
+        
+        // Mobile Menü schließen
+        document.getElementById('mobileMenu').classList.add('hidden');
       });
+    });
+
+    // ─── Popstate-Handler für Vor-/Zurück ─────────────────────────
+    window.addEventListener('popstate', () => {
+      const hash = location.hash || '#home';
+      hideAllPages();
+      // passenden Link finden und simuliert Klick
+      const link = document.querySelector(`.page-link[href="${hash}"]`);
+      if (link) {
+        link.click();
+      } else {
+        // kein Hash → Hauptseite
+        mainPage.style.display = 'block';
+      }
+    });
+    // ─── COPY-PASTE Ende ──────────────────────────────────────────
 
       /* Logo reload */
       document.getElementById('homeLink').addEventListener('click', e => { 
@@ -2098,6 +2118,5 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
 </body>
 </html>
