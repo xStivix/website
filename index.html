@@ -623,7 +623,7 @@ footer p {
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer; background-color: rgba(0, 0, 0, .3)!Important;">
       <iframe
         loading="lazy"
-        src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=1&title=0&byline=0&portrait=0"
+        src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
@@ -780,6 +780,11 @@ footer p {
   }
   .video-background {
     z-index: 1; /* Video bleibt oben */
+  }
+}
+@media (max-width: 767px) {
+  footer {
+    display: none !important;
   }
 }
 </style>
