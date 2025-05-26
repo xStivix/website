@@ -500,11 +500,11 @@ footer p {
   </div>
   <!-- Mobile-Links (base size, bold) -->
   <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
-    <a href="#about"      class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">About</a>
-    <a href="#portfolio"  class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Work</a>
-    <a href="#ai"         class="block text-white nav-link text-base font-bold page-link py-2" data-page="ai">AI</a>
-    <a href="#services"   class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Services</a>
-    <a href="#contact"    class="block text-white nav-link text-base font-bold page-link py-2" data-page="main">Contact</a>
+    <a href="#about"      class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">About</a>
+    <a href="#portfolio"  class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Work</a>
+    <a href="#ai"         class="block text-white nav-link text-base font-medium page-link py-2" data-page="ai">AI</a>
+    <a href="#services"   class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Services</a>
+    <a href="#contact"    class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Contact</a>
   </div>
 </nav>
 
@@ -784,6 +784,12 @@ footer p {
 }
 @media (max-width: 767px) {
   footer {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  /* versteckt alle Bilder nur innerhalb der Technical-Specs-Section auf Mobil */
+  .tech-specs img {
     display: none !important;
   }
 }
@@ -1564,12 +1570,12 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
       Workflow & Tools
     </p>
     <!-- Hier: mb-12 → mb-6 -->
-    <h2 class="super-title text-black text-center mb-6">Technical Specs</h2>
+    <h2 class="super-title text-black text-center mb-12 md:mb-6">Technical Specs</h2>
 
     <!-- Erste Reihe: Text links, Bild rechts -->
     <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
       <div>
-        <h3 class="text-xl font-bold mb-4">Color Management</h3>
+        <h3 class="text-xl font-bold mb-2 md:mb-4">Color Management</h3>
         <p class="text-base md:text-md font-light tech-text">
           I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW, film, und Sony S-Log.My pipeline is designed around Rec. 709 (Log to Rec 709 conversion); upon request, I can also deliver in Rec. 2020 or DCI-P3.
         </p>
@@ -1607,7 +1613,7 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
           >
         </div>
         <div>
-          <h3 class="text-xl font-bold mb-4">Programs & Tools</h3>
+          <h3 class="text-xl font-bold mb-2 md:mb-4">Programs & Tools</h3>
           <p class="text-base md:text-md font-light tech-text">
             I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Topaz Video Enhance AI. In addition, I use a wide range of AI tools, including ChatGPT, Midjourney, Runway, Kling, Google AI and others.
           </p>
@@ -1617,7 +1623,7 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
       <!-- Dritte Reihe: Text links, Bild rechts (wie Erste Reihe) -->
       <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
         <div>
-          <h3 class="text-xl font-bold mb-4">Delivery Formats</h3>
+          <h3 class="text-xl font-bold mb-2 md:mb-4">Delivery Formats</h3>
           <p class="text-base md:text-md font-light tech-text">
             I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom outputs for social media platforms and web use.
           </p>
