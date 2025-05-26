@@ -1774,11 +1774,28 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
     });
     // ─── COPY-PASTE Ende ──────────────────────────────────────────
 
-      /* Logo reload */
-      document.getElementById('homeLink').addEventListener('click', e => { 
-        e.preventDefault(); 
-        location.reload(); 
-      });
+      /* Logo klick → Main-Page anzeigen und nach oben scrollen */
+const homeLink = document.getElementById('homeLink');
+homeLink.addEventListener('click', e => {
+  e.preventDefault();
+  // alle Unterseiten ausblenden und Hauptseite zeigen
+  hideAllPages();
+  mainPage.style.display = 'block';
+
+  // Nav-Link “About” (oder “Home”) als aktiv markieren, falls gewünscht
+  document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+  const aboutNav = document.querySelector('.nav-link[href="#about"]');
+  if (aboutNav) aboutNav.classList.add('active');
+
+  // Smooth scroll ganz nach oben
+  mainPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // URL-Hash setzen
+  history.pushState(null, '', '#home');
+
+  // mobiles Menü schließen
+  document.getElementById('mobileMenu').classList.add('hidden');
+});
 
       /* Video Loading - Optimiert */
       function getVisibleIframe(){
