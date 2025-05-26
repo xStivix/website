@@ -1570,7 +1570,7 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
       Workflow & Tools
     </p>
     <!-- Hier: mb-12 → mb-6 -->
-    <h2 class="super-title text-black text-center mb-8 md:mb-6">Technical Specs</h2>
+    <h2 class="super-title text-black text-center mb-12 md:mb-6">Technical Specs</h2>
 
     <!-- Erste Reihe: Text links, Bild rechts -->
     <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
@@ -1715,23 +1715,29 @@ For AI-assisted tasks, I use wide spread collection of tools like Midjourney, Ru
         hideAllPages();
         switch(page) {
           case 'images':
-            imagesPage.style.display = 'block';
-            break;
+        imagesPage.style.display = 'block';
+        imagesPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
           case 'ai':
-            aiPage.style.display = 'block';
-            break;
-          case 'impressum':
-            impressumPage.style.display = 'block';
-            break;
-          case 'agb':
-            agbPage.style.display = 'block';
-            break;
+  aiPage.style.display = 'block';
+  aiPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  break;
+           case 'impressum':
+        impressumPage.style.display = 'block';
+        impressumPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
+           case 'agb':
+        agbPage.style.display = 'block';
+        agbPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
           case 'datenschutz':
-            datenschutzPage.style.display = 'block';
-            break;
+        datenschutzPage.style.display = 'block';
+        datenschutzPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
           case 'videoEditing':
-            videoEditingPage.style.display = 'block';
-            break;
+        videoEditingPage.style.display = 'block';
+        videoEditingPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
           default:
             mainPage.style.display = 'block';
             const target = document.querySelector(this.getAttribute('href'));
