@@ -166,8 +166,27 @@
           #services .text-base {min-height:12rem!important;}
 .ai-text{max-width: 42rem;}
 .tech-mob{display: none;}
+@media(max-width: 1024px){
+  #portfolio .max-w-8xl,   #ai-page .max-w-8xl{max-width: 100%!Important;}
+  .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: -46px!Important;
+  }
+  .swiper-wrapper .h-56 {
+    height: 12rem!important;
+}
+#services .text-base {
+    min-height: 100% !important;
+}
+  .about-us img{ display: none!important;}
+  .about-us{display: flex!important;}
+  .break-sm{display: none!Important;}
+  #services .text-base {
+    min-height: 100% !important;
+}
+}
     @media (max-width:767px){
-         .nav-link:hover::after{ display: none; }
+  .swiper-wrapper .h-56 {height: 9rem!important;}         
+    .nav-link:hover::after{ display: none; }
     .nav-link.active::after { display: none;}
       .nav-link::after {bottom: 0px;}
       .tech-specs img{width: 35%;}
@@ -197,9 +216,7 @@
        .switch-posi{-webkit-box-ordinal-group: 2; -moz-box-ordinal-group: 2; -ms-flex-order: 2;-webkit-order: 2; order: 2;}
         .video-editing-img{display: none;}
         .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {bottom: -2rem!important;}
-    #services .text-base {min-height: 10.5rem !important;}
-     .nav-link:hover::after{ width:13%; }
- 
+    #services .text-base {min-height: 100% !important;}
     .nav-link.active::after { width:13%; }
     .footer-main{display: flex;flex-direction: column;justify-content: center;align-items: center; text-align:center;}
     .tech-desk{display: none;}
@@ -385,9 +402,18 @@ footer p {
   .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
     bottom: -46px!Important;
   }
+  .swiper-wrapper .h-56 {
+    height: 12rem;
+}
+#services .text-base {
+    min-height: 100% !important;
+}
   .about-us img{ display: none!important;}
   .about-us{display: flex!important;}
   .break-sm{display: none!Important;}
+  #services .text-base {
+    min-height: 100% !important;
+}
 }
 /* iframe klick-durchlässig machen  */
 #portfolio iframe, #ai-page iframe{pointer-events:none;}
@@ -416,13 +442,8 @@ footer p {
     .mega-title {font-size: 2rem!important;}
     #home .text-xl {font-size: 0.8rem !important;}
     .text-base {font-size: 14px;line-height: 1.5rem;}
-        #services .text-base { min-height: 14.5rem!important; }
+        #services .text-base { min-height: 100%!important; }
            .tech-specs img{width: 45%;}
-
-/* #portfolio iframe , #ai-page iframe{
-      transform: translateY(-38.778%)!important;
-          height: 300%!important;
-} */
 }
 .mobile-hero__title{
   font-family:'Circular STD Bold',sans-serif;
@@ -433,10 +454,10 @@ footer p {
 
 /* Subtext ggf. etwas nach unten schieben */
 .mobile-hero__sub{ margin-top:0.75rem; }
-  font-family:'Circular STD Light',sans-serif;
+  /* font-family:'Circular STD Light',sans-serif;
   font-size:1rem;
   max-width:4rem;
-}
+} */
 
 /* Noch größer auf sehr kleinen Geräten anpassen */
 @media (max-width:450px){
@@ -513,7 +534,7 @@ footer p {
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
-      <iframe loading="eager" class="video-background fade-in desktop-iframe"
+      <iframe id="landingIframe "loading="eager" class="video-background fade-in desktop-iframe"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       <iframe loading="lazy"  class="video-background fade-in mobile-iframe"
@@ -525,7 +546,7 @@ footer p {
     src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/fallbackmobile_00000.png"
     alt="Video-Fallback"
     class="mobile-fallback"
-    loading="eager" />
+    loading="lazy" />
 
 <iframe class="video-background desktop-iframe" …></iframe>
 <img
@@ -623,7 +644,7 @@ footer p {
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer; background-color: rgba(0, 0, 0, .3)!Important;">
       <iframe
         loading="lazy"
-        src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+        src="https://player.vimeo.com/video/1043117915?muted=1&background=1&loop=1&autoplay=1&muted=1"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
@@ -644,7 +665,7 @@ footer p {
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
       <iframe
         loading="lazy"
-        src="https://player.vimeo.com/video/843986777?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+        src="https://player.vimeo.com/video/843986777?muted=1&background=1&loop=1&autoplay=1&muted=1"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
@@ -665,7 +686,7 @@ footer p {
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
     <iframe
       loading="lazy"
-      src="https://player.vimeo.com/video/1073580177?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      src="https://player.vimeo.com/video/1073580177?muted=1&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -687,7 +708,7 @@ footer p {
 
     <iframe
       loading="lazy"
-      src="https://player.vimeo.com/video/1043677704?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      src="https://player.vimeo.com/video/1043677704?muted=1&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -793,12 +814,18 @@ footer p {
     display: none !important;
   }
 }
+@media (max-width: 767px) {
+  .mobile-hero__title {
+    font-size: 4rem !important;  /* oder 6rem, je nach Geschmack */
+    line-height: 1;
+  }
+}
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
   <div class="container mx-auto max-w-7xl px-6 text-center mb-12">
     <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">more about me</p>
-    <h2 class="super-title text-3xl font-bold text-black mb-4 md:mb-12">Services</h2>
+    <h2 class="super-title text-3xl font-bold text-black mb-8 md:mb-12">Services</h2>
 
     <!-- Mobile: Swiper -->
     <div class="block lg:hidden relative  text-left">
@@ -822,14 +849,14 @@ footer p {
     {
       number: '01',
       title: 'MISCELLANEOUS',
-      text: "Whether it's purely video content or anything else – I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual direction and lay the groundwork for a smooth and effective production process.",
+      text: "Whether it's purely video content or anything else, I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative professionals to define the right visual approach & direction as well as lay the groundwork for a smooth and effective production process.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/sercicsdpics/misc_00000.png',
       button: '<button class="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">COMING SOON</button>'
     },
     {
       number: '02',
       title: 'VIDEO EDITING',
-      text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching if needed.',
+      text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics, animations, and VFX. As well as handle compositing, cleanup and retouching.',
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/videoediting_ss00000.png',
       button: '<a href="#video-editing" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="videoEditing">Tech insights</a>'
     },
@@ -1096,7 +1123,7 @@ footer p {
       AI WORKFLOW
     </p>
       <h2 class="super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
-    <p class="container text-xb mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
+    <p class="container text-base mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
       When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
 
     <!-- ############################################################# -->
@@ -1154,8 +1181,8 @@ footer p {
 <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      loading="eager"
-     src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      loading="lazy"
+     src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -1173,21 +1200,76 @@ footer p {
 
 <!-- Vimeo Player SDK -->
 
-<h3 class="text-xl md:text-4xl text-black mx-auto text-center font-bold mb-4
-           mt-10 md:mt-0">
-  Production Breakdown
+<p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
+      Mai 2025
+    </p>
+<h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
+  Veo3 Showcase
 </h3>
 
-<p class="container text-xb mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
-  This is an early proof of concept built entirely from AI-generated footage. Created in late 2024 using an image-to-video workflow, similar to today’s best practices showen above but less efficient, getting usable results still required extensive manual retouching and classic post-production. This clip is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo.Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
+<p class="container text-base mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+Google’s latest generative AI sets new standards in AI-powered video creation especially when it comes to native audio generation paired with video. Below are two examples I created: one  general showcase generated directly by Veo 3 without any post-processing, and a short sitcom-style sketch with minimal to almost no editing.
+Key features like coherent scene-building with synchronized audio were not yet available in the time of making this showcase.
+</p>
+
+ <!-- neuesvideo  -->
+<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
+    <iframe
+      loading="lazy"
+     src="https://player.vimeo.com/video/1088241579?h=862b24bf9e&muted=1&background=1&loop=1&autoplay=1&muted=1"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+ data-vimeo-id="1088241579?h=862b24bf9e&"
+       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+   <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+      <p class="font-mono text-xs uppercase mb-0">Generated Showcase</p>
+      <h3 class="text-lg font-bold">Veo 3 Showcase</h3>
+    </div>
+  </div>
+</div>
+<!-- Drittes Video -->
+ <div class=" mx-auto max-w-7xl  mb-4 md:mb-12 lg:mb-12 video-hover ">
+  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
+    <iframe
+      loading="lazy"
+     src="https://player.vimeo.com/video/1088245147?h=9553efd5a6&muted=1&background=1&loop=1&autoplay=1&muted=1"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+ data-vimeo-id="1088245147?h=9553efd5a6&"
+       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
+    ></iframe>
+   <div style="position: absolute; inset: 0px; cursor: pointer; "></div>
+    <!-- Overlay Texte -->
+    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+      <p class="font-mono text-xs uppercase mb-0">Veo3 Sitcom</p>
+      <h3 class="text-lg font-bold">Prompt Theory</h3>
+    </div>
+  </div>
+</div>
+
+<p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
+      December 2024
+    </p>
+<h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
+  Ultimate Drive
+</h3>
+
+<p class="container text-base mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+  This is an early proof of concept based on AI-generated footage using an image-to-video workflow, similar to today’s best practices showen above, but much less efficient. This clip shows off more what has been achived with tradional editing than just seeing what raw ai can do. This is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo. Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison.
 </p>
 
  <!-- Zweites Video – jetzt im gleichen Container wie die Bilder -->
 <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      loading="eager"
-     src="https://player.vimeo.com/video/1067746530?h=fe2796adb1&muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      loading="lazy"
+     src="https://player.vimeo.com/video/1067746530?h=fe2796adb1&muted=1&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -1202,12 +1284,12 @@ footer p {
     </div>
   </div>
 </div>
-<!-- Zweites Video -->
+<!-- Drittes Video -->
  <div class=" mx-auto max-w-7xl  mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      loading="eager"
-     src="https://player.vimeo.com/video/1043117915?muted=1&loop=1&autoplay=0&title=0&byline=0&portrait=0"
+      loading="lazy"
+     src="https://player.vimeo.com/video/1043117915?muted=1&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -1225,13 +1307,15 @@ footer p {
     <!-- ===================================================== -->
     <!--  02 · AI Image Production – neuer Unterabschnitt      -->
     <!-- ===================================================== -->
-    <h3 class="text-xl text-center text-black md:text-4xl font-bold mb-4
-           mt-10 md:mt-12 lg:mt-12 max-w-2xl mx-auto">
+<p class="font-mono text-xs text-center tracking-widest uppercase text-gray-500 mb-2">
+      Novemeber 2024
+    </p>
+    <h3 class="text-2xl text-center text-black md:text-4xl font-bold mb-4 max-w-2xl mx-auto">
   Image Production
 </h3>
 
-    <p class=" container text-base  text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
-      While creating high-quality and coherent videos, whether traditionally or with AI, still requiresa lot of technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. Professional and compelling results still benefit from careful guidance and refinement, but often all it takes is a well-crafted prompt to achieve fully customizable outcomes. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
+    <p class=" container text-base text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
+      While creating high-quality and especially coherent videos, whether traditionally or with AI, still requires technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. I created these images to showcase AI’s potential in visual production, illustrating how it can support or even transform workflows as an innovative, efficient tool for advertising, social media, and branding.</p>
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
@@ -2095,7 +2179,13 @@ player.on('error', () => {
       // Bei Fehlern trotzdem die Animation starten
       if (!didReveal) revealContent();
     }
-  }, 300); // 300ms Verzögerung für die Vimeo-Initialisierung
+  }, 30); // 30ms Verzögerung für die Vimeo-Initialisierung
+});
+</script>
+<script>layer.addEventListener('click', () => {
+  plyr.classList.remove('ready');
+  plyr.src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+  box.classList.add('show');
 });
 </script>
 <script>
