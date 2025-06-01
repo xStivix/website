@@ -486,6 +486,11 @@ footer p {
     z-index:0;                  /* liegt hinter .content-overlay (z-index:3) */
   }
  }
+@media (max-width: 767px) {
+  .video-editing-img {
+    display: none;
+  }
+}
 </style>
 </head>
 <body>
@@ -809,17 +814,20 @@ footer p {
   }
 }
 @media (max-width: 767px) {
-  /* versteckt alle Bilder nur innerhalb der Technical-Specs-Section auf Mobil */
-  .tech-specs img {
-    display: none !important;
-  }
-}
-@media (max-width: 767px) {
   .mobile-hero__title {
     font-size: 4rem !important;  /* oder 6rem, je nach Geschmack */
     line-height: 1;
   }
 }
+@media (max-width: 767px) {
+  /* Alle Bilder in „Misc“ und „Video Editing“ mobil um 30 % vergrößern */
+  #miscellaneous-page img,
+  #video-editing-page img {
+    transform: scale(1.3);
+    transform-origin: center center;
+  }
+}
+
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
@@ -998,7 +1006,6 @@ footer p {
           <h2 class="super-title mb-8 md:mb-16 lg:mb-16 text-center">Images</h2>
           <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 lg:gap-8">
             <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20illustration%20of%20a%20stylized%20black%20humanoid%20figure%20with%20white%20eyes%2C%20bent%20over%20and%20vomiting%20a%20surrea...%20(2).png" alt="Image 1" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20featuring%20a%20cute%2C%20stylized%20humanoid%20character%20with%20smooth%2C%20rounded%20features%20and%20bol...%20(1).png" alt="Image 2" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/3D%20poster%20design%20of%20a%20quirky%20cartoon%20humanoid%20character%20with%20an%20oversized%20head%20and%20a%20glowing%20lightbu_.png" alt="Image 3" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png" alt="Image 4" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
@@ -1025,9 +1032,7 @@ footer p {
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png" alt="Image 25" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png" alt="Image 26" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png" alt="Image 27" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy6vvcyfv7am28t06499dn9_1745844382_img_0.webp" alt="Image 28" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp" alt="Image 29" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-            <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7mn8ff0ka37pkpdfd8yyq_1745845181_img_1.webp" alt="Image 30" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/Comp%201_00000.png" alt="Image 31" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
             <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp" alt="Image 32" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png" alt="Image 33" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
@@ -1047,13 +1052,12 @@ footer p {
 	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png" alt="Image 46" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 	    <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-172-Create%20a%20black%20poster%20with%20white%20chalkboard%20texture%20and%20scattered%20handwritten_.png" alt="Image 47" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_A_high_resolution_photography_award_winning_phot_e876f282-2b1a-46cc-bb51-d9418bbe87db_2.png" alt="Image 48" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-<div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_0d2d61e3-8681-4e86-a96e-54750e3fc563.png" alt="Image 49" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-<div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_5fec6877-e5e4-4e6c-b5f8-9b39af593080.png" alt="Image 50" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+<div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_an_orange_Porsc_00170f89-9253-469e-b4fb-d8484ccbc244.png" alt="Image 50" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_e15cecf9-6abb-4c2d-8192-8fcebf9ad33b_00000.png" alt="Image 51" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_mod_76c82e1a-a3d9-40ef-a04a-d81c0a4273b0.png" alt="Image 52" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_lime_green_Po_0ee50d1e-e1c7-4140-b84e-c1de20f3c542.png" alt="Image 53" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 <div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_olive_red_Por_ade10585-3a4d-4af9-9d9b-155c1c954116.png" alt="Image 54" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
-<div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_an_orange_Porsc_00170f89-9253-469e-b4fb-d8484ccbc244.png" alt="Image 55" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
+<div class="portfolio-item"><img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_0d2d61e3-8681-4e86-a96e-54750e3fc563.png" alt="Image 55" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
 	  </div>
         </div>
       </section>
@@ -1323,7 +1327,7 @@ Key features like coherent scene-building with synchronized audio were not yet a
 </h3>
 
     <p class=" container text-base text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
-      While creating high-quality and especially coherent videos, whether traditionally or with AI, still requires technical expertise, experience, time, and a clear creative vision, AI image generation is now more accessible than ever. These images were created to showcase AI’s transformative potential in fields like advertising, social media, and branding. Note: These images were generated solely from prompts and further prompt engineering. With minimal manual post production they can be further refined into high quality and brand-ready images.
+      While creating high-quality and especially coherent videos, whether traditionally or with AI, still requires technical expertise, experience, time, and a clear creative vision, image generation on the other hand is now more accessible than ever. These images were created to showcase AI’s transformative potential in fields like advertising, social media, and branding. Note: These images were generated solely from prompts and further prompt engineering. With minimal manual post production they can be further refined into high quality and brand-ready images.
 
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
@@ -1674,7 +1678,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
           loading="lazy"
         >
         <img
-          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/colormanagement_00000.png"
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/colormangementpngfinal_00000.webp"
           alt="Color Management Vorschaubild"
           class="max-w-md w-full h-auto rounded-lg tech-mob"
           loading="lazy"
@@ -1692,7 +1696,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
             loading="lazy"
           >
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/Programs&tools_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
             alt="Programs & Tools Vorschaubild"
             class="max-w-md w-full h-auto rounded-lg tech-mob"
             loading="lazy"
@@ -1716,7 +1720,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         </div>
         <div class="flex justify-center">
           <img
-            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/TechnicalSpecsImageUpdate/DeliveryFormats_00000.png"
+            src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
             alt="Platzhalter Bild für drittes Feature"
             class="max-w-md w-full h-auto rounded-lg tech-mob"
             loading="lazy"
@@ -1784,7 +1788,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
       <div>
         <h3 class="text-xl font-bold mb-2 md:mb-4">From Idea to Video</h3>
         <p class="text-base md:text-md font-light tech-text">
-         From concept to final cut, I create videos and transport your message by using high-quality stock footage or fully individualized AI-generated visuals, always combined with traditional editing & sound design. For more advanced needs, such as detailed 3D visualizations, I collaborate with industry professionals to seamlessly integrate high-end 3D elements into the project.
+         From concept to final cut, I can also create videos and transport your message by using high-quality stock footage or fully individualized AI-generated visuals, always combined with traditional editing & sound design. For more advanced needs, such as detailed 3D visualizations, I collaborate with industry professionals to seamlessly integrate high-end 3D elements into the project.
         </p>
       </div>
       <div class="flex justify-center">
@@ -1797,7 +1801,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
           alt="Color Management Vorschaubild"
-          class="max-w-md w-full h-auto rounded-lg tech-mob"
+          class="md:max-w-lg w-full h-auto rounded-lg tech-mob"
           loading="lazy"
         >
       </div>
@@ -1809,13 +1813,13 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
               <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
             alt="Programs & Tools Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg tech-desk"
+            class="md:max-w-md w-full h-auto rounded-lg tech-desk"
             loading="lazy"
           >
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
             alt="Programs & Tools Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg tech-mob"
+            class="md:max-w-md w-full h-auto rounded-lg tech-mob"
             loading="lazy"
           >
         </div>
