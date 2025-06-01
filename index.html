@@ -513,6 +513,7 @@ footer p {
         <a href="#about"     class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">ABOUT</a>
         <a href="#portfolio" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">WORK</a>
         <a href="#ai" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="ai">AI</a>
+        <a href="#images" class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="images">IMAGES</a>
         <a href="#services"  class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">SERVICES</a>
         <a href="#contact"   class="nav-link text-white text-sm font-base page-link font-mono-custom" data-page="main">CONTACT</a>
       </div>
@@ -526,11 +527,10 @@ footer p {
   </div>
   <!-- Mobile-Links (base size, bold) -->
   <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
-    <a href="#about"      class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">About</a>
-    <a href="#portfolio"  class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Work</a>
     <a href="#ai"         class="block text-white nav-link text-base font-medium page-link py-2" data-page="ai">AI</a>
-    <a href="#services"   class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Services</a>
-    <a href="#contact"    class="block text-white nav-link text-base font-medium page-link py-2" data-page="main">Contact</a>
+    <a href="#images"   class="block text-white nav-link text-base font-medium page-link py-2" data-page="images">Images</a>
+<a href="#videoEditing" class="block text-white nav-link text-base font-medium page-link py-2" data-page="videoEditing">Tech</a>
+ <a href="#miscellaneous" class="block text-white nav-link text-base font-medium page-link py-2" data-page="miscellaneous"> Misc</a>
   </div>
 </nav>
 
@@ -820,14 +820,25 @@ footer p {
   }
 }
 @media (max-width: 767px) {
-  /* Alle Bilder in „Misc“ und „Video Editing“ mobil um 30 % vergrößern */
-  #miscellaneous-page img,
+  /* Video Editing-Bilder auf Mobile um 30 % vergrößern */
   #video-editing-page img {
     transform: scale(1.3);
     transform-origin: center center;
   }
-}
 
+  /* Misc-Bilder auf Mobile um 40 % vergrößern */
+  #miscellaneous-page img {
+    transform: scale(1.4);
+    transform-origin: center center;
+  }
+}
+@media (min-width: 768px) {
+  /* Desktop: Misc‐Bilder um 10 % vergrößern */
+  #miscellaneous-page img {
+    transform: scale(1.05);
+    transform-origin: center center;
+  }
+}
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
@@ -1765,7 +1776,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
             Miscellaneous.
           </h1>
           <p class="text-base md:text-lg max-w-2xl font-light mb-4"  style="max-width: 37rem;">
-            While my main profession lies in editing provided footage, I also offer a full-scope visual service that includes both individual video creation and image production always grounded in a modern, digital-first approach.
+            While my core focus is video editing, I offer a complete visual service, from video and image production to web-based solutions, always rooted within a modern digital-first approach.
           </p>
         </div>
         <div class="flex justify-center">
@@ -1788,7 +1799,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
       <div>
         <h3 class="text-xl font-bold mb-2 md:mb-4">From Idea to Video</h3>
         <p class="text-base md:text-md font-light tech-text">
-         From concept to final cut, I can also create videos and transport your message by using high-quality stock footage or fully individualized AI-generated visuals, always combined with traditional editing & sound design. For more advanced needs, such as detailed 3D visualizations, I collaborate with industry professionals to seamlessly integrate high-end 3D elements into the project.
+         From concept to final cut, I can create videos and transport your message fully by using high-quality stock footage or individualized AI-generated visuals, always combined with traditional editing & sound design. For more advanced needs, such as detailed 3D visualizations, I collaborate with industry professionals to seamlessly integrate high-end 3D elements into the project.
         </p>
       </div>
       <div class="flex justify-center">
@@ -1826,7 +1837,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         <div>
           <h3 class="text-xl font-bold mb-2 md:mb-4">Image Content</h3>
           <p class="text-base md:text-md font-light tech-text">
-           Whether creating images with or without typography, working with existing assets, or generating custom imagery, I combine traditional editing with an AI-assisted, fully digital workflow to deliver professional, fully individual and lifelike images for any usecase. This approach avoids the need for traditional production while maintaining a high-end visual standard.</p>
+           Whether creating images with or without typography, working with existing assets, or generating custom imagery, I combine traditional editing with an AI-assisted, fully digital workflow to deliver professional, fully individual and lifelike images for any usecase. This approach avoids the need for traditional production while maintaining a high visual standard.</p>
      </div>
       </div>
     </div>
