@@ -930,23 +930,48 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     gridWrapper.appendChild(gridCard.firstElementChild);
   });
 
-  new Swiper('.mySwiper', {
-  direction: 'horizontal',
-  slidesPerView: 1.1,
-  spaceBetween : 16,
+  /* ---------- NEUE Swiper-Initialisierung ---------- */
+  const swiper = new Swiper('.mySwiper', {
+    direction      : 'horizontal',
+    slidesPerView  : 1.1,
+    spaceBetween   : 16,
 
-  /* <<<  HIER die Empfindlichkeit ↓↓↓  >>> */
-  touchAngle : 10,   // statt 30 °  → nur fast waagrechte Gesten
-  threshold  : 20,   // min. 20 px Horizontaldistanz, bevor Swiper greift
-  longSwipesRatio : 0.3, // (optional) erst ab 30 % der Breite zum nächsten Slide
-  touchStartPreventDefault: false, // Browser darf vertikal scrollen
-  passiveListeners        : true,  // verhindert Scroll-Jank
+    /* horizontales Verhalten */
+    threshold      : 5,
+    touchAngle     : 45,
+    longSwipesRatio: 0.15,
+    speed          : 280,
 
-  pagination: {
-    el       : '.swiper-pagination',
-    clickable: true
-  }
-});
+    followFinger   : true,
+    passiveListeners         : true,
+    touchStartPreventDefault : false,
+
+    pagination: {
+      el       : '.swiper-pagination',
+      clickable: true
+    }
+  });
+
+  /* ---------- Vertikal-Gate  ---------- */
+  let startX, startY;
+
+  swiper.on('touchStart', (_s, e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    swiper.allowTouchMove = true;          // vorsichtshalber aktiv
+  });
+
+  swiper.on('touchMove', (_s, e) => {
+    const dx = Math.abs(e.touches[0].clientX - startX);
+    const dy = Math.abs(e.touches[0].clientY - startY);
+
+    // erst ab >35 px und klar vertikal Browser-Scroll zulassen
+    swiper.allowTouchMove = !(dy > dx && dy > 35);
+  });
+
+  swiper.on('touchEnd', () => {
+    swiper.allowTouchMove = true;          // zurücksetzen
+  });
 </script>
 
 
