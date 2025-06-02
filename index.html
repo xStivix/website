@@ -478,7 +478,7 @@ footer p {
 
 @media (max-width:767px){
   /* nur Smartphones */
-  .mobile-fallback{
+  .mobile-fallback {
     display:block;
     position:absolute;
     top:50%;
@@ -488,7 +488,7 @@ footer p {
     transform:translate(-50%,-50%) scale(1.2); width:100vw; height:100vh;  /* exakt wie dein .mobile-iframe */
     object-fit:cover;           /* füllt lückenlos */
     pointer-events:none;        /* nichts klickbar machen */
-    z-index:0;                  /* liegt hinter .content-overlay (z-index:3) */
+    z-index:2;                  /* liegt hinter .content-overlay (z-index:3) */
   }
  }
 @media (max-width: 767px) {
@@ -853,7 +853,6 @@ footer p {
 iframe:not(.desktop-iframe):not(.mobile-iframe) {
   filter: brightness(90%);
 }
-
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
@@ -2303,7 +2302,6 @@ player.on('play', () => {
 player.on('error', () => {
   triggerOverlaySlideOut();
 });
-
       
       // Event-Listener für Play-Event
       player.on('play', () => {
@@ -2379,5 +2377,31 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<!-- … dein existierender Code, alle Skripte, etc. … -->
+
+<!-- Neues, eigenständiges Script nur für das Fallback-Hiding -->
+<!-- Ganz unten, direkt vor </body> -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Nur ausführen, wenn wir tatsächlich in der mobilen Ansicht sind
+    if (window.innerWidth > 767) return; // nur <=767px
+
+    // 2. Das mobile Iframe auswählen
+    const mobileIframe = document.querySelector('.mobile-iframe');
+    if (!mobileIframe) return;
+
+    // 3. Einen neuen Vimeo-Player nur dafür instanziieren
+    const mobilePlayer = new Vimeo.Player(mobileIframe);
+
+    // 4. Sobald das mobile Video wirklich abspielt, das Fallback ausblenden
+    mobilePlayer.on('play', function() {
+      const fallback = document.querySelector('.mobile-fallback');
+      if (fallback) {
+        // statt `display:none` kannst du auch `opacity:0` o.Ä. nutzen, wenn du sanftere Übergänge willst
+        fallback.style.display = 'none';
+      }
+    });
+  });
+</script>
 </body>
 </html>
