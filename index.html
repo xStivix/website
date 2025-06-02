@@ -555,7 +555,9 @@ footer p {
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       <iframe loading="eager"  class="video-background fade-in mobile-iframe"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
-              frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+              style="opacity: 0; transition: opacity 0.3s ease-out;"
+              onload="this.style.opacity = '1';"></iframe>
 
  <!-- 🔥 Mobile-Fallback-Bild (nur Smartphones sichtbar) -->
   <img
