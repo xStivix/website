@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -486,7 +485,7 @@ footer p {
     left:50%;
     width:100vw;
     height:100vh;
-    transform:translate(-50%,-50%) scale(1.07); width:100vw; height:100vh;  /* exakt wie dein .mobile-iframe */
+    transform:translate(-50%,-50%) scale(1.2); width:100vw; height:100vh;  /* exakt wie dein .mobile-iframe */
     object-fit:cover;           /* füllt lückenlos */
     pointer-events:none;        /* nichts klickbar machen */
     z-index:0;                  /* liegt hinter .content-overlay (z-index:3) */
@@ -659,7 +658,7 @@ footer p {
   <div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer; background-color: rgba(0, 0, 0, .3)!Important;">
       <iframe
-        loading="lazy"
+        loading="eager"
         src="https://player.vimeo.com/video/1043117915?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
@@ -680,7 +679,7 @@ footer p {
   <div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
       <iframe
-        loading="lazy"
+        loading="eager"
         src="https://player.vimeo.com/video/843986777?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
@@ -701,7 +700,7 @@ footer p {
 <div class="container mx-auto max-w-8xl px-6 mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
     <iframe
-      loading="lazy"
+      loading="eager"
       src="https://player.vimeo.com/video/1073580177?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
@@ -723,7 +722,7 @@ footer p {
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
 
     <iframe
-      loading="lazy"
+      loading="eager"
       src="https://player.vimeo.com/video/1043677704?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
@@ -932,20 +931,21 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   });
 
   new Swiper(".mySwiper", {
-    slidesPerView: 1.1,
-    spaceBetween: 16,
+  direction:     "horizontal",
+  slidesPerView: 1.1,
+  spaceBetween:  16,
 
-    // Erlaube schrägere Swipes (≤ 60° Abweichung von der Horizontalen)
-    touchAngle: 40,
+  // Nur Wischgesten akzeptieren, die maximal 10° von der Horizontalen abweichen
+  touchAngle:    10,
 
-    // Minimale Pixelbewegung, bevor Swiper startet
-    threshold: 20,
+  // Finger muss sich erst 30px horizontal bewegen, bevor Swiper reagiert
+  threshold:     30,
 
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
-    }
-  });
+  pagination: {
+    el:        ".swiper-pagination",
+    clickable: true
+  }
+});
 </script>
 
 
@@ -1227,7 +1227,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
-      loading="eager"
+      loading="lazy"
      src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
