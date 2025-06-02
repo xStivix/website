@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -8,7 +9,12 @@
   <link rel="dns-prefetch" href="https://i.vimeocdn.com">
   <link rel="preconnect" href="https://player.vimeo.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
-  <link rel="preload" href="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"as="document"crossorigin>
+  <link
+  rel="preload"
+  href="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
+  as="document"
+  crossorigin
+>
   <title>Stefan Aberer - Video Editor</title>
   <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
   <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
@@ -545,7 +551,7 @@ footer p {
     <!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
-      <iframe id="landingIframe "loading="eager" class="video-background fade-in desktop-iframe"
+      <iframe id="landingIframe" loading="eager" class="video-background fade-in desktop-iframe"
               src="https://player.vimeo.com/video/1073580177?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
       <iframe loading="lazy"  class="video-background fade-in mobile-iframe"
@@ -559,7 +565,6 @@ footer p {
     class="mobile-fallback"
     loading="lazy" />
 
-<iframe class="video-background desktop-iframe" …></iframe>
 <img
   src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Fallbackimageswebp/fallbackimg_00000.webp"
   alt="Video-Fallback Desktop"
@@ -931,10 +936,10 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     spaceBetween: 16,
 
     // Erlaube schrägere Swipes (≤ 60° Abweichung von der Horizontalen)
-    touchAngle: 60,
+    touchAngle: 40,
 
     // Minimale Pixelbewegung, bevor Swiper startet
-    threshold: 10,
+    threshold: 20,
 
     pagination: {
       el: ".swiper-pagination",
