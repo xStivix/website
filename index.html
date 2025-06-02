@@ -489,6 +489,8 @@ footer p {
     object-fit:cover;           /* füllt lückenlos */
     pointer-events:none;        /* nichts klickbar machen */
     z-index:2;                  /* liegt hinter .content-overlay (z-index:3) */
+opacity: 1; /* Start‐Zustand */
+    transition: opacity 0.1s ease; /* 300 ms Ausblend-Effekt */
   }
  }
 @media (max-width: 767px) {
@@ -2264,7 +2266,7 @@ const isMobile = window.matchMedia('(max-width: 767px)').matches;
 
 // fallback-Zeit mobil/kontainer
 const FALLBACK_MS_DESKTOP = 2500;
-const FALLBACK_MS_MOBILE  = 1200; // z.B. 1,5s auf Mobil
+const FALLBACK_MS_MOBILE  = 200; // z.B. 1,5s auf Mobil
 
 const FALLBACK_MS = isMobile ? FALLBACK_MS_MOBILE : FALLBACK_MS_DESKTOP;
 
@@ -2377,29 +2379,30 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<!-- … dein existierender Code, alle Skripte, etc. … -->
 
-<!-- Neues, eigenständiges Script nur für das Fallback-Hiding -->
-<!-- Ganz unten, direkt vor </body> -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // 1. Nur ausführen, wenn wir tatsächlich in der mobilen Ansicht sind
-    if (window.innerWidth > 767) return; // nur <=767px
+    // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
+    if (window.innerWidth > 767) return;
 
-    // 2. Das mobile Iframe auswählen
+    // 2. Mobile-Iframe selektieren
     const mobileIframe = document.querySelector('.mobile-iframe');
-    if (!mobileIframe) return;
+    const fallback = document.querySelector('.mobile-fallback');
+    if (!mobileIframe || !fallback) return;
 
-    // 3. Einen neuen Vimeo-Player nur dafür instanziieren
+    // 3. Vimeo-Player nur für das mobile Iframe instanziieren
     const mobilePlayer = new Vimeo.Player(mobileIframe);
 
-    // 4. Sobald das mobile Video wirklich abspielt, das Fallback ausblenden
-    mobilePlayer.on('play', function() {
-      const fallback = document.querySelector('.mobile-fallback');
-      if (fallback) {
-        // statt `display:none` kannst du auch `opacity:0` o.Ä. nutzen, wenn du sanftere Übergänge willst
+    // 4. Wenn Buffering beendet ist, Fallback langsam ausblenden
+    mobilePlayer.on('bufferend', function() {
+      // 4.1 Opacity des Fallback auf 0 setzen (Transition startet)
+      fallback.style.opacity = '0';
+
+      // 4.2 Nach der Transition (gleiche Dauer wie in CSS: 0.3s)
+      setTimeout(function() {
+        // 4.2.1 Fallback per display:none ganz entfernen
         fallback.style.display = 'none';
-      }
+      }, 100); // 300 ms, gleiche Zeit wie CSS-Transition
     });
   });
 </script>
