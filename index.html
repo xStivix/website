@@ -952,9 +952,9 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
       <!-- Bild links -->
       <div class="flex justify-center">
         <img
-          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/conncedted_00000_00000.png"
+          src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/stayconnectedlel_00000.png"
           alt="Contact"
-          class="max-w-xs h-auto rounded-lg desktop-icon -mt-8"
+          class="max-w-sm h-auto rounded-lg desktop-icon -mt-8"
           loading="lazy"
         /> 
 </a>
@@ -2377,6 +2377,25 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Erkenne Mobil-Viewport (hier max-width: 767px)
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (!isMobile) return;
+
+    // 2. Wähle alle iframes im Portfolio-Bereich
+    const portfolioIframes = document.querySelectorAll('#portfolio iframe');
+
+    // 3. Passe das src-Attribut an: autoplay=1 → autoplay=0
+    portfolioIframes.forEach(iframe => {
+      let src = iframe.getAttribute('src');
+      // Ersetze alle Vorkommen von autoplay=1 durch autoplay=0
+      src = src.replace(/autoplay=1/g, 'autoplay=0');
+      iframe.setAttribute('src', src);
+    });
+  });
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
