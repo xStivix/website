@@ -1262,7 +1262,7 @@ Google’s latest generative AI sets new standards in AI-powered video creation 
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
       loading="lazy"
-     src="https://player.vimeo.com/video/1093141149?h=1392a96123&muted=1&autopause=0&background=1&loop=1&autoplay=0&muted=1"
+     src="https://player.vimeo.com/video/1093141149?h=1392a96123&muted=1&autopause=0&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -1282,7 +1282,7 @@ Google’s latest generative AI sets new standards in AI-powered video creation 
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
       loading="lazy"
-     src="https://player.vimeo.com/video/1088245147?h=9553efd5a6&muted=1&autopause=0&background=1&loop=1&autoplay=0&muted=1"
+     src="https://player.vimeo.com/video/1088245147?h=9553efd5a6&muted=1&autopause=0&background=1&loop=1&autoplay=1&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -2404,34 +2404,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 </script>
-<!-- ===============================================
-     MOBILE: Autoplay in #portfolio & #ai-page ausschalten
+<!-- ==========================================================
+     MOBILE: Thumbnail-Overlay bis zum ersten Abspielen
      (muss als allerletztes Skript eingebunden sein!)
-==================================================== -->
+========================================================== -->
+<style>
+  /* einfacher Fade-Out für die Platzhalterbilder */
+  .video-placeholder   {position:absolute;inset:0;z-index:2;
+                         background-size:cover;background-position:center;
+                         transition:opacity .35s ease}
+  .video-placeholder.hide{opacity:0;pointer-events:none}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* 1) Nur auf Smartphones / Tablets reagieren */
+  /* 1) Nur Smartphones / Tablets */
   if (!window.matchMedia('(max-width: 767px)').matches) return;
 
-  /* 2) Alle Vimeo-Iframes in Portfolio- und AI-Bereich holen */
+  /* 2) Relevante Iframes suchen (#portfolio & #ai-page) */
   const iframes = document.querySelectorAll(
     '#portfolio iframe[src*="vimeo.com"], #ai-page iframe[src*="vimeo.com"]'
   );
 
   iframes.forEach(frame => {
-    /* 3) Autoplay-Parameter auf „0“ setzen (oder anhängen) */
-    let src = frame.getAttribute('src') || '';
-    src = src.replace(/autoplay=1/gi, 'autoplay=0');
-    if (!/autoplay=\d/.test(src)) {
-      src += (src.includes('?') ? '&' : '?') + 'autoplay=0';
+    /* 2a) Video-ID ermitteln (data-Attr. oder aus URL) */
+    let id = frame.dataset.vimeoId;
+    if (!id) {
+      const match = frame.src.match(/\/video\/(\d+)/);
+      if (match) id = match[1];
     }
-    frame.setAttribute('src', src);
+    if (!id) return;                               // Sicherheitsnetz
 
-    /* 4) Falls schon ein Vimeo-Player läuft → sofort pausieren */
-    if (typeof Vimeo !== 'undefined') {
-      try { new Vimeo.Player(frame).pause(); } catch (_) {/* ignore */ }
+    /* 2b) Platzhalter-DIV mit Thumbnail anlegen */
+    const placeholder = document.createElement('div');
+    placeholder.className   = 'video-placeholder';
+    placeholder.style.backgroundImage =
+      `url('https://vumbnail.com/${id}.jpg')`;      // schnelles öffentliches CDN
+    frame.parentElement.style.position = 'relative';
+    frame.parentElement.appendChild(placeholder);
+
+    /* 2c) Vimeo-Player initialisieren */
+    if (typeof Vimeo === 'undefined') return;       // sollte eigentlich geladen sein
+    const player = new Vimeo.Player(frame);
+
+    /* 2d) Wenn der Player zu spielen beginnt → Placeholder ausblenden */
+    function hidePlaceholder() {
+      placeholder.classList.add('hide');
+      /* nach Transition entfernen, spart Reflows */
+      setTimeout(() => placeholder.remove(), 400);
     }
+    player.on('play',  hidePlaceholder);
+    player.on('loaded', () => {                     // Fallback: Startet sofort?
+      /* prüft, ob wir schon in play-State sind */
+      player.getPaused().then(paused => { if (!paused) hidePlaceholder(); });
+    });
+
+    /* 2e) Autoplay bleibt unverändert (bereits 1) – kein src-Eingriff nötig */
   });
 
 });
