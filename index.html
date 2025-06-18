@@ -2379,20 +2379,28 @@ document.addEventListener('DOMContentLoaded', () => {
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1. Erkenne Mobil-Viewport (hier max-width: 767px)
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    if (!isMobile) return;
+  document.addEventListener('DOMContentLoaded', function() {
+    // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
+    if (window.innerWidth > 767) return;
 
-    // 2. Wähle alle iframes im Portfolio-Bereich
-    const portfolioIframes = document.querySelectorAll('#portfolio iframe');
+    // 2. Mobile-Iframe selektieren
+    const mobileIframe = document.querySelector('.mobile-iframe');
+    const fallback = document.querySelector('.mobile-fallback');
+    if (!mobileIframe || !fallback) return;
 
-    // 3. Passe das src-Attribut an: autoplay=1 → autoplay=0
-    portfolioIframes.forEach(iframe => {
-      let src = iframe.getAttribute('src');
-      // Ersetze alle Vorkommen von autoplay=1 durch autoplay=0
-      src = src.replace(/autoplay=1/g, 'autoplay=0');
-      iframe.setAttribute('src', src);
+    // 3. Vimeo-Player nur für das mobile Iframe instanziieren
+    const mobilePlayer = new Vimeo.Player(mobileIframe);
+
+    // 4. Wenn Buffering beendet ist, Fallback langsam ausblenden
+    mobilePlayer.on('bufferend', function() {
+      // 4.1 Opacity des Fallback auf 0 setzen (Transition startet)
+      fallback.style.opacity = '0';
+
+      // 4.2 Nach der Transition (gleiche Dauer wie in CSS: 0.3s)
+      setTimeout(function() {
+        // 4.2.1 Fallback per display:none ganz entfernen
+        fallback.style.display = 'none';
+      }, 100); // 300 ms, gleiche Zeit wie CSS-Transition
     });
   });
 </script>
