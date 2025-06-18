@@ -2405,63 +2405,79 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 <!-- ==========================================================
-     MOBILE: Thumbnail-Overlay bis zum ersten Abspielen
-     (muss als allerletztes Skript eingebunden sein!)
+     UNIVERSAL: Thumbnail-Overlay (inkl. Fallback für „unlisted“)
 ========================================================== -->
 <style>
-  /* einfacher Fade-Out für die Platzhalterbilder */
-  .video-placeholder   {position:absolute;inset:0;z-index:2;
-                         background-size:cover;background-position:center;
-                         transition:opacity .35s ease}
-  .video-placeholder.hide{opacity:0;pointer-events:none}
+  /* bestehende Platzhalter-Regeln ---------------- */
+  .video-placeholder        {position:absolute;inset:0;z-index:1;
+                              background:#000 center/cover no-repeat;
+                              transition:opacity .4s ease}
+  .video-placeholder.hide   {opacity:0;pointer-events:none}
+  .video-placeholder::after {content:"";position:absolute;inset:0;
+                              background:rgba(0,0,0,.35);}
+
+  /* NEU: Text-Overlays über Platzhalter und Video */
+  #portfolio .video-hover .absolute,
+  #ai-page    .video-hover .absolute {
+    z-index: 3 !important;   /* höher als Placeholder (1) und Iframe (0) */
+  }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* 1) Nur Smartphones / Tablets */
-  if (!window.matchMedia('(max-width: 767px)').matches) return;
-
-  /* 2) Relevante Iframes suchen (#portfolio & #ai-page) */
+  /* alle Vimeo-Iframes innerhalb von Portfolio- & AI-Sektion */
   const iframes = document.querySelectorAll(
     '#portfolio iframe[src*="vimeo.com"], #ai-page iframe[src*="vimeo.com"]'
   );
 
   iframes.forEach(frame => {
-    /* 2a) Video-ID ermitteln (data-Attr. oder aus URL) */
-    let id = frame.dataset.vimeoId;
-    if (!id) {
-      const match = frame.src.match(/\/video\/(\d+)/);
-      if (match) id = match[1];
-    }
-    if (!id) return;                               // Sicherheitsnetz
+    /* — ID bestimmen — */
+    let id = frame.dataset.vimeoId ||
+             (frame.src.match(/\/video\/(\d+)/) || [])[1];
+    if (!id) return;                                    // Safety
 
-    /* 2b) Platzhalter-DIV mit Thumbnail anlegen */
-    const placeholder = document.createElement('div');
-    placeholder.className   = 'video-placeholder';
-    placeholder.style.backgroundImage =
-      `url('https://vumbnail.com/${id}.jpg')`;      // schnelles öffentliches CDN
+    /* — Placeholder erzeugen — */
+    const ph = document.createElement('div');
+    ph.className = 'video-placeholder';
     frame.parentElement.style.position = 'relative';
-    frame.parentElement.appendChild(placeholder);
+    frame.parentElement.appendChild(ph);
 
-    /* 2c) Vimeo-Player initialisieren */
-    if (typeof Vimeo === 'undefined') return;       // sollte eigentlich geladen sein
-    const player = new Vimeo.Player(frame);
-
-    /* 2d) Wenn der Player zu spielen beginnt → Placeholder ausblenden */
-    function hidePlaceholder() {
-      placeholder.classList.add('hide');
-      /* nach Transition entfernen, spart Reflows */
-      setTimeout(() => placeholder.remove(), 400);
-    }
-    player.on('play',  hidePlaceholder);
-    player.on('loaded', () => {                     // Fallback: Startet sofort?
-      /* prüft, ob wir schon in play-State sind */
-      player.getPaused().then(paused => { if (!paused) hidePlaceholder(); });
+    /* 1. Versuch: öffentliches CDN */
+    const cdnUrl = `https://vumbnail.com/${id}.jpg`;
+    setPlaceholder(ph, cdnUrl, () => {
+      /* Fallback: player-config von Vimeo (klappt auch bei „unlisted“) */
+      fetch(`https://player.vimeo.com/video/${id}/config`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(cfg => {
+          const thumbs = cfg.video.thumbs || {};
+          const best   = thumbs[Object.keys(thumbs).sort().pop()];
+          if (best) ph.style.backgroundImage = `url("${best}")`;
+        })
+        .catch(()=>{/* schwarz bleibt */});
     });
 
-    /* 2e) Autoplay bleibt unverändert (bereits 1) – kein src-Eingriff nötig */
+    /* — Player initialisieren & Overlay wegfaden — */
+    if (typeof Vimeo !== 'undefined') {
+      const player  = new Vimeo.Player(frame);
+      const fadeOut = () => {
+        ph.classList.add('hide');
+        setTimeout(() => ph.remove(), 500);
+      };
+      player.on('play', fadeOut);
+      player.on('loaded', () =>
+        player.getPaused().then(paused => !paused && fadeOut())
+      );
+    }
   });
+
+  /* Hilfsfunktion: Bild testen → setzen oder Fallback */
+  function setPlaceholder(el, url, onError){
+    const img = new Image();
+    img.onload  = () => el.style.backgroundImage = `url("${url}")`;
+    img.onerror = onError;
+    img.src = url;
+  }
 
 });
 </script>
