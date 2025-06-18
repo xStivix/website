@@ -2404,5 +2404,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 </script>
+<!-- ===============================================
+     MOBILE: Autoplay in #portfolio & #ai-page ausschalten
+     (muss als allerletztes Skript eingebunden sein!)
+==================================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* 1) Nur auf Smartphones / Tablets reagieren */
+  if (!window.matchMedia('(max-width: 767px)').matches) return;
+
+  /* 2) Alle Vimeo-Iframes in Portfolio- und AI-Bereich holen */
+  const iframes = document.querySelectorAll(
+    '#portfolio iframe[src*="vimeo.com"], #ai-page iframe[src*="vimeo.com"]'
+  );
+
+  iframes.forEach(frame => {
+    /* 3) Autoplay-Parameter auf „0“ setzen (oder anhängen) */
+    let src = frame.getAttribute('src') || '';
+    src = src.replace(/autoplay=1/gi, 'autoplay=0');
+    if (!/autoplay=\d/.test(src)) {
+      src += (src.includes('?') ? '&' : '?') + 'autoplay=0';
+    }
+    frame.setAttribute('src', src);
+
+    /* 4) Falls schon ein Vimeo-Player läuft → sofort pausieren */
+    if (typeof Vimeo !== 'undefined') {
+      try { new Vimeo.Player(frame).pause(); } catch (_) {/* ignore */ }
+    }
+  });
+
+});
+</script>
 </body>
 </html>
