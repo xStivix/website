@@ -2396,32 +2396,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 </script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
-    if (window.innerWidth > 767) return;
-
-    // 2. Mobile-Iframe selektieren
-    const mobileIframe = document.querySelector('.mobile-iframe');
-    const fallback = document.querySelector('.mobile-fallback');
-    if (!mobileIframe || !fallback) return;
-
-    // 3. Vimeo-Player nur für das mobile Iframe instanziieren
-    const mobilePlayer = new Vimeo.Player(mobileIframe);
-
-    // 4. Wenn Buffering beendet ist, Fallback langsam ausblenden
-    mobilePlayer.on('bufferend', function() {
-      // 4.1 Opacity des Fallback auf 0 setzen (Transition startet)
-      fallback.style.opacity = '0';
-
-      // 4.2 Nach der Transition (gleiche Dauer wie in CSS: 0.3s)
-      setTimeout(function() {
-        // 4.2.1 Fallback per display:none ganz entfernen
-        fallback.style.display = 'none';
-      }, 100); // 300 ms, gleiche Zeit wie CSS-Transition
-    });
-  });
-</script>
 </body>
 </html>
