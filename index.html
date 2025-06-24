@@ -2494,6 +2494,12 @@ document.addEventListener('DOMContentLoaded', () => {
 #contact {
   display: none !important;
 }
+@media (max-width: 767px) {
+  /* Button-Container in der Hero-Section ausblenden */
+  .content-overlay > .flex.justify-center.space-x-4 {
+    display: none;
+  }
+}
 </style>
 
 <script>
