@@ -2510,12 +2510,29 @@ document.addEventListener('DOMContentLoaded', () => {
 #contact {
   display: none !important;
 }
-@media (max-width: 767px) {
-  /* Button-Container in der Hero-Section ausblenden */
-  .content-overlay > .flex.justify-center.space-x-4 {
-    display: none;
+@media (min-width: 768px) {
+    #contact {
+      display: none !important;
+    }
   }
-}
+
+  /* Mobile-Ansicht (bis 767px) */
+  @media (max-width: 767px) {
+    /* Button-Container in der Hero-Section ausblenden */
+    .content-overlay > .flex.justify-center.space-x-4 {
+      display: none;
+    }
+
+    /* Footer auf Mobile komplett ausblenden */
+    footer {
+      display: none !important;
+    }
+
+    /* Contact-Sektion auf Mobile wieder einblenden */
+    #contact {
+      display: block !important;
+    }
+  }
 </style>
 
 <script>
