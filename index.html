@@ -202,7 +202,7 @@
       .nav-link      { font-size:.9rem !important; }
       #about .grid, #portfolio .grid, #services .grid, #contact .grid{ grid-template-columns:1fr !important; }
       #portfolio .grid, #services .grid, #contact .grid{ gap:1rem !important; }
-      #mobileMenu a  { padding:1rem 0 !important; font-size:1.25rem !important; }
+      #mobileMenu a  { padding:1rem 0 !important; font-size:1rem !important; }
       .contact-input { padding:1.25rem !important; font-size:1.125rem !important; }
       button[type="submit"]{ padding:1.25rem !important; font-size:1.125rem !important; }
       #portfolio  .container{padding-left: 0!Important;padding-right: 0!Important;}
@@ -547,10 +547,10 @@ footer {
   </div>
   <!-- Mobile-Links (base size, bold) -->
   <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
-    <a href="#ai"         class="block text-white nav-link text-base font-medium page-link py-2" data-page="ai">AI</a>
-    <a href="#images"   class="block text-white nav-link text-base font-medium page-link py-2" data-page="images">Images</a>
-<a href="#videoEditing" class="block text-white nav-link text-base font-medium page-link py-2" data-page="videoEditing">Tech</a>
- <a href="#miscellaneous" class="block text-white nav-link text-base font-medium page-link py-2" data-page="miscellaneous"> Misc</a>
+    <a href="#ai"         class="block text-white nav-link text-sm font-medium page-link py-2" data-page="ai">AI</a>
+    <a href="#images"   class="block text-white nav-link text-sm font-medium page-link py-2" data-page="images">Images</a>
+<a href="#videoEditing" class="block text-white nav-link text-sm font-medium page-link py-2" data-page="videoEditing">Tech</a>
+ <a href="#miscellaneous" class="block text-white nav-link text-sm font-medium page-link py-2" data-page="miscellaneous"> Misc</a>
   </div>
 </nav>
 
@@ -629,18 +629,18 @@ footer {
         </p>
 
         <!-- große Headlines -->
-        <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+        <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
           Sharp Cuts
         </h1>
-        <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+        <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
           Smooth Flow
         </h1>
-        <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+        <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
           AI Enhanced
         </h1>
 
         <!-- Fließtext -->
-        <p class="text-base md:text-lg max-w-2xl font-light mb-4">
+        <p class="text-base md:text-md max-w-2xl font-light mb-4">
           I am a 28 years old video editor with over 5 years of experience in the industry. I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With my roots in traditional editing and expertise in AI, I bring a unique perspective to every project.
         </p>
 
@@ -901,6 +901,12 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     font-size: 9rem;  /* statt 7rem */
   }
 }
+@media (max-width: 767px) {
+  /* Miscellaneous-Hero-Bild auf Mobile verstecken */
+  #miscellaneous-page .misc-hero-img {
+    display: none !important;
+  }
+}
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
@@ -943,7 +949,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     {
       number: '03',
       title: 'MISCELLANEOUS',
-      text: "Whether it's purely video content or anything else, I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative individuals to define the right visual approach & direction as well as lay the groundwork for a smooth and effective production process.",
+      text: "Whether it's purely video content or anything else, I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative individuals to define the right visual approach & direction as well as lay the groundwork for a smooth production process.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/misc_00000.webp',
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">READ MORE</a>'
     }
@@ -1183,21 +1189,21 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             AI INSIGHTS
           </p>
-          <h1 class="text-3xl md:text-4xl leading-tight font-light mb-2">
+          <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
             Cutting-Edge
           </h1>
-<h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+<h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
             Solutions
           </h1>
-          <p class="text-base md:text-lg max-w-2xl font-light mb-4">
-            Whether it's images, videos or text – if it can be done with AI, I can make it happen. For me AI isn't just about following trends; it's about staying current in a fast-moving field.
+          <p class="text-base md:text-md max-w-2xl font-light mb-4">
+            Whether it's images, videos or text – if it can be done with AI, I can make it happen. For me, AI isn’t just about trends, more about understanding and applying the technology in a way that keeps pace with constant change. 
           </p>
         </div>
         <div class="flex justify-center relative">
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/dotsfinalai_00000.webp"
             alt="AI Visualisierung"
-            class="max-w-md w-full h-auto rounded-lg visualisierung-img "
+            class="max-w-sm w-full h-auto rounded-lg visualisierung-img "
             loading="eager"
           >             
         </div>
@@ -1212,8 +1218,8 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
       AI WORKFLOW
     </p>
       <h2 class="super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
-    <p class="container text-base mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
-      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it with manual adjustments.</p>
+    <p class="container text-sm mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
+      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. I find that an image-to-video approach currently offers the highest level of creative control. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I refine through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it.</p>
 
     <!-- ############################################################# -->
     <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
@@ -1296,7 +1302,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   Veo3 Showcase
 </h3>
 
-<p class="container text-base mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+<p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
 Google’s latest generative AI sets new standards in AI-powered video creation especially in the field of human behavior paired with native audio generation. Below are two examples. First, I created a general showcase, including a short, trashy, sitcom-style show, to test Veo3's capabilities in conveying emotion and human interaction when it was first released. Second is a short, high-dopamine ad directed by PJaccetturo. This clip marks a major milestone in advertising: the first fully Veo3 AI-generated commercial that was actually launched for a real company. Fast, absurd, engaging and efficient without loosing brand identity.
 </p>
 
@@ -1348,7 +1354,7 @@ Google’s latest generative AI sets new standards in AI-powered video creation 
   Ultimate Drive
 </h3>
 
-<p class="container text-base mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+<p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
   This is an early proof of concept based on AI-generated footage using an image-to-video workflow, similar to today’s best practices showen above, but much less efficient. This clip focuses more on the results of traditional editing craftsmanship than on raw AI output alone. This is the result of over 80 hours of hands-on work: editing, sound design, VFX, color grading, and prompt engineering. Images were created with MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche logo. Final polish and upscaling were done with Topaz AI. Below is a before-and-after comparison aswell as the final clip.
 </p>
 
@@ -1402,9 +1408,8 @@ Google’s latest generative AI sets new standards in AI-powered video creation 
   Image Production
 </h3>
 
-    <p class=" container text-base text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
-      While creating high-quality and especially coherent videos, whether traditionally or with AI, still requires technical expertise, experience, time, and a clear creative vision, image generation on the other hand is now more accessible than ever. These images were created to showcase AI’s transformative potential to replace real life photoshootings. The following images were solely generated from prompts, no further post processing or refinement.
-
+    <p class=" container text-sm text-black mx-auto font-light max-w-2xl mb-4 md:mb-12 ai-text">
+      While creating high-quality and especially coherent videos, whether traditionally or with AI, still requires technical expertise, experience, time, and a clear creative vision, image generation on the other hand is now more accessible than ever. These images were created to showcase AI’s transformative potential to replace real life photoshootings. The following images were solely generated from prompts.
     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
     <div class="container grid grid-cols-2 md:grid-cols-4 gap-4 m-auto md:gap-8 mb-8 md:mb-24 lg:mb-24">
@@ -1715,10 +1720,10 @@ Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übert
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             TEch insights
           </p>
-          <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+          <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
             Video Editing
           </h1>
-          <p class="text-base md:text-lg max-w-2xl font-light mb-4"  style="max-width: 37rem;">
+          <p class="text-base md:text-md max-w-2xl font-light mb-4"  style="max-width: 37rem;">
             My workflow is built around mainly industry-standard Adobe Programs. <br class="break-sm">
 For AI-assisted tasks, I use a wide spread collection of tools for image & video generation as well as editing. My main OS is Windows, but I’m also comfortable on macOS.
           </p>
@@ -1727,7 +1732,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/update1/videoediting2_00000.webp"
             alt="Video Editing Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg video-editing-img"
+            class="max-w-sm w-full h-auto rounded-lg video-editing-img"
             loading="eager"
           >
         </div>
@@ -1742,7 +1747,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
     <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
       <div>
         <h3 class="text-xl font-bold mb-2 md:mb-4">Color Management</h3>
-        <p class="text-base md:text-md font-light tech-text">
+        <p class="text-base md:text-sm font-light tech-text">
           I can work with all major camera systems: ARRI Alexa (Log C), RED Komodo & DSMC2 (REDCODE RAW / Log3G10), Blackmagic RAW & Sony S-Log. My pipeline is designed around Rec. 709 (Log to Rec 709 conversion).
         </p>
       </div>
@@ -1750,7 +1755,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
              <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/colormangementpngfinal_00000.webp"
           alt="Color Management Vorschaubild"
-          class="max-w-md w-full h-auto rounded-lg tech-desk"
+          class="max-w-sm w-full h-auto rounded-lg tech-desk"
           loading="lazy"
         >
         <img
@@ -1768,7 +1773,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
               <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
             alt="Programs & Tools Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg tech-desk"
+            class="max-w-sm w-full h-auto rounded-lg tech-desk"
             loading="lazy"
           >
           <img
@@ -1780,7 +1785,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         </div>
         <div>
           <h3 class="text-xl font-bold mb-2 md:mb-4">Programs & Tools</h3>
-          <p class="text-base md:text-md font-light tech-text">
+          <p class="text-base md:text-sm font-light tech-text">
             I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Davinci. In addition, I use a wide range of AI tools, including Flux, Midjourney, Runway, Topaz, Kling, OpenAI, Google and others.
           </p>
         </div>
@@ -1790,7 +1795,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
       <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
         <div>
           <h3 class="text-xl font-bold mb-2 md:mb-4">Delivery Formats</h3>
-          <p class="text-base md:text-md font-light tech-text">
+          <p class="text-base md:text-sm font-light tech-text">
             I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom outputs for social media platforms and web use.
           </p>
         </div>
@@ -1798,13 +1803,13 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
             alt="Platzhalter Bild für drittes Feature"
-            class="max-w-md w-full h-auto rounded-lg tech-mob"
+            class="max-w-sm w-full h-auto rounded-lg tech-mob"
             loading="lazy"
           >
                  <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
             alt="Platzhalter Bild für drittes Feature"
-            class="max-w-md w-full h-auto rounded-lg tech-desk"
+            class="max-w-sm w-full h-auto rounded-lg tech-desk"
             loading="lazy"
           >
         </div>
@@ -1837,10 +1842,10 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             Videos, Images & Web
           </p>
-          <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
+          <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
             Miscellaneous
           </h1>
-          <p class="text-base md:text-lg max-w-2xl font-light mb-4"  style="max-width: 37rem;">
+          <p class="text-base md:text-md max-w-2xl font-light mb-4"  style="max-width: 37rem;">
             While my core focus is video editing, I offer a complete visual service, from video and image production to web-based solutions, always rooted within a modern digital-first approach.
           </p>
         </div>
@@ -1848,7 +1853,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
           <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfinal_00000.webp"
             alt="misc Vorschaubild"
-            class="max-w-md w-full h-auto rounded-lg misc-hero-img"
+            class="max-w-sm w-full h-auto rounded-lg misc-hero-img"
             loading="eager"
           >
         </div>
@@ -1863,7 +1868,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
     <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
       <div>
         <h3 class="text-xl font-bold mb-2 md:mb-4">From Idea to Video</h3>
-        <p class="text-base md:text-md font-light tech-text">
+        <p class="text-base md:text-sm font-light tech-text">
          In addition to editing existing footage, I can create complete videos without any pre-shot material using Motion Graphics, Typography, high-quality stock footage and or fully customized AI-generated visuals, always enhanced with traditional editing and sound design. I also create and implement 3D visuals, objects, and renderings directly within After Effects. For more advanced 3D requirements such as complex visualizations or high-end animations, I collaborate with experienced industry professionals to seamlessly integrate 3D elements into any project.
         </p>
       </div>
@@ -1871,7 +1876,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
              <img
           src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
           alt="Color Management Vorschaubild"
-          class="max-w-md w-full h-auto rounded-lg tech-desk"
+          class="max-w-sm w-full h-auto rounded-lg tech-desk"
           loading="lazy"
         >
         <img
@@ -1889,7 +1894,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
               <img
             src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
             alt="Programs & Tools Vorschaubild"
-            class="md:max-w-md w-full h-auto rounded-lg tech-desk"
+            class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
             loading="lazy"
           >
           <img
@@ -1901,8 +1906,8 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         </div>
         <div>
           <h3 class="text-xl font-bold mb-2 md:mb-4">Image Content</h3>
-          <p class="text-base md:text-md font-light tech-text">
-           Whether working with typography, existing images or real life assets, I combine traditional image editing processes with an AI-assisted, digital-first workflow to create professional, lifelike, and fully individualized images for any purpose.<br> This method eliminates the need for traditional production while upholding a high visual standard.</p>
+          <p class="text-base md:text-sm font-light tech-text">
+           Whether working with typography, existing images or real life assets, I combine traditional image editing processes with an AI-assisted, digital-first workflow to create professional, lifelike, and fully individualized images for any purpose. This method eliminates the need for traditional production while upholding a high visual standard.</p>
      </div>
       </div>
     </div>
