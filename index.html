@@ -100,7 +100,7 @@
     .mega-title      { font-size:6rem; line-height:1; letter-spacing:-.05em; }
     @media (min-width:768px){ .mega-title{font-size:7rem;} }
     .super-title     { font-size:3.5rem; line-height:1; letter-spacing:-.03em; }
-    @media (min-width:768px){ .super-title{font-size:5rem;} }
+    @media (min-width:768px){ .super-title{font-size:4rem;} }
 
     .nav-link        { position:relative; transition:all .3s ease; }
     .nav-link::after { content:''; position:absolute; width:0; height:2px; bottom:-4px; left:0; background:#fff; transition:width .3s ease; }
@@ -532,6 +532,10 @@ footer {
         <a href="#videoEditing"  class="nav-link text-white text-xs font-base page-link font-mono-custom" data-page="videoEditing">TECH</a>
         <a href="#ai"  class="nav-link text-white text-xs font-base page-link font-mono-custom" data-page="ai">AI</a>
         <a href="#contact"   class="nav-link text-white text-xs font-base page-link font-mono-custom" data-page="miscellaneous">MISC</a>
+<a href="mailto:stefan.aberer@hotmail.com"
+     class="nav-link text-white text-xs font-base font-mono-custom uppercase hover:text-gray-300 transition-colors">
+    CONTACT
+  </a>
       </div>
       <!-- Mobile-Button -->
       <div class="md:hidden">
@@ -593,58 +597,13 @@ footer {
     AVAILABLE
   </span>
 </div>
-
-<!-- Live-Clock unten rechts -->
-<div id="hero-clock"
-     class="absolute bottom-6 right-6 font-mono-custom text-xs tracking-widest uppercase z-10">
-  00:00:00
-</div>
-
-<script>
-(() => {
-  const clockEl = document.getElementById('hero-clock');
-
-  function updateClock () {
-    const now = new Date();
-    clockEl.textContent = now.toLocaleTimeString('de-AT', {
-      hour   : '2-digit',
-      minute : '2-digit',
-      second : '2-digit',
-      hour12 : false,
-      timeZone: 'Europe/Vienna'
-    });
-  }
-
-  updateClock();               // sofort anzeigen
-  setInterval(updateClock, 1000); // jede Sekunde
-})();
-</script>
  
-    <h1 class="mega-title mb-2">Make It Count.</h1>
-    <p class="text-xl md:text-xl mb-8 max-w-3xl mx-auto text-gray-100">
+    <h1 class="text-8xl mb-2">Make It Count.</h1>
+    <p class="text-lg md:text-lg mb-8 max-w-xl mx-auto text-gray-100">
       Creating visuals by combining traditional editing with cutting-edge AI&nbsp;technologies.
     </p>
   </div>
 
-<div class="flex justify-center space-x-4">
-  <!-- Contact öffnet jetzt den Mail-Client -->
-  <a
-    href="mailto:stefan.aberer@hotmail.com"
-    target="_blank"
-    class="inline-block bg-white text-black text-sm tracking-widest px-4 py-2 rounded-md border border-transparent hover:bg-gray-100 transition-colors"
-  >
-    Contact
-  </a>
-
-  <!-- Services bleibt unverändert -->
-  <a
-    href="#services"
-    data-page="services"
-    class="page-link inline-block bg-black text-white text-sm tracking-widest px-4 py-2 rounded-md border border-gray-400 hover:bg-gray-700 transition-colors"
-  >
-    Services
-  </a>
-</div>
 
   <!-- 🌟 Mobile-Variante -->
   <div class="mobile-hero md:hidden absolute bottom-4 left-4 text-left">
@@ -689,10 +648,10 @@ footer {
         <a
   href="#ai"
   data-page="ai"
-  class="page-link mt-2 inline-block bg-white text-black font-mono uppercase text-xs md:text-sm tracking-widest px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
+  class="page-link mt-2 inline-block bg-white text-black tracking-widest font-mono uppercase text-xs px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
 >
   MORE ABOUT AI
-  <span class="inline-block ml-0 md:ml-2 lg:ml-2 align-middle">→</span>
+  <span class="ml-2">→</span>
 </a>
       </div>
 
@@ -1224,7 +1183,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
           <p class="font-mono uppercase text-xs tracking-widest mb-4">
             AI INSIGHTS
           </p>
-          <h1 class="text-3xl md:text-5xl leading-tight font-light mb-2">
+          <h1 class="text-3xl md:text-4xl leading-tight font-light mb-2">
             Cutting-Edge
           </h1>
 <h1 class="text-3xl md:text-5xl leading-tight font-bold mb-6">
