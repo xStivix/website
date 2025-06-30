@@ -581,7 +581,7 @@ footer {
 
              <div class="content-overlay">
   <!-- Desktop-Variante -->
-  <div class="hidden md:block absolute bottom-24 inset-x-0 mx-auto max-w-7xl px-4 text-left"">
+  <div class="hidden md:block absolute bottom-48 inset-x-0 mx-auto max-w-7xl px-4 text-left"">
 <!-- Status-Badge -->
 <div id="status-badge" class="flex items-center justify-start mb-4">
   <!-- grüner Puls-Punkt -->
@@ -597,32 +597,6 @@ footer {
     AVAILABLE
   </span>
 </div>
-
-<!-- Live-Clock unten rechts -->
-<div id="hero-clock"
-     class="absolute bottom-6 right-6 font-mono-custom text-xs tracking-widest uppercase z-10">
-  00:00:00
-</div>
-
-<script>
-(() => {
-  const clockEl = document.getElementById('hero-clock');
-
-  function updateClock () {
-    const now = new Date();
-    clockEl.textContent = now.toLocaleTimeString('de-AT', {
-      hour   : '2-digit',
-      minute : '2-digit',
-      second : '2-digit',
-      hour12 : false,
-      timeZone: 'Europe/Vienna'
-    });
-  }
-
-  updateClock();               // sofort anzeigen
-  setInterval(updateClock, 1000); // jede Sekunde
-})();
-</script>
  
     <h1 class="text-8xl mb-2">Make It Count.</h1>
     <p class="text-lg md:text-lg mb-8 max-w-xl text-left text-gray-100">
