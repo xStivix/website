@@ -9,6 +9,12 @@
   <link rel="dns-prefetch" href="https://i.vimeocdn.com">
   <link rel="preconnect" href="https://player.vimeo.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
+<link
+  rel="preload"
+  href="https://player.vimeo.com/video/1095933665?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
+  as="document"
+  crossorigin
+>
   <title>Stefan Aberer - Video Editor</title>
   <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
   <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
@@ -513,6 +519,7 @@ html, body { scroll-behavior: auto !important; }
 </style>
 </head>
 <body>
+
   <!-- Intro Overlay -->
 <div class="intro-overlay">
   <div class="name-wrapper text-xl md:text-2xl font-bold text-white leading-tight">
@@ -555,13 +562,14 @@ html, body { scroll-behavior: auto !important; }
 
   <!-- MAIN-PAGE -->
   <div id="main-page" data-page="main">
-    <!-- Hero -->
+
+<!-- Hero -->
     <section id="home" class="video-container">
       <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
       <iframe id="landingIframe" loading="eager" class="video-background fade-in desktop-iframe"
-              <iframe src="https://player.vimeo.com/video/1095933665?h=6266b2155c&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
+              src="https://player.vimeo.com/video/1095933665?h=6266b2155c&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      <iframe loading="lazy"  class="video-background fade-in mobile-iframe"
+      <iframe loading="eager"  class="video-background fade-in mobile-iframe"
               src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
               frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
@@ -580,7 +588,7 @@ html, body { scroll-behavior: auto !important; }
 
              <div class="content-overlay">
   <!-- Desktop-Variante -->
-  <div class="hidden md:block absolute bottom-24 inset-x-0 mx-auto max-w-7xl px-4 text-left"">
+  <div class="hidden md:block absolute bottom-24 inset-x-0 mx-auto max-w-7xl px-4 text-left">
 <!-- Status-Badge -->
 <div id="status-badge" class="flex items-center justify-start mb-4">
   <!-- grüner Puls-Punkt -->
@@ -645,7 +653,7 @@ html, body { scroll-behavior: auto !important; }
 
         <!-- Fließtext -->
         <p class="text-base md:text-md max-w-2xl font-light mb-4">
-          I am a 28 years old video editor with over 5 years of experience in the industry.<br> I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With my roots in traditional editing & filmmaking as well as my expertise in AI, I bring a unique perspective to every project.
+          I am a 28 years old video editor with over 5 years of experience in the industry.<br> I specialize in short-form content such as ads, trailers, music videos, image films, and social media content. With my roots in traditional editing, and several years into using AI, I combine the best of both worlds.
         </p>
 
         <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
@@ -750,18 +758,18 @@ html, body { scroll-behavior: auto !important; }
 
     <iframe
       loading="lazy"
-      src="https://player.vimeo.com/video/1073580177?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1" 
+      src="https://player.vimeo.com/video/1065077098?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1" 
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
-      data-vimeo-id="1073580177"
+      data-vimeo-id="1065077098"
       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
     ></iframe>
   
     <!-- Overlay Texte -->
     <div class="absolute  bottom-2 md:bottom-6  left-6 text-white z-[1]">
-      <p class="font-mono text-sm uppercase mb-1">Porsche, Mercedes & Co</p>
-      <h3 class="text-xl :text-3xl lg:text-2xl font-bold">Automotive Showreel 2022</h3>
+      <p class="font-mono text-sm uppercase mb-1">Porsche</p>
+      <h3 class="text-xl :text-3xl lg:text-2xl font-bold">Skyfall</h3>
     </div>
   </div>
 </div>
@@ -954,7 +962,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
       title: 'MISCELLANEOUS',
       text: "Whether it's purely video content or anything else, I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative individuals to define the right visual approach & direction as well as lay the groundwork for a smooth production process.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/misc_00000.webp',
-      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">READ MORE</a>'
+      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
   ];
 
@@ -1375,7 +1383,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     </p>
       <h2 class="super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
     <p class="container text-sm mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text" >
-      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. I find that an image-to-video approach offers the highest level of creative control. Currently, the process still closely resembles traditional methods. Each shot requires planning in terms of lighting, virtual camera & lense, setting, and intended action. Images are created one by one and then assembled scene by scene. The main difference is that the entire workflow takes place in a digital environment, while the pre production phase remains largely the same. Starting from a base image, AI-generated or photographed, I define the composition using sketches, 3D models, or images. I guide the AI with style references and tailored prompts to generate a high-quality image, which I then refine further through editing and color grading. This image then serves as the input for an AI image-to-video model, where I select the best result and finalize it again through traditional manual adjustments.
+      When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way we create content. For me, I prefer an image-to-video approach because it currently offers the most amount of creative control. The process still follows traditional methods: each shot is planned in terms of lighting, camera, lense, setting, and action. I begin with a base image, either photographed or AI-generated, and develop the composition using sketches, 3D models, or reference images. With tailored prompts and style guides, I generate a high-quality image, which I then refine through editing and color grading. This image then becomes the base for the AI video model, after all that I then finalize the best Ai-output one last time with finishing touches like adding back the logos, text or just an overall cleanup.
 </p>
 
     <!-- ############################################################# -->
@@ -1430,7 +1438,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 
  <!-- Erstes Video – jetzt im gleichen Container wie die Bilder -->
 
-<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-4 video-hover ">
+<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
     <iframe
       loading="lazy"
@@ -1450,28 +1458,6 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   </div>
 </div>
 
- <!-- Erstes Video – jetzt im gleichen Container wie die Bilder -->
-
-<div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
-  <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
-    <iframe
-      loading="lazy"
-     src="https://player.vimeo.com/video/1095933665?h=6266b2155c&muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture"
-      allowfullscreen
- data-vimeo-id="1095933665?h=6266b2155c&"
-       style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"
-    ></iframe>
-   <div style="position: absolute; inset: 0px; cursor: pointer;"></div>
-    <!-- Overlay Texte -->
-    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
-      <p class="font-mono uppercase text-sm md:text-xs mb-1 md:mb-0">05 Background Video</p>
-      <h3 class="font-bold text-xl md:text-lg">Fighting Scene</h3>
-    </div>
-  </div>
-</div>
-
 <!-- Vimeo Player SDK -->
 
 <p class="mt-6 mb-0 sm:mt-0 sm:mb-2 font-mono text-xs text-center tracking-widest uppercase text-gray-500">
@@ -1482,7 +1468,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 </h3>
 
 <p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
-Google’s latest generative AI sets new standards in AI-powered video creation especially in the field of human behavior paired with native audio generation. Below are two examples. First, I created a general showcase, including a short, trashy, sitcom-style show, to test Veo3's capabilities in conveying emotion and human interaction when it was first released. Second is a short, high-dopamine ad directed by PJaccetturo. This clip marks a major milestone in advertising: the first fully Veo3 AI-generated commercial that was actually launched for a real company. Fast, absurd, engaging and efficient without loosing brand identity.
+Google’s latest generative AI sets new standards in AI-powered video creation especially in the field of facial look, movements and talking with built-in native audio generation. Below are two examples. First, I created a general showcase, including a short, trashy, sitcom-style show, to test Veo3's capabilities in conveying emotion and human interaction when it was first released. Second is a short, high-dopamine ad directed by PJaccetturo. This clip marks a major milestone in advertising: the first fully Veo3 AI-generated commercial that was actually launched for a real company. Fast, absurd, engaging and efficient without loosing brand identity.
 </p>
 
  <!-- neuesvideo  -->
@@ -2041,8 +2027,7 @@ For AI-assisted tasks, I use a wide spread collection of tools for image & video
         </div>
         <div>
           <h3 class="text-xl font-bold mb-2 md:mb-4">Programs & Tools</h3>
-          <p class="text-base md:text-sm font-light tech-text">
-            I have nearly 10 years of experience with After Effects and also work with Premiere, Photoshop, and Davinci. In addition, I use a wide range of AI tools, including Flux, Midjourney, Runway, Topaz, Kling, OpenAI, Google and others.
+          <p class="text-base md:text-sm font-light tech-text">My main program is Adobe After Effects but I also work with Premiere, Photoshop, and Davinci. In addition, I use a wide range of AI tools, including Midjourney, Runway, Topaz, Kling, ChatGPT, Gemini, Veo and others.
           </p>
         </div>
       </div>
@@ -2749,7 +2734,7 @@ player.on('error', () => {
       // Bei Fehlern trotzdem die Animation starten
       if (!didReveal) revealContent();
     }
-  }, 30); // 30ms Verzögerung für die Vimeo-Initialisierung
+  }, 0); // 30ms Verzögerung für die Vimeo-Initialisierung
 });
 </script>
 <script>layer.addEventListener('click', () => {
