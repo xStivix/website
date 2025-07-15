@@ -2826,7 +2826,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* bestehende Platzhalter-Regeln ---------------- */
   .video-placeholder        {position:absolute;inset:0;z-index:1;
                               background:#000 center/cover no-repeat;
-                              transition:opacity .4s ease}
+                              transition:opacity .1s ease}
   .video-placeholder.hide   {opacity:0;pointer-events:none}
   .video-placeholder::after {content:"";position:absolute;inset:0;
                               background:rgba(0,0,0,.10);}
@@ -2876,53 +2876,61 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* alle Vimeo-Iframes innerhalb von Portfolio- & AI-Sektion */
+  /* ---------------------------------------------------------------
+     Welche Iframes?  – Passe die Selector‑Liste bei Bedarf an
+     --------------------------------------------------------------- */
   const iframes = document.querySelectorAll(
     '#portfolio iframe[src*="vimeo.com"], #ai-page iframe[src*="vimeo.com"]'
   );
 
   iframes.forEach(frame => {
-    /* — ID bestimmen — */
-    let id = frame.dataset.vimeoId ||
-             (frame.src.match(/\/video\/(\d+)/) || [])[1];
-    if (!id) return;                                    // Safety
+    /* 1) ID + (falls vorhanden) HASH aus der src ziehen ------------- */
+    const urlMatch = frame.src.match(/\/video\/(\d+)(?:\?[^#]*h=([a-z0-9]+))?/i);
+    if (!urlMatch) return;                             // Safety‑Stop
 
-    /* — Placeholder erzeugen — */
+    const id   = urlMatch[1];                // „1098650054“
+    const hash = urlMatch[2] || '';          // „6266b2155c“ (bei unlisted) oder ''
+
+    /* 2) Platzhalter‑Div ins Wrapper‑Element einsetzen -------------- */
+    const wrapper = frame.parentElement;
+    wrapper.style.position = 'relative';
+
     const ph = document.createElement('div');
-    ph.className = 'video-placeholder';
-    frame.parentElement.style.position = 'relative';
-    frame.parentElement.appendChild(ph);
+    ph.className = 'video-placeholder';      // ➜ siehe CSS‑Snippet unten
+    wrapper.appendChild(ph);
 
-    /* 1. Versuch: öffentliches CDN */
-    const cdnUrl = `https://vumbnail.com/${id}.jpg`;
+    /* 3) Thumbnail‑URL bauen – unlisted =  ID:HASH ------------------ */
+    const thumbId = hash ? `${id}:${hash}` : id;
+    const cdnUrl  = `https://vumbnail.com/${thumbId}.jpg`;
+
+    /* 4) Bild testen – wenn es lädt → als BG setzen,
+          sonst Fallback über player‑config versuchen                */
     setPlaceholder(ph, cdnUrl, () => {
-      /* Fallback: player-config von Vimeo (klappt auch bei „unlisted“) */
-      fetch(`https://player.vimeo.com/video/${id}/config`)
-        .then(r => r.ok ? r.json() : Promise.reject())
-        .then(cfg => {
-          const thumbs = cfg.video.thumbs || {};
-          const best   = thumbs[Object.keys(thumbs).sort().pop()];
-          if (best) ph.style.backgroundImage = `url("${best}")`;
-        })
-        .catch(()=>{/* schwarz bleibt */});
+      const cfgUrl = `https://player.vimeo.com/video/${id}/config` + (hash ? `?h=${hash}` : '');
+      fetch(cfgUrl).then(r => r.ok ? r.json() : Promise.reject())
+                   .then(cfg => {
+                     const thumbs = cfg.video.thumbs || {};
+                     const largest = thumbs[Object.keys(thumbs).sort().pop()];
+                     if (largest) ph.style.backgroundImage = `url("${largest}")`;
+                   });
     });
 
-    /* — Player initialisieren & Overlay wegfaden — */
+    /* 5) Player‑Init & Overlay ausblenden, wenn Video spielt -------- */
     if (typeof Vimeo !== 'undefined') {
       const player  = new Vimeo.Player(frame);
+
       const fadeOut = () => {
-        ph.classList.add('hide');
-        setTimeout(() => ph.remove(), 500);
+        ph.classList.add('hide');            // CSS‑Transition
+        setTimeout(() => ph.remove(), 500);  // DOM aufräumen
       };
-      player.on('play', fadeOut);
-      player.on('loaded', () =>
-        player.getPaused().then(paused => !paused && fadeOut())
-      );
+
+      player.on('play',   fadeOut);
+      player.on('loaded', () => player.getPaused().then(p => !p && fadeOut()));
     }
   });
 
-  /* Hilfsfunktion: Bild testen → setzen oder Fallback */
-  function setPlaceholder(el, url, onError){
+  /* Helper: Bild laden oder Fehler‑Callback auslösen ----------------- */
+  function setPlaceholder(el, url, onError) {
     const img = new Image();
     img.onload  = () => el.style.backgroundImage = `url("${url}")`;
     img.onerror = onError;
