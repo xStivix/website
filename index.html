@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -588,32 +589,21 @@ html, body { scroll-behavior: auto !important; }
 
              <div class="content-overlay">
   <!-- Desktop-Variante -->
-  <div class="hidden md:block absolute bottom-28 inset-x-0 mx-auto max-w-7xl px-4 text-left">
-<!-- Status-Badge -->
-<div id="status-badge" class="flex items-center justify-start mb-4">
-  <!-- grüner Puls-Punkt -->
-  <span class="relative flex h-3 w-3 mr-2">
-    <!-- Ring -->
-    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-    <!-- fester Kern -->
-    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-  </span>
+   <div class="hidden md:flex flex-col items-center justify-center
+              text-center gap-2 mt-12 w-full h-full">
 
-  <!-- Text in Roboto Mono -->
-  <span class="font-mono-custom text-xs text-gray-300 tracking-widest">
-    AVAILABLE
-  </span>
-</div>
- 
-    <h1 class="text-8xl mb-2">Make it Count.</h1>
-    <p class="text-lg md:text-lg mb-4 max-w-xl text-left text-gray-100">
-  Creating visuals by combinding traditional editing processes with  cutting-edge AI technology.
-</p>
-<!-- ← Hier kommt dein Contact-Button linksbündig -->
-  <div class="mt-6">
-    <a href="mailto:stefan.aberer@hotmail.com" class="btn-glass">Contact</a>
+    <h1 class="hero-title text-8xl md:text-9xl font-bold leading-none">
+      Make&nbsp;it&nbsp;Count.
+    </h1>
+
+    <p class="text-lg md:text-xl max-w-xl mb-4 mx-auto text-gray-100">
+      Creating Visuals by combinding traditional editing processes with cutting-edge AI technology.
+    </p>
+
+    <a href="mailto:stefan.aberer@hotmail.com" class="btn-glass">
+      Contact
+    </a>
   </div>
-</div>
 
 
 
@@ -693,7 +683,7 @@ html, body { scroll-behavior: auto !important; }
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer; background-color: rgba(0, 0, 0, .3)!Important;">
       <iframe
         loading="lazy"
-        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
+        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
@@ -714,7 +704,7 @@ html, body { scroll-behavior: auto !important; }
     <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
       <iframe
         loading="lazy"
-        src="https://player.vimeo.com/video/1043117915?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1" 
+        src="https://player.vimeo.com/video/1043117915?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1" 
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture"
         allowfullscreen
@@ -736,7 +726,7 @@ html, body { scroll-behavior: auto !important; }
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;cursor:pointer;">
     <iframe
       loading="lazy"
-      src="https://player.vimeo.com/video/1098650054?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
+      src="https://player.vimeo.com/video/1098650054?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -759,7 +749,7 @@ html, body { scroll-behavior: auto !important; }
 
     <iframe
       loading="lazy"
-      src="https://player.vimeo.com/video/1065077098?muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1" 
+      src="https://player.vimeo.com/video/1065077098?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1" 
       frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture"
       allowfullscreen
@@ -901,24 +891,30 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 }
 .btn-glass {
   display: inline-block;
-  background: rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.20);
   border: 1px solid rgba(255,255,255,0.25);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #fff;
   padding: 0.5rem 1.5rem;    /* oben/unten 8px, links/rechts 24px */
-  font-size: 0.875rem;       /* etwas kleinere Schrift */
+  font-size: 0.800rem;       /* etwas kleinere Schrift */
   border-radius: 9999px;
-  font-weight: 600;
+  font-weight: 400;
   transition: background 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .btn-glass:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.05);
 }
-
+/* ab 1024 px Breite (lg‑Breakpoint) noch größer */
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 11.5rem;    /* z.B. ≈192 px – passe nach Geschmack an */
+    line-height: 1;      /* bleibt knackig eng */
+  }
+}
 </style>
 
 <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white" >
@@ -2878,10 +2874,10 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------------------------------------------------------------
-     Welche Iframes?  – Passe die Selector‑Liste bei Bedarf an
+     Welche Iframes?  – Passe die Selector‑Liste bei Bedarf an
      --------------------------------------------------------------- */
   const iframes = document.querySelectorAll(
-    '#portfolio iframe[src*="vimeo.com"], #ai-page iframe[src*="vimeo.com"]'
+  '#ai-page iframe[src*="vimeo.com"]'
   );
 
   iframes.forEach(frame => {
@@ -2897,14 +2893,14 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.style.position = 'relative';
 
     const ph = document.createElement('div');
-    ph.className = 'video-placeholder';      // ➜ siehe CSS‑Snippet unten
+    ph.className = 'video-placeholder';      // ➜ siehe CSS‑Snippet unten
     wrapper.appendChild(ph);
 
-    /* 3) Thumbnail‑URL bauen – unlisted =  ID:HASH ------------------ */
+    /* 3) Thumbnail‑URL bauen – unlisted =  ID:HASH ------------------ */
     const thumbId = hash ? `${id}:${hash}` : id;
     const cdnUrl  = `https://vumbnail.com/${thumbId}.jpg`;
 
-    /* 4) Bild testen – wenn es lädt → als BG setzen,
+    /* 4) Bild testen – wenn es lädt → als BG setzen,
           sonst Fallback über player‑config versuchen                */
     setPlaceholder(ph, cdnUrl, () => {
       const cfgUrl = `https://player.vimeo.com/video/${id}/config` + (hash ? `?h=${hash}` : '');
