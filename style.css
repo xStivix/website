@@ -1,0 +1,1418 @@
+/* ─── Language Switcher initial hidden und Einblend-Animation ─── */
+#lang-switcher {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+#lang-switcher.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.font-mono-custom {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* ─── Language Switcher oben halten ─── */
+#lang-switcher {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999 !important;
+  pointer-events: auto;
+}
+
+/* Grundlegende Einstellungen */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+p {
+  font-family: 'Circular STD Light', sans-serif;
+  font-weight: 300;
+}
+
+/* Scrollbalken ausblenden */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Fonts - Font-Display hinzugefügt für bessere Performance */
+@font-face {
+  font-family: 'Circular STD Bold';
+  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Circular STD Medium';
+  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Circular STD Light';
+  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Book.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  background-color: #000000;
+  color: #fff;
+  font-family: 'Circular STD Medium', sans-serif;
+}
+
+.bg-darker {
+  background-color: #0f0f0f;
+}
+
+.bg-white {
+  background-color: #FFFFFF;
+}
+
+.bg-medium {
+  background-color: #262626;
+}
+
+.bg-blacksolid {
+  background-color: #000000
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Circular STD Bold', sans-serif;
+  font-weight: bold;
+}
+
+.mega-title {
+  font-size: 6rem;
+  line-height: 1;
+  letter-spacing: -.05em;
+}
+
+@media (min-width:768px) {
+  .mega-title {
+    font-size: 7rem;
+  }
+}
+
+.super-title {
+  font-size: 3.5rem;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+@media (min-width:768px) {
+  .super-title {
+    font-size: 4rem;
+  }
+}
+
+.nav-link {
+  position: relative;
+  transition: all .3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: #fff;
+  transition: width .3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* aktiv gefüllt */
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Video-Hero */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.desktop-iframe {
+  display: block;
+}
+
+.mobile-iframe {
+  display: none;
+}
+
+.content-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(18, 18, 18, .5);
+  z-index: 3;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.0s ease-out forwards;
+}
+
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* expliziter Start‑Zustand für die Transition */
+  transform: translateY(0);
+  /* nur eine, klare transition‑Definition */
+  transition: transform 1.0s cubic-bezier(0.7, 0, 0.175, 1);
+}
+
+.intro-overlay.slide-out {
+  transform: translateY(100%);
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  background: #1e1e1e;
+  transition: transform .3s ease;
+  border-radius: .5rem;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.02);
+}
+
+.portfolio-item img,
+.portfolio-item video {
+  transition: opacity .3s ease;
+}
+
+.portfolio-item:hover img,
+.portfolio-item:hover video {
+  opacity: .7;
+}
+
+.service-card {
+  background: #1e1e1e;
+  transition: transform .3s ease;
+  border-radius: .5rem;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  background: #2a2a2a;
+}
+
+.service-card h4 {
+  font-size: 1.875rem;
+}
+
+.service-card p {
+  font-family: 'Circular STD Light', sans-serif;
+  font-weight: 300;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #A0A0A0;
+  border-radius: 50%;
+  margin: 0 4px;
+  display: inline-block;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #000000 !important;
+}
+
+.contact-input {
+  background: #2a2a2a;
+  border: none;
+  color: #fff;
+  outline: none;
+  transition: .3s ease;
+  border-radius: .5rem;
+}
+
+.contact-input:focus {
+  background: #333;
+}
+
+.btn {
+  transition: .3s ease;
+}
+
+.social-icon {
+  transition: transform .3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+}
+
+.tech-text {
+  max-width: 36rem;
+}
+
+/* Mobile-Styles */
+.swiper-slide .p-8 {
+  padding: 1.5rem 1rem;
+}
+
+#services .text-base {
+  min-height: 12rem !important;
+}
+
+.ai-text {
+  max-width: 42rem;
+}
+
+.tech-mob {
+  display: none;
+}
+
+@media(max-width: 1024px) {
+
+  #portfolio .max-w-8xl,
+  #ai-page .max-w-8xl {
+    max-width: 100% !Important;
+  }
+
+  .swiper-horizontal>.swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    bottom: -46px !Important;
+  }
+
+  .swiper-wrapper .h-56 {
+    height: 12rem !important;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+
+  .about-us img {
+    display: none !important;
+  }
+
+  .about-us {
+    display: flex !important;
+  }
+
+  .break-sm {
+    display: none !Important;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+}
+
+@media (max-width:767px) {
+  .swiper-wrapper .h-56 {
+    height: 9rem !important;
+  }
+
+  .nav-link:hover::after {
+    display: none;
+  }
+
+  .nav-link.active::after {
+    display: none;
+  }
+
+  .nav-link::after {
+    bottom: 0px;
+  }
+
+  .tech-specs img {
+    width: 35%;
+  }
+
+  .desktop-iframe {
+    display: none;
+  }
+
+  .mobile-iframe {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.3);
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mega-title {
+    font-size: 3rem !important;
+  }
+
+  .super-title {
+    font-size: 2.5rem !important;
+  }
+
+  .text-xl {
+    font-size: 1.125rem !important;
+  }
+
+  #about img {
+    max-width: 100% !important;
+    display: none !Important;
+  }
+
+  section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  #ai-page {
+    padding-bottom: 0 !important;
+  }
+
+  .btn {
+    padding: .75rem 1rem !important;
+    font-size: 1rem !important;
+  }
+
+  .nav-link {
+    font-size: .9rem !important;
+  }
+
+  #about .grid,
+  #portfolio .grid,
+  #services .grid,
+  #contact .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #portfolio .grid,
+  #services .grid,
+  #contact .grid {
+    gap: 1rem !important;
+  }
+
+  #mobileMenu a {
+    padding: 1rem 0 !important;
+    font-size: 1rem !important;
+  }
+
+  .contact-input {
+    padding: 1.25rem !important;
+    font-size: 1.125rem !important;
+  }
+
+  button[type="submit"] {
+    padding: 1.25rem !important;
+    font-size: 1.125rem !important;
+  }
+
+  #portfolio .container {
+    padding-left: 0 !Important;
+    padding-right: 0 !Important;
+  }
+
+  #portfolio .left-6,
+  #ai-page .left-6 {
+    left: 1rem !important;
+  }
+
+  #portfolio .text-sm,
+  #ai-page .absolute .text-sm {
+    font-size: .5rem !Important;
+    line-height: 0 !important;
+  }
+
+  #portfolio .text-xl,
+  #ai-page .absolute .text-xl {
+    font-size: 1rem !important;
+  }
+
+  #contact .desktop-icon {
+    display: none;
+  }
+
+  .swiper-horizontal>.swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    bottom: -40px;
+  }
+
+  .visualisierung-img {
+    display: none;
+  }
+
+  .switch-posi {
+    -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;
+  }
+
+  .video-editing-img {
+    display: none;
+  }
+
+  .swiper-horizontal>.swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    bottom: -2rem !important;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+
+  .nav-link.active::after {
+    width: 13%;
+  }
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tech-desk {
+    display: none;
+  }
+
+  .tech-mob {
+    display: block;
+  }
+
+  .break-sm {
+    display: none !Important;
+  }
+}
+
+/* IMAGES-Seite */
+#blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .4);
+  backdrop-filter: blur(8px);
+  transition: opacity .5s ease, backdrop-filter .5s ease;
+  opacity: 1;
+  z-index: 30;
+}
+
+#blur-overlay.hide {
+  opacity: 0;
+  backdrop-filter: blur(0);
+}
+
+#popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 40;
+  opacity: 1;
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+#popup-overlay.hide {
+  opacity: 0;
+  transform: scale(.95);
+}
+
+#popup-box {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  padding: 2.5rem 2rem 4rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #232323 100%);
+  border: 1px solid #2e2e2e;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .6);
+  text-align: left;
+  font-family: 'Circular STD', sans-serif;
+  overflow: hidden;
+}
+
+#popup-box h3 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+#popup-box .popup-content p {
+  margin: 0 0 1.25rem;
+  line-height: 1.6;
+}
+
+#continue-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+#continue-btn:hover {
+  background: #e0e0e0;
+}
+
+#image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+}
+
+#image-modal.active {
+  display: flex;
+}
+
+#image-modal .modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, .7);
+  backdrop-filter: blur(8px);
+}
+
+#image-modal .modal-image {
+  z-index: 110;
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: .5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, .6);
+}
+
+/* Footer Styles */
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Platzhalter-Seiten */
+.placeholder-page {
+  display: none;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+.placeholder-content {
+  max-width: 800px;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 0 0rem;
+}
+
+.placeholder-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Footer-Links: Circular STD Light */
+footer nav a.page-link {
+  font-family: 'Circular STD Light', sans-serif;
+  font-weight: 300;
+}
+
+/* Language Switcher Sliding Indicator */
+#lang-switcher .indicator {
+  transition: transform 0.2s ease;
+}
+
+/* Wenn DE aktiv ist, schiebe den weißen Slider nach rechts und invertiere die Farben */
+#lang-switcher.de-active .indicator {
+  transform: translateX(100%);
+}
+
+#lang-switcher.de-active button[data-lang="de"] {
+  color: black;
+}
+
+#lang-switcher.de-active button[data-lang="en"] {
+  color: white;
+}
+
+footer p {
+  font-family: 'Circular STD Light', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+/* ─── Name-Animation ─────────────────────────────────────────────── */
+.name-wrapper {
+  display: flex;
+  gap: 0.35rem;
+  /* kleiner Abstand zwischen Vor- & Nachname */
+  overflow: hidden;
+  /* verhindert, dass der Start-Slide unten sichtbar ist */
+}
+
+.name-part {
+  display: inline-block;
+  /* nötig, damit transform wirkt  */
+  transform: translateY(110%);
+  /* Start: unterhalb, unsichtbar  */
+  opacity: 0;
+  animation: slideUp .7s cubic-bezier(.25, .8, .25, 1) forwards;
+}
+
+/* Verzögerungen – Vorname nach 0,2 s / Nachname 0,45 s */
+.name-part.first {
+  animation-delay: .2s;
+}
+
+.name-part.second {
+  animation-delay: .5s;
+}
+
+/* Animation selbst */
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Überschreibe das Abdunkeln */
+.portfolio-item:hover img,
+.portfolio-item:hover video {
+  opacity: 1 !important;
+}
+
+/* Stärkere Skalierung des gesamten Elements */
+.portfolio-item {
+  /* verlängere die Dauer, damit es sanfter wirkt */
+  transition: transform 0.3s ease;
+  /* damit gleichmäßig um die Mitte skaliezrt wird */
+  transform-origin: center center;
+}
+
+/* im Selected‑Work-Teil wieder nur leicht skalieren */
+#portfolio .portfolio-item:hover {
+  transform: scale(1.02) !important;
+}
+
+.portfolio-item:hover {
+  /* hier den Wert nach Wunsch anpassen: 
+     1.1 = +10 %, 1.2 = +20 % usw. */
+  transform: scale(1.05);
+}
+
+/* 1) zeige Pointer an, damit Klickbarkeit deutlich wird */
+#ai-video .portfolio-item img {
+  cursor: pointer;
+}
+
+/* Note-Popup und Blur-Overlay permanent ausblenden */
+#popup-overlay,
+#blur-overlay {
+  display: none !important;
+}
+
+#lang-switcher {
+  display: none !important;
+}
+
+/* VIDEO WRAPPER */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 17, 5%;
+  /* <-- hier auf 25% ändern für echtes 16:4 */
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 225%;
+  /* bleibt 225% */
+  transform: translateY(-27.778%);
+  /* bleibt gleich */
+  border: 0;
+}
+
+/* === Portfolio-Lightbox =============================== */
+#video-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, .85);
+  z-index: 1000;
+}
+
+#video-lightbox.show {
+  display: flex;
+}
+
+#video-lightbox iframe {
+  width: 80vw;
+  height: 45vw;
+  /* 16 : 9 */
+  max-width: 1280px;
+  max-height: 720px;
+  border: 0;
+  border-radius: .5rem;
+}
+
+#video-lightbox .close-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width:767px) {
+  #video-lightbox iframe {
+    width: 90vw;
+    height: 56.25vw;
+  }
+
+  .nav-link:hover::after {
+    width: 13%;
+  }
+
+  #about .page-link {
+    padding-left: 0.5rem !Important;
+    padding-right: 0.5rem !Important;
+  }
+}
+
+@media(max-width: 1024px) {
+
+  #portfolio .max-w-8xl,
+  #ai-page .max-w-8xl {
+    max-width: 100% !Important;
+  }
+
+  .swiper-horizontal>.swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal,
+  .swiper-pagination-custom,
+  .swiper-pagination-fraction {
+    bottom: -46px !Important;
+  }
+
+  .swiper-wrapper .h-56 {
+    height: 12rem;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+
+  .about-us img {
+    display: none !important;
+  }
+
+  .about-us {
+    display: flex !important;
+  }
+
+  .break-sm {
+    display: none !Important;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+}
+
+/* iframe klick-durchlässig machen  */
+#portfolio iframe,
+#ai-page iframe {
+  pointer-events: none;
+}
+
+/* Lightbox-Player sauber einblenden */
+#lightbox-player {
+  background: #000;
+  /* verhindert Transparent-Blitz */
+  opacity: 0;
+  /* Start unsichtbar */
+  transition: opacity .3s ease;
+}
+
+#lightbox-player.ready {
+  opacity: 1;
+}
+
+/* Close-Icon im Lightbox-Overlay ausblenden */
+#video-lightbox .close-btn {
+  display: none !important;
+}
+
+/* Oder nur für Services */
+#services {
+  scroll-margin-top: 80px;
+}
+
+@media (min-width: 1024px) {
+  /* Skaliert rem-basierte Abstände und Schrift proportional */
+  /* html {
+    font-size: min(1vw, 1.7777777778vh);
+  } */
+}
+
+@media (max-width: 450px) {
+  .mega-title {
+    font-size: 2rem !important;
+  }
+
+  #home .text-xl {
+    font-size: 0.8rem !important;
+  }
+
+  .text-base {
+    font-size: 14px;
+    line-height: 1.5rem;
+  }
+
+  #services .text-base {
+    min-height: 100% !important;
+  }
+
+  .tech-specs img {
+    width: 45%;
+  }
+}
+
+.mobile-hero__title {
+  font-family: 'Circular STD Bold', sans-serif;
+  font-size: clamp(4rem, 18vw, 7rem);
+  /* 64 px → 7 rem (≈112 px) */
+  line-height: 0.9;
+  letter-spacing: -.04em;
+}
+
+/* Subtext ggf. etwas nach unten schieben */
+.mobile-hero__sub {
+  margin-top: 0.75rem;
+}
+
+/* font-family:'Circular STD Light',sans-serif;
+  font-size:1rem;
+  max-width:4rem;
+} */
+
+/* Noch größer auf sehr kleinen Geräten anpassen */
+@media (max-width:450px) {
+  .mobile-hero__title {
+    font-size: 2.75rem;
+  }
+
+  /* ≈ 44 px */
+}
+
+/* ==============================
+   Mobile-Fallback für Hero-Video
+   ============================== */
+.mobile-fallback {
+  /* Standard: nichts anzeigen */
+  display: none;
+}
+
+@media (max-width:767px) {
+
+  /* nur Smartphones */
+  .mobile-fallback {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(1.07);
+    width: 100vw;
+    height: 100vh;
+    /* exakt wie dein .mobile-iframe */
+    object-fit: cover;
+    /* füllt lückenlos */
+    pointer-events: none;
+    /* nichts klickbar machen */
+    z-index: 2;
+    /* liegt hinter .content-overlay (z-index:3) */
+    opacity: 1;
+    /* Start‐Zustand */
+    transition: opacity 0.1s ease;
+    /* 300 ms Ausblend-Effekt */
+  }
+}
+
+@media (max-width: 767px) {
+  .video-editing-img {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mySwiper {
+    /* Browser leitet horizontale Wische an Swiper weiter */
+    touch-action: pan-y;
+  }
+}
+
+/* ganz am Ende deines <style>-Blocks hinzufügen oder überschreiben */
+footer {
+  background-color: #000 !important;
+  /* tiefschwarz */
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  /* 8 % Weiß auf Schwarz */
+}
+
+/* im <style>-Block ergänzen */
+.site-nav {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* --------------------------------------------------------
+   Scroll-Verhalten
+-------------------------------------------------------- */
+
+/* Global KEIN Smooth-Scroll mehr */
+html,
+body {
+  scroll-behavior: auto !important;
+}
+
+/* Nur innerhalb der Startseite (#home, #about, #portfolio, #services …)
+   weich scrollen */
+#main-page {
+  scroll-behavior: smooth;
+}
+
+/* bestehende Platzhalter-Regeln ---------------- */
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #000 center/cover no-repeat;
+  transition: opacity .1s ease
+}
+
+.video-placeholder.hide {
+  opacity: 0;
+  pointer-events: none
+}
+
+.video-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .10);
+}
+
+/* NEU: Text-Overlays über Platzhalter und Video */
+#portfolio .video-hover .absolute,
+#ai-page .video-hover .absolute {
+  z-index: 3 !important;
+  /* höher als Placeholder (1) und Iframe (0) */
+}
+
+/* Kontakt komplett verstecken */
+#contact {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  #contact {
+    display: none !important;
+  }
+}
+
+/* Mobile-Ansicht (bis 767px) */
+@media (max-width: 767px) {
+
+  /* Button-Container in der Hero-Section ausblenden */
+  .content-overlay>.flex.justify-center.space-x-4 {
+    display: none;
+  }
+
+  /* Footer auf Mobile komplett ausblenden */
+  footer {
+    display: none !important;
+  }
+
+  /* Contact-Sektion auf Mobile wieder einblenden */
+  #contact {
+    display: block !important;
+  }
+}
+
+.magnet-grid {
+  display: block;
+  /* wichtig für <canvas>              */
+  width: 80vw;
+  /* wie vorher                        */
+  max-width: 1300px;
+  height: 160px;
+  /* 8 Reihen × 20 px Abstand          */
+  margin: 0 auto;
+  /* kein background mehr – wird jetzt im Canvas gezeichnet */
+}
+
+
+/* Custom dot styles */
+.swiper-pagination-bullet {
+  background: #d1d5db;
+  /* Tailwind gray-300 */
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000;
+  /* black */
+}
+
+/* =========================================
+   Mobile-Cropping nur für AI-Workflow-Bilder
+   ========================================= */
+@media (max-width: 767px) {
+
+  /* Wrapper – flacher machen ⇒ oben/unten Crop */
+  .ai-img {
+    padding-top: 30% !important;
+    /* ← Fein-Tuning! 30 % ≈ Video-Höhe */
+    height: auto;
+    /* ignoriere max-h */
+  }
+
+  /* Bild absolut in den Wrapper setzen */
+  .ai-img img {
+    position: absolute;
+    inset: 0;
+    /* top:0 right:0 bottom:0 left:0 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* schneidet proportional */
+    object-position: center;
+    /* zentriert bleiben */
+  }
+
+  /* Overlay braucht jetzt volle Breite, bleibt aber korrekt unten */
+  .ai-img .absolute {
+    left: 1rem;
+    /* wie bisher left-4 */
+    bottom: 0.5rem;
+    /* passt sich der neuen Höhe an */
+  }
+}
+
+/* ---------  HERO-TEXT: ALLE ANIMATIONEN ABSCHALTEN  --------- */
+.mega-title,
+.content-overlay p,
+.content-overlay a {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Desktop-Fallback (standard versteckt) */
+.desktop-fallback {
+  display: none;
+}
+
+/* ab 768px: Fallback unter das Video legen und auf 1.3 skalieren */
+@media (min-width: 768px) {
+  .desktop-fallback {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(1.3);
+    /* hier dein 1.3 */
+    object-fit: cover;
+    filter: brightness(100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .video-background {
+    z-index: 1;
+    /* Video bleibt oben */
+  }
+}
+
+@media (max-width: 767px) {
+  .mobile-hero__title {
+    font-size: 5rem !important;
+    /* oder 6rem, je nach Geschmack */
+    line-height: 1;
+  }
+}
+
+@media (max-width: 767px) {
+
+  /* Video Editing-Bilder auf Mobile um 30 % vergrößern */
+  #video-editing-page img {
+    transform: scale(1.3);
+    transform-origin: center center;
+  }
+
+  /* Misc-Bilder auf Mobile um 40 % vergrößern */
+  #miscellaneous-page img {
+    transform: scale(1.4);
+    transform-origin: center center;
+  }
+}
+
+@media (min-width: 768px) {
+
+  /* Desktop: alle Misc-Bilder skalieren – außer dem Titelbild */
+  #miscellaneous-page img:not(.misc-hero-img) {
+    transform: scale(1.05);
+    /* +5 %  (oder 1.10 für +10 %) */
+    transform-origin: center center;
+  }
+}
+
+/* Alle iframes, die nicht die Hero-Iframes sind, um 10 % abdunkeln */
+iframe:not(.desktop-iframe):not(.mobile-iframe) {
+  filter: brightness(90%);
+}
+
+.mega-title {
+  font-size: 8rem;
+  /* statt 6rem */
+}
+
+@media (min-width: 768px) {
+  .mega-title {
+    font-size: 9rem;
+    /* statt 7rem */
+  }
+}
+
+@media (max-width: 767px) {
+
+  /* Miscellaneous-Hero-Bild auf Mobile verstecken */
+  #miscellaneous-page .misc-hero-img {
+    display: none !important;
+  }
+}
+
+.btn-glass {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  /* oben/unten 8px, links/rechts 24px */
+  font-size: 0.800rem;
+  /* etwas kleinere Schrift */
+  border-radius: 9999px;
+  font-weight: 400;
+  transition: background 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-glass:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ab 1024 px Breite (lg‑Breakpoint) noch größer */
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 11.5rem;
+    /* z.B. ≈192 px – passe nach Geschmack an */
+    line-height: 1;
+    /* bleibt knackig eng */
+  }
+}
+
+
+/* bestehende Platzhalter-Regeln ---------------- */
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #000 center/cover no-repeat;
+  transition: opacity .1s ease
+}
+
+.video-placeholder.hide {
+  opacity: 0;
+  pointer-events: none
+}
+
+.video-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .10);
+}
+
+/* NEU: Text-Overlays über Platzhalter und Video */
+#portfolio .video-hover .absolute,
+#ai-page .video-hover .absolute {
+  z-index: 3 !important;
+  /* höher als Placeholder (1) und Iframe (0) */
+}
+
+/* Kontakt komplett verstecken */
+#contact {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  #contact {
+    display: none !important;
+  }
+}
+
+/* Mobile-Ansicht (bis 767px) */
+@media (max-width: 767px) {
+
+  /* Button-Container in der Hero-Section ausblenden */
+  .content-overlay>.flex.justify-center.space-x-4 {
+    display: none;
+  }
+
+  /* Footer auf Mobile komplett ausblenden */
+  footer {
+    display: none !important;
+  }
+
+  /* Contact-Sektion auf Mobile wieder einblenden */
+  #contact {
+    display: block !important;
+  }
+}
+
+.magnet-grid {
+  display: block;
+  /* wichtig für <canvas>              */
+  width: 80vw;
+  /* wie vorher                        */
+  max-width: 1300px;
+  height: 160px;
+  /* 8 Reihen × 20 px Abstand          */
+  margin: 0 auto;
+  /* kein background mehr – wird jetzt im Canvas gezeichnet */
+}
+
+.erstes-video {
+  position: relative;
+  width: 100%;
+  padding-top: 30%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.erstes-video-s {
+  position: absolute;
+  inset: 0px;
+  cursor: pointer;
+}
+
+#images-page {
+  display: none;
+  position: relative;
+}
