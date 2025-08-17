@@ -24,10 +24,10 @@ const services = [
 
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
-      <div class="relative h-56 overflow-hidden">
+      <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img src="${service.image}" alt="${service.title}" class="absolute inset-0 w-full h-full object-cover" />
       </div>
-      <div class="p-8 md:p-4 lg:p-8 flex-1 bg-gray-100">
+      <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
         <h3 class="text-xl font-semibold text-black mb-4">${service.title}</h3>
         <p class="text-base text-black font-light mb-4">${service.text}</p>
@@ -51,20 +51,31 @@ const services = [
   });
 
   new Swiper(".mySwiper", {
-  direction:     "horizontal",
-  slidesPerView: 1.1,
-  spaceBetween:  16,
+    direction:     "horizontal",
+    slidesPerView: 1.4,
+    spaceBetween:  16,
+    touchAngle: 45,     // Smaller angle feels more natural for horizontal
+    threshold: 5,       // React faster to swipes
+    freeMode: {
+      enabled: true,    // Allows smooth momentum scrolling
+      momentum: true
+    },
+    pagination: {
+      el:        ".swiper-pagination",
+      clickable: true
+    },
 
-  // Nur Wischgesten akzeptieren, die maximal 10° von der Horizontalen abweichen
-  touchAngle:    90,
-
-  // Finger muss sich erst 30px horizontal bewegen, bevor Swiper reagiert
-  threshold:     10,
-
-  pagination: {
-    el:        ".swiper-pagination",
-    clickable: true
-  }
+    // Responsive breakpoints
+    breakpoints: {
+      0: {              // Mobile portrait
+        slidesPerView: 1.4,
+        spaceBetween: 16
+      },
+      480: {            // Mobile landscape / small tablets
+        slidesPerView: 1.9,
+        spaceBetween: 16
+      }
+    }
 });
 
  /* JS bei DOMContentLoaded laden, um Render-Blocking zu reduzieren */
