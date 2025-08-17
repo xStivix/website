@@ -324,7 +324,7 @@ h6 {
 }
 
 #services .text-base {
-  min-height: 12rem !important;
+  min-height: 11rem !important;
 }
 
 .ai-text {
@@ -334,7 +334,16 @@ h6 {
 .tech-mob {
   display: none;
 }
+#grid-wrapper .bg-gray-100{
+    display: flex;
+    flex-direction: column;
+ }
+@media(max-width: 1200px) {
+  #services .text-base {
+    min-height: 13.5rem !important;
+  }
 
+}
 @media(max-width: 1024px) {
 
   #portfolio .max-w-8xl,
@@ -353,13 +362,10 @@ h6 {
     height: 12rem !important;
   }
 
-  #services .text-base {
-    min-height: 100% !important;
-  }
+  /*#services .text-base {*/
+  /*  min-height: 100% !important;*/
+  /*}*/
 
-  .about-us img {
-    display: none !important;
-  }
 
   .about-us {
     display: flex !important;
@@ -368,15 +374,17 @@ h6 {
   .break-sm {
     display: none !Important;
   }
-
-  #services .text-base {
-    min-height: 100% !important;
+  .magnet-grid {
+    width: 100% !important;
   }
+  /*#services .text-base {*/
+  /*  min-height: 100% !important;*/
+  /*}*/
 }
 
 @media (max-width:767px) {
   .swiper-wrapper .h-56 {
-    height: 9rem !important;
+    height: 10rem !important;
   }
 
   .nav-link:hover::after {
@@ -398,7 +406,9 @@ h6 {
   .desktop-iframe {
     display: none;
   }
-
+  .video-container{
+    height: 100dvh;
+  }
   .mobile-iframe {
     display: block;
     position: absolute;
@@ -406,7 +416,7 @@ h6 {
     left: 50%;
     transform: translate(-50%, -50%) scale(1.3);
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     pointer-events: none;
     z-index: 1;
   }
@@ -535,7 +545,8 @@ h6 {
   }
 
   #services .text-base {
-    min-height: 100% !important;
+    /*min-height: initial !important;*/
+    min-height: 18rem !important;
   }
 
   .nav-link.active::after {
@@ -898,12 +909,12 @@ footer p {
   }
 
   #services .text-base {
-    min-height: 100% !important;
+    min-height: 18rem !important;
   }
 
-  .about-us img {
-    display: none !important;
-  }
+  /*.about-us img {*/
+  /*  display: none !important;*/
+  /*}*/
 
   .about-us {
     display: flex !important;
@@ -913,9 +924,6 @@ footer p {
     display: none !Important;
   }
 
-  #services .text-base {
-    min-height: 100% !important;
-  }
 }
 
 /* iframe klick-durchlässig machen  */
@@ -1118,6 +1126,8 @@ body {
   #contact {
     display: none !important;
   }
+
+
 }
 
 /* Mobile-Ansicht (bis 767px) */
@@ -1129,9 +1139,9 @@ body {
   }
 
   /* Footer auf Mobile komplett ausblenden */
-  footer {
-    display: none !important;
-  }
+  /*footer {*/
+  /*  display: none !important;*/
+  /*}*/
 
   /* Contact-Sektion auf Mobile wieder einblenden */
   #contact {
@@ -1235,13 +1245,21 @@ body {
     z-index: 1;
     /* Video bleibt oben */
   }
-}
 
+}
+@media (max-width: 768px) {
+  .container:has(.portfolio-item){
+    padding-inline: 1.5rem;
+  }
+}
 @media (max-width: 767px) {
   .mobile-hero__title {
     font-size: 5rem !important;
     /* oder 6rem, je nach Geschmack */
     line-height: 1;
+  }
+  .about-us img {
+    display: none !important;
   }
 }
 
@@ -1318,7 +1336,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 }
 
 /* ab 1024 px Breite (lg‑Breakpoint) noch größer */
-@media (min-width: 1024px) {
+@media (min-width: 1270px) {
   .hero-title {
     font-size: 11.5rem;
     /* z.B. ≈192 px – passe nach Geschmack an */
@@ -1361,31 +1379,6 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   display: none !important;
 }
 
-@media (min-width: 768px) {
-  #contact {
-    display: none !important;
-  }
-}
-
-/* Mobile-Ansicht (bis 767px) */
-@media (max-width: 767px) {
-
-  /* Button-Container in der Hero-Section ausblenden */
-  .content-overlay>.flex.justify-center.space-x-4 {
-    display: none;
-  }
-
-  /* Footer auf Mobile komplett ausblenden */
-  footer {
-    display: none !important;
-  }
-
-  /* Contact-Sektion auf Mobile wieder einblenden */
-  #contact {
-    display: block !important;
-  }
-}
-
 .magnet-grid {
   display: block;
   /* wichtig für <canvas>              */
@@ -1415,4 +1408,43 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 #images-page {
   display: none;
   position: relative;
+}
+@media (min-width: 768px) {
+  #contact {
+    display: none !important;
+  }
+
+}
+
+/* Mobile-Ansicht (bis 767px) */
+@media (max-width: 767px) {
+ footer .h-16{
+   height: 2rem;
+ }
+  /* Button-Container in der Hero-Section ausblenden */
+  .content-overlay>.flex.justify-center.space-x-4 {
+    display: none;
+  }
+  .magnet-grid{
+    width: 100%;
+  }
+  /* Footer auf Mobile komplett ausblenden */
+  /*footer {*/
+  /*  display: none !important;*/
+  /*}*/
+
+  /* Contact-Sektion auf Mobile wieder einblenden */
+  #contact {
+    display: block !important;
+  }
+
+  #services .text-base {
+    min-height: 21rem !important;
+  }
+
+}
+@media (max-width: 639px) {
+  #services .text-base{
+    min-height: 240px !important;
+  }
 }
