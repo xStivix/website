@@ -97,7 +97,7 @@
                 <div class="hidden md:flex flex-col items-center justify-center
               text-center gap-2 mt-12 w-full h-full">
 
-                    <h1 class="hero-title text-8xl md:text-9xl font-bold leading-none">
+                    <h1 class="hero-title text-8xl md:text-8xl lg:text-9xl font-bold leading-none">
                         Make&nbsp;it&nbsp;Count.
                     </h1>
 
@@ -113,7 +113,7 @@
 
 
                 <!--  Mobile-Variante -->
-                <div class="mobile-hero md:hidden absolute bottom-4 left-4 text-left">
+                <div class="mobile-hero md:hidden absolute bottom-6 left-4 text-left">
                     <h1 class="mobile-hero__title leading-none">
                         <span class="block">Let’s</span>
                         <span class="block">Make&nbsp;it</span>
@@ -126,7 +126,7 @@
         <!-- About / Hero Section -->
         <section id="about" class="py-8 md:py-24 bg-blacksolid text-white" data-page="about">
             <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6 ">
-                <div class="grid md:grid-cols-2 gap-0 items-center about-us">
+                <div class="grid md:grid-cols-2 lg:gap-0 md:gap-8 gap-0 items-center about-us">
 
                     <!-- Text-Column -->
                     <div>
@@ -262,7 +262,7 @@
                 <h2 class="super-title text-3xl font-bold text-black mb-8 md:mb-12">Services</h2>
 
                 <!-- Mobile: Swiper -->
-                <div class="block lg:hidden relative text-left">
+                <div class="block sm:hidden relative text-left">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper" id="swiper-wrapper"></div>
                     </div>
@@ -270,57 +270,57 @@
                 </div>
 
                 <!-- Desktop: Grid -->
-                <div class="hidden lg:grid lg:grid-cols-3 gap-4 md:gap-4 lg:gap-12 text-left" id="grid-wrapper"></div>
+                <div class="hidden sm:grid sm:grid-cols-3 gap-4 sm:gap-4 xl:gap-12 text-left" id="grid-wrapper"></div>
             </div>
         </section>
 
         <!-- Contact -->
-        <section id="contact" class="py-8 md:py-32 bg-blacksolid" data-page="contact">
-            <div class="container mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <!-- Bild links -->
-                    <div class="flex justify-center">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/conncedted_00000_00000.png"
-                            alt="Contact" class="max-w-xs h-auto rounded-lg desktop-icon -mt-8" loading="lazy" />
-                        </a>
-                    </div>
-                    <!-- Text rechts -->
-                    <div class="footer-main">
-                        <p class="font-mono-custom uppercase text-xs tracking-widest mb-4">
-                            Reach out anytime
-                        </p>
-                        <h2 class="text-3xl md:text-5xl font-bold mb-6">
-                            Let’s Stay Connected
-                        </h2>
-                        <p class="text-base md:text-lg font-light mb-8 max-w-lg">
-                            Got questions or want to collaborate? Feel free to reach out.<br class="break-sm">I’m open
-                            to new projects or just a casual chat!
-                        </p>
-                        <a href="mailto:stefan.aberer@hotmail.com"
-                            class="inline-block px-6 py-3 border-2 border-white bg-black text-white rounded-md font-mono-custom uppercase text-sm mb-8 transition-colors hover:bg-white hover:text-black hover:border-black">
-                            Contact Me
-                        </a>
-                        <div class="flex space-x-6 mb-4 text-white text-2xl">
-                            <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-gray-400 transition">
-                                <i class="fab fa-vimeo"></i>
-                            </a>
-                            <a href="https://www.instagram.com/i12b0kay" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-gray-400 transition">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="https://wa.me/4369911110970" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-gray-400 transition">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                        </div>
-                        <p class="text-sm font-light">
-                            stefan.aberer@hotmail.com
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!--        <section id="contact" class="py-8 md:py-32 bg-blacksolid" data-page="contact">-->
+<!--            <div class="container mx-auto px-6">-->
+<!--                <div class="grid md:grid-cols-2 gap-12 items-center">-->
+<!--                    &lt;!&ndash; Bild links &ndash;&gt;-->
+<!--                    <div class="flex justify-center">-->
+<!--                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/conncedted_00000_00000.png"-->
+<!--                            alt="Contact" class="max-w-xs h-auto rounded-lg desktop-icon -mt-8" loading="lazy" />-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Text rechts &ndash;&gt;-->
+<!--                    <div class="footer-main">-->
+<!--                        <p class="font-mono-custom uppercase text-xs tracking-widest mb-4">-->
+<!--                            Reach out anytime-->
+<!--                        </p>-->
+<!--                        <h2 class="text-3xl md:text-5xl font-bold mb-6">-->
+<!--                            Let’s Stay Connected-->
+<!--                        </h2>-->
+<!--                        <p class="text-base md:text-lg font-light mb-8 max-w-lg">-->
+<!--                            Got questions or want to collaborate? Feel free to reach out.<br class="break-sm">I’m open-->
+<!--                            to new projects or just a casual chat!-->
+<!--                        </p>-->
+<!--                        <a href="mailto:stefan.aberer@hotmail.com"-->
+<!--                            class="inline-block px-6 py-3 border-2 border-white bg-black text-white rounded-md font-mono-custom uppercase text-sm mb-8 transition-colors hover:bg-white hover:text-black hover:border-black">-->
+<!--                            Contact Me-->
+<!--                        </a>-->
+<!--                        <div class="flex space-x-6 mb-4 text-white text-2xl">-->
+<!--                            <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"-->
+<!--                                class="hover:text-gray-400 transition">-->
+<!--                                <i class="fab fa-vimeo"></i>-->
+<!--                            </a>-->
+<!--                            <a href="https://www.instagram.com/i12b0kay" target="_blank" rel="noopener noreferrer"-->
+<!--                                class="hover:text-gray-400 transition">-->
+<!--                                <i class="fab fa-instagram"></i>-->
+<!--                            </a>-->
+<!--                            <a href="https://wa.me/4369911110970" target="_blank" rel="noopener noreferrer"-->
+<!--                                class="hover:text-gray-400 transition">-->
+<!--                                <i class="fab fa-whatsapp"></i>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                        <p class="text-sm font-light">-->
+<!--                            stefan.aberer@hotmail.com-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
 
         <!-- ===== Footer mit Magnet-Lines & neuem Spalten-Setup ===== -->
         <footer class="bg-darker footer-magnet">
@@ -337,7 +337,7 @@
                 <!-- Inhalt -->
                 <div class="pb-12">
                     <!-- Logo / Name (kein Hover, nicht klickbar) -->
-                    <span class="block text-white font-bold text-xl mt-12 mb-10 select-none">
+                    <span class="block text-white font-bold text-xl md:mt-12 mt-8 md:mb-10 mb-8 select-none">
                         stefan aberer
                     </span>
 
@@ -744,7 +744,7 @@
                 <!-- =============   AI-WORKFLOW IMAGE BLOCK   ==================== -->
                 <!-- ############################################################# -->
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 mb-0">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 mb-0 gap-y-4">
 
                     <!-- Bild 1 -->
                     <div class="relative w-full ai-img overflow-hidden">
@@ -802,7 +802,7 @@
                 </div>
 
  <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
-                    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;">
+                    <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;pointer-events:none;">
                         <iframe loading="lazy"
                               src="https://player.vimeo.com/video/1108201283?h=39501b5291&background=1&loop=1&autoplay=1"
                             frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
@@ -1067,7 +1067,7 @@
 
     <!-- IMPRESSUM-PAGE -->
     <div id="impressum-page" class="placeholder-page">
-        <section class="py-20 md:py-32 bg-black">
+        <section class="py-32 bg-black">
             <div class="container max-w-7xl mx-auto px-6">
                 <h2 class="super-title mb-16 text-center">IMPRESSUM</h2>
                 <div class="placeholder-content">
@@ -1147,7 +1147,7 @@
 
     <!-- AGB-PAGE -->
     <div id="agb-page" class="placeholder-page">
-        <section class="py-20 md:py-32 bg-black">
+        <section class="py-32 bg-black">
             <div class="container max-w-7xl mx-auto px-6">
                 <h2 class="super-title mb-16 text-center">AGB</h2>
                 <div class="placeholder-content">
@@ -1284,7 +1284,7 @@
 
     <!-- DATENSCHUTZ-PAGE -->
     <div id="datenschutz-page" class="placeholder-page">
-        <section class="py-20 md:py-32 bg-black">
+        <section class="py-32 bg-black">
             <div class="container max-w-7xl mx-auto px-6">
                 <h2 class="super-title mb-16 text-center">DATENSCHUTZ</h2>
                 <div class="placeholder-content">
