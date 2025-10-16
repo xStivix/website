@@ -686,3 +686,68 @@ document.addEventListener('DOMContentLoaded', () => {
   close.addEventListener('click', closeBox);
   box.addEventListener('click', e => { if (e.target === box) closeBox(); });
 });
+/* ===== Quote Ticker Data & Init (10 Items) ===== */
+const QUOTES = [
+  { initials: "WB", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
+  { initials: "P6", text: "Absolutley lovely stuff", author: "Eline (Particle6 CEO)" },
+  { initials: "TB", text: "Great attention to detail", author: "The Dor Brothers" },
+  { initials: "KT", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
+  { initials: "PJ", text: "Love the Work.", author: "PJ Accetturo (Director)" },
+  { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
+  { initials: "ML", text: "Impressed by your work.", author: "(MotherLA)" },
+  { initials: "OA", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
+  { initials: "HO", text: "Really impresssed with what your're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
+  { initials: "FN", text: "Absolutley insane stuff...", author: "Frank Nitty (Executive Producer)" }
+];
+
+function createQuoteItem(q){
+  const wrap = document.createElement('div');
+  wrap.className = 'quote-item';
+
+  const logoWrap = document.createElement('div');
+  logoWrap.className = 'quote-logo';
+
+  if (q.logo){
+    const img = document.createElement('img');
+    img.src = q.logo;
+    img.alt = q.author ? `${q.author} logo` : 'logo';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    logoWrap.appendChild(img);
+  } else {
+    const badge = document.createElement('div');
+    badge.className = 'quote-initial';
+    badge.textContent = (q.initials || '?').toUpperCase();
+    logoWrap.appendChild(badge);
+  }
+
+  const textEl = document.createElement('div');
+  textEl.className = 'quote-text';
+  textEl.textContent = q.text;
+
+  const authorEl = document.createElement('div');
+  authorEl.className = 'quote-author';
+  authorEl.textContent = q.author || '';
+
+  wrap.appendChild(logoWrap);
+  wrap.appendChild(textEl);
+  wrap.appendChild(authorEl);
+  return wrap;
+}
+
+(function initQuoteTicker(){
+  const track = document.getElementById('quoteTrack');
+  if(!track) return;
+
+  // Spur füllen
+  const frag = document.createDocumentFragment();
+  QUOTES.forEach(q => frag.appendChild(createQuoteItem(q)));
+  track.appendChild(frag);
+
+  // Erstes Item ohne linke Linie
+  if (track.firstElementChild) track.firstElementChild.classList.add('first');
+
+  // Zweite Spur anhängen (nahtloses Loop, CSS animiert -50 %)
+  const clones = Array.from(track.children).map(n => n.cloneNode(true));
+  clones.forEach(n => track.appendChild(n));
+})();
