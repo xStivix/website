@@ -1070,7 +1070,7 @@ footer {
 
 /* im <style>-Block ergänzen */
 .site-nav {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.20);
 }
 
 /* --------------------------------------------------------
@@ -1447,4 +1447,174 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   #services .text-base{
     min-height: 240px !important;
   }
+}
+/* ===== QUOTE TICKER (centered, tidy, with logo box) ====================== */
+:root{
+  /* Sizes & spacing */
+  --qt-height: 90px;                /* Gesamthöhe des Tickers */
+  --qt-item-w: 360px;               /* Breite je Kachel */
+  --qt-logo: 60px;                  /* Logo/Initialen-Box (min 72px) */
+  --qt-pad-x: 24px;                 /* Innenabstand der Kachel links/rechts */
+  --qt-gap-x: 16px;                 /* Abstand zwischen Logo und Textblock */
+  --qt-stack-gap: 6px;              /* Abstand zwischen Quote und Author */
+  --qt-fade-w: 72px;                /* Breite der Rand-Fades */
+
+  /* Animation & colors */
+  --qt-speed: 40s;                  /* Dauer eines Loops */
+  --qt-sep: rgba(255,255,255,.22);  /* Trennlinienfarbe (vertikal/oben) */
+  --qt-fg: #fff;                    /* Textfarbe */
+  --qt-dim: #bdbdbd;                /* Author-Farbe */
+}
+
+/* Abschnitt mit oberer Linie (wie Navbar) */
+#quotes{
+  background:#000;
+  border-top:1px solid var(--qt-sep);
+}
+
+/* Full-bleed Container */
+.quotes-container{
+  max-width:none;
+  padding-inline:4vw;
+  margin-inline:auto;
+}
+
+/* Mobil ausblenden */
+@media (max-width:767px){
+  #quotes{ display:none; }
+}
+
+/* Viewport */
+.quote-ticker{
+  position:relative;
+  overflow:hidden;
+  height:var(--qt-height);
+}
+
+/* Laufband */
+.quote-track{
+  display:flex;
+  align-items:center;
+  gap:0;
+  width:max-content;
+  animation:qt-scroll var(--qt-speed) linear infinite;
+  will-change:transform;
+}
+
+/* Kachel: symmetrische Ränder, Gruppe exakt mittig */
+.quote-item{
+  box-sizing:border-box;
+  width:var(--qt-item-w);
+  height:var(--qt-height);
+  padding-inline:var(--qt-pad-x);
+
+  display:grid;
+  grid-template-columns:auto max-content;  /* Logo | Textblock nimmt nur nötige Breite */
+  grid-template-rows:1fr auto auto 1fr;    /* Spacer | Quote | Author | Spacer */
+  column-gap:var(--qt-gap-x);
+  row-gap:var(--qt-stack-gap);
+
+  justify-content:center;                  /* Logo+Text als Gruppe mittig in der Kachel */
+  align-items:center;
+
+  border-left:1px solid var(--qt-sep);
+  white-space:normal;
+}
+
+/* Separator-Fix: nur das ALLERERSTE Item ohne linke Linie */
+#quotes .quote-item.first{ border-left:1px solid var(--qt-sep) !important; } /* neutralisiert evtl. alte Regel */
+#quotes .quote-item:first-child{ border-left:none !important; }
+
+/* Logo-Box: mit dünner Linie (Box für SVG/PNG und Initialen) */
+#quotes .quote-logo{
+  grid-column:1;
+  grid-row:1 / -1;
+  width:var(--qt-logo) !important;
+  height:var(--qt-logo) !important;
+  flex:0 0 var(--qt-logo) !important;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid var(--qt-sep);
+  border-radius:8px;
+  background:transparent;
+  padding:6px;                       /* etwas Luft im Rahmen */
+  overflow:hidden;
+}
+#quotes .quote-logo img,
+#quotes .quote-logo svg{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain;
+  display:block;
+}
+
+/* Initialen (Platzhalter) – skalieren mit Logo; Rahmen kommt von .quote-logo */
+#quotes .quote-initial{
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  line-height:1;
+  font-family:'Roboto Mono', monospace;
+  font-size:calc(var(--qt-logo) * 0.6);
+  font-weight:800; letter-spacing:.01em;
+  color:#fff;
+  background:transparent;
+  border:none;
+  border-radius:6px; /* nur Innenform; Box-Rahmen bleibt an .quote-logo */
+}
+
+/* Quote oben – vertikal zum Logo mittig via Spacer-Grid, 2-zeilig */
+#quotes .quote-text{
+  grid-column:2; grid-row:2;
+  font-family:'Circular STD Light', sans-serif;
+  font-size:.92rem; line-height:1.2; color:var(--qt-fg);
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
+  overflow:hidden; text-align:left;
+
+  /* Breitenlimit, damit die Gruppe nicht nach links zieht */
+  max-width: calc(var(--qt-item-w) - var(--qt-logo) - (var(--qt-pad-x)*2) - var(--qt-gap-x));
+}
+
+/* Author direkt darunter, konstanter Abstand durch row-gap */
+#quotes .quote-author{
+  grid-column:2; grid-row:3;
+  font-family:'Roboto Mono', monospace;
+  font-size:.72rem; letter-spacing:.02em;
+  color:var(--qt-dim); text-transform:uppercase;
+  text-align:left; margin-left:0;
+}
+
+/* sanfte Fade-Masken */
+.quote-fade{
+  position:absolute; top:0; bottom:0; width:var(--qt-fade-w); pointer-events:none;
+}
+.quote-fade.left  { left:0;  background:linear-gradient(90deg,#000 35%,rgba(0,0,0,0)); }
+.quote-fade.right { right:0; background:linear-gradient(-90deg,#000 35%,rgba(0,0,0,0)); }
+
+/* Endlosanimation (Track wird im JS dupliziert → -50%) */
+@keyframes qt-scroll{
+  from{ transform:translateX(0); }
+  to  { transform:translateX(-50%); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .quote-track{ animation:none; }
+}
+/* Quote: kursiv + Anführungszeichen */
+#quotes .quote-text{
+  font-style: italic;
+  position: relative;
+}
+
+#quotes .quote-text::before{
+  content: "“";
+  margin-right: 2px;   /* minimaler Abstand zum Text */
+}
+
+#quotes .quote-text::after{
+  content: "”";
+  margin-left: 2px;    /* minimaler Abstand nach dem Text */
 }
