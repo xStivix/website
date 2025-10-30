@@ -689,15 +689,15 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ===== Quote Ticker Data & Init (10 Items) ===== */
 const QUOTES = [
   { initials: "WB", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
-  { initials: "P6", text: "Absolutley lovely stuff", author: "Eline (Particle6 CEO)" },
-  { initials: "TB", text: "Great attention to detail", author: "The Dor Brothers" },
+  { initials: "P6", text: "Absolutely lovely stuff.", author: "Eline (Particle6 CEO)" },
+  { initials: "TB", text: "Great attention to detail.", author: "The Dor Brothers" },
   { initials: "KT", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
-  { initials: "PJ", text: "Love the Work.", author: "PJ Accetturo (Director)" },
+  { initials: "PJ", text: "Love the work.", author: "PJ Accetturo (Director)" },
   { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
   { initials: "ML", text: "Impressed by your work.", author: "(MotherLA)" },
   { initials: "OA", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
-  { initials: "HO", text: "Really impresssed with what your're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
-  { initials: "FN", text: "Absolutley insane stuff...", author: "Frank Nitty (Executive Producer)" }
+  { initials: "HO", text: "Really impressed with what your're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
+  { initials: "FN", text: "Absolutely insane stuff...", author: "Frank Nitty (Executive Producer)" }
 ];
 
 function createQuoteItem(q){
