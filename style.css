@@ -1181,7 +1181,7 @@ body {
 
   /* Wrapper – flacher machen ⇒ oben/unten Crop */
   .ai-img {
-    padding-top: 30% !important;
+    padding-top: 56.25% !important;
     /* ← Fein-Tuning! 30 % ≈ Video-Höhe */
     height: auto;
     /* ignoriere max-h */
@@ -1617,4 +1617,16 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 #quotes .quote-text::after{
   content: "”";
   margin-left: 2px;    /* minimaler Abstand nach dem Text */
+}
+/* Mobile: AI-Workflow-Captions extrem klein */
+@media (max-width: 767px) {
+  #main-page .ai-img p {
+    font-size: 0.25rem !important;  /* SUPER klein zum Testen */
+    line-height: 1.1 !important;
+  }
+
+  #main-page .ai-img h4 {
+    font-size: 0.35rem !important;  /* auch winzig */
+    line-height: 1.1 !important;
+  }
 }
