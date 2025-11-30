@@ -16,9 +16,9 @@ const services = [
     {
       number: '03',
       title: 'MISCELLANEOUS',
-      text: "Whether it's purely video content or anything else, I adapt to the needs of each project. Depending on its size and scope, I collaborate with other creative individuals to define the right visual approach & direction as well as lay the groundwork for a smooth production process.",
+      text: "Whether it's a small or a large-scale production, or anything in between, I adapt to the needs of each project. Depending on its scope, I collaborate with other creative professionals to define the right visual approach and ensure a well-structured production process from start to finish.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/misc_00000.webp',
-      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
+      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">READ MORE</a>'
     }
   ];
 
@@ -29,7 +29,7 @@ const services = [
       </div>
       <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
-        <h3 class="text-xl font-semibold text-black mb-4">${service.title}</h3>
+        <h3 class="text-xl font-bold text-black mb-4">${service.title}</h3>
         <p class="text-base text-black font-light mb-4">${service.text}</p>
         <div class="mt-8">${service.button}</div>
       </div>
