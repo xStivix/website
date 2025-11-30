@@ -47,35 +47,10 @@ body {
   scrollbar-width: none;
 }
 
-/* Fonts - Font-Display hinzugefügt für bessere Performance */
-@font-face {
-  font-family: 'Circular STD Bold';
-  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Bold.woff2') format('woff2');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Circular STD Medium';
-  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Medium.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Circular STD Light';
-  src: url('https://cdn.jsdelivr.net/npm/circular-std@3.0.0/fonts/CircularStd-Book.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
 body {
   background-color: #000000;
   color: #fff;
-  font-family: 'Circular STD Medium', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .bg-darker {
@@ -100,7 +75,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Circular STD Bold', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: bold;
 }
 
@@ -167,7 +142,7 @@ h6 {
   left: 50%;
   width: 100vw;
   height: 100vh;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%)
   pointer-events: none;
   z-index: 0;
 }
@@ -1629,4 +1604,3 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
     font-size: 0.35rem !important;  /* auch winzig */
     line-height: 1.1 !important;
   }
-}
