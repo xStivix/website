@@ -8,11 +8,14 @@
     <link rel="dns-prefetch" href="https://i.vimeocdn.com">
     <link rel="preconnect" href="https://player.vimeo.com">
     <link rel="preconnect" href="https://i.vimeocdn.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload"
         href="https://player.vimeo.com/video/1095933665?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
         as="document" crossorigin>
   
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
@@ -65,6 +68,8 @@
         <!-- Mobile-Links (base size, bold) -->
         <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
             <a href="#ai" class="block text-white nav-link text-sm font-medium page-link py-2" data-page="ai">AI</a>
+            <a href="#images" class="block text-white nav-link text-sm font-medium page-link py-2"
+                data-page="images">Images</a>
             <a href="#videoEditing" class="block text-white nav-link text-sm font-medium page-link py-2"
                 data-page="videoEditing">Tech</a>
             <a href="#miscellaneous" class="block text-white nav-link text-sm font-medium page-link py-2"
@@ -79,7 +84,7 @@
         <section id="home" class="video-container">
             <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
             <iframe id="landingIframe" loading="eager" class="video-background fade-in desktop-iframe"
-                src="https://player.vimeo.com/video/1134787837?h=0193a46ab0&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
+                src="https://player.vimeo.com/video/1134787837?h=0193a46ab0&background=1&autoplay=1&muted=1&playsinline=1&loop=1&autopause=0" 
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
             <iframe loading="eager" class="video-background fade-in mobile-iframe"
                 src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
@@ -134,22 +139,19 @@
                         </p>
 
                         <!-- große Headlines -->
-                        <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
-                            Sharp Cuts
+                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
+                            Sharp Cuts.
                         </h1>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
-                            Smooth Flow
+                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
+                            Smooth Flow.
                         </h1>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            AI Enhanced
+                            AI Enhanced.
                         </h1>
 
                         <!-- Fließtext -->
                         <p class="text-base md:text-md max-w-2xl font-light mb-4">
-                            I’m a 28-year-old Video Editor based near Bregenz (Austria) with over 5 years of industry
-                            experience. I specialize in short-form content such as ads, trailers, music videos, image
-                            films, and social media visuals. My foundation lies in traditional video editing and filmmaking, refined through the latest
-                            years of working with AI.
+                           I’m a 28-year-old Video Editor based in Bregenz (Austria) with over 5 years of industry experience. I specialize in short-form content with a strong focus on automotive production: including ads, trailers, image films, and social media visuals. My foundation lies in traditional video editing and filmmaking, further refined in recent years through the integration of AI-driven workflows.
                         </p>
 
                         <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
@@ -190,6 +192,23 @@
                 <h2 class="super-title text-black">Selected Work</h2>
             </div>
 
+  <!-- Zweites Video (ohne Autoplay) -->
+            <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
+                <div class="erstes-video">
+                    <iframe loading="lazy"
+                        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
+                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                        data-vimeo-id="1104258791"
+                        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
+                     <div class="erstes-video-s"></div>
+                    <!-- Overlay Texte -->
+                    <div class="absolute  bottom-2 md:bottom-6 left-6 text-white z-[1]">
+                        <p class="font-mono text-sm uppercase mb-1">Motion Desgin Study (2025)</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
+                    </div>
+                </div>
+            </div>
+
             <!-- Erstes Video -->
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
                 <div class="erstes-video">
@@ -207,22 +226,7 @@
                 </div>
             </div>
 
-            <!-- Zweites Video (ohne Autoplay) -->
-            <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
-                <div class="erstes-video">
-                    <iframe loading="lazy"
-                        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
-                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        data-vimeo-id="1104258791"
-                        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
-                     <div class="erstes-video-s"></div>
-                    <!-- Overlay Texte -->
-                    <div class="absolute  bottom-2 md:bottom-6 left-6 text-white z-[1]">
-                        <p class="font-mono text-sm uppercase mb-1">Motion Study (2025)</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
-                    </div>
-                </div>
-            </div>
+ 
 
             <!-- Dritt­es Video (ohne Autoplay) -->
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
@@ -710,14 +714,14 @@
                         <p class="font-mono uppercase text-xs tracking-widest mb-4">
                             AI INSIGHTS
                         </p>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-light mb-2">
+                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
                             Cutting-Edge
                         </h1>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            Solutions
+                            Solutions.
                         </h1>
                         <p class="text-base md:text-md max-w-2xl font-light mb-4">
-                            Whether it's videos, images or code – if it can be done with AI, I can make it happen. For
+                            Whether it's images, videos or code – if it can be done with AI, I can make it happen. For
                             me, AI isn’t just about chasings trends, but more about staying current in a fast moving
                             field.
                         </p>
@@ -814,6 +818,9 @@
 </div>
 
 
+ <p
+                  
+
                 <!-- Vimeo Player SDK -->
 
 
@@ -822,12 +829,12 @@
                     October 2025
                 </p>
                 <h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
-                    Sora 2 Beta
+                    Sora2 Beta Test
                 </h3>
 
                 <p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
                      
-I created this video with the preview version of Sora 2. As of October 1st, Sora 2 mainly supports text-to-video; image-to-video allows one reference image per generation and serves more as a visual guideline than a true starting point. For this test, I used a quick text-to-video approach, which is much faster but less visually consistent in its results. The main drawback is the watermarks and it's resolution limit of 352p, making it usable only for testing its theoretical capabilities. Despite that, its physics understanding and ability to generate multiple consistent angles within its 10-second window set a new benchmark. The full video process took about five to six hours, from the initial concept to manual music mixing and editing in After Effects. Most engine sounds came directly from Sora 2. This is not a polished cut, just a demo of what may soon be possible. The video reached over 5M views across all platforms.
+I created this test video with the preview version of Sora 2. As of October 1st, Sora 2 mainly supports text-to-video; image-to-video allows one reference image per generation and serves more as a visual guideline than a true starting point. For this test, I used a quick text-to-video approach, which is much faster but less visually consistent in its results. The main drawback is the watermarks and it's resolution limit of 352p, making it usable only for testing its theoretical capabilities. Despite that, its physics understanding and ability to generate multiple consistent angles within its 10-second window set a new benchmark. The full video process took about five to six hours, from the initial concept to manual music mixing and editing in After Effects. Most engine sounds came directly from Sora 2. This is not a polished cut, just a demo of what may soon be possible. The video reached over 5M views across all platforms.
 
                 <!-- Drittes Video -->
                 <div class=" mx-auto max-w-7xl  mb-4 md:mb-12 lg:mb-12 video-hover ">
@@ -853,7 +860,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                     Mai 2025
                 </p>
                 <h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
-                    Veo 3 Showcase
+                    Veo3 Showcase
                 </h3>
 
                 <p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
@@ -898,7 +905,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                     MidJourney 6.1, refined in Photoshop and Magnific AI, animated with Kling 1.6 AI and Veo2, and
                     finalized in After Effects with flares, flames, lighting effects, camera shake, and a 3D Porsche
                     logo.  Additional upscaling was done with Topaz AI. Below is a before-and-after comparison
-                    aswell as the final clip which generated 2M views across all platforms.
+                    aswell as the final clip which generated over 2M views across all platforms.
                 </p>
 
                 <!-- Zweites Video – jetzt im gleichen Container wie die Bilder -->
@@ -949,7 +956,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                     requires technical expertise, experience, time, and a clear creative vision, image generation on the
                     other hand is now more accessible than ever. These images were created to showcase AI’s
                     transformative potential to replace real life photoshootings. The following images were solely
-                    generated from prompts.
+                    generated from prompts within minutes.
                     <!-- Mini-Gallery für AI-Image-Production ----------------------------->
 
                 <div class="container grid grid-cols-2 md:grid-cols-4 gap-4 m-auto md:gap-8 mb-8 md:mb-24 lg:mb-24">
@@ -972,11 +979,11 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                 </div>
 
                 <div class="text-center">
-                    <a href="#images" data-page="images"
-                        class="page-link inline-block px-3 py-1 text-sm font-medium bg-black text-white rounded-md border border-transparent transition-colors duration-200 hover:bg-white hover:text-black hover:border-black">
-                        View More
-                    </a>
-                </div>
+  <a href="#ai-intro"
+     class="inline-block px-3 py-1 text-sm font-medium bg-black text-white rounded-md border border-transparent transition-colors duration-200 hover:bg-white hover:text-black hover:border-black">
+    Back to Top
+  </a>
+</div>
 
             </div> <!-- ← Ende .container -->
         </section> <!-- ← Ende AI-Workflow -->
@@ -1400,7 +1407,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                             TEch insights
                         </p>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            Video Editing
+                            Video Editing.
                         </h1>
                         <p class="text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
                             My workflow is built around mainly industry-standard Adobe Programs. <br class="break-sm">
@@ -1454,7 +1461,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                         <h3 class="text-xl font-bold mb-2 md:mb-4">Programs & Tools</h3>
                         <p class="text-base md:text-sm font-light tech-text">My main program is Adobe After Effects but
                             I also work with Premiere, Photoshop, and Davinci. In addition, I use a wide range of AI
-                            tools, including Midjourney, Runway, Topaz, Kling, ChatGPT, Gemini, Veo and others.
+                            tools, including Midjourney, Nano Banana, Seadance, Topaz, Kling, ChatGPT, Gemini, Veo and others.
                         </p>
                     </div>
                 </div>
@@ -1466,7 +1473,7 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                         <p class="text-base md:text-sm font-light tech-text">
                             I deliver in all common industry formats, including ProRes 422 HQ, ProRes 4444, and
                             H.264/HEVC (up to 4K resolution). Depending on the project's needs, I also provide custom
-                            outputs for social media platforms and web use.
+                            outputs for broadcast, social media platforms and or web use.
                         </p>
                     </div>
                     <div class="flex justify-center">
@@ -1586,12 +1593,10 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                             Videos, Images & Web
                         </p>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            Miscellaneous
+                            Miscellaneous.
                         </h1>
                         <p class="text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
-                            While my core focus is video editing, I offer a complete visual service, from video and
-                            image production to web-based solutions, always rooted within a modern digital-first
-                            approach.
+                            Additional services that complement my core filmmaking and editing workflow, expanding projects with AI-driven creation, smart digital-first processes, and flexible 3D integrations.
                         </p>
                     </div>
                     <div class="flex justify-center">
@@ -1612,11 +1617,11 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
                         <h3 class="text-xl font-bold mb-2 md:mb-4">From Idea to Video</h3>
                         <p class="text-base md:text-sm font-light tech-text">
                             In addition to editing existing footage, I can create complete videos without any pre-shot
-                            material using Motion Graphics, Typography, high-quality stock footage and or fully
-                            customized AI-generated visuals, always enhanced with traditional editing and sound design.
+                            material using Motion Graphics, Typography, fully
+                            customized AI-generated visuals or high-quality stock footage, always enhanced with traditional editing and sound design.
                             I also create and implement 3D visuals, objects, and renderings directly within After
                             Effects. For more advanced 3D requirements such as complex visualizations or high-end
-                            animations, I collaborate with experienced industry professionals to seamlessly integrate 3D
+                            animations that are beyond the limits of After Effects and AI-based Solutions, I collaborate with experienced industry professionals to seamlessly integrate 3D
                             elements into any project.
                         </p>
                     </div>
@@ -1780,8 +1785,3 @@ I created this video with the preview version of Sora 2. As of October 1st, Sora
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
