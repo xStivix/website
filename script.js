@@ -15,8 +15,8 @@ const services = [
     },
     {
       number: '03',
-      title: 'MISCELLANEOUS',
-      text: "Whether it's a small or a large-scale production, or anything in between, I adapt to the needs of each project. Depending on its scope, I collaborate with other creative professionals to define the right visual approach and ensure a well-structured production process from start to finish.",
+      title: 'LEARNING',
+      text: "You want to learn how to create content by using generative AI? Whether it's a quick consultation, an individual learning session, or a larger AI-driven project, I adapt to the needs of each case. Depending on the scope, I provide hands-on guidance, oversight, or assisted project execution.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/misc_00000.webp',
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">READ MORE</a>'
     }
