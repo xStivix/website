@@ -902,10 +902,10 @@ footer p {
 }
 
 /* iframe klick-durchlässig machen  */
-#portfolio iframe,
+/* #portfolio iframe,
 #ai-page iframe {
   pointer-events: none;
-}
+} */
 
 /* Lightbox-Player sauber einblenden */
 #lightbox-player {
@@ -1458,7 +1458,11 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 @media (max-width:767px){
   #quotes{ display:none; }
 }
-
+@media (max-width:1024px) and (min-width:767px){
+  .defected-video{
+    margin-top: 15px;
+  }
+}
 /* Viewport */
 .quote-ticker{
   position:relative;
