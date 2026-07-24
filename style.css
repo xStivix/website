@@ -2409,6 +2409,65 @@ body.intro-active .hero-editorial__footer {
   }
 }
 
+@media (max-width: 639px) {
+  #services .mySwiper {
+    overflow: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  #services .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  #services .swiper-slide {
+    height: auto;
+  }
+
+  #services .swiper-slide > article {
+    height: 100%;
+  }
+
+  #services .text-base {
+    min-height: 0 !important;
+  }
+
+  #services .swiper-pagination {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin-top: 1.25rem !important;
+    transform: none !important;
+    line-height: 1;
+  }
+
+  #services .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
+    transition: width .25s ease, border-radius .25s ease, background-color .25s ease;
+  }
+
+  #services .swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 767px) {
+  #miscellaneous-page .masterclass-support-image {
+    display: none !important;
+  }
+
+  #masterclass-access-page .masterclass-request-submit {
+    min-height: 2.75rem;
+    margin-top: 1.5rem;
+    padding: .7rem 1rem !important;
+    font-size: .7rem !important;
+    letter-spacing: .07em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto !important;
