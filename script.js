@@ -16,7 +16,7 @@ const services = [
     {
       number: '03',
       title: 'MASTERCLASS',
-      text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my automotive AI projects, from prompt development and reference preparation to post-production.',
+      text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my automotive AI projects, from prompt development and reference preparation all the way to post-production integration.',
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/masterclass-symbol-pattern.webp',
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
@@ -51,32 +51,33 @@ const services = [
   });
 
   new Swiper(".mySwiper", {
-    direction:     "horizontal",
-    slidesPerView: 1.4,
-    spaceBetween:  16,
-    touchAngle: 45,     // Smaller angle feels more natural for horizontal
-    threshold: 5,       // React faster to swipes
-    freeMode: {
-      enabled: true,    // Allows smooth momentum scrolling
-      momentum: true
-    },
+    direction: "horizontal",
+    slidesPerView: 1.08,
+    spaceBetween: 12,
+    speed: 420,
+    threshold: 3,
+    touchAngle: 45,
+    resistanceRatio: 0.7,
+    shortSwipes: true,
+    longSwipes: true,
+    longSwipesRatio: 0.18,
+    watchOverflow: true,
+    roundLengths: true,
     pagination: {
-      el:        ".swiper-pagination",
+      el: ".swiper-pagination",
       clickable: true
     },
-
-    // Responsive breakpoints
     breakpoints: {
-      0: {              // Mobile portrait
-        slidesPerView: 1.4,
-        spaceBetween: 16
+      0: {
+        slidesPerView: 1.08,
+        spaceBetween: 12
       },
-      480: {            // Mobile landscape / small tablets
-        slidesPerView: 1.9,
-        spaceBetween: 16
+      480: {
+        slidesPerView: 1.18,
+        spaceBetween: 14
       }
     }
-});
+  });
 
  /* JS bei DOMContentLoaded laden, um Render-Blocking zu reduzieren */
     document.addEventListener('DOMContentLoaded', function() {
