@@ -421,12 +421,29 @@ function updateDesktopIframeScale(){
 document.addEventListener('DOMContentLoaded', () => {
   let didReveal = false;
   const introOverlay = document.querySelector('.intro-overlay');
+  const heroEditorial = document.querySelector('.hero-editorial');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (heroEditorial && !prefersReducedMotion) {
+    heroEditorial.classList.add('hero-animate');
+  }
 
   function revealContent(immediate = false) {
     if (didReveal) return;
     didReveal = true;
     document.body.classList.remove('intro-active');
+
+    if (heroEditorial && !prefersReducedMotion) {
+      const revealHero = () => {
+        heroEditorial.classList.add('hero-revealed');
+        setTimeout(() => heroEditorial.classList.add('hero-interactive'), 1200);
+      };
+      if (immediate) {
+        requestAnimationFrame(() => requestAnimationFrame(revealHero));
+      } else {
+        setTimeout(revealHero, 420);
+      }
+    }
 
     if (introOverlay) {
       if (immediate) {
@@ -825,3 +842,83 @@ document.addEventListener('DOMContentLoaded', () => {
       `mailto:stefan.aberer@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 });
+
+(() => {
+  const portrait = document.querySelector('.about-portrait');
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (!portrait || !supportsHover.matches || prefersReducedMotion.matches) return;
+
+  let animationFrame = 0;
+
+  const resetPortrait = () => {
+    cancelAnimationFrame(animationFrame);
+    portrait.classList.remove('is-active');
+    portrait.style.setProperty('--portrait-rx', '0deg');
+    portrait.style.setProperty('--portrait-ry', '0deg');
+    portrait.style.setProperty('--portrait-shadow-x', '0rem');
+    portrait.style.setProperty('--portrait-shadow-y', '0rem');
+  };
+
+  portrait.addEventListener('pointerenter', () => {
+    portrait.classList.add('is-active');
+  });
+
+  portrait.addEventListener('pointermove', event => {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = requestAnimationFrame(() => {
+      const bounds = portrait.getBoundingClientRect();
+      const x = Math.min(Math.max((event.clientX - bounds.left) / bounds.width, 0), 1);
+      const y = Math.min(Math.max((event.clientY - bounds.top) / bounds.height, 0), 1);
+
+      portrait.style.setProperty('--portrait-rx', `${((.5 - y) * 2.4).toFixed(2)}deg`);
+      portrait.style.setProperty('--portrait-ry', `${((x - .5) * 2.4).toFixed(2)}deg`);
+      portrait.style.setProperty('--portrait-shadow-x', `${((x - .5) * .45).toFixed(3)}rem`);
+      portrait.style.setProperty('--portrait-shadow-y', `${((y - .5) * .45).toFixed(3)}rem`);
+    });
+  });
+
+  portrait.addEventListener('pointerleave', resetPortrait);
+})();
+
+(() => {
+  const images = document.querySelectorAll('.content-image-effect');
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (!images.length || !supportsHover.matches || prefersReducedMotion.matches) return;
+
+  images.forEach(image => {
+    let animationFrame = 0;
+
+    const resetImage = () => {
+      cancelAnimationFrame(animationFrame);
+      image.classList.remove('is-active');
+      image.style.setProperty('--content-rx', '0deg');
+      image.style.setProperty('--content-ry', '0deg');
+      image.style.setProperty('--content-shadow-x', '0rem');
+      image.style.setProperty('--content-shadow-y', '0rem');
+    };
+
+    image.addEventListener('pointerenter', () => {
+      image.classList.add('is-active');
+    });
+
+    image.addEventListener('pointermove', event => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        const bounds = image.getBoundingClientRect();
+        const x = Math.min(Math.max((event.clientX - bounds.left) / bounds.width, 0), 1);
+        const y = Math.min(Math.max((event.clientY - bounds.top) / bounds.height, 0), 1);
+
+        image.style.setProperty('--content-rx', `${((.5 - y) * 2.4).toFixed(2)}deg`);
+        image.style.setProperty('--content-ry', `${((x - .5) * 2.4).toFixed(2)}deg`);
+        image.style.setProperty('--content-shadow-x', `${((x - .5) * .45).toFixed(3)}rem`);
+        image.style.setProperty('--content-shadow-y', `${((y - .5) * .45).toFixed(3)}rem`);
+      });
+    });
+
+    image.addEventListener('pointerleave', resetImage);
+  });
+})();
