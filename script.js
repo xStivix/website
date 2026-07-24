@@ -468,15 +468,16 @@ layer.addEventListener('click', () => {
     const mobilePlayer = new Vimeo.Player(mobileIframe);
 
     // 4. Wenn Buffering beendet ist, Fallback langsam ausblenden
-    mobilePlayer.on('bufferend', function() {
+    mobilePlayer.on('playing', function() {
       // 4.1 Opacity des Fallback auf 0 setzen (Transition startet)
-      fallback.style.opacity = '0';
+      mobileIframe.classList.add('is-ready');
+      fallback.classList.add('is-hidden');
 
       // 4.2 Nach der Transition (gleiche Dauer wie in CSS: 0.3s)
       setTimeout(function() {
         // 4.2.1 Fallback per display:none ganz entfernen
         fallback.style.display = 'none';
-      }, 100); // 300 ms, gleiche Zeit wie CSS-Transition
+      }, 350); // gleiche Dauer wie die CSS-Transition
     });
   });
 
