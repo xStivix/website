@@ -15,17 +15,17 @@ const services = [
     },
     {
       number: '03',
-      title: 'LEARNING',
-      text: "You want to learn how to create content by using generative AI? Whether it's a quick consultation, an individual learning session, or a larger AI-driven project, I adapt to the needs of each case. Depending on the scope, I provide hands-on guidance, oversight, or assisted project execution.",
-      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/misc_00000.webp',
-      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">READ MORE</a>'
+      title: 'MASTERCLASS',
+      text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my automotive AI projects, from prompt development and reference preparation to post-production.',
+      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/masterclass-symbol-pattern.webp',
+      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
   ];
 
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
-        <img src="${service.image}" alt="${service.title}" class="absolute inset-0 w-full h-full object-cover" />
+        <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
       </div>
       <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
@@ -90,6 +90,7 @@ const services = [
     const aiPage = document.getElementById('ai-page');
     const videoEditingPage = document.getElementById('video-editing-page');
     const miscellaneousPage = document.getElementById('miscellaneous-page');
+    const masterclassAccessPage = document.getElementById('masterclass-access-page');
 
     
     const hideAllPages = () => {
@@ -101,6 +102,7 @@ const services = [
       datenschutzPage.style.display = "none";
       videoEditingPage.style.display = "none";
       miscellaneousPage.style.display = "none";
+      masterclassAccessPage.style.display = "none";
     };
     
   // ─── COPY-PASTE ab hier ───────────────────────────────────────────
@@ -123,6 +125,7 @@ pageLinks.forEach(link => {
       datenschutz:   datenschutzPage,
       videoEditing:  videoEditingPage,
       miscellaneous: miscellaneousPage,
+      masterclassAccess: masterclassAccessPage,
       main:          mainPage,    // "WORK" / "ABOUT" / "SERVICES" usw.
       undefined:     mainPage     // Fallback
     }[page]).style.display = 'block';
@@ -153,7 +156,8 @@ pageLinks.forEach(link => {
     ------------------------------------------------------------ */
     document.querySelectorAll('.nav-link')
             .forEach(n => n.classList.remove('active'));
-    const active = document.querySelector(`.nav-link[data-page="${page}"]`);
+    const activePage = page === 'masterclassAccess' ? 'miscellaneous' : page;
+    const active = document.querySelector(`.nav-link[data-page="${activePage}"]`);
     if (active) active.classList.add('active');
 
     langSwitcher.style.display =
@@ -259,8 +263,29 @@ function updateDesktopIframeScale(){
       /* Mobile Menu */
       const mobileMenuButton = document.getElementById('mobileMenuButton');
       const mobileMenu = document.getElementById('mobileMenu');
-      mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-      document.querySelectorAll('#mobileMenu a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+      function setMobileMenu(open) {
+        mobileMenu.classList.toggle('hidden', !open);
+        mobileMenuButton.setAttribute('aria-expanded', String(open));
+        mobileMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        const icon = mobileMenuButton.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-bars', !open);
+          icon.classList.toggle('fa-xmark', open);
+        }
+      }
+
+      mobileMenuButton.addEventListener('click', () => {
+        setMobileMenu(mobileMenu.classList.contains('hidden'));
+      });
+      document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', () => setMobileMenu(false));
+      });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+          setMobileMenu(false);
+          mobileMenuButton.focus();
+        }
+      });
 
       /* Images Popup */
       const continueBtn = document.getElementById('continue-btn');
@@ -280,13 +305,45 @@ function updateDesktopIframeScale(){
       /* Image Modal */
       const imageModal = document.getElementById('image-modal');
       const modalImage = imageModal.querySelector('.modal-image');
+      const imageModalClose = imageModal.querySelector('.image-modal-close');
+      let imageModalTrigger = null;
+
+      function closeImageModal() {
+        imageModal.classList.remove('active');
+        imageModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        modalImage.removeAttribute('src');
+        if (imageModalTrigger) imageModalTrigger.focus();
+      }
+
       document.querySelectorAll('#images-page .portfolio-item img, #ai-page .portfolio-item img').forEach(img => {
-  img.addEventListener('click', e => {
-    modalImage.src = e.target.src;
-    imageModal.classList.add('active');
-  });
-});
-      imageModal.addEventListener('click', () => imageModal.classList.remove('active'));
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `Open image: ${img.alt || 'project still'}`);
+        const openImageModal = () => {
+          imageModalTrigger = img;
+          modalImage.src = img.currentSrc || img.src;
+          modalImage.alt = img.alt || 'Expanded project image';
+          imageModal.classList.add('active');
+          imageModal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('modal-open');
+          imageModalClose.focus();
+        };
+        img.addEventListener('click', openImageModal);
+        img.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openImageModal();
+          }
+        });
+      });
+      imageModalClose.addEventListener('click', closeImageModal);
+      imageModal.addEventListener('click', event => {
+        if (event.target === imageModal || event.target.classList.contains('modal-overlay')) closeImageModal();
+      });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && imageModal.classList.contains('active')) closeImageModal();
+      });
 
       /* Shuffle Images */
       function shuffleImages(){
@@ -322,7 +379,8 @@ function updateDesktopIframeScale(){
       // URL-Hash Handling für direkte Links
       if (location.hash) {
         const hash = location.hash.substring(1);
-        if (hash === "impressum" || hash === "agb" || hash === "datenschutz" || hash === "images") {
+        if (hash === "impressum" || hash === "agb" || hash === "datenschutz" || hash === "images" ||
+            hash === "masterclass-access") {
           hideAllPages();
           if (hash === "images") {
             imagesPage.style.display = "block";
@@ -332,6 +390,8 @@ function updateDesktopIframeScale(){
             agbPage.style.display = "block";
           } else if (hash === "datenschutz") {
             datenschutzPage.style.display = "block";
+          } else if (hash === "masterclass-access") {
+            masterclassAccessPage.style.display = "block";
           }
         }
       }
@@ -358,104 +418,34 @@ function updateDesktopIframeScale(){
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Globale Variable, damit andere Funktionen darauf zugreifen können
   let didReveal = false;
-  
   const introOverlay = document.querySelector('.intro-overlay');
-  const textEls = [
-    document.querySelector('.mega-title'),
-    document.querySelector('.content-overlay p'),
-    document.querySelector('.content-overlay a')
-  ];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Texte sofort verbergen
-  textEls.forEach(el => {
-    if (el) { // Sicherheitscheck hinzugefügt
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-    }
-  });
-
-  // Funktion, die die Animation startet
-  function revealContent() {
-    // Vermeide doppelte Animation
+  function revealContent(immediate = false) {
     if (didReveal) return;
     didReveal = true;
-    
-    // Animation starten
-    if (introOverlay) introOverlay.classList.add('slide-out');
+    document.body.classList.remove('intro-active');
 
-    // Text-Elemente animieren
-    const delays = ['0s', '0.0s', '1.2s'];
-    textEls.forEach((el, i) => {
-      if (el) {
-        el.style.animationDelay = delays[i];
-        el.classList.add('fade-in-up');
+    if (introOverlay) {
+      if (immediate) {
+        introOverlay.remove();
+      } else {
+        introOverlay.classList.add('slide-out');
+        const removeOverlay = () => introOverlay.remove();
+        introOverlay.addEventListener('transitionend', removeOverlay, { once: true });
+        setTimeout(removeOverlay, 1200);
       }
-    });
+    }
   }
 
-  // detect mobile
-const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
-// fallback-Zeit mobil/kontainer
-const FALLBACK_MS_DESKTOP = 2500;
-const FALLBACK_MS_MOBILE  = 1500; // z.B. 1,5s auf Mobil
-
-const FALLBACK_MS = isMobile ? FALLBACK_MS_MOBILE : FALLBACK_MS_DESKTOP;
-
-setTimeout(() => {
-  if (!didReveal) revealContent();
-}, FALLBACK_MS);
-
-  // Verzögerte Vimeo-Initialisierung, um sicherzustellen, dass das DOM bereit ist
-  setTimeout(() => {
-    try {
-      // Bestimme, welches iframe aktiv ist
-      const desktop = document.querySelector('.desktop-iframe');
-      if (!desktop) throw new Error('Desktop iframe nicht gefunden');
-      
-      const bgIframe = window.getComputedStyle(desktop).display !== 'none'
-                     ? desktop
-                     : document.querySelector('.mobile-iframe');
-      
-      if (!bgIframe) throw new Error('Kein aktives iframe gefunden');
-      
-      // Vimeo Player initialisieren
-      const player = new Vimeo.Player(bgIframe);
-
-// Wenn Video bereit ist, Overlay weg
-player.on('loaded', () => {
-  triggerOverlaySlideOut();
-});
-
-// oder sobald es abspielt
-player.on('play', () => {
-  triggerOverlaySlideOut();
-});
-
-// und auch bei Fehler
-player.on('error', () => {
-  triggerOverlaySlideOut();
-});
-      
-      // Event-Listener für Play-Event
-      player.on('play', () => {
-        if (!didReveal) revealContent();
-      });
-      
-      // Event-Listener für Error-Event
-      player.on('error', () => {
-        console.log('Vimeo-Player Fehler aufgetreten');
-        if (!didReveal) revealContent();
-      });
-      
-    } catch (e) {
-      console.error('Fehler bei der Vimeo-Initialisierung:', e);
-      // Bei Fehlern trotzdem die Animation starten
-      if (!didReveal) revealContent();
-    }
-  }, 0); // 30ms Verzögerung für die Vimeo-Initialisierung
+  const skipIntro = prefersReducedMotion || !introOverlay;
+  if (skipIntro) {
+    revealContent(true);
+  } else {
+    document.body.classList.add('intro-active');
+    setTimeout(() => revealContent(), 1200);
+  }
 });
 /*
 layer.addEventListener('click', () => {
@@ -647,9 +637,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const box   = document.getElementById('video-lightbox');
   const close = box.querySelector('.close-btn');
   const plyr  = document.getElementById('lightbox-player');
+  const stage = box.querySelector('.video-lightbox-stage');
+  let videoTrigger = null;
+  let playbackSession = 0;
+  let revealTimer = null;
 
-  /* Vimeo-Iframe nach Ladung einblenden */
-  plyr.addEventListener('load', () => plyr.classList.add('ready'));
+  function schedulePlayerReveal(session, delay) {
+    clearTimeout(revealTimer);
+    revealTimer = setTimeout(() => {
+      if (session === playbackSession && box.classList.contains('show')) {
+        stage.classList.add('is-ready');
+      }
+    }, delay);
+  }
+
+  /* Vimeo lädt unter einer schwarzen Fläche; danach wird der Player freigegeben. */
+  plyr.addEventListener('load', () => {
+    if (!plyr.src.includes('player.vimeo.com/video/')) return;
+    schedulePlayerReveal(playbackSession, 700);
+  });
 
   /* === Klick- & Hover-Layer über jedes Portfolio-Video === */
   document.querySelectorAll('#portfolio .video-hover > div, #ai-page .video-hover > div').forEach(wrapper => {
@@ -663,6 +669,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* 2) transparente Schicht erzeugen */
     const layer = document.createElement('div');
     layer.style.cssText = 'position:absolute;inset:0;cursor:pointer;';
+    layer.tabIndex = 0;
+    layer.setAttribute('role', 'button');
+    layer.setAttribute('aria-label', 'Play project video');
     wrapper.appendChild(layer);
 
     /* --- Hover: abspielen / pausieren ------------------- */
@@ -671,20 +680,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* --- Klick: Lightbox öffnen ------------------------- */
     const id = frame.dataset.vimeoId || frame.src.split('/').pop().split('?')[0];
-    layer.addEventListener('click', () => {
-      plyr.classList.remove('ready');
-      plyr.src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+    const openVideo = () => {
+      videoTrigger = layer;
+      playbackSession += 1;
+      clearTimeout(revealTimer);
+      stage.classList.remove('is-ready');
+      const separator = id.includes('?') ? '&' : '?';
       box.classList.add('show');
+      box.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      schedulePlayerReveal(playbackSession, 2500);
+      plyr.src = `https://player.vimeo.com/video/${id}${separator}autoplay=1&transparent=0&playsinline=1`;
+      close.focus();
+    };
+    layer.addEventListener('click', openVideo);
+    layer.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openVideo();
+      }
     });
   });
 
   /* Lightbox schließen */
   function closeBox(){
+    playbackSession += 1;
+    clearTimeout(revealTimer);
+    revealTimer = null;
     box.classList.remove('show');
+    box.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    stage.classList.remove('is-ready');
     plyr.src = '';
+    if (videoTrigger) videoTrigger.focus();
   }
   close.addEventListener('click', closeBox);
   box.addEventListener('click', e => { if (e.target === box) closeBox(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && box.classList.contains('show')) closeBox();
+  });
 });
 /* ===== Quote Ticker Data & Init (10 Items) ===== */
 const QUOTES = [
@@ -751,3 +785,41 @@ function createQuoteItem(q){
   const clones = Array.from(track.children).map(n => n.cloneNode(true));
   clones.forEach(n => track.appendChild(n));
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const requestForm = document.getElementById('masterclass-request-form');
+  const requestStatus = document.getElementById('masterclass-request-status');
+
+  if (!requestForm || !requestStatus) return;
+
+  requestForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!requestForm.reportValidity()) return;
+
+    const requestData = new FormData(requestForm);
+    const name = String(requestData.get('name') || '').trim();
+    const email = String(requestData.get('email') || '').trim();
+    const company = String(requestData.get('company') || '').trim() || 'Not provided';
+    const profession = String(requestData.get('profession') || '').trim();
+    const access = String(requestData.get('access') || '').trim();
+    const subject = `AI Masterclass Request — ${name}`;
+    const body = [
+      'Hello Stefan,',
+      '',
+      'I would like to request access to the AI Masterclass.',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Company / Team: ${company}`,
+      `Profession / Role: ${profession}`,
+      `Access: ${access}`,
+      '',
+      'Best,',
+      name
+    ].join('\n');
+
+    requestStatus.hidden = false;
+    window.location.href =
+      `mailto:stefan.aberer@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+});
