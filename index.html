@@ -4,18 +4,16 @@
     <title>Stefan Aberer - Video Editor</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Stefan Aberer is a video editor and AI filmmaker based in Bregenz, Austria, creating automotive films, commercials and AI-enhanced visual experiences." />
+    <meta name="theme-color" content="#050505" />
+    <meta name="color-scheme" content="dark light" />
     <link rel="dns-prefetch" href="https://player.vimeo.com">
     <link rel="dns-prefetch" href="https://i.vimeocdn.com">
     <link rel="preconnect" href="https://player.vimeo.com">
     <link rel="preconnect" href="https://i.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload"
-        href="https://player.vimeo.com/video/1095933665?background=1&autoplay=1&muted=1&playsinline=1&autopause=0"
-        as="document" crossorigin>
-  
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/png" sizes="48x48" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
     <link rel="shortcut icon" href="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/iconsite_00000.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
@@ -23,13 +21,20 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="style.css" />
+    <script>
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reducedMotion) {
+            document.documentElement.classList.add('intro-skip');
+        }
+    </script>
     <script src="https://player.vimeo.com/api/player.js" defer importance="high"></script>
 </head>
 
 <body>
+    <a class="skip-link" href="#main-page">Skip to content</a>
 
     <!-- Intro Overlay -->
-    <div class="intro-overlay">
+    <div class="intro-overlay" aria-hidden="true">
         <div class="name-wrapper text-xl md:text-2xl font-bold text-white leading-tight">
             <span class="name-part first">stefan</span>
             <span class="name-part second">aberer</span>
@@ -37,11 +42,11 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 bg-black site-nav">
+    <nav class="fixed w-full z-50 bg-black site-nav" aria-label="Primary navigation">
         <div class="mx-auto max-w-7xl px-6 py-3">
             <div class="flex justify-between items-center">
                 <!-- Logo links (bold, 2xl) -->
-                <a href="#" id="homeLink" class="text-white font-bold text-xl ">stefan aberer</a>
+                <a href="#home" id="homeLink" class="text-white font-bold text-xl" aria-label="Stefan Aberer — back to home">stefan aberer</a>
                 <!-- Desktop-Links (base size, medium) -->
                 <div class="hidden md:flex space-x-8">
                     <a href="#about" class="nav-link text-white text-xs font-base page-link font-mono-custom"
@@ -55,73 +60,82 @@
                     <a href="#ai" class="nav-link text-white text-xs font-base page-link font-mono-custom"
                         data-page="ai">AI</a>
                     <a href="#misc" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="miscellaneous">LEARNING</a>
+                        data-page="miscellaneous">MASTERCLASS</a>
                 </div>
                 <!-- Mobile-Button -->
                 <div class="md:hidden">
-                    <button id="mobileMenuButton" class="text-white text-2xl focus:outline-none">
-                        <i class="fas fa-bars"></i>
+                    <button id="mobileMenuButton" class="mobile-menu-button text-white text-2xl focus:outline-none"
+                        type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile-Links (base size, bold) -->
-        <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-4">
-            <a href="#ai" class="block text-white nav-link text-sm font-medium page-link py-2" data-page="ai">AI</a>
+        <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-5" aria-label="Mobile navigation">
+            <a href="#about" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">About</a>
+            <a href="#portfolio" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">Work</a>
+            <a href="#services" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">Services</a>
+            <a href="#ai" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="ai">AI</a>
             <!-- <a href="#images" class="block text-white nav-link text-sm font-medium page-link py-2"
                 data-page="images">Images</a> -->
-            <a href="#videoEditing" class="block text-white nav-link text-sm font-medium page-link py-2"
+            <a href="#videoEditing" class="block text-white nav-link text-sm font-medium page-link py-3"
                 data-page="videoEditing">Tech</a>
-            <a href="#miscellaneous" class="block text-white nav-link text-sm font-medium page-link py-2"
-                data-page="miscellaneous"> Misc</a>
+            <a href="#misc" class="block text-white nav-link text-sm font-medium page-link py-3"
+                data-page="miscellaneous">Masterclass</a>
         </div>
     </nav>
 
     <!-- MAIN-PAGE -->
-    <div id="main-page" data-page="main">
+    <div id="main-page" data-page="main" role="main" tabindex="-1">
 
         <!-- Hero -->
         <section id="home" class="video-container">
             <!-- Hinzugefügt: loading="lazy" für iframes, um das Laden zu verzögern -->
             <iframe id="landingIframe" loading="eager" class="video-background fade-in desktop-iframe"
                 src="https://player.vimeo.com/video/1154250384?h=1e34e019ce&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
+                title="Background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
             <iframe loading="eager" class="video-background fade-in mobile-iframe"
                 src="https://player.vimeo.com/video/873205791?background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1"
+                title="Mobile background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
             <!-- Mobile-Fallback-Bild (nur Smartphones sichtbar) -->
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/audifinalreel_00037.webp" alt="Video-Fallback" class="mobile-fallback" loading="eager" />
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/audifinalreel_00037.webp" alt="" class="mobile-fallback" loading="eager" />
 
-            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201_00000.png" alt="Video-Fallback Desktop" class="desktop-fallback" loading="lazy" />
+            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201_00000.png" alt="" class="desktop-fallback" loading="lazy" />
 
-            <div class="content-overlay">
-                <!-- Desktop-Variante -->
-                <div class="hidden md:flex flex-col items-center justify-center
-              text-center gap-2 mt-12 w-full h-full">
+            <div class="content-overlay hero-editorial">
+                <div class="hero-editorial__inner">
+                    <div class="hero-editorial__content">
+                        <p class="hero-editorial__eyebrow">Automotive Film / AI Production</p>
 
-                    <h1 class="hero-title text-8xl md:text-8xl lg:text-9xl font-bold leading-none">
-                        Make&nbsp;it&nbsp;Count.
-                    </h1>
+                        <h1 class="hero-editorial__title">
+                            <span>Make it</span>
+                            <span>Count.</span>
+                        </h1>
 
-                    <p class="text-lg md:text-xl max-w-xl mb-4 mx-auto text-gray-100">
-                        Creating visuals by combining traditional editing processes with cutting-edge AI technology.
-                    </p>
+                        <p class="hero-editorial__description">
+                            Creating visuals by combining traditional editing processes with cutting-edge AI technology.
+                        </p>
 
-                    <a href="mailto:stefan.aberer@hotmail.com" class="btn-glass">
-                        Contact
-                    </a>
-                </div>
+                        <div class="hero-editorial__actions">
+                            <a href="mailto:stefan.aberer@hotmail.com" class="hero-editorial__primary">
+                                Start a project <span aria-hidden="true">→</span>
+                            </a>
+                        </div>
+                    </div>
 
-
-
-                <!--  Mobile-Variante -->
-                <div class="mobile-hero md:hidden absolute bottom-6 left-4 text-left">
-                    <h1 class="mobile-hero__title leading-none">
-                        <span class="block">Let’s</span>
-                        <span class="block">Make&nbsp;it</span>
-                        <span class="block">Count.</span>
-                    </h1>
+                    <div class="hero-editorial__footer">
+                        <a href="#about" class="hero-editorial__scroll page-link" data-page="main">
+                            Scroll to explore <span aria-hidden="true">↓</span>
+                        </a>
+                        <p class="hero-editorial__meta">
+                            <span>Bregenz, Austria</span>
+                            <span>Available worldwide</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -151,7 +165,7 @@
 
                         <!-- Fließtext -->
                         <p class="text-base md:text-md max-w-2xl font-light mb-4">
-                           I’m a 28-year-old Video Editor based in Bregenz (Austria) with over 5 years of industry experience. I specialize in short-form content with a strong focus on automotive production: including ads, trailers, image films, and commercial visuals. My foundation lies in traditional video editing and filmmaking, further refined in recent years through the integration of AI-driven workflows. In 2026, I joined OpenAI’s Artist Program.
+                           I’m a Video Editor based in Bregenz (Austria) with over 5 years of industry experience. I specialize in short-form content with a strong focus on automotive production: including ads, trailers, image films, and commercial visuals. My foundation lies in traditional video editing and filmmaking, further refined in recent years through the integration of AI-driven workflows. In 2026, I joined OpenAI’s Artist Program.
                         </p>
 
                         <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
@@ -197,15 +211,15 @@
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
                 <div class="erstes-video">
                     <iframe loading="lazy"
-                        src="https://player.vimeo.com/video/1043117915?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1" 
+                        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1" 
                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        data-vimeo-id="1043117915"
+                        data-vimeo-id="1104258791"
                         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
                     <div class="erstes-video-s"></div>
                     <!-- Overlay Texte -->
                     <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1] ">
-                        <p class="font-mono text-sm uppercase mb-1">Proof of Concept (2024) [AI]</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">The Ultimate Drive</h3>
+                        <p class="font-mono text-sm uppercase mb-1">OPEN AI Motion Design Study (2025)</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
                     </div>
                 </div>
             </div> 
@@ -217,15 +231,15 @@
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
                 <div class="erstes-video">
                     <iframe loading="lazy"
-                        src="https://player.vimeo.com/video/1104258791?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
+                        src="https://player.vimeo.com/video/1043117915?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        data-vimeo-id="1104258791"
+                        data-vimeo-id="1043117915"
                         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
                      <div class="erstes-video-s"></div>
                     <!-- Overlay Texte -->
                     <div class="absolute  bottom-2 md:bottom-6 left-6 text-white z-[1]">
-                        <p class="font-mono text-sm uppercase mb-1">OPEN AI Motion Design Study (2025)</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
+                        <p class="font-mono text-sm uppercase mb-1">Proof of Concept (2024) [AI]</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">The Ultimate Drive</h3>
                     </div>
                 </div>
             </div>
@@ -234,15 +248,15 @@
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
                 <div class="erstes-video">
                     <iframe loading="lazy"
-                        src="https://player.vimeo.com/video/1135132373?h=1242479337&muted=1&background=1&autopause=0&loop=1&autoplay=0"
+                        src="https://player.vimeo.com/video/1187212934?muted=1&background=1&autopause=0&loop=1&autoplay=0"
                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        data-vimeo-id="1135132373?h=1242479337&"
+                        data-vimeo-id="1187212934"
                         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
                      <div class="erstes-video-s"></div>
                     <!-- Overlay Texte -->
                     <div class="absolute  bottom-2 md:bottom-6 left-6 text-white z-[1]">
-                        <p class="font-mono text-sm uppercase mb-1">Proof of Concept (2025) [AI]</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">The GEELY EX5</h3>
+                        <p class="font-mono text-sm uppercase mb-1">Audi Q5 Sportback (2026) [AI]</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">Your world, without limits.</h3>
                     </div>
                 </div>
             </div>
@@ -251,17 +265,16 @@
 
             <!-- Dritt­es Video (ohne Autoplay) -->
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
-               <div class="erstes-video">
+                <div class="erstes-video">
                     <iframe loading="lazy"
-                        src="https://player.vimeo.com/video/1098650054?muted=1&background=1&autopause=0&loop=1&autoplay=0&muted=1"
+                        src="https://player.vimeo.com/video/1212507419?h=d456667f08&muted=1&background=1&autopause=0&loop=1&autoplay=0"
                         frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        data-vimeo-id="1098650054"
+                        data-vimeo-id="1212507419?h=d456667f08&"
                         style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
-                     <div class="erstes-video-s"></div>
-                    <!-- Overlay Texte -->
-                    <div class="absolute  bottom-2 md:bottom-6  left-6 text-white z-[1]">
-                        <p class="font-mono text-sm uppercase mb-1">Shortfilm Trailer (2023)</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">One Last Time</h3>
+                    <div class="erstes-video-s"></div>
+                    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+                        <p class="font-mono text-sm uppercase mb-1">Audi Spain Advertisement (2026) [Hybrid]</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">10000 Hours</h3>
                     </div>
                 </div>
             </div>
@@ -773,7 +786,14 @@
                 </p>
                 <h2 class="super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
                 <p class="container text-sm mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text">
-                   When working with AI in video production, generative AI is by far the most transformative innovation, fundamentally changing the way how footage can be created. I prefer an image-to-video approach, as it offers the greatest creative control. With sufficient reference images, today’s tools can generate near-photorealistic visuals and even full video sequences that closely resemble real productions. The workflow still follows classic filmmaking principles: each shot is planned in terms of subject, lighting, camera, lens, and action. I start from a base image, refine it using sketches, 3D models, or references, and finalize it through editing and color grading. Each shot is created individually to ensure maximum control and consistency, forming the foundation for the final AI video output with manual finishing touches.
+                    Generative AI has become one of the most transformative tools in video production, fundamentally
+                    changing how shots can be designed and produced. I primarily use an image-to-video approach because
+                    it provides greater control over composition, lighting, art direction, and visual consistency
+                    before motion is introduced. With carefully prepared reference material and detailed refinement,
+                    today’s tools can create near-photorealistic visuals and complete sequences that closely resemble
+                    traditionally produced footage. My focus is always realism. I try to get as close to a realistic,
+                    authentic feel as possible with AI. Lighting, camera behavior, motion, textures, and fine details
+                    should follow the visual language of real-world cinematography.
                 </p>
 
                 <!-- ############################################################# -->
@@ -814,7 +834,7 @@
 
               <!-- Erstes Video – jetzt im gleichen Container wie die Bilder -->
 
-<div class="mx-auto max-w-7xl mt-2 md:mt-4 mb-2 md:mb-4 video-hover defected-video">
+<div class="mx-auto max-w-7xl mt-2 md:mt-4 mb-2 md:mb-4 video-hover defected-video no-hover-dim">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;pointer-events:none;">
     <iframe loading="lazy"
       src="https://player.vimeo.com/video/1082247370?h=98745941f3&muted=1&background=1&autopause=0&loop=1&autoplay=1&muted=1"
@@ -830,7 +850,7 @@
 </div>
 
 <!-- Zweites Video -->
-<div class="mx-auto max-w-7xl md:-mt-0 mb-2 md:mb-4 video-hover">
+<div class="mx-auto max-w-7xl md:-mt-0 mb-2 md:mb-4 video-hover no-hover-dim">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;pointer-events:none;">
     <iframe loading="lazy"
       src="https://player.vimeo.com/video/1124167740?h=32adda97ac&muted=1&background=1&autopause=0&loop=1&autoplay=1"
@@ -846,7 +866,7 @@
 </div>
 
 <!-- Zweites Video -->
-<div class="mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
+<div class="mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover no-hover-dim">
   <div style="position:relative;width:100%;padding-top:30%;overflow:hidden;pointer-events:none;">
     <iframe loading="lazy"
       src="https://player.vimeo.com/video/1154256076?h=88c3d675a1&muted=1&background=1&autopause=0&loop=1&autoplay=1"
@@ -861,11 +881,45 @@
   </div>
 </div>
 
-
- <p
-                  
-
                 <!-- Vimeo Player SDK -->
+
+                <!-- Neues AI-Projekt -->
+                <p
+                    class="mt-6 mb-0 sm:mt-0 sm:mb-2 font-mono text-xs text-center tracking-widest uppercase text-gray-500">
+                    Mai 2026
+                </p>
+                <h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
+                    Your world, without limits.
+                </h3>
+
+                <p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
+                    This is my Director’s Cut of an advertisement created for Audi Spain. This version uses entirely
+                    AI-generated footage, although every shot was extensively edited and adjusted. The vehicle shown is
+                    a specific configuration of the Audi Q5 Sportback. For each image and final video output, I
+                    re-tracked the correct Audi logos, number plates, and defining model details, including the exact
+                    shape and design of the light signatures. Extensive color correction and finishing helped reduce
+                    the recognizable AI look as much as possible, making post-production and editing especially
+                    time-consuming. The concept, edit, post-production, and sound design were all created through a
+                    traditional workflow; AI was used only to generate the source footage. The film was produced with
+                    native 720p and 1080p generations. Native 4K generation is already possible, but remains very
+                    expensive. With access to it, I believe the final image quality and visual fidelity could have been
+                    considerably stronger.
+                </p>
+
+                <div class="mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
+                    <div class="erstes-video">
+                        <iframe loading="lazy"
+                            src="https://player.vimeo.com/video/1187212934?muted=1&autopause=0&background=1&loop=1&autoplay=1"
+                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                            data-vimeo-id="1187212934"
+                            style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
+                        <div class="erstes-video-s"></div>
+                        <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+                            <p class="font-mono uppercase text-sm md:text-xs mb-1 md:mb-0">Audi Q5 Sportback (2026) [AI]</p>
+                            <h3 class="font-bold text-xl md:text-lg">Your world, without limits.</h3>
+                        </div>
+                    </div>
+                </div>
 
 
  <p
@@ -930,40 +984,6 @@ I created this test video with the preview version of Sora 2. As of October 1st,
                     </div>
                 </div>
 
-
-                <p
-                    class="mt-6 mb-0 sm:mt-0 sm:mb-2 font-mono text-xs text-center tracking-widest uppercase text-gray-500">
-                    Mai 2025
-                </p>
-                <h3 class="text-2xl md:text-4xl text-black mx-auto text-center font-bold mb-4">
-                    Veo3 Showcase
-                </h3>
-
-                <p class="container text-sm mx-auto text-black font-light max-w-2xl mb-4 md:mb-12 ai-text">
-                    Google’s latest generative AI sets new standards in AI-powered video creation especially in the
-                    field of facial look, movements and talking with built-in native audio generation. Below is a great example
-                    directed by PJ Accetturo. This clip marks a major milestone in advertising:
-                    the first fully Veo3 AI-generated commercial that was launched for a company. Fast, absurd, engaging
-                    and efficient. In total across all platforms, this video has generated over 3 million views.
-                </p>
-
-                <!-- Drittes Video -->
-                <div class=" mx-auto max-w-7xl  mb-4 md:mb-12 lg:mb-12 video-hover ">
-                    <div class="erstes-video">
-                        <iframe loading="lazy"
-                            src="https://player.vimeo.com/video/1088245147?h=9553efd5a6&muted=1&autopause=0&background=1&loop=1&autoplay=1&muted=1" /
-                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                            data-vimeo-id="1088245147?h=9553efd5a6&"
-                            style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
-                          <div class="erstes-video-s"></div>
-                        <!-- Overlay Texte -->
-                        <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
-                            <p class="font-mono uppercase text-sm md:text-xs mb-1 md:mb-0">directed by PJ Accetturo
-                            </p>
-                            <h3 class="font-bold text-xl md:text-lg">Kalshi Ad</h3>
-                        </div>
-                    </div>
-                </div>
 
                 <p
                     class="mt-6 mb-0 sm:mt-0 sm:mb-2 font-mono text-xs text-center tracking-widest uppercase text-gray-500">
@@ -1718,19 +1738,21 @@ I created this test video with the preview version of Sora 2. As of October 1st,
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="pt-8 md:pt-0">
                         <p class="font-mono uppercase text-xs tracking-widest mb-4">
-                           Learning & Advisory
+                           Learning
                         </p>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            AI Consulting.
+                            AI Masterclass
                         </h1>
                         <p class="text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
-                            I help individuals, teams, and companies understand and apply generative AI for image and video production.
-My focus lies on practical workflows, creative control, and achieving the best possible current quality.
+                            In this Masterclass, I share my complete AI production workflow. From prompt development and
+                            reference preparation to image generation, video creation, refinement, and final
+                            post-production integration. The course covers the latest tools, industry standard proven
+                            best practices, and practical tips and tricks.
                         </p>
                     </div>
                     <div class="flex justify-center">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfinal_00000.webp"
-                            alt="misc Vorschaubild" class="max-w-sm w-full h-auto rounded-lg misc-hero-img"
+                            alt="AI Masterclass visual" class="max-w-sm w-full h-auto rounded-lg misc-hero-img"
                             loading="eager">
                     </div>
                 </div>
@@ -1743,16 +1765,67 @@ My focus lies on practical workflows, creative control, and achieving the best p
                 <!-- Erste Reihe: Text links, Bild rechts -->
                 <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
                     <div>
-                        <h3 class="text-xl font-bold mb-2 md:mb-4">Workflow & Structure </h3>
+                        <h3 class="text-xl font-bold mb-2 md:mb-4">Workflow & Structure</h3>
                         <p class="text-base md:text-sm font-light tech-text">
-                            I offer AI learnings and consulting focused exclusively on generative AI for image and video production. This includes overview of the latest up to date and best generative AI tools, current industry standard best practices and proven workflows for the highest-quality AI-driven visuals. I share my insights on prompt structuring, workflow organization, and approaches for text-to-video and image-to-video use cases. A strong emphasis is placed on maximizing visual quality, consistency, and creative control covering everything from AI-generated images & videos to refinement, enhancement and final integration.  </p>
+                            The Masterclass is designed for individuals, companies, and teams with prior experience in
+                            traditional or AI filmmaking. While key fundamentals are covered where necessary, this is
+                            not a beginner step-by-step course. Across five video lessons, I break down my practical AI
+                            production workflow for automotive content, using real projects for brands such as Audi and
+                            Porsche. The focus is on quality control and practical solutions to common production
+                            challenges. These methods can also be adapted to projects beyond the automotive industry.
+                        </p>
+                        <div class="masterclass-outline">
+                            <div class="masterclass-module">
+                                <h4><span>01</span>Shot Design & Image Creation</h4>
+                                <ul>
+                                    <li>Developing shots through prompting and references</li>
+                                    <li>My image-generation workflow</li>
+                                    <li>Iterating towards a consistent visual direction</li>
+                                    <li>Editing and preparing source images while preserving detail and Quality</li>
+                                </ul>
+                            </div>
+
+                            <div class="masterclass-module">
+                                <h4><span>02</span>Video Generation</h4>
+                                <ul>
+                                    <li>Structuring prompts for motion, camera behavior, and performance</li>
+                                    <li>Maintaining visual consistency and image Quality</li>
+                                </ul>
+                            </div>
+
+                            <div class="masterclass-module">
+                                <h4><span>03</span>VFX & AI Integration</h4>
+                                <ul>
+                                    <li>Replacing objects within existing footage</li>
+                                    <li>Integrating AI-generated elements into exisitng footage</li>
+                                    <li>Adding VFX while maintaining the quality of the original Image or Video</li>
+                                </ul>
+                            </div>
+
+                            <div class="masterclass-module">
+                                <h4><span>04</span>Post-Production & Upscaling</h4>
+                                <ul>
+                                    <li>Upscaling and refining AI-generated footage</li>
+                                    <li>Compositing, color correction, and final polishing</li>
+                                </ul>
+                            </div>
+
+                            <div class="masterclass-module">
+                                <h4><span>05</span>Final Thoughts & Takeaways</h4>
+                                <ul>
+                                    <li>Key principles from the complete workflow</li>
+                                    <li>Practical approaches that can be applied to future projects</li>
+                                    <li>Final considerations &amp; what to look out for in the future.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex justify-center">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
-                            alt="Color Management Vorschaubild" class="max-w-sm w-full h-auto rounded-lg tech-desk"
+                            alt="AI workflow from idea to final output" class="max-w-sm w-full h-auto rounded-lg tech-desk"
                             loading="lazy">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
-                            alt="Color Management Vorschaubild" class="md:max-w-lg w-full h-auto rounded-lg tech-mob"
+                            alt="AI workflow from idea to final output" class="md:max-w-lg w-full h-auto rounded-lg tech-mob"
                             loading="lazy">
                     </div>
                 </div>
@@ -1761,16 +1834,34 @@ My focus lies on practical workflows, creative control, and achieving the best p
                 <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
                     <div class="flex justify-center switch-posi">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
-                            alt="Programs & Tools Vorschaubild" class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
+                            alt="Individual AI Masterclass consultation" class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
                             loading="lazy">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
-                            alt="Programs & Tools Vorschaubild" class="md:max-w-md w-full h-auto rounded-lg tech-mob"
+                            alt="Individual AI Masterclass consultation" class="md:max-w-md w-full h-auto rounded-lg tech-mob"
                             loading="lazy">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-2 md:mb-4">Individual Sessions</h3>
                         <p class="text-base md:text-sm font-light tech-text">
-                            These sessions are fully adapted to individual needs. They can range from a quick heads-up or hands-on walkthrough on how to approach AI-based creation and production, to guidance on choosing the best workflow for maximum creative control or the most efficient workflow for maximum speed, depending on the intended use case. I also offer project-based assistance, supporting you throughout an AI-driven project with oversight, practical tips and tricks, and proven best practices as we create with AI. The focus is to emphasize creator-led processes, decision-making, and quality control with AI. These sessions are not focused on fully automated workflows (such as AI agents or node-based systems like ComfyUI), nor on software-specific editing lessons in tools like After Effects, Premiere, or DaVinci Resolve.</p>
+                            Every Masterclass includes an additional one-hour private video consultation. This session
+                            gives you the opportunity to ask follow-up questions, discuss individual challenges, and
+                            receive guidance tailored to your specific projects, workflow, or goals. We can review your
+                            current work, troubleshoot creative or technical challenges, and revisit specific parts of
+                            the course through practical examples.
+                        </p>
+                    </div>
+                    <div class="masterclass-closing">
+                        <p class="masterclass-disclaimer">
+                            <strong>Tool disclaimer.</strong> Throughout the Masterclass, I use After Effects, Photoshop,
+                            and Topaz, alongside platforms such as Midjourney, Higgsfield, and Martini, and LLMs such as
+                            ChatGPT. The course does not cover the fundamentals of these tools; it shows how I use them
+                            within my production and post-production workflow. The principles and techniques are not
+                            tied to this specific setup and can be applied with alternatives such as Premiere Pro,
+                            DaVinci Resolve, other AI platforms, or LLMs such as Claude.
+                        </p>
+                        <a href="#masterclass-access"
+                            class="masterclass-request-button masterclass-request-button--dark page-link"
+                            data-page="masterclassAccess">Request Access</a>
                     </div>
                 </div>
             </div>
@@ -1895,16 +1986,88 @@ My focus lies on practical workflows, creative control, and achieving the best p
         </footer>
     </div>
 
+    <div id="masterclass-access-page" class="placeholder-page">
+        <section class="masterclass-request-section" aria-labelledby="masterclass-request-title">
+            <div class="container max-w-7xl mx-auto px-6">
+                <div class="masterclass-request-shell">
+                    <a href="#miscellaneous" class="masterclass-request-back page-link"
+                        data-page="miscellaneous">Back to Masterclass</a>
+
+                    <div class="masterclass-request-intro">
+                        <p class="font-mono uppercase text-xs tracking-widest mb-4">Masterclass Access</p>
+                        <h1 id="masterclass-request-title">Available by request</h1>
+                        <p>
+                            The Masterclass is currently offered directly. Send me a short request and I’ll personally
+                            get back to you with pricing, availability, and access details.
+                        </p>
+                    </div>
+
+                    <div class="masterclass-request-panel">
+                        <form class="masterclass-request-form" id="masterclass-request-form"
+                            action="mailto:stefan.aberer@hotmail.com" method="post" enctype="text/plain">
+                            <div class="masterclass-request-grid">
+                                <div class="masterclass-request-field">
+                                    <label for="masterclass-name">Name</label>
+                                    <input id="masterclass-name" name="name" type="text" autocomplete="name" required>
+                                </div>
+                                <div class="masterclass-request-field">
+                                    <label for="masterclass-email">Email</label>
+                                    <input id="masterclass-email" name="email" type="email" autocomplete="email" required>
+                                </div>
+                                <div class="masterclass-request-field">
+                                    <label for="masterclass-company">Company / Team <span>(optional)</span></label>
+                                    <input id="masterclass-company" name="company" type="text"
+                                        autocomplete="organization">
+                                </div>
+                                <div class="masterclass-request-field">
+                                    <label for="masterclass-profession">Your profession / role</label>
+                                    <input id="masterclass-profession" name="profession" type="text"
+                                        autocomplete="organization-title" required>
+                                </div>
+                                <div class="masterclass-request-field masterclass-request-field--wide">
+                                    <label for="masterclass-access">Individual or team access</label>
+                                    <select id="masterclass-access" name="access" required>
+                                        <option value="" selected disabled>Select access type</option>
+                                        <option value="Individual access">Individual access</option>
+                                        <option value="Team access">Team access</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button class="masterclass-request-submit" type="submit">Prepare Email Request</button>
+                        </form>
+                        <p class="masterclass-request-note">
+                            Submitting prepares the request in your email app. Please send the email there to complete
+                            your request. Prefer to write directly?
+                            <a href="mailto:stefan.aberer@hotmail.com">stefan.aberer@hotmail.com</a>
+                        </p>
+                        <p class="masterclass-request-status" id="masterclass-request-status" role="status" hidden>
+                            Your request is ready. Send it from your email app to complete the request.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
     <!-- Image Modal -->
-    <div id="image-modal">
+    <div id="image-modal" role="dialog" aria-modal="true" aria-label="Image preview" aria-hidden="true">
         <div class="modal-overlay"></div>
-        <img src="" class="modal-image" alt="Vergrößertes Bild">
+        <button class="image-modal-close" type="button" aria-label="Close image preview">&times;</button>
+        <img src="" class="modal-image" alt="Expanded project image">
     </div>
 
     <!-- Video Lightbox -->
-    <div id="video-lightbox">
-        <span class="close-btn">&times;</span>
-        <iframe id="lightbox-player" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div id="video-lightbox" role="dialog" aria-modal="true" aria-label="Video player" aria-hidden="true">
+        <button class="close-btn" type="button" aria-label="Close video">&times;</button>
+        <div class="video-lightbox-stage">
+            <iframe id="lightbox-player" src="" title="Selected project video"
+                allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-lightbox-loader" role="status" aria-live="polite">
+                <span class="video-lightbox-spinner" aria-hidden="true"></span>
+                <span class="video-lightbox-loader-text">Loading video</span>
+            </div>
+        </div>
     </div>
 
     <!-- Language Switcher -->
