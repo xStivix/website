@@ -511,23 +511,14 @@ layer.addEventListener('click', () => {
 
     // 2. Mobile-Iframe selektieren
     const mobileIframe = document.querySelector('.mobile-iframe');
-    const fallback = document.querySelector('.mobile-fallback');
-    if (!mobileIframe || !fallback) return;
+    if (!mobileIframe) return;
 
     // 3. Vimeo-Player nur für das mobile Iframe instanziieren
     const mobilePlayer = new Vimeo.Player(mobileIframe);
 
-    // 4. Wenn Buffering beendet ist, Fallback langsam ausblenden
+    // 4. Das Video erst sichtbar machen, wenn es wirklich abspielt
     mobilePlayer.on('playing', function() {
-      // 4.1 Opacity des Fallback auf 0 setzen (Transition startet)
       mobileIframe.classList.add('is-ready');
-      fallback.classList.add('is-hidden');
-
-      // 4.2 Nach der Transition (gleiche Dauer wie in CSS: 0.3s)
-      setTimeout(function() {
-        // 4.2.1 Fallback per display:none ganz entfernen
-        fallback.style.display = 'none';
-      }, 350); // gleiche Dauer wie die CSS-Transition
     });
   });
 
