@@ -9,14 +9,14 @@ const services = [
     {
       number: '02',
       title: 'VIDEO EDITING',
-      text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organising footage, video editing, color grading, sound design, and mixing. I can also add motion graphics and VFX. As well as handle compositing, cleanup and retouching.',
+      text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organizing footage, video editing, color grading, sound design, and mixing. I can also add motion graphics and VFX, as well as handle compositing, cleanup, and retouching.',
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/vewebfinal.webp',
       button: '<a href="#video-editing" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="videoEditing">Tech insights</a>'
     },
     {
       number: '03',
       title: 'MASTERCLASS',
-      text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my automotive AI projects, from prompt development and reference preparation all the way to post-production integration.',
+      text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my AI projects, from prompt development and reference preparation all the way to post-production integration.',
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/masterclass-symbol-pattern.webp',
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
@@ -468,9 +468,42 @@ document.addEventListener('DOMContentLoaded', () => {
 /*
 layer.addEventListener('click', () => {
   plyr.classList.remove('ready');
-  plyr.src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+  plyr.src = `https://player.vimeo.com/video/${id}?dnt=1&autoplay=1`;
   box.classList.add('show');
 });*/
+
+ document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth < 768) return;
+
+    const desktopIframe = document.querySelector('.desktop-iframe');
+    if (!desktopIframe) return;
+
+    let apiAttempts = 0;
+    const revealDesktopVideo = () => desktopIframe.classList.add('is-ready');
+
+    const initializeDesktopPlayer = () => {
+      if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
+        apiAttempts += 1;
+        if (apiAttempts < 200) {
+          setTimeout(initializeDesktopPlayer, 100);
+        }
+        return;
+      }
+
+      const desktopPlayer = new Vimeo.Player(desktopIframe);
+      desktopPlayer.on('playing', revealDesktopVideo);
+      desktopPlayer.ready()
+        .then(() => desktopPlayer.getPaused())
+        .then(paused => {
+          if (!paused) revealDesktopVideo();
+        })
+        .catch(() => {
+          // Bei einem Ladefehler bleibt der schwarze Hintergrund sichtbar.
+        });
+    };
+
+    initializeDesktopPlayer();
+  });
 
  document.addEventListener('DOMContentLoaded', function() {
     // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
@@ -568,14 +601,28 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Grundeinstellungen ────────────────────────────────────── */
-  const STEP = 20, BASE_R = 2, MAX_R = 6, FALLOFF = 120;
+  const STEP = 20;
+  const BASE_R = 2;
+  const MAX_R = 6;
+  const FALLOFF = 185;
+  const BASE_ALPHA = 0.65;
+  const MAX_ALPHA = 1;
+  const GROW_EASE = 0.16;
+  const RETURN_EASE = 0.075;
+  const BRIGHTNESS_EASE = 0.11;
+  const AMBIENT_INTERVAL = 6500;
+  const AMBIENT_SWEEP_DURATION = 2400;
+  const AMBIENT_POINT_DURATION = 850;
+  const AMBIENT_RADIUS_BOOST = 0.6;
+  const AMBIENT_BRIGHTNESS_BOOST = 0.13;
 
   /* Initialisiert genau ein Canvas ----------------------------- */
   function initGrid(canvas){
-    console.log('initGrid');
     const ctx   = canvas.getContext('2d');
     let dots    = [];
     let mouse   = { x: 1e9, y: 1e9 };
+    let viewWidth = 1;
+    const ambientStart = performance.now() + 2200;
 
     /* Größe & Punkte berechnen --------------------------------- */
     function resize(){
@@ -585,12 +632,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const d = window.devicePixelRatio || 1;
       canvas.width  = r.width  * d;
       canvas.height = r.height * d;
+      viewWidth = r.width;
       ctx.setTransform(d,0,0,d,0,0);
 
       dots = [];
       for (let y = STEP/2; y < r.height; y += STEP){
         for (let x = STEP/2; x < r.width;  x += STEP){
-          dots.push({ x, y });
+          dots.push({ x, y, radius: BASE_R, alpha: BASE_ALPHA });
         }
       }
     }
@@ -601,15 +649,32 @@ document.addEventListener('DOMContentLoaded', () => {
       if (canvas.width === 0 || canvas.height === 0) resize();
 
       ctx.clearRect(0,0,canvas.width,canvas.height);
+      const ambientElapsed = performance.now() - ambientStart;
+      const ambientPhase = ambientElapsed >= 0 ? ambientElapsed % AMBIENT_INTERVAL : -1;
+
       dots.forEach(p => {
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
         const dist = Math.hypot(dx,dy);
         const t = Math.exp(-dist / FALLOFF);
-        const r = BASE_R + (MAX_R - BASE_R) * t;
+        const pointDelay = (p.x / viewWidth) * AMBIENT_SWEEP_DURATION;
+        const pointPhase = ambientPhase - pointDelay;
+        const ambientPulse = pointPhase >= 0 && pointPhase < AMBIENT_POINT_DURATION
+          ? Math.sin(Math.PI * pointPhase / AMBIENT_POINT_DURATION) ** 2
+          : 0;
+        const targetR = BASE_R + (MAX_R - BASE_R) * t + AMBIENT_RADIUS_BOOST * ambientPulse;
+        const targetAlpha = Math.min(
+          MAX_ALPHA,
+          BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * t + AMBIENT_BRIGHTNESS_BOOST * ambientPulse
+        );
+        const radiusEase = targetR > p.radius ? GROW_EASE : RETURN_EASE;
+
+        p.radius += (targetR - p.radius) * radiusEase;
+        p.alpha += (targetAlpha - p.alpha) * BRIGHTNESS_EASE;
+
         ctx.beginPath();
-        ctx.arc(p.x, p.y, r, 0, Math.PI*2);
-        ctx.fillStyle = '#fff';
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
       });
       requestAnimationFrame(draw);
@@ -709,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
       box.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
       schedulePlayerReveal(playbackSession, 2500);
-      plyr.src = `https://player.vimeo.com/video/${id}${separator}autoplay=1&transparent=0&playsinline=1`;
+      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=1`;
       close.focus();
     };
     layer.addEventListener('click', openVideo);
@@ -741,15 +806,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 /* ===== Quote Ticker Data & Init (10 Items) ===== */
 const QUOTES = [
-  { initials: "WB", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
+  { initials: "WB", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/warner-bros.svg", logoAlt: "Warner Bros.", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
   { initials: "P6", text: "Absolutely lovely stuff.", author: "Eline (Particle6 CEO)" },
-  { initials: "TB", text: "Great attention to detail.", author: "The Dor Brothers" },
-  { initials: "KT", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
+  { initials: "TB", logo: "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Logoassets/dor-brothers.png", logoAlt: "The Dor Brothers", text: "Great attention to detail.", author: "The Dor Brothers" },
+  { initials: "KT", logo: "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Logoassets/martini-icon.png", logoAlt: "Martini", logoClass: "quote-brand-invert", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
   { initials: "PJ", text: "Love the work.", author: "PJ Accetturo (Director)" },
   { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
   { initials: "ML", text: "Impressed by your work.", author: "(MotherLA)" },
-  { initials: "OA", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
-  { initials: "HO", text: "Really impressed with what your're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
+  { initials: "OA", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/openai.svg", logoAlt: "OpenAI", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
+  { initials: "HO", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/we-are-tilt.svg", logoAlt: "We Are Tilt", text: "Really impressed with what you're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
   { initials: "FN", text: "Absolutely insane stuff...", author: "Frank Nitty (Executive Producer)" }
 ];
 
@@ -763,9 +828,12 @@ function createQuoteItem(q){
   if (q.logo){
     const img = document.createElement('img');
     img.src = q.logo;
-    img.alt = q.author ? `${q.author} logo` : 'logo';
+    img.alt = q.logoAlt || (q.author ? `${q.author} logo` : 'Company logo');
     img.loading = 'lazy';
     img.decoding = 'async';
+    img.draggable = false;
+    if (q.logoClass) img.classList.add(q.logoClass);
+    if (q.logoFit === 'wide') logoWrap.classList.add('quote-logo--wide');
     logoWrap.appendChild(img);
   } else {
     const badge = document.createElement('div');
@@ -800,9 +868,116 @@ function createQuoteItem(q){
   // Erstes Item ohne linke Linie
   if (track.firstElementChild) track.firstElementChild.classList.add('first');
 
-  // Zweite Spur anhängen (nahtloses Loop, CSS animiert -50 %)
+  // Zweite Spur anhängen, damit das manuell steuerbare Loop nahtlos bleibt
   const clones = Array.from(track.children).map(n => n.cloneNode(true));
   clones.forEach(n => track.appendChild(n));
+
+  const ticker = track.closest('.quote-ticker');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const AUTO_DURATION = 40;
+  const RETURN_RATE = 1.45;
+  const MAX_THROW_SPEED = 1500;
+
+  let loopWidth = 0;
+  let offset = 0;
+  let autoVelocity = 0;
+  let velocity = 0;
+  let dragging = false;
+  let pointerId = null;
+  let lastPointerX = 0;
+  let lastMoveTime = 0;
+  let dragVelocity = 0;
+  let lastFrame = performance.now();
+
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  function measureTrack(){
+    const previousWidth = loopWidth;
+    loopWidth = track.scrollWidth / 2;
+
+    if (previousWidth > 0 && loopWidth > 0) {
+      offset = offset / previousWidth * loopWidth;
+    }
+
+    autoVelocity = reducedMotion.matches || loopWidth === 0
+      ? 0
+      : -(loopWidth / AUTO_DURATION);
+
+    if (!dragging && velocity === 0) velocity = autoVelocity;
+  }
+
+  function wrapOffset(){
+    if (!loopWidth) return;
+    while (offset <= -loopWidth) offset += loopWidth;
+    while (offset > 0) offset -= loopWidth;
+  }
+
+  function renderTicker(now){
+    const deltaTime = Math.min((now - lastFrame) / 1000, 0.05);
+    lastFrame = now;
+
+    if (!dragging) {
+      const returnBlend = 1 - Math.exp(-RETURN_RATE * deltaTime);
+      velocity += (autoVelocity - velocity) * returnBlend;
+      offset += velocity * deltaTime;
+    }
+
+    wrapOffset();
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+    requestAnimationFrame(renderTicker);
+  }
+
+  function startDrag(event){
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+    dragging = true;
+    pointerId = event.pointerId;
+    lastPointerX = event.clientX;
+    lastMoveTime = performance.now();
+    dragVelocity = velocity;
+    velocity = 0;
+    ticker.classList.add('is-dragging');
+    ticker.setPointerCapture(pointerId);
+  }
+
+  function moveDrag(event){
+    if (!dragging || event.pointerId !== pointerId) return;
+
+    const now = performance.now();
+    const movement = event.clientX - lastPointerX;
+    const elapsed = Math.max(now - lastMoveTime, 8);
+    const instantVelocity = movement / elapsed * 1000;
+
+    offset += movement;
+    dragVelocity = dragVelocity * 0.68 + instantVelocity * 0.32;
+    lastPointerX = event.clientX;
+    lastMoveTime = now;
+  }
+
+  function endDrag(event){
+    if (!dragging || event.pointerId !== pointerId) return;
+
+    const heldStill = performance.now() - lastMoveTime > 120;
+    velocity = heldStill ? 0 : clamp(dragVelocity, -MAX_THROW_SPEED, MAX_THROW_SPEED);
+    dragging = false;
+    ticker.classList.remove('is-dragging');
+
+    if (ticker.hasPointerCapture(pointerId)) {
+      ticker.releasePointerCapture(pointerId);
+    }
+    pointerId = null;
+  }
+
+  ticker.addEventListener('pointerdown', startDrag);
+  ticker.addEventListener('pointermove', moveDrag);
+  ticker.addEventListener('pointerup', endDrag);
+  ticker.addEventListener('pointercancel', endDrag);
+  window.addEventListener('resize', measureTrack, { passive: true });
+  reducedMotion.addEventListener('change', measureTrack);
+
+  measureTrack();
+  velocity = autoVelocity;
+  requestAnimationFrame(renderTicker);
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
