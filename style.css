@@ -2087,7 +2087,7 @@ section[id] {
   pointer-events: none;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, .34) 0%, transparent 24%, transparent 53%, rgba(0, 0, 0, .78) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, .58) 0%, rgba(0, 0, 0, .18) 42%, transparent 72%);
+    radial-gradient(ellipse 76% 92% at 14% 68%, rgba(0, 0, 0, .52) 0%, rgba(0, 0, 0, .22) 46%, transparent 82%);
 }
 
 .content-overlay {
@@ -2132,13 +2132,13 @@ section[id] {
 }
 
 .hero-editorial__title {
-  margin: 0;
+  margin: 0 0 0 -.08em;
   color: #fff;
   font-size: clamp(5.5rem, 9.6vw, 10rem);
   font-weight: 700;
   letter-spacing: -.055em;
   line-height: .78;
-  text-shadow: 0 3px 28px rgba(0, 0, 0, .34);
+  text-shadow: none;
 }
 
 .hero-editorial__title-line {
