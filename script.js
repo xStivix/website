@@ -25,7 +25,7 @@ const services = [
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
-        <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+        <img src="${service.image}" alt="${service.title}" loading="eager" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
       </div>
       <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
@@ -581,6 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Helper: Bild laden oder Fehler‑Callback auslösen ----------------- */
   function setPlaceholder(el, url, onError) {
     const img = new Image();
+    img.loading = 'lazy';
     img.onload  = () => el.style.backgroundImage = `url("${url}")`;
     img.onerror = onError;
     img.src = url;
@@ -820,7 +821,7 @@ function createQuoteItem(q){
     const img = document.createElement('img');
     img.src = q.logo;
     img.alt = q.logoAlt || (q.author ? `${q.author} logo` : 'Company logo');
-    img.loading = 'lazy';
+    img.loading = 'eager';
     img.decoding = 'async';
     img.draggable = false;
     if (q.logoClass) img.classList.add(q.logoClass);

@@ -1954,6 +1954,9 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   font-size:.92rem; line-height:1.2; color:var(--qt-fg);
   display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
   overflow:hidden; text-align:left;
+  box-sizing:border-box;
+  padding-left:.08em;
+  padding-right:.28em; /* keeps the italic closing quote clear of the clipping edge */
 
   /* Breitenlimit, damit die Gruppe nicht nach links zieht */
   max-width: calc(var(--qt-item-w) - var(--qt-logo) - (var(--qt-pad-x)*2) - var(--qt-gap-x));
@@ -1993,11 +1996,19 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 
 #quotes .quote-text::before{
   content: "“";
+  display:inline-block;
+  font-family:Arial, Helvetica, sans-serif;
+  font-style:normal;
+  font-weight:600;
   margin-right: 2px;   /* minimaler Abstand zum Text */
 }
 
 #quotes .quote-text::after{
   content: "”";
+  display:inline-block;
+  font-family:Arial, Helvetica, sans-serif;
+  font-style:normal;
+  font-weight:600;
   margin-left: 2px;    /* minimaler Abstand nach dem Text */
 }
 /* Mobile: AI-Workflow-Captions extrem klein */
