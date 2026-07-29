@@ -396,7 +396,260 @@ function updateDesktopIframeScale(){
           }
         }
       }
-      /* --- Desktop‑Ifram…2541 tokens truncated…ointPhase = ambientPhase - pointDelay;
+      /* --- Desktop‑Iframe skalieren --- */
+      updateDesktopIframeScale();                                      // sofort ausführen
+      window.addEventListener('resize',            updateDesktopIframeScale, {passive:true});
+      window.addEventListener('orientationchange', updateDesktopIframeScale);
+    });
+
+
+  const langSwitcher = document.getElementById('lang-switcher');
+
+  // 5 Sekunden nach DOM-Laden einblenden
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      langSwitcher.classList.add('visible');
+    }, 5000);
+  });
+
+  // Klick-Handler für den Toggle
+  langSwitcher.addEventListener('click', () => {
+    langSwitcher.classList.toggle('de-active');
+  });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  let didReveal = false;
+  const introOverlay = document.querySelector('.intro-overlay');
+  const heroEditorial = document.querySelector('.hero-editorial');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (heroEditorial && !prefersReducedMotion) {
+    heroEditorial.classList.add('hero-animate');
+  }
+
+  function revealContent(immediate = false) {
+    if (didReveal) return;
+    didReveal = true;
+    document.body.classList.remove('intro-active');
+
+    if (heroEditorial && !prefersReducedMotion) {
+      const revealHero = () => {
+        heroEditorial.classList.add('hero-revealed');
+        setTimeout(() => heroEditorial.classList.add('hero-interactive'), 1200);
+      };
+      if (immediate) {
+        requestAnimationFrame(() => requestAnimationFrame(revealHero));
+      } else {
+        setTimeout(revealHero, 420);
+      }
+    }
+
+    if (introOverlay) {
+      if (immediate) {
+        introOverlay.remove();
+      } else {
+        introOverlay.classList.add('slide-out');
+        const removeOverlay = () => introOverlay.remove();
+        introOverlay.addEventListener('transitionend', removeOverlay, { once: true });
+        setTimeout(removeOverlay, 1200);
+      }
+    }
+  }
+
+  const skipIntro = prefersReducedMotion || !introOverlay;
+  if (skipIntro) {
+    revealContent(true);
+  } else {
+    document.body.classList.add('intro-active');
+    setTimeout(() => revealContent(), 1200);
+  }
+});
+/*
+layer.addEventListener('click', () => {
+  plyr.classList.remove('ready');
+  plyr.src = `https://player.vimeo.com/video/${id}?dnt=1&autoplay=1`;
+  box.classList.add('show');
+});*/
+
+ document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth < 768) return;
+
+    const desktopIframe = document.querySelector('.desktop-iframe');
+    if (!desktopIframe) return;
+
+    let apiAttempts = 0;
+    const revealDesktopVideo = () => desktopIframe.classList.add('is-ready');
+
+    const initializeDesktopPlayer = () => {
+      if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
+        apiAttempts += 1;
+        if (apiAttempts < 200) {
+          setTimeout(initializeDesktopPlayer, 100);
+        }
+        return;
+      }
+
+      const desktopPlayer = new Vimeo.Player(desktopIframe);
+      desktopPlayer.on('playing', revealDesktopVideo);
+      desktopPlayer.ready()
+        .then(() => desktopPlayer.getPaused())
+        .then(paused => {
+          if (!paused) revealDesktopVideo();
+        })
+        .catch(() => {
+          // Bei einem Ladefehler bleibt der schwarze Hintergrund sichtbar.
+        });
+    };
+
+    initializeDesktopPlayer();
+  });
+
+ document.addEventListener('DOMContentLoaded', function() {
+    // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
+    if (window.innerWidth > 767) return;
+
+    // 2. Mobile-Iframe selektieren
+    const mobileIframe = document.querySelector('.mobile-iframe');
+    if (!mobileIframe) return;
+
+    // 3. Vimeo-Player nur für das mobile Iframe instanziieren
+    const mobilePlayer = new Vimeo.Player(mobileIframe);
+
+    // 4. Das Video erst sichtbar machen, wenn es wirklich abspielt
+    mobilePlayer.on('playing', function() {
+      mobileIframe.classList.add('is-ready');
+    });
+  });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------------------------------------------------------------
+     Welche Iframes?  – Passe die Selector‑Liste bei Bedarf an
+     --------------------------------------------------------------- */
+  const iframes = document.querySelectorAll(
+  '#ai-page iframe[src*="vimeo.com"]'
+  );
+
+  iframes.forEach(frame => {
+    /* 1) ID + (falls vorhanden) HASH aus der src ziehen ------------- */
+    const urlMatch = frame.src.match(/\/video\/(\d+)(?:\?[^#]*h=([a-z0-9]+))?/i);
+    if (!urlMatch) return;                             // Safety‑Stop
+
+    const id   = urlMatch[1];                // „1098650054“
+    const hash = urlMatch[2] || '';          // „6266b2155c“ (bei unlisted) oder ''
+
+    /* 2) Platzhalter‑Div ins Wrapper‑Element einsetzen -------------- */
+    const wrapper = frame.parentElement;
+    wrapper.style.position = 'relative';
+
+    const ph = document.createElement('div');
+    ph.className = 'video-placeholder';      // ➜ siehe CSS‑Snippet unten
+    wrapper.appendChild(ph);
+
+    /* 3) Thumbnail‑URL bauen – unlisted =  ID:HASH ------------------ */
+    const thumbId = hash ? `${id}:${hash}` : id;
+    const cdnUrl  = `https://vumbnail.com/${thumbId}.jpg`;
+
+    /* 4) Bild testen – wenn es lädt → als BG setzen,
+          sonst Fallback über player‑config versuchen                */
+    setPlaceholder(ph, cdnUrl, () => {
+      const cfgUrl = `https://player.vimeo.com/video/${id}/config` + (hash ? `?h=${hash}` : '');
+      fetch(cfgUrl).then(r => r.ok ? r.json() : Promise.reject())
+                   .then(cfg => {
+                     const thumbs = cfg.video.thumbs || {};
+                     const largest = thumbs[Object.keys(thumbs).sort().pop()];
+                     if (largest) ph.style.backgroundImage = `url("${largest}")`;
+                   });
+    });
+
+    /* 5) Player‑Init & Overlay ausblenden, wenn Video spielt -------- */
+    if (typeof Vimeo !== 'undefined') {
+      const player  = new Vimeo.Player(frame);
+
+      const fadeOut = () => {
+        ph.classList.add('hide');            // CSS‑Transition
+        setTimeout(() => ph.remove(), 500);  // DOM aufräumen
+      };
+
+      player.on('play',   fadeOut);
+      player.on('loaded', () => player.getPaused().then(p => !p && fadeOut()));
+    }
+  });
+
+  /* Helper: Bild laden oder Fehler‑Callback auslösen ----------------- */
+  function setPlaceholder(el, url, onError) {
+    el.style.backgroundImage = `url("${url}")`;
+    const img = new Image();
+    img.onerror = onError;
+    img.src = url;
+  }
+
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ── Grundeinstellungen ────────────────────────────────────── */
+  const STEP = 20;
+  const BASE_R = 2;
+  const MAX_R = 6;
+  const FALLOFF = 185;
+  const BASE_ALPHA = 0.65;
+  const MAX_ALPHA = 1;
+  const GROW_EASE = 0.16;
+  const RETURN_EASE = 0.075;
+  const BRIGHTNESS_EASE = 0.11;
+  const AMBIENT_INTERVAL = 6500;
+  const AMBIENT_SWEEP_DURATION = 2400;
+  const AMBIENT_POINT_DURATION = 850;
+  const AMBIENT_RADIUS_BOOST = 0.6;
+  const AMBIENT_BRIGHTNESS_BOOST = 0.13;
+
+  /* Initialisiert genau ein Canvas ----------------------------- */
+  function initGrid(canvas){
+    const ctx   = canvas.getContext('2d');
+    let dots    = [];
+    let mouse   = { x: 1e9, y: 1e9 };
+    let viewWidth = 1;
+    const ambientStart = performance.now() + 2200;
+
+    /* Größe & Punkte berechnen --------------------------------- */
+    function resize(){
+      const r = canvas.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;  // Seite evtl. noch hidden
+
+      const d = window.devicePixelRatio || 1;
+      canvas.width  = r.width  * d;
+      canvas.height = r.height * d;
+      viewWidth = r.width;
+      ctx.setTransform(d,0,0,d,0,0);
+
+      dots = [];
+      for (let y = STEP/2; y < r.height; y += STEP){
+        for (let x = STEP/2; x < r.width;  x += STEP){
+          dots.push({ x, y, radius: BASE_R, alpha: BASE_ALPHA });
+        }
+      }
+    }
+
+    /* Zeichen-Loop --------------------------------------------- */
+    function draw(){
+      /* Falls das Canvas erst jetzt sichtbar wurde … */
+      if (canvas.width === 0 || canvas.height === 0) resize();
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const ambientElapsed = performance.now() - ambientStart;
+      const ambientPhase = ambientElapsed >= 0 ? ambientElapsed % AMBIENT_INTERVAL : -1;
+
+      dots.forEach(p => {
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.hypot(dx,dy);
+        const t = Math.exp(-dist / FALLOFF);
+        const pointDelay = (p.x / viewWidth) * AMBIENT_SWEEP_DURATION;
+        const pointPhase = ambientPhase - pointDelay;
         const ambientPulse = pointPhase >= 0 && pointPhase < AMBIENT_POINT_DURATION
           ? Math.sin(Math.PI * pointPhase / AMBIENT_POINT_DURATION) ** 2
           : 0;
