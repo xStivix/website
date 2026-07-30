@@ -1,23 +1,39 @@
+const introMark = document.querySelector('.intro-mark');
+const introNameText = document.querySelector('.intro-name-text');
+
+const syncIntroNameWidth = () => {
+  if (!introMark || !introNameText) return;
+  const nameWidth = Math.ceil(introNameText.getBoundingClientRect().width);
+  if (nameWidth > 0) introMark.style.setProperty('--intro-name-width', `${nameWidth}px`);
+};
+
+syncIntroNameWidth();
+document.fonts?.ready.then(syncIntroNameWidth);
+window.addEventListener('resize', syncIntroNameWidth, { passive: true });
+
 const services = [
     {
       number: '01',
       title: 'AI EXPERTISE',
       text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From visual effects (VFX) to fully AI-generated videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
-      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/Comp%2010_00000.webp',
+      image: 'Finalwebpimages/Comp%2010_00000.webp',
+      mobileImage: 'service-ai-768.webp',
       button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI Insights</a>'
     },
     {
       number: '02',
       title: 'VIDEO EDITING',
       text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organizing footage, video editing, color grading, sound design, and mixing. I can also add motion graphics and VFX, as well as handle compositing, cleanup, and retouching.',
-      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/vewebfinal.webp',
+      image: 'vewebfinal.webp',
+      mobileImage: 'service-video-editing-768.webp',
       button: '<a href="#video-editing" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="videoEditing">Tech insights</a>'
     },
     {
       number: '03',
       title: 'MASTERCLASS',
       text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my AI projects, from prompt development and reference preparation to video generation, all the way to post-production integration.',
-      image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/masterclass-symbol-pattern.webp',
+      image: 'masterclass-symbol-pattern.webp',
+      mobileImage: 'service-masterclass-768.webp',
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
   ];
@@ -25,7 +41,17 @@ const services = [
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
-        <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+        <img
+          src="${service.mobileImage}"
+          srcset="${service.mobileImage} 768w, ${service.image} 1536w"
+          sizes="(max-width: 639px) calc(100vw - 3rem), (max-width: 1279px) 33vw, 400px"
+          alt="${service.title}"
+          loading="lazy"
+          decoding="async"
+          width="768"
+          height="512"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
       </div>
       <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
@@ -50,8 +76,52 @@ const services = [
     gridWrapper.appendChild(gridCard.firstElementChild);
   });
 
-  if (typeof Swiper === 'function') {
-    new Swiper(".mySwiper", {
+  let servicesSwiper = null;
+  let swiperAssetsPromise = null;
+
+  const loadSwiperAssets = () => {
+    if (typeof window.Swiper === 'function') return Promise.resolve();
+    if (swiperAssetsPromise) return swiperAssetsPromise;
+
+    swiperAssetsPromise = new Promise((resolve, reject) => {
+      const stylesheet = document.createElement('link');
+      const script = document.createElement('script');
+      let stylesheetReady = false;
+      let scriptReady = false;
+
+      const finish = () => {
+        if (stylesheetReady && scriptReady && typeof window.Swiper === 'function') resolve();
+      };
+
+      stylesheet.rel = 'stylesheet';
+      stylesheet.href = 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css';
+      stylesheet.onload = () => {
+        stylesheetReady = true;
+        finish();
+      };
+      stylesheet.onerror = reject;
+
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js';
+      script.async = true;
+      script.onload = () => {
+        scriptReady = true;
+        finish();
+      };
+      script.onerror = reject;
+
+      document.head.appendChild(stylesheet);
+      document.head.appendChild(script);
+    });
+
+    return swiperAssetsPromise;
+  };
+
+  const initializeServicesSwiper = () => {
+    if (servicesSwiper || !window.matchMedia('(max-width: 639px)').matches) return;
+
+    loadSwiperAssets().then(() => {
+      if (servicesSwiper || !window.matchMedia('(max-width: 639px)').matches) return;
+      servicesSwiper = new window.Swiper(".mySwiper", {
       direction: "horizontal",
       slidesPerView: 1.08,
       spaceBetween: 12,
@@ -78,8 +148,36 @@ const services = [
           spaceBetween: 14
         }
       }
+      });
+    }).catch(() => {
+      swiperAssetsPromise = null;
     });
-  }
+  };
+
+  const servicesSection = document.getElementById('services');
+  const mobileServicesMedia = window.matchMedia('(max-width: 639px)');
+  let servicesObserver = null;
+
+  const prepareServicesSwiper = () => {
+    if (!mobileServicesMedia.matches || servicesSwiper || !servicesSection) return;
+
+    if (!('IntersectionObserver' in window)) {
+      initializeServicesSwiper();
+      return;
+    }
+
+    if (servicesObserver) return;
+    servicesObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      servicesObserver.disconnect();
+      servicesObserver = null;
+      initializeServicesSwiper();
+    }, { rootMargin: '1400px 0px' });
+    servicesObserver.observe(servicesSection);
+  };
+
+  prepareServicesSwiper();
+  mobileServicesMedia.addEventListener?.('change', prepareServicesSwiper);
 
   const projectPlayerPromises = new WeakMap();
   const selectedWorkThumbnailOverrides = {
