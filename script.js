@@ -2,7 +2,7 @@ const services = [
     {
       number: '01',
       title: 'AI EXPERTISE',
-      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From Visual Effects to completely generated AI Videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
+      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From visual effects (VFX) to fully AI-generated videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/Comp%2010_00000.webp',
       button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI Insights</a>'
     },
@@ -506,20 +506,52 @@ layer.addEventListener('click', () => {
   });
 
  document.addEventListener('DOMContentLoaded', function() {
-    // 1. Nur in der Smartphone-Ansicht (<= 767px) ausführen
     if (window.innerWidth > 767) return;
 
-    // 2. Mobile-Iframe selektieren
     const mobileIframe = document.querySelector('.mobile-iframe');
+    const mobileFallback = document.querySelector('.mobile-fallback');
     if (!mobileIframe) return;
 
-    // 3. Vimeo-Player nur für das mobile Iframe instanziieren
+    let revealTimer = null;
+
+    const showMobileFallback = () => {
+      if (revealTimer) {
+        clearTimeout(revealTimer);
+        revealTimer = null;
+      }
+      mobileIframe.classList.remove('is-ready');
+      if (mobileFallback) mobileFallback.classList.remove('is-hidden');
+    };
+
+    const revealMobileVideo = () => {
+      mobileIframe.classList.add('is-ready');
+      if (mobileFallback) mobileFallback.classList.add('is-hidden');
+    };
+
+    if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
+      showMobileFallback();
+      return;
+    }
+
     const mobilePlayer = new Vimeo.Player(mobileIframe);
 
-    // 4. Das Video erst sichtbar machen, wenn es wirklich abspielt
-    mobilePlayer.on('playing', function() {
-      mobileIframe.classList.add('is-ready');
+    // A real time update confirms that autoplay is producing video frames.
+    mobilePlayer.on('timeupdate', function(data) {
+      if (!data || data.seconds <= 0.2 || revealTimer || mobileIframe.classList.contains('is-ready')) return;
+
+      revealTimer = setTimeout(() => {
+        revealTimer = null;
+        mobilePlayer.getPaused()
+          .then(paused => paused ? showMobileFallback() : revealMobileVideo())
+          .catch(showMobileFallback);
+      }, 250);
     });
+
+    mobilePlayer.on('pause', showMobileFallback);
+    mobilePlayer.on('error', showMobileFallback);
+    mobilePlayer.ready()
+      .then(() => mobilePlayer.play())
+      .catch(showMobileFallback);
   });
 
 

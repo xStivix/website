@@ -1356,29 +1356,22 @@ footer p {
 
 @media (max-width:767px) {
 
-  /* nur Smartphones */
   .mobile-fallback {
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 100vw;
-    height: 100vh;
-    transform: translate(-50%, -50%) scale(1.07);
-    width: 100vw;
-    height: 100vh;
-    /* exakt wie dein .mobile-iframe */
+    height: 100dvh;
+    transform: translate(-50%, -50%);
     object-fit: cover;
-    /* füllt lückenlos */
+    object-position: center center;
     pointer-events: none;
-    /* nichts klickbar machen */
-    z-index: 2;
-    /* liegt hinter .content-overlay (z-index:3) */
+    z-index: 0;
     opacity: 1;
-    /* Start‐Zustand */
+    visibility: visible;
     background: #050505;
     transition: opacity .35s ease, visibility 0s linear .35s;
-    /* 300 ms Ausblend-Effekt */
   }
 
   .mobile-fallback.is-hidden {
