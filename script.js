@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealContent(true);
   } else {
     document.body.classList.add('intro-active');
-    setTimeout(() => revealContent(), 1200);
+    setTimeout(() => revealContent(), 1470);
   }
 });
 /*
