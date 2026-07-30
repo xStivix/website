@@ -25,7 +25,7 @@ const services = [
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
-        <img src="${service.image}" alt="${service.title}" loading="eager" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+        <img src="${service.image}" alt="${service.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
       </div>
       <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
         <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
@@ -50,32 +50,159 @@ const services = [
     gridWrapper.appendChild(gridCard.firstElementChild);
   });
 
-  new Swiper(".mySwiper", {
-    direction: "horizontal",
-    slidesPerView: 1.08,
-    spaceBetween: 12,
-    speed: 420,
-    threshold: 3,
-    touchAngle: 45,
-    resistanceRatio: 0.7,
-    shortSwipes: true,
-    longSwipes: true,
-    longSwipesRatio: 0.18,
-    watchOverflow: true,
-    roundLengths: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true
-    },
-    breakpoints: {
-      0: {
-        slidesPerView: 1.08,
-        spaceBetween: 12
+  if (typeof Swiper === 'function') {
+    new Swiper(".mySwiper", {
+      direction: "horizontal",
+      slidesPerView: 1.08,
+      spaceBetween: 12,
+      speed: 420,
+      threshold: 3,
+      touchAngle: 45,
+      resistanceRatio: 0.7,
+      shortSwipes: true,
+      longSwipes: true,
+      longSwipesRatio: 0.18,
+      watchOverflow: true,
+      roundLengths: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
       },
-      480: {
-        slidesPerView: 1.18,
-        spaceBetween: 14
+      breakpoints: {
+        0: {
+          slidesPerView: 1.08,
+          spaceBetween: 12
+        },
+        480: {
+          slidesPerView: 1.18,
+          spaceBetween: 14
+        }
       }
+    });
+  }
+
+  const projectPlayerPromises = new WeakMap();
+  let vimeoApiReadyPromise = null;
+
+  function waitForVimeoApi() {
+    if (window.Vimeo && Vimeo.Player) return Promise.resolve();
+    if (vimeoApiReadyPromise) return vimeoApiReadyPromise;
+
+    vimeoApiReadyPromise = new Promise((resolve, reject) => {
+      let attempts = 0;
+      const check = () => {
+        if (window.Vimeo && Vimeo.Player) {
+          resolve();
+          return;
+        }
+        attempts += 1;
+        if (attempts >= 200) {
+          reject(new Error('Vimeo Player API did not load.'));
+          return;
+        }
+        setTimeout(check, 100);
+      };
+      check();
+    });
+
+    return vimeoApiReadyPromise;
+  }
+
+  function getFrameSource(frame) {
+    return frame.dataset.src || frame.getAttribute('src') || '';
+  }
+
+  function assignFrameSource(frame) {
+    const source = getFrameSource(frame);
+    if (source && !frame.getAttribute('src')) {
+      frame.classList.remove('is-loaded');
+      frame.addEventListener('load', () => frame.classList.add('is-loaded'), { once: true });
+      frame.setAttribute('src', source);
+    }
+    return source;
+  }
+
+  function getProjectPlayer(frame) {
+    if (projectPlayerPromises.has(frame)) {
+      return projectPlayerPromises.get(frame);
+    }
+
+    assignFrameSource(frame);
+    const playerPromise = waitForVimeoApi().then(() => {
+      const player = new Vimeo.Player(frame);
+      player.setVolume(0).catch(() => {});
+
+      const placeholder = frame._videoPlaceholder;
+      if (placeholder) {
+        const fadeOut = () => {
+          if (!placeholder.isConnected) return;
+          placeholder.classList.add('hide');
+          setTimeout(() => placeholder.remove(), 500);
+        };
+
+        player.on('play', fadeOut);
+        player.on('loaded', () => {
+          player.getPaused().then(paused => {
+            if (!paused) fadeOut();
+          }).catch(() => {});
+        });
+      }
+
+      return player;
+    });
+
+    projectPlayerPromises.set(frame, playerPromise);
+    return playerPromise;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const projectFrames = document.querySelectorAll(
+      '#portfolio iframe[data-src*="vimeo.com"], #ai-page iframe[data-src*="vimeo.com"]'
+    );
+    const desktopSelectedWork = window.matchMedia('(min-width: 768px)');
+
+    const loadFrame = frame => {
+      const shouldLoadPlaceholder =
+        !frame.closest('#portfolio') || window.matchMedia('(max-width: 767px)').matches;
+      if (shouldLoadPlaceholder && typeof frame._loadVideoPlaceholder === 'function') {
+        frame._loadVideoPlaceholder();
+      }
+      assignFrameSource(frame);
+      getProjectPlayer(frame).catch(() => {});
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      projectFrames.forEach(loadFrame);
+      return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        loadFrame(entry.target);
+      });
+    }, { rootMargin: '900px 0px', threshold: 0.01 });
+
+    projectFrames.forEach(frame => {
+      if (desktopSelectedWork.matches && frame.closest('#portfolio')) {
+        loadFrame(frame);
+      } else {
+        observer.observe(frame);
+      }
+    });
+
+    const loadSelectedWorkOnDesktop = event => {
+      if (!event.matches) return;
+      document.querySelectorAll('#portfolio iframe[data-src*="vimeo.com"]').forEach(frame => {
+        observer.unobserve(frame);
+        loadFrame(frame);
+      });
+    };
+    if (desktopSelectedWork.addEventListener) {
+      desktopSelectedWork.addEventListener('change', loadSelectedWorkOnDesktop);
+    } else {
+      desktopSelectedWork.addListener(loadSelectedWorkOnDesktop);
     }
   });
 
@@ -107,18 +234,20 @@ const services = [
     };
     
   // ─── COPY-PASTE ab hier ───────────────────────────────────────────
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 pageLinks.forEach(link => {
   link.addEventListener('click', function (e) {
     e.preventDefault();
+    const page = this.dataset.page;
 
     /* ------------------------------------------------------------
        SEITE UMSCHALTEN
     ------------------------------------------------------------ */
     hideAllPages();                               // alles ausblenden
-    const page = this.dataset.page;               // Ziel ermitteln
 
     // Einblenden
-    ({
+    const targetPage = ({
       images:        imagesPage,
       ai:            aiPage,
       impressum:     impressumPage,
@@ -129,11 +258,12 @@ pageLinks.forEach(link => {
       masterclassAccess: masterclassAccessPage,
       main:          mainPage,    // "WORK" / "ABOUT" / "SERVICES" usw.
       undefined:     mainPage     // Fallback
-    }[page]).style.display = 'block';
+    }[page]);
+    targetPage.style.display = 'block';
 
     /* ------------------------------------------------------------
        SCROLL-LOGIK
-       – Unterseiten: sofort nach ganz oben (ohne Smooth)
+       – Tech, AI und Masterclass: wie Main-Sektionen per scrollIntoView
        – Main-Page-Sektionen: weich per scrollIntoView
     ------------------------------------------------------------ */
     if (page === 'main' || page === undefined) {
@@ -143,12 +273,14 @@ pageLinks.forEach(link => {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     } else {
-      // Alle anderen Unterseiten
+      const smoothPageStart = ['ai', 'videoEditing', 'miscellaneous'].includes(page);
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-        // Extra-Fallback für alte Browser / iOS
-        document.documentElement.scrollTop =
-        document.body.scrollTop          = 0;
+        targetPage.scrollIntoView({
+          behavior: smoothPageStart && !reducedMotion ? 'smooth' : 'auto',
+          block: 'start'
+        });
       });
     }
 
@@ -268,10 +400,9 @@ function updateDesktopIframeScale(){
         mobileMenu.classList.toggle('hidden', !open);
         mobileMenuButton.setAttribute('aria-expanded', String(open));
         mobileMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-        const icon = mobileMenuButton.querySelector('i');
+        const icon = mobileMenuButton.querySelector('.mobile-menu-icon');
         if (icon) {
-          icon.classList.toggle('fa-bars', !open);
-          icon.classList.toggle('fa-xmark', open);
+          icon.classList.toggle('is-open', open);
         }
       }
 
@@ -473,45 +604,14 @@ layer.addEventListener('click', () => {
 });*/
 
  document.addEventListener('DOMContentLoaded', function() {
-    if (window.innerWidth < 768) return;
-
     const desktopIframe = document.querySelector('.desktop-iframe');
-    if (!desktopIframe) return;
-
-    let apiAttempts = 0;
-    const revealDesktopVideo = () => desktopIframe.classList.add('is-ready');
-
-    const initializeDesktopPlayer = () => {
-      if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
-        apiAttempts += 1;
-        if (apiAttempts < 200) {
-          setTimeout(initializeDesktopPlayer, 100);
-        }
-        return;
-      }
-
-      const desktopPlayer = new Vimeo.Player(desktopIframe);
-      desktopPlayer.on('playing', revealDesktopVideo);
-      desktopPlayer.ready()
-        .then(() => desktopPlayer.getPaused())
-        .then(paused => {
-          if (!paused) revealDesktopVideo();
-        })
-        .catch(() => {
-          // Bei einem Ladefehler bleibt der schwarze Hintergrund sichtbar.
-        });
-    };
-
-    initializeDesktopPlayer();
-  });
-
- document.addEventListener('DOMContentLoaded', function() {
-    if (window.innerWidth > 767) return;
-
     const mobileIframe = document.querySelector('.mobile-iframe');
     const mobileFallback = document.querySelector('.mobile-fallback');
-    if (!mobileIframe) return;
+    const mobileMedia = window.matchMedia('(max-width: 767px)');
+    if (!desktopIframe || !mobileIframe) return;
 
+    let activeFrame = null;
+    let heroSession = 0;
     let revealTimer = null;
 
     const showMobileFallback = () => {
@@ -523,35 +623,70 @@ layer.addEventListener('click', () => {
       if (mobileFallback) mobileFallback.classList.remove('is-hidden');
     };
 
-    const revealMobileVideo = () => {
-      mobileIframe.classList.add('is-ready');
-      if (mobileFallback) mobileFallback.classList.add('is-hidden');
+    const loadResponsiveHero = () => {
+      heroSession += 1;
+      const session = heroSession;
+      const nextFrame = mobileMedia.matches ? mobileIframe : desktopIframe;
+      const previousFrame = nextFrame === mobileIframe ? desktopIframe : mobileIframe;
+
+      if (activeFrame !== nextFrame) {
+        previousFrame.classList.remove('is-ready');
+        previousFrame.removeAttribute('src');
+        activeFrame = nextFrame;
+      }
+
+      if (nextFrame === mobileIframe) {
+        showMobileFallback();
+      }
+      assignFrameSource(nextFrame);
+
+      waitForVimeoApi().then(() => {
+        if (session !== heroSession || activeFrame !== nextFrame) return;
+        const player = new Vimeo.Player(nextFrame);
+
+        if (nextFrame === desktopIframe) {
+          const revealDesktopVideo = () => {
+            if (session === heroSession) desktopIframe.classList.add('is-ready');
+          };
+          player.on('playing', revealDesktopVideo);
+          player.ready()
+            .then(() => player.getPaused())
+            .then(paused => {
+              if (!paused) revealDesktopVideo();
+            })
+            .catch(() => {});
+          return;
+        }
+
+        const revealMobileVideo = () => {
+          if (session !== heroSession) return;
+          mobileIframe.classList.add('is-ready');
+          if (mobileFallback) mobileFallback.classList.add('is-hidden');
+        };
+
+        player.on('timeupdate', data => {
+          if (!data || data.seconds <= 0.2 || revealTimer || mobileIframe.classList.contains('is-ready')) return;
+          revealTimer = setTimeout(() => {
+            revealTimer = null;
+            player.getPaused()
+              .then(paused => paused ? showMobileFallback() : revealMobileVideo())
+              .catch(showMobileFallback);
+          }, 250);
+        });
+        player.on('pause', showMobileFallback);
+        player.on('error', showMobileFallback);
+        player.ready().then(() => player.play()).catch(showMobileFallback);
+      }).catch(() => {
+        if (nextFrame === mobileIframe) showMobileFallback();
+      });
     };
 
-    if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
-      showMobileFallback();
-      return;
+    loadResponsiveHero();
+    if (mobileMedia.addEventListener) {
+      mobileMedia.addEventListener('change', loadResponsiveHero);
+    } else {
+      mobileMedia.addListener(loadResponsiveHero);
     }
-
-    const mobilePlayer = new Vimeo.Player(mobileIframe);
-
-    // A real time update confirms that autoplay is producing video frames.
-    mobilePlayer.on('timeupdate', function(data) {
-      if (!data || data.seconds <= 0.2 || revealTimer || mobileIframe.classList.contains('is-ready')) return;
-
-      revealTimer = setTimeout(() => {
-        revealTimer = null;
-        mobilePlayer.getPaused()
-          .then(paused => paused ? showMobileFallback() : revealMobileVideo())
-          .catch(showMobileFallback);
-      }, 250);
-    });
-
-    mobilePlayer.on('pause', showMobileFallback);
-    mobilePlayer.on('error', showMobileFallback);
-    mobilePlayer.ready()
-      .then(() => mobilePlayer.play())
-      .catch(showMobileFallback);
   });
 
 
@@ -561,12 +696,13 @@ document.addEventListener('DOMContentLoaded', () => {
      Welche Iframes?  – Passe die Selector‑Liste bei Bedarf an
      --------------------------------------------------------------- */
   const iframes = document.querySelectorAll(
-  '#ai-page iframe[src*="vimeo.com"]'
+  '#portfolio iframe[data-src*="vimeo.com"], #ai-page iframe[data-src*="vimeo.com"]'
   );
 
   iframes.forEach(frame => {
     /* 1) ID + (falls vorhanden) HASH aus der src ziehen ------------- */
-    const urlMatch = frame.src.match(/\/video\/(\d+)(?:\?[^#]*h=([a-z0-9]+))?/i);
+    const frameSource = getFrameSource(frame);
+    const urlMatch = frameSource.match(/\/video\/(\d+)(?:\?[^#]*h=([a-z0-9]+))?/i);
     if (!urlMatch) return;                             // Safety‑Stop
 
     const id   = urlMatch[1];                // „1098650054“
@@ -577,37 +713,63 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.style.position = 'relative';
 
     const ph = document.createElement('div');
-    ph.className = 'video-placeholder';      // ➜ siehe CSS‑Snippet unten
+    ph.className = 'video-placeholder';      // ➜ siehe CSS-Snippet unten
+    const isSelectedWork = Boolean(frame.closest('#portfolio'));
+    if (isSelectedWork) ph.classList.add('selected-work-thumbnail');
     wrapper.appendChild(ph);
+    frame._videoPlaceholder = ph;
 
     /* 3) Thumbnail‑URL bauen – unlisted =  ID:HASH ------------------ */
     const thumbId = hash ? `${id}:${hash}` : id;
     const cdnUrl  = `https://vumbnail.com/${thumbId}.jpg`;
+    const cfgUrlBase = `https://player.vimeo.com/video/${id}/config` + (hash ? `?h=${hash}` : '');
+    const cfgUrl = `${cfgUrlBase}${cfgUrlBase.includes('?') ? '&' : '?'}cache_bust=20260730-1`;
+
+    const loadCurrentVimeoThumbnail = () =>
+      fetch(cfgUrl, { cache: 'no-store' })
+        .then(response => response.ok ? response.json() : Promise.reject())
+        .then(cfg => {
+          const thumbs = cfg.video.thumbs || {};
+          const numericWidths = Object.keys(thumbs)
+            .map(Number)
+            .filter(Number.isFinite)
+            .sort((a, b) => a - b);
+          const largest = numericWidths.length
+            ? thumbs[String(numericWidths[numericWidths.length - 1])]
+            : thumbs[Object.keys(thumbs).pop()];
+          if (!largest) return Promise.reject();
+          ph.style.backgroundImage = `url("${largest}")`;
+        });
 
     /* 4) Bild testen – wenn es lädt → als BG setzen,
           sonst Fallback über player‑config versuchen                */
-    setPlaceholder(ph, cdnUrl, () => {
-      const cfgUrl = `https://player.vimeo.com/video/${id}/config` + (hash ? `?h=${hash}` : '');
-      fetch(cfgUrl).then(r => r.ok ? r.json() : Promise.reject())
-                   .then(cfg => {
-                     const thumbs = cfg.video.thumbs || {};
-                     const largest = thumbs[Object.keys(thumbs).sort().pop()];
-                     if (largest) ph.style.backgroundImage = `url("${largest}")`;
-                   });
-    });
+    frame._loadVideoPlaceholder = () => {
+      if (frame._videoPlaceholderLoading) return;
+      frame._videoPlaceholderLoading = true;
 
-    /* 5) Player‑Init & Overlay ausblenden, wenn Video spielt -------- */
-    if (typeof Vimeo !== 'undefined') {
-      const player  = new Vimeo.Player(frame);
+      if (isSelectedWork) {
+        loadCurrentVimeoThumbnail()
+          .catch(() => setPlaceholder(ph, `${cdnUrl}?cache_bust=20260730-1`, () => {}));
+        return;
+      }
 
-      const fadeOut = () => {
-        ph.classList.add('hide');            // CSS‑Transition
-        setTimeout(() => ph.remove(), 500);  // DOM aufräumen
+      setPlaceholder(ph, cdnUrl, () => loadCurrentVimeoThumbnail().catch(() => {}));
+    };
+
+    if (isSelectedWork) {
+      const mobileSelectedWork = window.matchMedia('(max-width: 767px)');
+      if (mobileSelectedWork.matches) frame._loadVideoPlaceholder();
+
+      const loadMobileThumbnail = event => {
+        if (event.matches) frame._loadVideoPlaceholder();
       };
-
-      player.on('play',   fadeOut);
-      player.on('loaded', () => player.getPaused().then(p => !p && fadeOut()));
+      if (mobileSelectedWork.addEventListener) {
+        mobileSelectedWork.addEventListener('change', loadMobileThumbnail);
+      } else {
+        mobileSelectedWork.addListener(loadMobileThumbnail);
+      }
     }
+
   });
 
   /* Helper: Bild laden oder Fehler‑Callback auslösen ----------------- */
@@ -639,6 +801,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx   = canvas.getContext('2d');
     let dots    = [];
     let mouse   = { x: 1e9, y: 1e9 };
+    let animationFrame = null;
+    let isVisible = false;
+    let isIntersecting = false;
 
     /* Größe & Punkte berechnen --------------------------------- */
     function resize(){
@@ -682,11 +847,29 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
       });
-      requestAnimationFrame(draw);
+      animationFrame = isVisible && !document.hidden
+        ? requestAnimationFrame(draw)
+        : null;
+    }
+
+    function startDrawing(){
+      if (animationFrame !== null || document.hidden) return;
+      isVisible = true;
+      animationFrame = requestAnimationFrame(draw);
+    }
+
+    function stopDrawing(){
+      isVisible = false;
+      mouse.x = mouse.y = 1e9;
+      if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
     }
 
     /* Maus / Touch global erfassen ------------------------------ */
     function setMouse(e){
+      if (!isVisible) return;
       const rect = canvas.getBoundingClientRect();
       const ev   = e.touches ? e.touches[0] : e;
       mouse.x = ev.clientX - rect.left;
@@ -701,9 +884,28 @@ document.addEventListener('DOMContentLoaded', () => {
     /* auch beim Umschalten der Unterseiten neu vermessen */
     document.addEventListener('pagechange', resize);
 
-    /* Start ----------------------------------------------------- */
+    /* Nur zeichnen, wenn das Raster tatsächlich sichtbar ist. */
     resize();
-    draw();
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          isIntersecting = entry.isIntersecting;
+          entry.isIntersecting ? startDrawing() : stopDrawing();
+        });
+      }, { rootMargin: '100px 0px' });
+      visibilityObserver.observe(canvas);
+    } else {
+      isIntersecting = true;
+      startDrawing();
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopDrawing();
+      } else if (isIntersecting) {
+        startDrawing();
+      }
+    });
   }
 
   /* alle Canvas initialisieren --------------------------------- */
@@ -751,9 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const frame = wrapper.querySelector('iframe');
     if (!frame) return;
 
-    /* 1) Vimeo-Player instanziieren */
-    const player = new Vimeo.Player(frame);
-    player.setVolume(0);            // immer stumm
+    let hoverPlayer = null;
 
     /* 2) transparente Schicht erzeugen */
     const layer = document.createElement('div');
@@ -764,11 +964,18 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.appendChild(layer);
 
     /* --- Hover: abspielen / pausieren ------------------- */
-    layer.addEventListener('mouseenter', () => player.play());
-    layer.addEventListener('mouseleave', () => player.pause());
+    layer.addEventListener('mouseenter', () => {
+      getProjectPlayer(frame).then(player => {
+        hoverPlayer = player;
+        player.play().catch(() => {});
+      }).catch(() => {});
+    });
+    layer.addEventListener('mouseleave', () => {
+      if (hoverPlayer) hoverPlayer.pause().catch(() => {});
+    });
 
     /* --- Klick: Lightbox öffnen ------------------------- */
-    const frameUrl = new URL(frame.src);
+    const frameUrl = new URL(getFrameSource(frame), window.location.href);
     const videoId = frame.dataset.vimeoId || frameUrl.pathname.split('/').filter(Boolean).pop();
     const videoHash = frame.dataset.vimeoHash || frameUrl.searchParams.get('h') || '';
     const id = videoHash ? `${videoId}?h=${encodeURIComponent(videoHash)}` : videoId;
@@ -837,7 +1044,7 @@ function createQuoteItem(q){
     const img = document.createElement('img');
     img.src = q.logo;
     img.alt = q.logoAlt || (q.author ? `${q.author} logo` : 'Company logo');
-    img.loading = 'eager';
+    img.loading = 'lazy';
     img.decoding = 'async';
     img.draggable = false;
     if (q.logoClass) img.classList.add(q.logoClass);
@@ -896,6 +1103,8 @@ function createQuoteItem(q){
   let lastMoveTime = 0;
   let dragVelocity = 0;
   let lastFrame = performance.now();
+  let tickerFrame = null;
+  let tickerVisible = false;
 
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -921,6 +1130,11 @@ function createQuoteItem(q){
   }
 
   function renderTicker(now){
+    if (!tickerVisible || document.hidden) {
+      tickerFrame = null;
+      return;
+    }
+
     const deltaTime = Math.min((now - lastFrame) / 1000, 0.05);
     lastFrame = now;
 
@@ -932,7 +1146,20 @@ function createQuoteItem(q){
 
     wrapOffset();
     track.style.transform = `translate3d(${offset}px, 0, 0)`;
-    requestAnimationFrame(renderTicker);
+    tickerFrame = requestAnimationFrame(renderTicker);
+  }
+
+  function startTicker(){
+    if (tickerFrame !== null || document.hidden || !tickerVisible) return;
+    lastFrame = performance.now();
+    tickerFrame = requestAnimationFrame(renderTicker);
+  }
+
+  function stopTicker(){
+    if (tickerFrame !== null) {
+      cancelAnimationFrame(tickerFrame);
+      tickerFrame = null;
+    }
   }
 
   function startDrag(event){
@@ -985,7 +1212,23 @@ function createQuoteItem(q){
 
   measureTrack();
   velocity = autoVelocity;
-  requestAnimationFrame(renderTicker);
+
+  if ('IntersectionObserver' in window) {
+    const tickerObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        tickerVisible = entry.isIntersecting;
+        entry.isIntersecting ? startTicker() : stopTicker();
+      });
+    }, { rootMargin: '120px 0px' });
+    tickerObserver.observe(ticker);
+  } else {
+    tickerVisible = true;
+    startTicker();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? stopTicker() : startTicker();
+  });
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
