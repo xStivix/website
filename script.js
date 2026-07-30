@@ -82,6 +82,9 @@ const services = [
   }
 
   const projectPlayerPromises = new WeakMap();
+  const selectedWorkThumbnailOverrides = {
+    '1187212934': 'audi-q5-thumbnail-20260730.jpg'
+  };
   let vimeoApiReadyPromise = null;
 
   function waitForVimeoApi() {
@@ -142,6 +145,11 @@ const services = [
 
         player.on('play', fadeOut);
         player.on('loaded', () => {
+          if (frame.closest('#portfolio')) {
+            setTimeout(fadeOut, 180);
+            return;
+          }
+
           player.getPaused().then(paused => {
             if (!paused) fadeOut();
           }).catch(() => {});
@@ -715,6 +723,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ph = document.createElement('div');
     ph.className = 'video-placeholder';      // ➜ siehe CSS-Snippet unten
     const isSelectedWork = Boolean(frame.closest('#portfolio'));
+    const localSelectedThumbnail = isSelectedWork
+      ? selectedWorkThumbnailOverrides[id] || ''
+      : '';
     if (isSelectedWork) ph.classList.add('selected-work-thumbnail');
     wrapper.appendChild(ph);
     frame._videoPlaceholder = ph;
@@ -748,6 +759,14 @@ document.addEventListener('DOMContentLoaded', () => {
       frame._videoPlaceholderLoading = true;
 
       if (isSelectedWork) {
+        if (localSelectedThumbnail) {
+          setPlaceholder(ph, localSelectedThumbnail, () => {
+            loadCurrentVimeoThumbnail()
+              .catch(() => setPlaceholder(ph, `${cdnUrl}?cache_bust=20260730-1`, () => {}));
+          });
+          return;
+        }
+
         loadCurrentVimeoThumbnail()
           .catch(() => setPlaceholder(ph, `${cdnUrl}?cache_bust=20260730-1`, () => {}));
         return;
@@ -1231,7 +1250,16 @@ function createQuoteItem(q){
   });
 })();
 
+const emailLinkTarget = ['mail', 'to:stefan.aberer@hotmail.com'].join('');
+
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-email-link]').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      window.location.href = emailLinkTarget;
+    });
+  });
+
   const requestForm = document.getElementById('masterclass-request-form');
   const requestStatus = document.getElementById('masterclass-request-status');
 
@@ -1265,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestStatus.hidden = false;
     window.location.href =
-      `mailto:stefan.aberer@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      `${emailLinkTarget}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 });
 
