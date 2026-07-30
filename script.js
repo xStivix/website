@@ -2,7 +2,7 @@ const services = [
     {
       number: '01',
       title: 'AI EXPERTISE',
-      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From deepfake applications to lifelike virtual talking models, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
+      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From Visual Effects to completely generated AI Videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
       image: 'https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/Comp%2010_00000.webp',
       button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI Insights</a>'
     },
@@ -601,19 +601,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const GROW_EASE = 0.16;
   const RETURN_EASE = 0.075;
   const BRIGHTNESS_EASE = 0.11;
-  const AMBIENT_INTERVAL = 6500;
-  const AMBIENT_SWEEP_DURATION = 2400;
-  const AMBIENT_POINT_DURATION = 850;
-  const AMBIENT_RADIUS_BOOST = 0.6;
-  const AMBIENT_BRIGHTNESS_BOOST = 0.13;
 
   /* Initialisiert genau ein Canvas ----------------------------- */
   function initGrid(canvas){
     const ctx   = canvas.getContext('2d');
     let dots    = [];
     let mouse   = { x: 1e9, y: 1e9 };
-    let viewWidth = 1;
-    const ambientStart = performance.now() + 2200;
 
     /* Größe & Punkte berechnen --------------------------------- */
     function resize(){
@@ -623,7 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const d = window.devicePixelRatio || 1;
       canvas.width  = r.width  * d;
       canvas.height = r.height * d;
-      viewWidth = r.width;
       ctx.setTransform(d,0,0,d,0,0);
 
       dots = [];
@@ -640,24 +632,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (canvas.width === 0 || canvas.height === 0) resize();
 
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      const ambientElapsed = performance.now() - ambientStart;
-      const ambientPhase = ambientElapsed >= 0 ? ambientElapsed % AMBIENT_INTERVAL : -1;
 
       dots.forEach(p => {
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
         const dist = Math.hypot(dx,dy);
         const t = Math.exp(-dist / FALLOFF);
-        const pointDelay = (p.x / viewWidth) * AMBIENT_SWEEP_DURATION;
-        const pointPhase = ambientPhase - pointDelay;
-        const ambientPulse = pointPhase >= 0 && pointPhase < AMBIENT_POINT_DURATION
-          ? Math.sin(Math.PI * pointPhase / AMBIENT_POINT_DURATION) ** 2
-          : 0;
-        const targetR = BASE_R + (MAX_R - BASE_R) * t + AMBIENT_RADIUS_BOOST * ambientPulse;
-        const targetAlpha = Math.min(
-          MAX_ALPHA,
-          BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * t + AMBIENT_BRIGHTNESS_BOOST * ambientPulse
-        );
+        const targetR = BASE_R + (MAX_R - BASE_R) * t;
+        const targetAlpha = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * t;
         const radiusEase = targetR > p.radius ? GROW_EASE : RETURN_EASE;
 
         p.radius += (targetR - p.radius) * radiusEase;
@@ -987,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const company = String(requestData.get('company') || '').trim() || 'Not provided';
     const profession = String(requestData.get('profession') || '').trim();
     const access = String(requestData.get('access') || '').trim();
-    const subject = `AI Masterclass Request — ${name}`;
+    const subject = `AI Masterclass Request: ${name}`;
     const body = [
       'Hello Stefan,',
       '',
