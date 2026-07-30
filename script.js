@@ -768,7 +768,10 @@ document.addEventListener('DOMContentLoaded', () => {
     layer.addEventListener('mouseleave', () => player.pause());
 
     /* --- Klick: Lightbox öffnen ------------------------- */
-    const id = frame.dataset.vimeoId || frame.src.split('/').pop().split('?')[0];
+    const frameUrl = new URL(frame.src);
+    const videoId = frame.dataset.vimeoId || frameUrl.pathname.split('/').filter(Boolean).pop();
+    const videoHash = frame.dataset.vimeoHash || frameUrl.searchParams.get('h') || '';
+    const id = videoHash ? `${videoId}?h=${encodeURIComponent(videoHash)}` : videoId;
     const openVideo = () => {
       videoTrigger = layer;
       playbackSession += 1;
