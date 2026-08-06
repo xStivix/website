@@ -1522,6 +1522,11 @@ footer p {
 }
 
 @media (max-width: 767px) {
+  .about-ai-link {
+    padding: .36rem .72rem !important;
+    font-size: .62rem !important;
+  }
+
   .video-editing-img {
     display: none;
   }
