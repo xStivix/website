@@ -294,94 +294,31 @@ h6 {
   display: none;
 }
 
-.intro-mark {
-  --intro-dot-size: 0.72rem;
-  --intro-gap: 0.7rem;
-  --intro-name-width: 8.9rem;
-  display: grid;
-  grid-template-columns: var(--intro-dot-size) 0;
-  column-gap: 0;
-  align-items: center;
-  color: #fff;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1;
-  white-space: nowrap;
-  will-change: grid-template-columns, column-gap;
-  animation: introMarkExpand 0.78s cubic-bezier(0.65, 0, 0.22, 1) 0.60s forwards;
-}
-
-.intro-dot {
-  position: relative;
-  width: var(--intro-dot-size);
-  height: var(--intro-dot-size);
-  border-radius: 50%;
-}
-
-.intro-dot::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: currentColor;
-  border-radius: inherit;
-  opacity: 0;
-  transform: scale(0.5);
-  animation: introDotSettle 0.42s cubic-bezier(0.22, 0.75, 0.25, 1) 0.16s forwards;
-}
-
-.intro-name {
-  display: block;
-  width: 100%;
-  min-width: 0;
+.name-wrapper {
+  display: flex;
+  gap: 0.35rem;
   overflow: hidden;
+}
+
+.name-part {
+  display: inline-block;
+  transform: translateY(110%);
   opacity: 0;
-  animation: introNameFade 0.18s ease-out 0.64s forwards;
+  animation: slideUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 
-.intro-name-text {
-  display: block;
-  width: max-content;
+.name-part.first {
+  animation-delay: 0.2s;
 }
 
-@keyframes introDotSettle {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  18% {
-    opacity: 1;
-  }
-
-  65% {
-    opacity: 1;
-    transform: scale(1.14);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.name-part.second {
+  animation-delay: 0.5s;
 }
 
-@keyframes introMarkExpand {
+@keyframes slideUp {
   to {
-    grid-template-columns: var(--intro-dot-size) var(--intro-name-width);
-    column-gap: var(--intro-gap);
-  }
-}
-
-@keyframes introNameFade {
-  to {
+    transform: translateY(0);
     opacity: 1;
-  }
-}
-
-@media (min-width: 768px) {
-  .intro-mark {
-    --intro-dot-size: 0.82rem;
-    --intro-name-width: 10.55rem;
-    font-size: 1.5rem;
   }
 }
 
