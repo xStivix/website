@@ -68,7 +68,36 @@
     <link rel="preload" href="fonts/roboto-mono-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
-    <link rel="stylesheet" href="site.min.css?v=20260806-3" />
+    <link rel="stylesheet" href="site.min.css?v=20260817-1" />
+    <style>
+        .name-wrapper {
+            display: flex;
+            gap: 0.35rem;
+            overflow: hidden;
+        }
+
+        .name-part {
+            display: inline-block;
+            transform: translateY(110%);
+            opacity: 0;
+            animation: slideUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+
+        .name-part.first {
+            animation-delay: 0.2s;
+        }
+
+        .name-part.second {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
     <script>
         const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (reducedMotion) {
@@ -90,11 +119,9 @@
 
     <!-- Intro Overlay -->
     <div class="intro-overlay" aria-hidden="true">
-        <div class="intro-mark">
-            <span class="intro-dot"></span>
-            <span class="intro-name">
-                <span class="intro-name-text">stefan aberer</span>
-            </span>
+        <div class="name-wrapper text-xl md:text-2xl font-bold text-white leading-tight">
+            <span class="name-part first">stefan</span>
+            <span class="name-part second">aberer</span>
         </div>
     </div>
 
@@ -2147,6 +2174,6 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20260730-22" defer></script>
+    <script src="script.js?v=20260817-1" defer></script>
 </body>
 </html>
