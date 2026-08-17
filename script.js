@@ -1,15 +1,3 @@
-const introMark = document.querySelector('.intro-mark');
-const introNameText = document.querySelector('.intro-name-text');
-
-const syncIntroNameWidth = () => {
-  if (!introMark || !introNameText) return;
-  const nameWidth = Math.ceil(introNameText.getBoundingClientRect().width);
-  if (nameWidth > 0) introMark.style.setProperty('--intro-name-width', `${nameWidth}px`);
-};
-
-syncIntroNameWidth();
-document.fonts?.ready.then(syncIntroNameWidth);
-window.addEventListener('resize', syncIntroNameWidth, { passive: true });
 
 const services = [
     {
@@ -699,7 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealContent(true);
   } else {
     document.body.classList.add('intro-active');
-    setTimeout(() => revealContent(), 1470);
+    setTimeout(() => revealContent(), 1200);
   }
 });
 /*
