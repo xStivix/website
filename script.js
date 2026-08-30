@@ -1,4 +1,3 @@
-
 const services = [
     {
       number: '01',
@@ -330,10 +329,69 @@ const services = [
   // ─── COPY-PASTE ab hier ───────────────────────────────────────────
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
+let currentPageName = 'main';
+let pageSwitchVersion = 0;
+let pendingPageScrollFrame = 0;
+let pendingPageScrollTimer = 0;
+let isHandlingPopstate = false;
+
+const isMobilePageNavigation = () =>
+  window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+
+const beginPageSwitch = () => {
+  pageSwitchVersion += 1;
+  cancelAnimationFrame(pendingPageScrollFrame);
+  clearTimeout(pendingPageScrollTimer);
+
+  // Stoppt einen noch laufenden nativen Smooth-Scroll, bevor sich die
+  // Dokumenthöhe durch das Ein-/Ausblenden einer Seite verändert.
+  window.scrollTo({ top: window.scrollY, left: 0, behavior: 'auto' });
+  return pageSwitchVersion;
+};
+
+const scrollPageTarget = (target, { smooth, stabilize, version }) => {
+  if (!target) return;
+
+  const targetTop = Math.max(
+    0,
+    window.scrollY + target.getBoundingClientRect().top
+  );
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const applyStablePosition = () => {
+    if (version !== pageSwitchVersion) return;
+    window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
+  };
+
+  if (stabilize) {
+    // iOS kann Scroll-Momentum noch kurz nach einem Tap weiterführen.
+    // Sofort, im nächsten Frame und nochmals nach 100 ms setzen verhindert,
+    // dass eine kürzere Unterseite am Footer hängen bleibt.
+    applyStablePosition();
+    pendingPageScrollFrame = requestAnimationFrame(() => {
+      applyStablePosition();
+      pendingPageScrollTimer = window.setTimeout(applyStablePosition, 100);
+    });
+    return;
+  }
+
+  pendingPageScrollFrame = requestAnimationFrame(() => {
+    if (version !== pageSwitchVersion) return;
+    window.scrollTo({
+      top: targetTop,
+      left: 0,
+      behavior: smooth && !reducedMotion ? 'smooth' : 'auto'
+    });
+  });
+};
+
 pageLinks.forEach(link => {
   link.addEventListener('click', function (e) {
     e.preventDefault();
     const page = this.dataset.page;
+    const nextPageName = page || 'main';
+    const isCrossPage = currentPageName !== nextPageName;
+    const switchVersion = beginPageSwitch();
 
     /* ------------------------------------------------------------
        SEITE UMSCHALTEN
@@ -354,6 +412,7 @@ pageLinks.forEach(link => {
       undefined:     mainPage     // Fallback
     }[page]);
     targetPage.style.display = 'block';
+    currentPageName = nextPageName;
 
     /* ------------------------------------------------------------
        SCROLL-LOGIK
@@ -363,18 +422,17 @@ pageLinks.forEach(link => {
     if (page === 'main' || page === undefined) {
       // Link zeigt auf #about, #portfolio, #services …
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      scrollPageTarget(target, {
+        smooth: true,
+        stabilize: isMobilePageNavigation() && isCrossPage,
+        version: switchVersion
+      });
     } else {
       const smoothPageStart = ['ai', 'videoEditing', 'miscellaneous'].includes(page);
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      requestAnimationFrame(() => {
-        targetPage.scrollIntoView({
-          behavior: smoothPageStart && !reducedMotion ? 'smooth' : 'auto',
-          block: 'start'
-        });
+      scrollPageTarget(targetPage, {
+        smooth: smoothPageStart,
+        stabilize: isMobilePageNavigation() && isCrossPage,
+        version: switchVersion
       });
     }
 
@@ -390,7 +448,9 @@ pageLinks.forEach(link => {
     langSwitcher.style.display =
       ['impressum','agb','datenschutz'].includes(page) ? 'none' : 'block';
 
-    history.pushState(null, '', this.getAttribute('href'));
+    if (!isHandlingPopstate) {
+      history.pushState(null, '', this.getAttribute('href'));
+    }
 
     /* Mobile-Menü schließen */
     document.getElementById('mobileMenu').classList.add('hidden');
@@ -406,12 +466,18 @@ window.addEventListener('popstate', () => {
 
   const link = document.querySelector(`.page-link[href="${hash}"]`);
   if (link) {
-    link.click();                 // feuert obigen Handler erneut
+    isHandlingPopstate = true;
+    link.click();
+    isHandlingPopstate = false;
   } else {
+    const switchVersion = beginPageSwitch();
     mainPage.style.display = 'block';
-    requestAnimationFrame(() =>
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-    );
+    currentPageName = 'main';
+    scrollPageTarget(mainPage, {
+      smooth: false,
+      stabilize: isMobilePageNavigation(),
+      version: switchVersion
+    });
   }
 });
 // ─── COPY-PASTE Ende ───────────────────────────────────────────
@@ -422,17 +488,25 @@ window.addEventListener('popstate', () => {
 const homeLink = document.getElementById('homeLink');
 homeLink.addEventListener('click', e => {
   e.preventDefault();
+  const isCrossPage = currentPageName !== 'main';
+  const switchVersion = beginPageSwitch();
   // alle Unterseiten ausblenden und Hauptseite zeigen
   hideAllPages();
   mainPage.style.display = 'block';
+  currentPageName = 'main';
 
   // Nav-Link “About” (oder “Home”) als aktiv markieren, falls gewünscht
   document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
   const aboutNav = document.querySelector('.nav-link[href="#about"]');
   if (aboutNav) aboutNav.classList.add('active');
 
-  // Smooth scroll ganz nach oben
-  mainPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Desktop bleibt weich; Mobil wird bei einem Seitenwechsel stabil auf
+  // den Seitenanfang gesetzt, damit kein Scroll-Momentum übernommen wird.
+  scrollPageTarget(mainPage, {
+    smooth: true,
+    stabilize: isMobilePageNavigation() && isCrossPage,
+    version: switchVersion
+  });
 
   // URL-Hash setzen
   history.pushState(null, '', '#home');
@@ -1462,3 +1536,4 @@ document.addEventListener('DOMContentLoaded', () => {
     image.addEventListener('pointerleave', resetImage);
   });
 })();
+
