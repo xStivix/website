@@ -256,6 +256,12 @@
                            I’m a Video Editor and Generative AI Specialist focused on post-production and automotive filmmaking. With over 5 years of industry experience, I focus on short-form content including ads, trailers, brand films, and commercial visuals. My foundation lies in traditional filmmaking, further refined in recent years through the integration of AI-driven workflows. In 2026, I joined OpenAI’s Artist Program.
                         </p>
 
+                        <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
+                        <a href="#ai" data-page="ai"
+                            class="about-ai-link page-link mt-2 inline-block bg-white text-black tracking-widest font-mono uppercase text-xs px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">
+                            MORE ABOUT AI
+                            <span class="ml-2">→</span>
+                        </a>
                     </div>
 
                     <!-- Dein Bild -->
@@ -885,16 +891,29 @@
                     try to get as close to a realistic, authentic feel as possible when using AI.
                 </p>
 
-                <!-- Generative AI video preview -->
-                <div class="mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
-                    <div class="erstes-video">
+                <!-- Non-interactive Generative AI loop previews -->
+                <div class="mx-auto max-w-7xl mb-2 md:mb-4 video-loop-preview">
+                    <div class="erstes-video" style="background:#000;cursor:default;pointer-events:none;">
                         <iframe loading="lazy"
-                            data-src="https://player.vimeo.com/video/1154256076?h=88c3d675a1&dnt=1&muted=1&background=1&autopause=0&loop=1&autoplay=1"
+                            data-src="https://player.vimeo.com/video/1223606144?h=583ad4d47d&dnt=1&muted=1&background=1&autopause=0&loop=1&autoplay=1&playsinline=1&controls=0&keyboard=0"
+                            title="AI project preview: Jet Scene"
+                            tabindex="-1" frameborder="0" allow="autoplay"
+                            style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;pointer-events:none;"></iframe>
+                        <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]" style="z-index:3;">
+                            <p class="font-mono uppercase text-sm md:text-xs mb-1 md:mb-0">Image to Video</p>
+                            <h3 class="font-bold text-xl md:text-lg">Jet Scene</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-loop-preview">
+                    <div class="erstes-video" style="background:#000;cursor:default;pointer-events:none;">
+                        <iframe loading="lazy"
+                            data-src="https://player.vimeo.com/video/1154256076?h=88c3d675a1&dnt=1&muted=1&background=1&autopause=0&loop=1&autoplay=1&playsinline=1&controls=0&keyboard=0"
                             title="AI project preview: Savannah Scene"
-                            frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                            style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
-                        <div class="erstes-video-s"></div>
-                        <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
+                            tabindex="-1" frameborder="0" allow="autoplay"
+                            style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;pointer-events:none;"></iframe>
+                        <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]" style="z-index:3;">
                             <p class="font-mono uppercase text-sm md:text-xs mb-1 md:mb-0">Image to Video</p>
                             <h3 class="font-bold text-xl md:text-lg">Savannah Scene</h3>
                         </div>
@@ -917,8 +936,8 @@
                     possible across shots, I used detailed photographs and 3D renders of the vehicle from multiple angles. Despite the
                     references, every image and final video still required careful re-tracking of the Audi logos, number plates,
                     defining model details, and the shape of the light signatures. Extensive color correction and post-production
-                    helped reduce the recognizable AI look, making the finishing process especially time-consuming. The AI tools
-                    used were: Nanobanana Pro, Magnific AI, Kling 3.0, Seedance 2.0 (720p) and Topaz for upscaling. The edit, post-production, and
+                    helped reduce the recognizable AI look, making the finishing process especially time-consuming. AI tools
+                    used: Nanobanana Pro, Magnific AI, Kling 3.0, Seedance 2.0 (720p) and Topaz for upscaling. The edit, post-production, and
                     sound design were all completed through a traditional workflow.
                 </p>
 
