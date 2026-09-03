@@ -338,6 +338,18 @@ let isHandlingPopstate = false;
 const isMobilePageNavigation = () =>
   window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
 
+const getPageScroller = () => {
+  const body = document.body;
+  // Mit height: 100% und overflow-x: hidden ist der Body ein eigener
+  // Scrollbereich. Andere Browser/Layouts können das Dokument scrollen.
+  const overflowY = getComputedStyle(body).overflowY;
+  if (body !== document.scrollingElement &&
+      /^(auto|scroll)$/.test(overflowY) && body.scrollHeight > body.clientHeight) {
+    return body;
+  }
+  return document.scrollingElement || document.documentElement;
+};
+
 const beginPageSwitch = () => {
   pageSwitchVersion += 1;
   cancelAnimationFrame(pendingPageScrollFrame);
@@ -345,23 +357,30 @@ const beginPageSwitch = () => {
 
   // Stoppt einen noch laufenden nativen Smooth-Scroll, bevor sich die
   // Dokumenthöhe durch das Ein-/Ausblenden einer Seite verändert.
-  window.scrollTo({ top: window.scrollY, left: 0, behavior: 'auto' });
+  const scroller = getPageScroller();
+  scroller.scrollTo({ top: scroller.scrollTop, left: 0, behavior: 'auto' });
   return pageSwitchVersion;
 };
 
-const scrollPageTarget = (target, { smooth, stabilize, version }) => {
+const scrollPageTarget = (target, { smooth, stabilize, version, pageStart = false }) => {
   if (!target) return;
 
-  const targetTop = Math.max(
-    0,
-    window.scrollY + target.getBoundingClientRect().top
-  );
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const applyStablePosition = () => {
+  const applyPosition = behavior => {
     if (version !== pageSwitchVersion) return;
-    window.scrollTo({ top: targetTop, left: 0, behavior: 'auto' });
+    const scroller = getPageScroller();
+    let top = 0;
+    if (!pageStart) {
+      // Erst das neue Layout messen, dann die aktuelle Scrollposition lesen.
+      const targetRect = target.getBoundingClientRect();
+      const scrollportTop = scroller === document.scrollingElement ? 0 :
+        scroller.getBoundingClientRect().top + scroller.clientTop;
+      const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+      top = Math.max(0, scroller.scrollTop + targetRect.top - scrollportTop - margin);
+    }
+    scroller.scrollTo({ top, left: 0, behavior });
   };
+  const applyStablePosition = () => applyPosition('auto');
 
   if (stabilize) {
     // iOS kann Scroll-Momentum noch kurz nach einem Tap weiterführen.
@@ -369,6 +388,7 @@ const scrollPageTarget = (target, { smooth, stabilize, version }) => {
     // dass eine kürzere Unterseite am Footer hängen bleibt.
     applyStablePosition();
     pendingPageScrollFrame = requestAnimationFrame(() => {
+      if (version !== pageSwitchVersion) return;
       applyStablePosition();
       pendingPageScrollTimer = window.setTimeout(applyStablePosition, 100);
     });
@@ -376,12 +396,7 @@ const scrollPageTarget = (target, { smooth, stabilize, version }) => {
   }
 
   pendingPageScrollFrame = requestAnimationFrame(() => {
-    if (version !== pageSwitchVersion) return;
-    window.scrollTo({
-      top: targetTop,
-      left: 0,
-      behavior: smooth && !reducedMotion ? 'smooth' : 'auto'
-    });
+    applyPosition(smooth && !reducedMotion ? 'smooth' : 'auto');
   });
 };
 
@@ -396,7 +411,8 @@ pageLinks.forEach(link => {
     /* ------------------------------------------------------------
        SEITE UMSCHALTEN
     ------------------------------------------------------------ */
-    hideAllPages();                               // alles ausblenden
+    setMobileMenu(false);
+    if (isCrossPage) hideAllPages();
 
     // Einblenden
     const targetPage = ({
@@ -416,8 +432,8 @@ pageLinks.forEach(link => {
 
     /* ------------------------------------------------------------
        SCROLL-LOGIK
-       – Tech, AI und Masterclass: wie Main-Sektionen per scrollIntoView
-       – Main-Page-Sektionen: weich per scrollIntoView
+       Tech, AI und Masterclass beginnen am Seitenanfang.
+       Main-Sektionen berücksichtigen den Abstand zur festen Navigation.
     ------------------------------------------------------------ */
     if (page === 'main' || page === undefined) {
       // Link zeigt auf #about, #portfolio, #services …
@@ -432,7 +448,8 @@ pageLinks.forEach(link => {
       scrollPageTarget(targetPage, {
         smooth: smoothPageStart,
         stabilize: isMobilePageNavigation() && isCrossPage,
-        version: switchVersion
+        version: switchVersion,
+        pageStart: true
       });
     }
 
@@ -442,8 +459,11 @@ pageLinks.forEach(link => {
     document.querySelectorAll('.nav-link')
             .forEach(n => n.classList.remove('active'));
     const activePage = page === 'masterclassAccess' ? 'miscellaneous' : page;
-    const active = document.querySelector(`.nav-link[data-page="${activePage}"]`);
-    if (active) active.classList.add('active');
+    document.querySelectorAll('.nav-link').forEach(nav => {
+      const matches = nextPageName === 'main' ?
+        nav.getAttribute('href') === this.getAttribute('href') : nav.dataset.page === activePage;
+      if (matches) nav.classList.add('active');
+    });
 
     langSwitcher.style.display =
       ['impressum','agb','datenschutz'].includes(page) ? 'none' : 'block';
@@ -452,8 +472,6 @@ pageLinks.forEach(link => {
       history.pushState(null, '', this.getAttribute('href'));
     }
 
-    /* Mobile-Menü schließen */
-    document.getElementById('mobileMenu').classList.add('hidden');
   });
 });
 
@@ -462,7 +480,6 @@ pageLinks.forEach(link => {
 -------------------------------------------------------------- */
 window.addEventListener('popstate', () => {
   const hash = location.hash || '#home';
-  hideAllPages();
 
   const link = document.querySelector(`.page-link[href="${hash}"]`);
   if (link) {
@@ -471,12 +488,15 @@ window.addEventListener('popstate', () => {
     isHandlingPopstate = false;
   } else {
     const switchVersion = beginPageSwitch();
+    setMobileMenu(false);
+    hideAllPages();
     mainPage.style.display = 'block';
     currentPageName = 'main';
     scrollPageTarget(mainPage, {
       smooth: false,
       stabilize: isMobilePageNavigation(),
-      version: switchVersion
+      version: switchVersion,
+      pageStart: true
     });
   }
 });
@@ -490,8 +510,9 @@ homeLink.addEventListener('click', e => {
   e.preventDefault();
   const isCrossPage = currentPageName !== 'main';
   const switchVersion = beginPageSwitch();
+  setMobileMenu(false);
   // alle Unterseiten ausblenden und Hauptseite zeigen
-  hideAllPages();
+  if (isCrossPage) hideAllPages();
   mainPage.style.display = 'block';
   currentPageName = 'main';
 
@@ -505,14 +526,13 @@ homeLink.addEventListener('click', e => {
   scrollPageTarget(mainPage, {
     smooth: true,
     stabilize: isMobilePageNavigation() && isCrossPage,
-    version: switchVersion
+    version: switchVersion,
+    pageStart: true
   });
 
   // URL-Hash setzen
   history.pushState(null, '', '#home');
 
-  // mobiles Menü schließen
-  document.getElementById('mobileMenu').classList.add('hidden');
 });
 
       /* Video Loading - Optimiert */
@@ -553,7 +573,7 @@ function updateDesktopIframeScale(){
 
       /* Smooth scroll für Anker-Links */
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        if(!anchor.classList.contains('page-link')){
+        if(!anchor.classList.contains('page-link') && anchor !== homeLink){
           anchor.addEventListener('click', function(e){
             e.preventDefault();
             document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
@@ -682,6 +702,7 @@ function updateDesktopIframeScale(){
         if (hash === "impressum" || hash === "agb" || hash === "datenschutz" || hash === "images" ||
             hash === "masterclass-access") {
           hideAllPages();
+          currentPageName = hash === 'masterclass-access' ? 'masterclassAccess' : hash;
           if (hash === "images") {
             imagesPage.style.display = "block";
           } else if (hash === "impressum") {
@@ -1536,4 +1557,3 @@ document.addEventListener('DOMContentLoaded', () => {
     image.addEventListener('pointerleave', resetImage);
   });
 })();
-
