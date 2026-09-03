@@ -724,6 +724,43 @@ h6 {
   max-width: 42rem;
 }
 
+/* Mobile AI text disclosures; desktop and no-JavaScript keep the full copy. */
+#ai-page .ai-read-more-toggle,
+#ai-page .ai-read-more-ellipsis {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  #ai-page [data-read-more-ready="true"][data-read-more-expanded="false"] .ai-read-more-rest {
+    display: none;
+  }
+
+  #ai-page [data-read-more-ready="true"][data-read-more-expanded="false"] .ai-read-more-ellipsis {
+    display: inline;
+  }
+
+  #ai-page [data-read-more-ready="true"] .ai-read-more-toggle {
+    display: inline;
+    margin: 0 0 0 .3em;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-weight: 400;
+    vertical-align: baseline;
+    white-space: normal;
+    text-decoration: underline;
+    text-underline-offset: .2em;
+    cursor: pointer;
+  }
+
+  #ai-page .ai-read-more-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
 .tech-mob {
   display: none;
 }

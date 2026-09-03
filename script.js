@@ -1,3 +1,59 @@
+/* Mobile AI read-more: CSS alone controls which viewport collapses the text. */
+(() => {
+  const minimumWordsForReadMore = 60;
+  document.querySelectorAll('#ai-page [data-ai-read-more]').forEach((paragraph, index) => {
+    if (paragraph.dataset.readMoreReady === 'true') return;
+
+    const fullText = paragraph.textContent.replace(/\s+/g, ' ').trim();
+    if (fullText.split(' ').length <= minimumWordsForReadMore) return;
+    const previewText = paragraph.dataset.readMorePreview;
+    if (!previewText || !fullText.startsWith(previewText) || fullText.length <= previewText.length) return;
+
+    const lead = document.createElement('span');
+    lead.className = 'ai-read-more-lead';
+    lead.textContent = previewText;
+
+    const ellipsis = document.createElement('span');
+    ellipsis.className = 'ai-read-more-ellipsis';
+    ellipsis.setAttribute('aria-hidden', 'true');
+    ellipsis.textContent = /[.!?]$/.test(previewText) ? '' : '…';
+
+    const remainder = document.createElement('span');
+    remainder.className = 'ai-read-more-rest';
+    remainder.id = `ai-read-more-${index + 1}`;
+    remainder.textContent = fullText.slice(previewText.length);
+
+    // A real inline link can wrap with the paragraph instead of forming a button box.
+    const toggle = document.createElement('a');
+    toggle.setAttribute('href', `#${remainder.id}`);
+    toggle.setAttribute('role', 'button');
+    toggle.className = 'ai-read-more-toggle';
+    toggle.setAttribute('aria-controls', remainder.id);
+
+    const setExpanded = expanded => {
+      paragraph.dataset.readMoreExpanded = String(expanded);
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.textContent = expanded ? 'Read less' : 'Read more';
+      toggle.setAttribute('aria-label', `${toggle.textContent} about ${paragraph.dataset.aiReadMore}`);
+    };
+
+    toggle.addEventListener('click', event => {
+      event.preventDefault();
+      setExpanded(paragraph.dataset.readMoreExpanded !== 'true');
+    });
+    toggle.addEventListener('keydown', event => {
+      if (event.key === ' ') {
+        event.preventDefault();
+        toggle.click();
+      }
+    });
+
+    setExpanded(false);
+    paragraph.replaceChildren(lead, ellipsis, remainder, toggle);
+    paragraph.dataset.readMoreReady = 'true';
+  });
+})();
+
 const services = [
     {
       number: '01',
@@ -573,7 +629,7 @@ function updateDesktopIframeScale(){
 
       /* Smooth scroll für Anker-Links */
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        if(!anchor.classList.contains('page-link') && anchor !== homeLink){
+        if(!anchor.classList.contains('page-link') && !anchor.classList.contains('ai-read-more-toggle') && anchor !== homeLink){
           anchor.addEventListener('click', function(e){
             e.preventDefault();
             document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
