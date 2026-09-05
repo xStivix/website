@@ -572,10 +572,8 @@ homeLink.addEventListener('click', e => {
   mainPage.style.display = 'block';
   currentPageName = 'main';
 
-  // Nav-Link “About” (oder “Home”) als aktiv markieren, falls gewünscht
+  // Der Hero hat keinen eigenen Menüpunkt: beim Namensklick alle abwählen.
   document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-  const aboutNav = document.querySelector('.nav-link[href="#about"]');
-  if (aboutNav) aboutNav.classList.add('active');
 
   // Desktop bleibt weich; Mobil wird bei einem Seitenwechsel stabil auf
   // den Seitenanfang gesetzt, damit kein Scroll-Momentum übernommen wird.

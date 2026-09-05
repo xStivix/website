@@ -55,14 +55,16 @@
 
 @media (min-width: 768px) {
   #home {
-    /* Scale the lower stack with the available height. Keep its original
-       Flow dimensions on tall screens and leave room below the centered title. */
+    /* Scale the supporting content with width as well as height. One shared
+       size keeps copy, CTA and gaps in proportion: 16px on small desktops,
+       up to the published 24px size on wide, tall screens. */
+    --hero-support-size: clamp(1rem, min(calc(.6rem + .84vw), 2.667svh), 1.5rem);
     --hero-bottom-space: clamp(2rem, 5.556svh, 3.125rem);
-    --hero-description-size: clamp(1.125rem, 2.667svh, 1.5rem);
-    --hero-action-gap: clamp(1.25rem, 3.556svh, 2rem);
-    --hero-button-size: clamp(1rem, 2.444svh, 1.375rem);
-    --hero-button-height: clamp(2.875rem, 6.667svh, 3.75rem);
-    --hero-details-gap: clamp(.875rem, 2.667svh, 1.5rem);
+    --hero-description-size: var(--hero-support-size);
+    --hero-action-gap: calc(2 * var(--hero-support-size) - 1rem);
+    --hero-button-size: calc(var(--hero-support-size) - .125rem);
+    --hero-button-height: calc(2 * var(--hero-support-size) + .75rem);
+    --hero-details-gap: calc(1.5 * var(--hero-support-size) - .75rem);
     height: 100svh;
     min-height: 36rem;
     background: #000;
@@ -201,7 +203,7 @@
     max-width: 18.75rem;
     height: var(--hero-button-height);
     min-height: var(--hero-button-height);
-    padding: clamp(.875rem, 2.222svh, 1.25rem) clamp(1.5rem, 4svh, 2.25rem);
+    padding: calc(var(--hero-support-size) - .25rem) calc(2 * var(--hero-support-size) - .75rem);
     gap: .5rem;
     border: 1px solid rgba(255, 255, 255, .2);
     border-radius: 32px;
@@ -268,9 +270,9 @@
   .hero-editorial__desktop-details p {
     margin: 0;
     font-family: 'Flow Text', 'Roboto', sans-serif;
-    font-size: .75rem;
+    font-size: calc(.125 * var(--hero-support-size) + .5625rem);
     font-weight: 400;
-    line-height: 1.25rem;
+    line-height: calc(.5 * var(--hero-support-size) + .5rem);
     letter-spacing: 0;
     text-transform: none;
     text-shadow: none;
