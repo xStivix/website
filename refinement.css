@@ -1,0 +1,333 @@
+/* Monochrome refinements to the original website. */
+/* Dark embed background without adding a second playback/readiness gate. */
+#home,
+#home .video-background {
+  background-color: #000;
+}
+
+#home .video-background {
+  color-scheme: dark;
+}
+
+.about-ai-link {
+  box-shadow: inset 0 0 0 1px #fff;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.about-ai-link:hover,
+.about-ai-link:focus-visible {
+  background-color: #000;
+  color: #fff;
+}
+
+.hero-editorial__desktop-details,
+.hero-editorial__desktop-scroll,
+.hero-editorial__desktop-break,
+.hero-editorial__primary--desktop {
+  display: none;
+}
+
+/* Google Flow's live hero values, measured on 2026-09-05.
+   Fonts are local and only used by the desktop hero. */
+@font-face {
+  font-family: 'Flow Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/google-sans-700.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Flow Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/google-sans-text-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Flow Text';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/google-sans-text-500.ttf') format('truetype');
+}
+
+@media (min-width: 768px) {
+  #home {
+    /* Scale the lower stack with the available height. Keep its original
+       Flow dimensions on tall screens and leave room below the centered title. */
+    --hero-bottom-space: clamp(2rem, 5.556svh, 3.125rem);
+    --hero-description-size: clamp(1.125rem, 2.667svh, 1.5rem);
+    --hero-action-gap: clamp(1.25rem, 3.556svh, 2rem);
+    --hero-button-size: clamp(1rem, 2.444svh, 1.375rem);
+    --hero-button-height: clamp(2.875rem, 6.667svh, 3.75rem);
+    --hero-details-gap: clamp(.875rem, 2.667svh, 1.5rem);
+    height: 100svh;
+    min-height: 36rem;
+    background: #000;
+  }
+
+  /* Same gradient stops as Flow, fitted to this full-bleed video.
+     Both edges finish at opaque black, matching the About section. */
+  #home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(#000 0%, transparent 10%, transparent 90%, #000 100%);
+  }
+
+  #home::after {
+    background:
+      linear-gradient(#000 0%, rgba(0, 0, 0, .85) 6%, rgba(0, 0, 0, .4) 14%, transparent 22%),
+      linear-gradient(0deg, #000 0%, rgba(0, 0, 0, .85) 6%, rgba(0, 0, 0, .4) 14%, transparent 22%),
+      rgba(0, 0, 0, .2);
+  }
+
+  .content-overlay.hero-editorial {
+    top: 4.5rem;
+    height: calc(100% - 4.5rem);
+  }
+
+  .hero-editorial__inner {
+    position: relative;
+    max-width: none;
+    padding: 0 1rem var(--hero-bottom-space);
+    justify-content: flex-end;
+  }
+
+  .hero-editorial__content {
+    flex: 0 0 auto;
+    position: static;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-editorial__eyebrow {
+    display: none;
+  }
+
+  .hero-editorial__title {
+    --hero-title-y: -50%;
+    position: absolute;
+    /* The overlay starts 72px below the viewport; compensate by half of that
+       offset to center the title in the full hero at every desktop size. */
+    top: calc(50% - 2.25rem);
+    left: 50%;
+    right: auto;
+    width: min(88vw, 84rem);
+    transform: translate(-50%, var(--hero-title-y));
+    display: block;
+    margin: 0;
+    font-family: 'Flow Display', 'Roboto', sans-serif;
+    font-size: clamp(3.25rem, min(11.4vw, 26svh), 12.25rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.035em;
+    word-spacing: -.025em;
+    text-box: trim-both cap alphabetic;
+    text-align: center;
+    white-space: nowrap;
+    cursor: default;
+  }
+
+  .hero-editorial__title-line,
+  .hero-editorial__title-word {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  /* Reveal the complete heading like the description; keep the old letter,
+     period and hover animations disabled on desktop. */
+  .hero-editorial .hero-editorial__title * {
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    letter-spacing: -.035em !important;
+  }
+
+  .hero-editorial.hero-animate .hero-editorial__title {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate(-50%, calc(var(--hero-title-y) + 14px));
+    transition: opacity .6s ease, filter .7s ease, transform .75s var(--ease-out);
+  }
+
+  .hero-editorial.hero-animate.hero-revealed .hero-editorial__title {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, var(--hero-title-y));
+    transition-delay: .12s;
+  }
+
+  .hero-editorial__description {
+    /* Flow uses 500px; this longer copy needs 600px for the requested break. */
+    max-width: 37.5rem;
+    margin: 0;
+    padding: 0 .5rem;
+    font-family: 'Flow Text', 'Roboto', sans-serif;
+    font-size: var(--hero-description-size);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #fff;
+    text-wrap: balance;
+    text-shadow: none;
+  }
+
+  .hero-editorial__desktop-break {
+    display: initial;
+  }
+
+  .hero-editorial__actions {
+    justify-content: center;
+    margin-top: var(--hero-action-gap);
+  }
+
+  .hero-editorial__primary {
+    justify-content: center;
+    width: auto;
+    max-width: 18.75rem;
+    height: var(--hero-button-height);
+    min-height: var(--hero-button-height);
+    padding: clamp(.875rem, 2.222svh, 1.25rem) clamp(1.5rem, 4svh, 2.25rem);
+    gap: .5rem;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 32px;
+    background: #fff;
+    color: #121317;
+    font-family: 'Flow Text', 'Roboto', sans-serif;
+    font-size: var(--hero-button-size);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+
+  .hero-editorial__primary::after {
+    display: none;
+  }
+
+  .hero-editorial__primary--desktop > span {
+    display: inline-block;
+    text-box: trim-both cap alphabetic;
+    transform: none !important;
+  }
+
+  .hero-editorial__primary--mobile {
+    display: none;
+  }
+
+  .hero-editorial__primary--desktop {
+    display: inline-flex;
+  }
+
+  .hero-editorial__primary:hover,
+  .hero-editorial__primary:focus-visible {
+    background: #000;
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .hero-editorial__footer {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: var(--hero-details-gap);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero-editorial__footer::before,
+  .hero-editorial__footer > .hero-editorial__scroll,
+  .hero-editorial__footer > .hero-editorial__meta {
+    display: none;
+  }
+
+  .hero-editorial__desktop-details {
+    display: block;
+    text-align: center;
+    color: #fff;
+  }
+
+  .hero-editorial__desktop-details p {
+    margin: 0;
+    font-family: 'Flow Text', 'Roboto', sans-serif;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    letter-spacing: 0;
+    text-transform: none;
+    text-shadow: none;
+    opacity: .5;
+  }
+
+  .hero-editorial__desktop-scroll {
+    position: absolute;
+    left: 50%;
+    bottom: calc(-1 * var(--hero-bottom-space));
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 31px;
+    color: #fff;
+    border-radius: 3px;
+    opacity: var(--hero-scroll-opacity, 1);
+    visibility: visible;
+    transition: opacity .16s linear, visibility 0s;
+  }
+
+  .hero-editorial__desktop-scroll[data-scroll-hidden] {
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .16s linear, visibility 0s .16s;
+  }
+
+  .hero-editorial__desktop-scroll svg {
+    width: 24px;
+    height: 24px;
+    transition: transform .3s var(--ease-out);
+  }
+
+  .hero-editorial__desktop-scroll:hover svg {
+    transform: translateY(3px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #home {
+    /* Extra tablet clearance only when the window is tall enough for it. */
+    --hero-bottom-space: calc(clamp(2rem, 5.556svh, 3.125rem) + clamp(0rem, calc(100svh - 44rem), 2rem));
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .hero-editorial__desktop-scroll,
+  .hero-editorial__desktop-scroll[data-scroll-hidden] {
+    transition: none;
+  }
+
+  .hero-editorial.hero-animate .hero-editorial__title {
+    opacity: 1;
+    filter: none;
+    transform: translate(-50%, var(--hero-title-y));
+    transition: none;
+  }
+}
