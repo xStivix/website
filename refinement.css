@@ -1,4 +1,17 @@
 /* Monochrome refinements to the original website. */
+:root {
+  --button-radius: 999px;
+}
+
+/* One consistent pill shape for action buttons across all pages. */
+.about-ai-link,
+#services .page-link,
+.masterclass-request-button,
+.masterclass-request-submit,
+#continue-btn {
+  border-radius: var(--button-radius);
+}
+
 /* Dark embed background without adding a second playback/readiness gate. */
 #home,
 #home .video-background {
@@ -7,6 +20,14 @@
 
 #home .video-background {
   color-scheme: dark;
+}
+
+/* A little extra overscan for wide portrait phones such as the Surface Duo
+   (540 × 720). The usual 1.3 scale leaves narrow side bars around 3:4. */
+@media (max-width: 767px) and (min-aspect-ratio: 73/100) and (max-aspect-ratio: 77/100) {
+  #home .mobile-iframe {
+    transform: translate(-50%, -50%) scale(1.4);
+  }
 }
 
 .about-ai-link {
@@ -20,11 +41,47 @@
   color: #fff;
 }
 
+@media (max-width: 767px) {
+  #about .about-ai-link {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Phone playback fills the viewport, including when native fullscreen is unavailable. */
+#video-lightbox.is-mobile-player {
+  background: #000;
+}
+
+#video-lightbox.is-mobile-player .video-lightbox-stage {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+}
+
+#video-lightbox.is-mobile-player iframe {
+  display: block;
+}
+
+#video-lightbox.is-mobile-player .close-btn {
+  top: max(.75rem, env(safe-area-inset-top));
+  right: max(.75rem, env(safe-area-inset-right));
+  z-index: 4;
+}
+
 .hero-editorial__desktop-details,
 .hero-editorial__desktop-scroll,
 .hero-editorial__desktop-break,
 .hero-editorial__primary--desktop {
   display: none;
+}
+
+/* Once the entrance is finished, resize must place the heading directly at its
+   new center rather than interpolating the old translate percentages. */
+.hero-editorial.hero-animate.hero-revealed.hero-interactive .hero-editorial__title {
+  transition: none;
 }
 
 /* Google Flow's live hero values, measured on 2026-09-05.
@@ -206,7 +263,7 @@
     padding: calc(var(--hero-support-size) - .25rem) calc(2 * var(--hero-support-size) - .75rem);
     gap: .5rem;
     border: 1px solid rgba(255, 255, 255, .2);
-    border-radius: 32px;
+    border-radius: var(--button-radius);
     background: #fff;
     color: #121317;
     font-family: 'Flow Text', 'Roboto', sans-serif;
@@ -313,10 +370,462 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+/* Tablet hero reference: heading in the upper third, with a compact,
+   readable description and action group near the bottom. */
+@media (min-width: 768px) and (max-width: 1199px) {
   #home {
-    /* Extra tablet clearance only when the window is tall enough for it. */
-    --hero-bottom-space: calc(clamp(2rem, 5.556svh, 3.125rem) + clamp(0rem, calc(100svh - 44rem), 2rem));
+    --hero-support-size: clamp(1.25rem, min(2.5vw, 3svh), 1.5rem);
+    --hero-bottom-space: clamp(3rem, 5svh, 4rem);
+    --hero-action-gap: 1.5rem;
+    --hero-details-gap: 1.25rem;
+  }
+
+  #home .hero-editorial__title {
+    /* The content overlay starts 72px below the top of the hero. */
+    top: calc(33.333svh - 4.5rem);
+  }
+
+  #home .hero-editorial__description {
+    max-width: 28rem;
+    line-height: 1.1;
+  }
+
+  #home .hero-editorial__desktop-break {
+    display: none;
+  }
+}
+
+#quotes {
+  display: block;
+  border-top: 0;
+}
+
+/* Hide the logo frames while preserving the existing spacing. */
+#quotes .quote-logo {
+  border-color: transparent;
+}
+
+#quotes .quote-item,
+#quotes .quote-item.first {
+  border-left-color: transparent !important;
+}
+
+/* Scale the desktop proportions together on tablet-sized screens. */
+@media (min-width: 768px) and (max-width: 1366px) {
+  #quotes {
+    --qt-scale-unit: clamp(.75px, .083333vw, 1px);
+    --qt-height: calc(90 * var(--qt-scale-unit));
+    --qt-item-w: calc(360 * var(--qt-scale-unit));
+    --qt-logo: calc(60 * var(--qt-scale-unit));
+    --qt-pad-x: calc(24 * var(--qt-scale-unit));
+    --qt-gap-x: calc(16 * var(--qt-scale-unit));
+    --qt-stack-gap: calc(6 * var(--qt-scale-unit));
+    --qt-fade-w: calc(72 * var(--qt-scale-unit));
+    padding-block: calc(16 * var(--qt-scale-unit));
+  }
+
+  #quotes .quote-ticker {
+    height: auto;
+    min-height: var(--qt-height);
+    touch-action: pan-y pinch-zoom;
+  }
+
+  #quotes .quote-item {
+    flex-shrink: 0;
+    height: auto;
+    min-height: var(--qt-height);
+    grid-template-columns: var(--qt-logo) minmax(0, 1fr);
+    align-self: stretch;
+  }
+
+  #quotes .quote-logo {
+    padding: calc(6 * var(--qt-scale-unit));
+  }
+
+  #quotes .quote-text {
+    min-width: 0;
+    max-width: none;
+    font-size: clamp(.69rem, 1.226667vw, .92rem);
+    line-height: 1.2;
+  }
+
+  #quotes .quote-author {
+    min-width: 0;
+    font-size: clamp(.54rem, .96vw, .72rem);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Keep the quote slider off phone layouts. */
+@media (max-width: 767px) {
+  #quotes {
+    display: none;
+  }
+}
+
+/* Consecutive thirds of one panorama make the light continuous at both joins. */
+.service-visual {
+  background: #101010;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  flex-shrink: 0;
+}
+
+.service-visual__image {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  width: 300%;
+  max-width: none;
+  height: 100%;
+  object-fit: fill;
+  /* Keep the crop fixed while the existing hover transform zooms its center. */
+  translate: calc(var(--service-panel) * -100% / 3) 0;
+  transform-origin: calc((var(--service-panel) + .5) * 100% / 3) 50%;
+  pointer-events: none;
+}
+
+@media (max-width: 639px) {
+  #services .swiper-slide {
+    width: min(78vw, 18rem);
+  }
+
+  #services .service-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.125rem;
+  }
+
+  #services .service-card__number {
+    margin-bottom: .375rem;
+    font-size: .75rem;
+    line-height: 1.4;
+  }
+
+  #services .service-card__title {
+    margin-bottom: .75rem;
+    font-size: 1rem !important;
+    line-height: 1.25;
+  }
+
+  #services .service-card__text {
+    margin-bottom: 0;
+    font-size: .8125rem;
+    line-height: 1.5;
+  }
+
+  #services .service-card__actions {
+    margin-top: auto;
+    padding-top: 1.25rem;
+  }
+
+  #services .service-card__actions .page-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding: .3125rem .75rem;
+    font-size: .625rem;
+    line-height: 1.4;
+  }
+
+  #services > .container {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Tablet refinements are deliberately bounded: preserve both the phone
+   layouts (through 767px) and the established desktop layout (from 1200px). */
+@media (min-width: 768px) and (max-width: 1199px) {
+  #services .services-carousel {
+    display: block;
+  }
+
+  #services #grid-wrapper {
+    display: none;
+  }
+
+  #services .mySwiper {
+    overflow: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  #services .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  #services .swiper-slide {
+    width: clamp(18rem, calc((100% - 4.5rem) / 2), 24rem);
+    height: auto;
+  }
+
+  #services .swiper-slide > article {
+    height: 100%;
+  }
+
+  #services .service-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  #services .service-card__title {
+    margin-bottom: .875rem;
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  #services .service-card__text {
+    min-height: 0 !important;
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  #services .service-card__actions {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  #services .service-card__actions .page-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.875rem;
+    padding: .3125rem .75rem;
+    font-size: .6875rem;
+    line-height: 1.5;
+  }
+
+  #services .swiper-pagination {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+    transform: none !important;
+    line-height: 1;
+  }
+
+  #services .swiper-pagination-bullet {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    margin: 0 10px;
+    transition: width .25s ease, border-radius .25s ease, background-color .25s ease;
+  }
+
+  #services .swiper-pagination-bullet::before {
+    content: '';
+    position: absolute;
+    inset: -18px -10px;
+  }
+
+  #services .swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 999px;
+  }
+
+  #services {
+    padding-bottom: 4.5rem;
+  }
+
+  #services > .container {
+    margin-bottom: 0;
+  }
+
+  #services .super-title,
+  #portfolio .super-title,
+  #ai-page .super-title {
+    font-size: clamp(2.75rem, 5.5vw, 3.5rem);
+    line-height: 1.05;
+  }
+
+  #services .super-title {
+    margin-bottom: 2.25rem;
+  }
+
+  /* Keep type readable independently of the logo scaling. */
+  #quotes {
+    --qt-height: 90px;
+    --qt-item-w: 340px;
+    --qt-logo: 52px;
+    --qt-pad-x: 20px;
+    --qt-gap-x: 16px;
+    --qt-stack-gap: 6px;
+    --qt-fade-w: 36px;
+    padding-block: 16px;
+  }
+
+  #quotes .quote-text {
+    font-size: .875rem;
+    line-height: 1.35;
+  }
+
+  #quotes .quote-author {
+    font-size: .75rem;
+    line-height: 1.4;
+  }
+
+  #ai-page > section,
+  #video-editing-page > section,
+  #miscellaneous-page > section {
+    padding-block: 4.5rem;
+  }
+
+  /* Balance the visible black space below the fixed navigation with the
+     space beneath the introduction, including its trailing text margin. */
+  #ai-page > section:first-child,
+  #video-editing-page > section:first-child,
+  #miscellaneous-page > section:first-child {
+    padding-top: 9rem;
+  }
+
+  /* Tablets use a single text column without the decorative artwork. */
+  #about {
+    padding-block: 3.5rem 2.5rem;
+  }
+
+  #about > .container {
+    margin-block: 0;
+  }
+
+  #about .about-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  #about .about-copy {
+    display: contents;
+  }
+
+  #about .about-heading-group {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #about .about-heading-group > p {
+    margin: 0 0 1rem;
+  }
+
+  #about .about-heading-group > h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 4.5vw, 3rem);
+    line-height: 1.12;
+  }
+
+  #about .about-artwork {
+    display: none !important;
+  }
+
+  #about .about-description {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: none;
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  #about .about-ai-link {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+    margin-top: 0;
+  }
+
+  #portfolio {
+    padding-block: 4rem;
+  }
+
+  #ai-intro img,
+  #video-editing-page > section:first-child img,
+  #miscellaneous-page > section:first-child img {
+    max-width: 18rem;
+  }
+
+  #ai-page .ai-text,
+  #video-editing-page .tech-text,
+  #miscellaneous-page .tech-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  #video-editing-page .tech-specs > .container > .grid {
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  #video-editing-page .tech-specs > .container > .grid:last-child {
+    margin-bottom: 0;
+  }
+
+  #video-editing-page .tech-specs img {
+    max-width: 16rem;
+  }
+
+  /* The lesson outline spans the row; the decorative image only shares
+     the short introduction instead of reserving an entire empty column. */
+  #miscellaneous-page .masterclass-workflow {
+    grid-template-columns: minmax(0, 1fr) 11rem;
+    gap: 1rem 2rem;
+    margin-bottom: 3.5rem;
+    align-items: start;
+  }
+
+  .masterclass-workflow > .masterclass-workflow__content {
+    display: contents;
+  }
+
+  .masterclass-workflow__content > h3,
+  .masterclass-workflow__content > p {
+    grid-column: 1;
+    margin: 0;
+    max-width: none;
+  }
+
+  .masterclass-workflow > .masterclass-support-image {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+
+  .masterclass-workflow .masterclass-outline {
+    grid-column: 1 / -1;
+    max-width: none;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .masterclass-workflow .masterclass-module h4 {
+    font-size: 1rem;
+  }
+
+  #miscellaneous-page .masterclass-sessions {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 2rem;
+    margin-bottom: 0;
+  }
+
+  .masterclass-sessions .masterclass-closing {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+
+  .masterclass-sessions .masterclass-disclaimer {
+    max-width: none;
+    font-size: .8125rem;
+  }
+
+  .site-nav .nav-link {
+    padding-block: .875rem;
+    margin-block: -.875rem;
+  }
+
+  .site-nav .nav-link::after {
+    bottom: .625rem;
   }
 }
 

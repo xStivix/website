@@ -59,48 +59,42 @@ const services = [
       number: '01',
       title: 'AI EXPERTISE',
       text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From visual effects (VFX) to fully AI-generated videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
-      image: 'Finalwebpimages/Comp%2010_00000.webp',
-      mobileImage: 'service-ai-768.webp',
+      imagePanel: 0,
       button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI Insights</a>'
     },
     {
       number: '02',
       title: 'VIDEO EDITING',
       text: 'I cover the full post-production workflow from rough cut to final export. This includes selecting and organizing footage, video editing, color grading, sound design, and mixing. I can also add motion graphics and VFX, as well as handle compositing, cleanup, and retouching.',
-      image: 'vewebfinal.webp',
-      mobileImage: 'service-video-editing-768.webp',
+      imagePanel: 1,
       button: '<a href="#video-editing" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="videoEditing">Tech insights</a>'
     },
     {
       number: '03',
       title: 'MASTERCLASS',
       text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my AI projects, from prompt development and reference preparation to video generation, all the way to post-production integration.',
-      image: 'masterclass-symbol-pattern.webp',
-      mobileImage: 'service-masterclass-768.webp',
+      imagePanel: 2,
       button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
     }
   ];
 
   const renderCard = (service) => `
     <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
-      <div class="relative h-40 lg:h-56 md:h-40 overflow-hidden">
+      <div class="service-visual relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img
-          src="${service.mobileImage}"
-          srcset="${service.mobileImage} 768w, ${service.image} 1536w"
-          sizes="(max-width: 639px) calc(100vw - 3rem), (max-width: 1279px) 33vw, 400px"
-          alt="${service.title}"
+          src="service-lightstream-connected.png"
+          alt=""
           loading="lazy"
           decoding="async"
-          width="768"
-          height="512"
-          class="absolute inset-0 w-full h-full object-cover"
+          class="service-visual__image"
+          style="--service-panel: ${service.imagePanel}"
         />
       </div>
-      <div class="p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
-        <span class="font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
-        <h3 class="text-xl font-bold text-black mb-4">${service.title}</h3>
-        <p class="text-base text-black font-light mb-4">${service.text}</p>
-        <div class="mt-8">${service.button}</div>
+      <div class="service-card__body p-8 sm:p-4 lg:p-8 flex-1 bg-gray-100">
+        <span class="service-card__number font-mono text-sm text-gray-500 mb-2 block">${service.number}</span>
+        <h3 class="service-card__title text-xl font-bold text-black mb-4">${service.title}</h3>
+        <p class="service-card__text text-base text-black font-light mb-4">${service.text}</p>
+        <div class="service-card__actions mt-8">${service.button}</div>
       </div>
     </article>
   `;
@@ -121,6 +115,8 @@ const services = [
 
   let servicesSwiper = null;
   let swiperAssetsPromise = null;
+  // Keep phone behavior intact; also use the existing carousel on tablets.
+  const servicesSliderMedia = window.matchMedia('(max-width: 639px), (min-width: 768px) and (max-width: 1199px)');
 
   const loadSwiperAssets = () => {
     if (typeof window.Swiper === 'function') return Promise.resolve();
@@ -160,13 +156,13 @@ const services = [
   };
 
   const initializeServicesSwiper = () => {
-    if (servicesSwiper || !window.matchMedia('(max-width: 639px)').matches) return;
+    if (servicesSwiper || !servicesSliderMedia.matches) return;
 
     loadSwiperAssets().then(() => {
-      if (servicesSwiper || !window.matchMedia('(max-width: 639px)').matches) return;
+      if (servicesSwiper || !servicesSliderMedia.matches) return;
       servicesSwiper = new window.Swiper(".mySwiper", {
       direction: "horizontal",
-      slidesPerView: 1.08,
+      slidesPerView: 'auto',
       spaceBetween: 12,
       speed: 420,
       threshold: 3,
@@ -177,19 +173,12 @@ const services = [
       longSwipesRatio: 0.18,
       watchOverflow: true,
       roundLengths: true,
+      breakpoints: {
+        768: { spaceBetween: 20 }
+      },
       pagination: {
         el: ".swiper-pagination",
         clickable: true
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1.08,
-          spaceBetween: 12
-        },
-        480: {
-          slidesPerView: 1.18,
-          spaceBetween: 14
-        }
       }
       });
     }).catch(() => {
@@ -198,11 +187,10 @@ const services = [
   };
 
   const servicesSection = document.getElementById('services');
-  const mobileServicesMedia = window.matchMedia('(max-width: 639px)');
   let servicesObserver = null;
 
   const prepareServicesSwiper = () => {
-    if (!mobileServicesMedia.matches || servicesSwiper || !servicesSection) return;
+    if (!servicesSliderMedia.matches || servicesSwiper || !servicesSection) return;
 
     if (!('IntersectionObserver' in window)) {
       initializeServicesSwiper();
@@ -220,7 +208,7 @@ const services = [
   };
 
   prepareServicesSwiper();
-  mobileServicesMedia.addEventListener?.('change', prepareServicesSwiper);
+  servicesSliderMedia.addEventListener?.('change', prepareServicesSwiper);
 
   const projectPlayerPromises = new WeakMap();
   const selectedWorkThumbnailOverrides = {
@@ -846,91 +834,123 @@ layer.addEventListener('click', () => {
   box.classList.add('show');
 });*/
 
- document.addEventListener('DOMContentLoaded', function() {
-    const desktopIframe = document.querySelector('.desktop-iframe');
-    const mobileIframe = document.querySelector('.mobile-iframe');
-    const mobileFallback = document.querySelector('.mobile-fallback');
-    const mobileMedia = window.matchMedia('(max-width: 767px)');
-    if (!desktopIframe || !mobileIframe) return;
+// Keep each responsive hero player alive; removing src invalidates Vimeo's
+// cached player/ready state when the same iframe is selected again.
+document.addEventListener('DOMContentLoaded', function() {
+  const desktopIframe = document.querySelector('.desktop-iframe');
+  const mobileIframe = document.querySelector('.mobile-iframe');
+  const mobileFallback = document.querySelector('.mobile-fallback');
+  const mobileMedia = window.matchMedia('(max-width: 767px)');
+  if (!desktopIframe || !mobileIframe) return;
 
-    let activeFrame = null;
-    let heroSession = 0;
-    let revealTimer = null;
+  const states = [desktopIframe, mobileIframe].map(frame => ({
+    frame,
+    playerPromise: null,
+    commands: Promise.resolve(),
+    revision: 0
+  }));
+  let activeState = null;
+  let revealTimer = null;
 
-    const showMobileFallback = () => {
-      if (revealTimer) {
-        clearTimeout(revealTimer);
-        revealTimer = null;
-      }
-      mobileIframe.classList.remove('is-ready');
-      if (mobileFallback) mobileFallback.classList.remove('is-hidden');
-    };
+  const showMobileFallback = () => {
+    if (activeState?.frame !== mobileIframe) return;
+    if (revealTimer) {
+      clearTimeout(revealTimer);
+      revealTimer = null;
+    }
+    mobileIframe.classList.remove('is-ready');
+    if (mobileFallback) mobileFallback.classList.remove('is-hidden');
+  };
 
-    const loadResponsiveHero = () => {
-      heroSession += 1;
-      const session = heroSession;
-      const nextFrame = mobileMedia.matches ? mobileIframe : desktopIframe;
-      const previousFrame = nextFrame === mobileIframe ? desktopIframe : mobileIframe;
+  const revealVideo = state => {
+    if (activeState !== state) return;
+    state.frame.classList.add('is-ready');
+    if (state.frame === mobileIframe && mobileFallback) {
+      mobileFallback.classList.add('is-hidden');
+    }
+  };
 
-      if (activeFrame !== nextFrame) {
-        previousFrame.classList.remove('is-ready');
-        previousFrame.removeAttribute('src');
-        activeFrame = nextFrame;
-      }
-
-      if (nextFrame === mobileIframe) {
-        showMobileFallback();
-      }
-      assignFrameSource(nextFrame);
-
-      waitForVimeoApi().then(() => {
-        if (session !== heroSession || activeFrame !== nextFrame) return;
-        const player = new Vimeo.Player(nextFrame);
-
-        if (nextFrame === desktopIframe) {
-          const revealDesktopVideo = () => {
-            if (session === heroSession) desktopIframe.classList.add('is-ready');
-          };
-          player.on('playing', revealDesktopVideo);
-          player.ready()
-            .then(() => player.getPaused())
-            .then(paused => {
-              if (!paused) revealDesktopVideo();
-            })
-            .catch(() => {});
+  const getHeroPlayer = state => {
+    if (state.playerPromise) return state.playerPromise;
+    assignFrameSource(state.frame);
+    state.playerPromise = waitForVimeoApi().then(() => {
+      const player = new Vimeo.Player(state.frame);
+      player.on('playing', () => {
+        // Autoplay may finish loading after this iframe becomes inactive.
+        if (activeState !== state) syncPlayback(state);
+        else if (state.frame === desktopIframe) revealVideo(state);
+      });
+      player.on('timeupdate', data => {
+        if (activeState !== state || !data || data.seconds <= 0.2) return;
+        if (state.frame.classList.contains('is-ready')) return;
+        if (state.frame === desktopIframe) {
+          revealVideo(state);
           return;
         }
-
-        const revealMobileVideo = () => {
-          if (session !== heroSession) return;
-          mobileIframe.classList.add('is-ready');
-          if (mobileFallback) mobileFallback.classList.add('is-hidden');
-        };
-
-        player.on('timeupdate', data => {
-          if (!data || data.seconds <= 0.2 || revealTimer || mobileIframe.classList.contains('is-ready')) return;
-          revealTimer = setTimeout(() => {
-            revealTimer = null;
-            player.getPaused()
-              .then(paused => paused ? showMobileFallback() : revealMobileVideo())
-              .catch(showMobileFallback);
-          }, 250);
-        });
-        player.on('pause', showMobileFallback);
-        player.on('error', showMobileFallback);
-        player.ready().then(() => player.play()).catch(showMobileFallback);
-      }).catch(() => {
-        if (nextFrame === mobileIframe) showMobileFallback();
+        if (revealTimer) return;
+        const revision = state.revision;
+        revealTimer = setTimeout(() => {
+          revealTimer = null;
+          player.getPaused().then(paused => {
+            if (activeState !== state || revision !== state.revision) return;
+            if (paused) showMobileFallback();
+            else revealVideo(state);
+          }).catch(() => {
+            if (activeState === state && revision === state.revision) showMobileFallback();
+          });
+        }, 250);
       });
-    };
+      const handleMobileStop = () => {
+        if (activeState === state && state.frame === mobileIframe) showMobileFallback();
+      };
+      player.on('pause', handleMobileStop);
+      player.on('error', handleMobileStop);
+      return player.ready().then(() => player);
+    });
+    return state.playerPromise;
+  };
 
-    loadResponsiveHero();
-    if (mobileMedia.addEventListener) {
-      mobileMedia.addEventListener('change', loadResponsiveHero);
-    } else {
-      mobileMedia.addListener(loadResponsiveHero);
+  const syncPlayback = state => {
+    const revision = ++state.revision;
+    // Only load a second video if that layout is actually visited.
+    if (activeState !== state && !state.playerPromise) return;
+    state.commands = state.commands.then(async () => {
+      if (revision !== state.revision) return;
+      const player = await getHeroPlayer(state);
+      if (revision !== state.revision) return;
+      // Serialize commands so a delayed pause cannot overtake a newer play.
+      if (activeState === state) {
+        await player.play();
+        if (revision === state.revision && state.frame === desktopIframe) revealVideo(state);
+      } else {
+        await player.pause();
+      }
+    }).catch(() => {
+      if (activeState === state && revision === state.revision && state.frame === mobileIframe) {
+        showMobileFallback();
+      }
+    });
+  };
+
+  const loadResponsiveHero = () => {
+    const nextState = states[mobileMedia.matches ? 1 : 0];
+    if (activeState === nextState) return;
+    if (revealTimer) {
+      clearTimeout(revealTimer);
+      revealTimer = null;
     }
-  });
+    activeState = nextState;
+    // Keep the last rendered frame during a switch instead of flashing black.
+    states.forEach(syncPlayback);
+  };
+
+  loadResponsiveHero();
+  if (mobileMedia.addEventListener) {
+    mobileMedia.addEventListener('change', loadResponsiveHero);
+  } else {
+    mobileMedia.addListener(loadResponsiveHero);
+  }
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1183,9 +1203,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const close = box.querySelector('.close-btn');
   const plyr  = document.getElementById('lightbox-player');
   const stage = box.querySelector('.video-lightbox-stage');
+  const mobilePlayback = window.matchMedia('(max-width: 767px), (max-width: 1024px) and (max-height: 500px) and (pointer: coarse)');
+  const hoverPlayback = window.matchMedia('(hover: hover) and (pointer: fine)');
   let videoTrigger = null;
   let playbackSession = 0;
   let revealTimer = null;
+  let lightboxWasFullscreen = false;
+
+  function fullscreenElement() {
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+
+  function exitLightboxFullscreen() {
+    if (fullscreenElement() !== box) return;
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if (!exit) return;
+    try {
+      Promise.resolve(exit.call(document)).catch(() => {});
+    } catch (_) {}
+  }
+
+  function requestMobileFullscreen() {
+    const request = box.requestFullscreen || box.webkitRequestFullscreen;
+    if (!request) return; // iPhone uses Vimeo's native playsinline=0 playback.
+    try {
+      // Stay in the original tap handler; waiting for Vimeo loses activation.
+      Promise.resolve(request.call(box)).then(() => {
+        if (!box.classList.contains('show') || !box.classList.contains('is-mobile-player')) {
+          exitLightboxFullscreen();
+        }
+      }).catch(() => {}); // The full-viewport player remains usable if denied.
+    } catch (_) {}
+  }
+
+  function handleFullscreenChange() {
+    const active = fullscreenElement();
+    if (active === box) {
+      if (!box.classList.contains('show')) {
+        exitLightboxFullscreen();
+        return;
+      }
+      lightboxWasFullscreen = true;
+    } else if (!active && lightboxWasFullscreen) {
+      lightboxWasFullscreen = false;
+      closeBox();
+    }
+  }
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
+  document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 
   function schedulePlayerReveal(session, delay) {
     clearTimeout(revealTimer);
@@ -1219,6 +1284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* --- Hover: abspielen / pausieren ------------------- */
     layer.addEventListener('mouseenter', () => {
+      if (!hoverPlayback.matches) return;
       getProjectPlayer(frame).then(player => {
         hoverPlayer = player;
         player.play().catch(() => {});
@@ -1234,16 +1300,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoHash = frame.dataset.vimeoHash || frameUrl.searchParams.get('h') || '';
     const id = videoHash ? `${videoId}?h=${encodeURIComponent(videoHash)}` : videoId;
     const openVideo = () => {
+      const useFullscreen = mobilePlayback.matches;
       videoTrigger = layer;
       playbackSession += 1;
       clearTimeout(revealTimer);
       stage.classList.remove('is-ready');
       const separator = id.includes('?') ? '&' : '?';
+      box.classList.toggle('is-mobile-player', useFullscreen);
       box.classList.add('show');
       box.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
       schedulePlayerReveal(playbackSession, 2500);
-      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=1`;
+      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=${useFullscreen ? '0' : '1'}`;
+      if (useFullscreen) requestMobileFullscreen();
       close.focus();
     };
     layer.addEventListener('click', openVideo);
@@ -1257,10 +1326,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Lightbox schließen */
   function closeBox(){
+    if (!box.classList.contains('show')) return;
     playbackSession += 1;
+    lightboxWasFullscreen = false;
+    exitLightboxFullscreen();
     clearTimeout(revealTimer);
     revealTimer = null;
     box.classList.remove('show');
+    box.classList.remove('is-mobile-player');
     box.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
     stage.classList.remove('is-ready');
@@ -1339,11 +1412,16 @@ function createQuoteItem(q){
 
   // Zweite Spur anhängen, damit das manuell steuerbare Loop nahtlos bleibt
   const clones = Array.from(track.children).map(n => n.cloneNode(true));
-  clones.forEach(n => track.appendChild(n));
+  clones.forEach(n => {
+    n.setAttribute('aria-hidden', 'true');
+    track.appendChild(n);
+  });
 
   const ticker = track.closest('.quote-ticker');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const compactLayout = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
   const AUTO_DURATION = 40;
+  const TOUCH_SPEED = 45;
   const RETURN_RATE = 1.45;
   const MAX_THROW_SPEED = 1500;
 
@@ -1352,6 +1430,9 @@ function createQuoteItem(q){
   let autoVelocity = 0;
   let velocity = 0;
   let dragging = false;
+  let dragStarted = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
   let pointerId = null;
   let lastPointerX = 0;
   let lastMoveTime = 0;
@@ -1363,18 +1444,24 @@ function createQuoteItem(q){
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
   function measureTrack(){
+    // Hidden pages have no measurable width; preserve the loop until visible.
+    const measuredWidth = track.scrollWidth / 2;
+    if (!measuredWidth) return;
     const previousWidth = loopWidth;
-    loopWidth = track.scrollWidth / 2;
+    loopWidth = measuredWidth;
 
     if (previousWidth > 0 && loopWidth > 0) {
       offset = offset / previousWidth * loopWidth;
     }
 
-    autoVelocity = reducedMotion.matches || loopWidth === 0
+    autoVelocity = reducedMotion.matches
       ? 0
-      : -(loopWidth / AUTO_DURATION);
+      : -(compactLayout.matches ? TOUCH_SPEED : loopWidth / AUTO_DURATION);
 
+    if (reducedMotion.matches) velocity = 0;
     if (!dragging && velocity === 0) velocity = autoVelocity;
+    wrapOffset();
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
   }
 
   function wrapOffset(){
@@ -1417,13 +1504,17 @@ function createQuoteItem(q){
   }
 
   function startDrag(event){
+    if (event.isPrimary === false || pointerId !== null) return;
     if (event.pointerType === 'mouse' && event.button !== 0) return;
 
     dragging = true;
+    dragStarted = event.pointerType === 'mouse';
     pointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragStartY = event.clientY;
     lastPointerX = event.clientX;
     lastMoveTime = performance.now();
-    dragVelocity = velocity;
+    dragVelocity = 0;
     velocity = 0;
     ticker.classList.add('is-dragging');
     ticker.setPointerCapture(pointerId);
@@ -1431,6 +1522,18 @@ function createQuoteItem(q){
 
   function moveDrag(event){
     if (!dragging || event.pointerId !== pointerId) return;
+
+    // Let vertical gestures scroll the page without nudging the quote track.
+    if (!dragStarted) {
+      const distanceX = Math.abs(event.clientX - dragStartX);
+      const distanceY = Math.abs(event.clientY - dragStartY);
+      if (Math.max(distanceX, distanceY) < 6) return;
+      if (distanceY >= distanceX) {
+        endDrag(event);
+        return;
+      }
+      dragStarted = true;
+    }
 
     const now = performance.now();
     const movement = event.clientX - lastPointerX;
@@ -1447,8 +1550,11 @@ function createQuoteItem(q){
     if (!dragging || event.pointerId !== pointerId) return;
 
     const heldStill = performance.now() - lastMoveTime > 120;
-    velocity = heldStill ? 0 : clamp(dragVelocity, -MAX_THROW_SPEED, MAX_THROW_SPEED);
+    const cancelled = event.type === 'pointercancel' || event.type === 'lostpointercapture';
+    velocity = heldStill || cancelled || !dragStarted || reducedMotion.matches
+      ? 0 : clamp(dragVelocity, -MAX_THROW_SPEED, MAX_THROW_SPEED);
     dragging = false;
+    dragStarted = false;
     ticker.classList.remove('is-dragging');
 
     if (ticker.hasPointerCapture(pointerId)) {
@@ -1461,8 +1567,14 @@ function createQuoteItem(q){
   ticker.addEventListener('pointermove', moveDrag);
   ticker.addEventListener('pointerup', endDrag);
   ticker.addEventListener('pointercancel', endDrag);
+  ticker.addEventListener('lostpointercapture', endDrag);
   window.addEventListener('resize', measureTrack, { passive: true });
   reducedMotion.addEventListener('change', measureTrack);
+  compactLayout.addEventListener('change', measureTrack);
+
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(measureTrack).observe(ticker);
+  }
 
   measureTrack();
   velocity = autoVelocity;
@@ -1471,6 +1583,7 @@ function createQuoteItem(q){
     const tickerObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         tickerVisible = entry.isIntersecting;
+        if (tickerVisible) measureTrack();
         entry.isIntersecting ? startTicker() : stopTicker();
       });
     }, { rootMargin: '120px 0px' });

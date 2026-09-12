@@ -69,7 +69,7 @@
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="stylesheet" href="site.min.css?v=20260903-8" />
-    <link rel="stylesheet" href="refinement.css?v=20260905-23" />
+    <link rel="stylesheet" href="refinement.css?v=20260912-ipad-about-full-width" />
     <style>
         .name-wrapper {
             display: flex;
@@ -245,28 +245,30 @@
         <!-- About / Hero Section -->
         <section id="about" class="py-8 md:py-24 bg-blacksolid text-white" data-page="about">
             <div class="container mt-6 mb-6 mx-auto max-w-7xl px-6 ">
-                <div class="grid md:grid-cols-2 lg:gap-0 md:gap-8 gap-0 items-center about-us">
+                <div class="grid md:grid-cols-2 lg:gap-0 md:gap-8 gap-0 items-center about-us about-layout">
 
                     <!-- Text-Column -->
-                    <div>
-                        <!-- kleine Monospace-Überschrift -->
-                        <p class="font-mono uppercase text-xs tracking-widest mb-4">
-                            01 Behind the frame
-                        </p>
+                    <div class="about-copy">
+                        <div class="about-heading-group">
+                            <!-- kleine Monospace-Überschrift -->
+                            <p class="font-mono uppercase text-xs tracking-widest mb-4">
+                                01 Behind the frame
+                            </p>
 
-                        <!-- große Headlines -->
-                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
-                            Sharp Cuts.
-                        </h1>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
-                            Smooth Flow.
-                        </h1>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            AI Enhanced.
-                        </h1>
+                            <!-- große Headlines -->
+                            <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
+                                Sharp Cuts.
+                            </h1>
+                            <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
+                                Smooth Flow.
+                            </h1>
+                            <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
+                                AI Enhanced.
+                            </h1>
+                        </div>
 
                         <!-- Fließtext -->
-                        <p class="text-base md:text-md max-w-2xl font-light mb-4">
+                        <p class="about-description text-base md:text-md max-w-2xl font-light mb-4">
                            I’m a Video Editor and Generative AI Specialist focused on post-production and automotive filmmaking. With over 5 years of industry experience, I focus on short-form content including ads, trailers, brand films, and commercial visuals. My foundation lies in traditional filmmaking, further refined in recent years through the integration of AI-driven workflows. In 2026, I joined OpenAI’s Artist Program.
                         </p>
 
@@ -279,7 +281,7 @@
                     </div>
 
                     <!-- Dein Bild -->
-                    <div class="flex justify-center about-us pl-18">
+                    <div class="flex justify-center about-us pl-18 about-artwork">
                         <div class="about-portrait">
                             <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/stayconnectedlel_00000.png"
                                 alt="Portrait of Stefan Aberer"
@@ -312,12 +314,12 @@
                 <div class="selected-work-legend" aria-label="Project label definitions">
                     <span class="selected-work-legend__item">
                         <strong>[AI]</strong>
-                        <span>Fully AI-generated footage</span>
+                        <span>Fully AI footage</span>
                     </span>
                     <span class="selected-work-legend__divider" aria-hidden="true"></span>
                     <span class="selected-work-legend__item">
                         <strong>[Hybrid]</strong>
-                        <span>Live-action + AI-generated footage</span>
+                        <span>Live-action + AI footage</span>
                     </span>
                 </div>
             </div>
@@ -404,11 +406,11 @@
 
         <section id="services" class="pt-0 md:pt-0 pb-8 md:pb-28 bg-white">
             <div class="container mx-auto max-w-7xl px-6 text-center mb-12">
-                <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">02 What I do</p>
+                <p class="font-mono text-xs tracking-widest uppercase text-gray-500 mb-2">02 Expertise</p>
                 <h2 class="super-title text-3xl font-bold text-black mb-8 md:mb-12">Services</h2>
 
                 <!-- Mobile: Swiper -->
-                <div class="block sm:hidden relative text-left">
+                <div class="services-carousel block sm:hidden relative text-left">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper" id="swiper-wrapper"></div>
                     </div>
@@ -1738,8 +1740,8 @@ This proof of concept video was commissioned by a production company for a Chine
             <div class="container text-black max-w-7xl mx-auto px-6">
 
                 <!-- Erste Reihe: Text links, Bild rechts -->
-                <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
-                    <div>
+                <div class="masterclass-workflow grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
+                    <div class="masterclass-workflow__content">
                         <h3 class="text-xl font-bold mb-2 md:mb-4">Workflow & Structure</h3>
                         <p class="text-base md:text-sm font-light tech-text">
                             The Masterclass is designed for individuals, companies, and teams with prior experience in
@@ -1806,7 +1808,7 @@ This proof of concept video was commissioned by a production company for a Chine
                 </div>
 
                 <!-- Zweite Reihe: Bild links, Text rechts -->
-                <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
+                <div class="masterclass-sessions grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
                     <div class="flex justify-center switch-posi masterclass-support-image">
                         <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
                             alt="Individual AI Masterclass consultation" class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
@@ -2055,7 +2057,7 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20260905-nav-home-1" defer></script>
+    <script src="script.js?v=20260912-ipad-quotes-faster" defer></script>
     <script src="refinement.js?v=20260905-3" defer></script>
 </body>
 </html>
