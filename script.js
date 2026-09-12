@@ -79,7 +79,7 @@ const services = [
   ];
 
   const renderCard = (service) => `
-    <article class="flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
+    <article class="service-card flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="service-visual relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img
           src="service-lightstream-connected.png"
@@ -1203,68 +1203,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const close = box.querySelector('.close-btn');
   const plyr  = document.getElementById('lightbox-player');
   const stage = box.querySelector('.video-lightbox-stage');
-  const mobilePlayback = window.matchMedia('(max-width: 767px), (max-width: 1024px) and (max-height: 500px) and (pointer: coarse)');
   const hoverPlayback = window.matchMedia('(hover: hover) and (pointer: fine)');
   let videoTrigger = null;
   let playbackSession = 0;
   let revealTimer = null;
-  let lightboxWasFullscreen = false;
 
-  function fullscreenElement() {
-    return document.fullscreenElement || document.webkitFullscreenElement;
+  function revealPlayer(session) {
+    if (session !== playbackSession || !box.classList.contains('show')) return;
+    clearTimeout(revealTimer);
+    revealTimer = null;
+    stage.classList.add('is-ready');
   }
-
-  function exitLightboxFullscreen() {
-    if (fullscreenElement() !== box) return;
-    const exit = document.exitFullscreen || document.webkitExitFullscreen;
-    if (!exit) return;
-    try {
-      Promise.resolve(exit.call(document)).catch(() => {});
-    } catch (_) {}
-  }
-
-  function requestMobileFullscreen() {
-    const request = box.requestFullscreen || box.webkitRequestFullscreen;
-    if (!request) return; // iPhone uses Vimeo's native playsinline=0 playback.
-    try {
-      // Stay in the original tap handler; waiting for Vimeo loses activation.
-      Promise.resolve(request.call(box)).then(() => {
-        if (!box.classList.contains('show') || !box.classList.contains('is-mobile-player')) {
-          exitLightboxFullscreen();
-        }
-      }).catch(() => {}); // The full-viewport player remains usable if denied.
-    } catch (_) {}
-  }
-
-  function handleFullscreenChange() {
-    const active = fullscreenElement();
-    if (active === box) {
-      if (!box.classList.contains('show')) {
-        exitLightboxFullscreen();
-        return;
-      }
-      lightboxWasFullscreen = true;
-    } else if (!active && lightboxWasFullscreen) {
-      lightboxWasFullscreen = false;
-      closeBox();
-    }
-  }
-  document.addEventListener('fullscreenchange', handleFullscreenChange);
-  document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 
   function schedulePlayerReveal(session, delay) {
     clearTimeout(revealTimer);
-    revealTimer = setTimeout(() => {
-      if (session === playbackSession && box.classList.contains('show')) {
-        stage.classList.add('is-ready');
-      }
-    }, delay);
+    revealTimer = setTimeout(() => revealPlayer(session), delay);
   }
 
-  /* Vimeo lädt unter einer schwarzen Fläche; danach wird der Player freigegeben. */
+  /* Uncover Vimeo as soon as the iframe loads; audio must not run behind a timed cover. */
   plyr.addEventListener('load', () => {
     if (!plyr.src.includes('player.vimeo.com/video/')) return;
-    schedulePlayerReveal(playbackSession, 700);
+    revealPlayer(playbackSession);
   });
 
   /* === Klick- & Hover-Layer über jedes Portfolio-Video === */
@@ -1300,19 +1259,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoHash = frame.dataset.vimeoHash || frameUrl.searchParams.get('h') || '';
     const id = videoHash ? `${videoId}?h=${encodeURIComponent(videoHash)}` : videoId;
     const openVideo = () => {
-      const useFullscreen = mobilePlayback.matches;
       videoTrigger = layer;
       playbackSession += 1;
       clearTimeout(revealTimer);
       stage.classList.remove('is-ready');
       const separator = id.includes('?') ? '&' : '?';
-      box.classList.toggle('is-mobile-player', useFullscreen);
       box.classList.add('show');
       box.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
       schedulePlayerReveal(playbackSession, 2500);
-      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=${useFullscreen ? '0' : '1'}`;
-      if (useFullscreen) requestMobileFullscreen();
+      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=1`;
       close.focus();
     };
     layer.addEventListener('click', openVideo);
@@ -1328,12 +1284,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeBox(){
     if (!box.classList.contains('show')) return;
     playbackSession += 1;
-    lightboxWasFullscreen = false;
-    exitLightboxFullscreen();
     clearTimeout(revealTimer);
     revealTimer = null;
     box.classList.remove('show');
-    box.classList.remove('is-mobile-player');
     box.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
     stage.classList.remove('is-ready');
@@ -1647,41 +1600,231 @@ document.addEventListener('DOMContentLoaded', () => {
 
 (() => {
   const portrait = document.querySelector('.about-portrait');
-  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const about = document.getElementById('about');
+  const quotes = document.getElementById('quotes');
+  // Normalized artwork circles exclude the generous padding in the source images.
+  const headingCircles = [312, 540, 768].map(x => [x / 1080, .5, 104 / 1080]);
+  const targets = [
+    { graphic: portrait, section: about, boundary: quotes, maxRadius: 100, circles: [[.5, 537 / 1080, 244 / 1080]] },
+    {
+      graphic: document.querySelector('#ai-intro .heading-hover-visual'),
+      section: document.getElementById('ai-intro'), circles: headingCircles
+    },
+    {
+      graphic: document.querySelector('#video-editing-page .heading-hover-visual'),
+      section: document.getElementById('Workflow & Tools'), circles: headingCircles
+    },
+    {
+      graphic: document.querySelector('#miscellaneous-page .heading-hover-visual'),
+      section: document.getElementById('Videos, Images & Web'), circles: headingCircles
+    }
+  ].filter(target => target.graphic && target.section);
+  const desktopPointer = window.matchMedia('(min-width: 1200px) and (hover: hover) and (pointer: fine)');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!targets.length) return;
 
-  if (!portrait || !supportsHover.matches || prefersReducedMotion.matches) return;
+  // Blend against the whole page so the image's canvas never clips the lens.
+  const cursor = document.createElement('span');
+  cursor.className = 'about-lens-cursor';
+  cursor.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(cursor);
 
+  const minimumRadius = 8;
+  const proximity = 120;
+  const growthDistance = 72;
+  let enabled = false;
+  let visible = false;
+  const visibleSections = new Set();
+  let activeTarget = null;
+  let active = false;
   let animationFrame = 0;
+  let lastTime = 0;
+  let radius = 0;
+  let targetRadius = 0;
+  let shrinkTime = 140;
+  let leftHeld = false;
+  let lastX = -1;
+  let lastY = -1;
+  let pointer = null;
 
   const resetPortrait = () => {
     cancelAnimationFrame(animationFrame);
-    portrait.classList.remove('is-active');
-    portrait.style.setProperty('--portrait-rx', '0deg');
-    portrait.style.setProperty('--portrait-ry', '0deg');
-    portrait.style.setProperty('--portrait-shadow-x', '0rem');
-    portrait.style.setProperty('--portrait-shadow-y', '0rem');
+    animationFrame = 0;
+    active = false;
+    pointer = null;
+    radius = 0;
+    targetRadius = 0;
+    shrinkTime = 140;
+    leftHeld = false;
+    lastTime = 0;
+    cursor.style.width = '0px';
+    cursor.style.height = '0px';
+    activeTarget?.graphic.classList.remove('is-lens-active');
+    activeTarget = null;
+    cursor.classList.remove('is-visible');
+    document.documentElement.classList.remove('has-about-lens');
   };
 
-  portrait.addEventListener('pointerenter', () => {
-    portrait.classList.add('is-active');
-  });
+  const forgetPointer = () => {
+    lastX = -1;
+    lastY = -1;
+    resetPortrait();
+  };
 
-  portrait.addEventListener('pointermove', event => {
-    cancelAnimationFrame(animationFrame);
-    animationFrame = requestAnimationFrame(() => {
-      const bounds = portrait.getBoundingClientRect();
-      const x = Math.min(Math.max((event.clientX - bounds.left) / bounds.width, 0), 1);
-      const y = Math.min(Math.max((event.clientY - bounds.top) / bounds.height, 0), 1);
+  const measureLensTarget = () => {
+    const underPointer = document.elementFromPoint(pointer.x, pointer.y);
+    if (enabled && visible) {
+      for (const target of targets) {
+        if (!visibleSections.has(target.section)) continue;
+        const area = target.section.getBoundingClientRect();
+        const boundary = target.boundary?.getBoundingClientRect();
+        const areaBottom = boundary?.height ? Math.min(area.bottom, boundary.top) : area.bottom;
+        // Never activate over navigation, overlays or content below the black intro.
+        if (!area.width || !area.height ||
+            pointer.x < area.left || pointer.x >= area.right ||
+            pointer.y < Math.max(0, area.top) || pointer.y >= Math.min(window.innerHeight, areaBottom) ||
+            (underPointer && !target.section.contains(underPointer))) continue;
+        const bounds = target.graphic.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) continue;
+        const size = Math.min(bounds.width, bounds.height);
+        const distance = Math.max(0, Math.min(...target.circles.map(([x, y, r]) =>
+          Math.hypot(pointer.x - bounds.left - bounds.width * x,
+            pointer.y - bounds.top - bounds.height * y) - size * r
+        )));
+        if (distance > proximity) continue;
+        if (activeTarget !== target) {
+          activeTarget?.graphic.classList.remove('is-lens-active');
+          activeTarget = target;
+          active = false;
+          shrinkTime = 140;
+        }
+        const maximumRadius = Math.min(target.maxRadius ?? 75, bounds.width * .325, bounds.height * .325);
+        const growth = Math.max(0, 1 - distance / growthDistance);
+        targetRadius = minimumRadius + (maximumRadius - minimumRadius) * growth;
+        return true;
+      }
+    }
+    resetPortrait();
+    return false;
+  };
 
-      portrait.style.setProperty('--portrait-rx', `${((.5 - y) * 2.4).toFixed(2)}deg`);
-      portrait.style.setProperty('--portrait-ry', `${((x - .5) * 2.4).toFixed(2)}deg`);
-      portrait.style.setProperty('--portrait-shadow-x', `${((x - .5) * .45).toFixed(3)}rem`);
-      portrait.style.setProperty('--portrait-shadow-y', `${((y - .5) * .45).toFixed(3)}rem`);
+  const renderLens = time => {
+    animationFrame = 0;
+    if (!pointer) return;
+    const previousTarget = targetRadius;
+    if (!measureLensTarget()) return;
+    if (!active) {
+      active = true;
+      radius = minimumRadius;
+      lastTime = 0;
+      activeTarget.graphic.classList.add('is-lens-active');
+      cursor.classList.add('is-visible');
+      document.documentElement.classList.add('has-about-lens');
+    }
+    const elapsed = lastTime ? Math.min(time - lastTime, 40) : 16;
+    lastTime = time;
+    const desiredRadius = leftHeld ? minimumRadius : targetRadius;
+    // Retain the faster response until a quick retreat has finished shrinking.
+    const retreatSpeed = Math.max(0, previousTarget - targetRadius) / elapsed;
+    if (!leftHeld && retreatSpeed > 0) {
+      shrinkTime = Math.min(shrinkTime, Math.max(40, 140 / (1 + retreatSpeed * 2)));
+    }
+    if (targetRadius > previousTarget || desiredRadius >= radius) shrinkTime = 140;
+    const responseTime = leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 180;
+    radius += (desiredRadius - radius) * (1 - Math.exp(-elapsed / responseTime));
+    if (Math.abs(desiredRadius - radius) < .15) radius = desiredRadius;
+
+    cursor.style.width = `${radius * 2}px`;
+    cursor.style.height = `${radius * 2}px`;
+    cursor.style.transform = `translate3d(${pointer.x - radius}px, ${pointer.y - radius}px, 0)`;
+    if (radius !== desiredRadius) animationFrame = requestAnimationFrame(renderLens);
+  };
+
+  const onPointerMove = event => {
+    if (!enabled) return;
+    if (event.pointerType !== 'mouse') {
+      forgetPointer();
+      return;
+    }
+    // Reconcile a release outside the window as soon as the mouse returns.
+    const heldChanged = leftHeld !== Boolean(event.buttons & 1);
+    leftHeld = Boolean(event.buttons & 1);
+    // Ignore synthetic pointer events; scrolling updates the geometry separately.
+    if (event.clientX === lastX && event.clientY === lastY && !heldChanged) return;
+    lastX = event.clientX;
+    lastY = event.clientY;
+    if (!visible || (event.buttons & ~1)) {
+      resetPortrait();
+      return;
+    }
+
+    pointer = { x: lastX, y: lastY };
+    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
+  };
+
+  const updateScrolledPointer = () => {
+    if (!enabled || !visible || lastX < 0 || lastY < 0) return;
+    pointer = { x: lastX, y: lastY };
+    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
+  };
+
+  const configureLens = () => {
+    enabled = desktopPointer.matches && !prefersReducedMotion.matches;
+    targets.forEach(target => target.graphic.classList.toggle('is-lens-ready', enabled));
+    window.removeEventListener('pointermove', onPointerMove);
+    if (enabled) window.addEventListener('pointermove', onPointerMove, { passive: true });
+    forgetPointer();
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      });
+      visible = visibleSections.size > 0;
+      if (!visible) resetPortrait();
+      else updateScrolledPointer();
     });
+    targets.forEach(target => observer.observe(target.section));
+  } else {
+    targets.forEach(target => visibleSections.add(target.section));
+    visible = true;
+  }
+  window.addEventListener('scroll', updateScrolledPointer, { passive: true, capture: true });
+  window.addEventListener('resize', forgetPointer);
+  window.addEventListener('blur', forgetPointer);
+  window.addEventListener('pagehide', forgetPointer);
+  window.addEventListener('pointercancel', forgetPointer);
+  window.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'mouse') {
+      forgetPointer();
+      return;
+    }
+    if (!enabled || !active || event.button !== 0 || !activeTarget.section.contains(event.target)) return;
+    leftHeld = true;
+    // Keep links and form controls fully usable with the circular cursor.
+    if (!event.target.closest?.('a, button, input, select, textarea, [role="button"], [contenteditable]')) {
+      event.preventDefault();
+    }
+    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
   });
-
-  portrait.addEventListener('pointerleave', resetPortrait);
+  window.addEventListener('pointerup', event => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    leftHeld = false;
+    if (active && !animationFrame) animationFrame = requestAnimationFrame(renderLens);
+  });
+  targets.forEach(target => target.graphic.addEventListener('dragstart', event => {
+    if (active && leftHeld && activeTarget === target) event.preventDefault();
+  }));
+  window.addEventListener('pointerout', event => {
+    if (!event.relatedTarget) forgetPointer();
+  });
+  window.addEventListener('keydown', forgetPointer);
+  document.addEventListener('visibilitychange', forgetPointer);
+  desktopPointer.addEventListener('change', configureLens);
+  prefersReducedMotion.addEventListener('change', configureLens);
+  configureLens();
 })();
 
 (() => {
