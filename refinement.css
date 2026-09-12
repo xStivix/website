@@ -491,8 +491,6 @@
   --service-muted: #6b7280;
   --service-button-surface: #000;
   --service-button-ink: #fff;
-  --service-shine-opacity: 0;
-  --service-shine-y: 0%;
   --service-image-invert: 0;
   position: relative;
   isolation: isolate;
@@ -530,21 +528,6 @@
   transition: color .6s ease, background-color .6s ease, border-color .6s ease;
 }
 
-#services .service-card::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(0deg, transparent, transparent 10%, rgb(255 255 255 / .2));
-  opacity: var(--service-shine-opacity);
-  transform: rotate(-45deg) translateY(var(--service-shine-y));
-  transition: transform .7s ease-out, opacity .7s ease-out;
-}
-
 /* Touch scrolling never leaves a card stuck in its hover appearance. */
 @media (hover: hover) and (pointer: fine) {
   #services .service-card:hover {
@@ -554,8 +537,6 @@
     --service-muted: #aaa;
     --service-button-surface: #fff;
     --service-button-ink: #000;
-    --service-shine-opacity: 1;
-    --service-shine-y: 100%;
     --service-image-invert: 1;
   }
 }
@@ -566,8 +547,6 @@
   --service-muted: #aaa;
   --service-button-surface: #fff;
   --service-button-ink: #000;
-  --service-shine-opacity: 1;
-  --service-shine-y: 100%;
   --service-image-invert: 1;
 }
 
@@ -585,10 +564,6 @@
   #services .service-card__number,
   #services .service-card__actions .page-link {
     transition: none;
-  }
-
-  #services .service-card::after {
-    display: none;
   }
 }
 
