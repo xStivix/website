@@ -1605,7 +1605,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Normalized artwork circles exclude the generous padding in the source images.
   const headingCircles = [312, 540, 768].map(x => [x / 1080, .5, 104 / 1080]);
   const targets = [
-    { graphic: portrait, section: about, boundary: quotes, maxRadius: 100, circles: [[.5, 537 / 1080, 244 / 1080]] },
+    { graphic: portrait, section: about, boundary: quotes, maxRadius: 125, circles: [[.5, 537 / 1080, 244 / 1080]] },
     {
       graphic: document.querySelector('#ai-intro .heading-hover-visual'),
       section: document.getElementById('ai-intro'), circles: headingCircles
@@ -1630,8 +1630,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(cursor);
 
   const minimumRadius = 8;
-  const proximity = 120;
+  const proximity = 220;
+  const entryDistance = 80;
   const growthDistance = 72;
+  const followTime = 90;
   let enabled = false;
   let visible = false;
   const visibleSections = new Set();
@@ -1646,12 +1648,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastX = -1;
   let lastY = -1;
   let pointer = null;
+  let lensPosition = null;
 
   const resetPortrait = () => {
     cancelAnimationFrame(animationFrame);
     animationFrame = 0;
     active = false;
     pointer = null;
+    lensPosition = null;
     radius = 0;
     targetRadius = 0;
     shrinkTime = 140;
@@ -1673,6 +1677,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const measureLensTarget = () => {
     const underPointer = document.elementFromPoint(pointer.x, pointer.y);
+    let insideActiveArea = false;
     if (enabled && visible) {
       for (const target of targets) {
         if (!visibleSections.has(target.section)) continue;
@@ -1684,6 +1689,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pointer.x < area.left || pointer.x >= area.right ||
             pointer.y < Math.max(0, area.top) || pointer.y >= Math.min(window.innerHeight, areaBottom) ||
             (underPointer && !target.section.contains(underPointer))) continue;
+        if (target === activeTarget) insideActiveArea = true;
         const bounds = target.graphic.getBoundingClientRect();
         if (!bounds.width || !bounds.height) continue;
         const size = Math.min(bounds.width, bounds.height);
@@ -1698,11 +1704,19 @@ document.addEventListener('DOMContentLoaded', () => {
           active = false;
           shrinkTime = 140;
         }
-        const maximumRadius = Math.min(target.maxRadius ?? 75, bounds.width * .325, bounds.height * .325);
+        const maximumRadius = Math.min(target.maxRadius ?? 100, bounds.width * .325, bounds.height * .325);
         const growth = Math.max(0, 1 - distance / growthDistance);
-        targetRadius = minimumRadius + (maximumRadius - minimumRadius) * growth;
+        // Ease the small ball in across the outer edge instead of popping in.
+        const entry = Math.min(1, Math.max(0, (proximity - distance) / entryDistance));
+        const entryEase = entry * entry * (3 - 2 * entry);
+        targetRadius = minimumRadius * entryEase + (maximumRadius - minimumRadius) * growth;
         return true;
       }
+    }
+    // Shrink away smoothly within the intro; clear immediately over other UI.
+    if (active && insideActiveArea) {
+      targetRadius = 0;
+      return true;
     }
     resetPortrait();
     return false;
@@ -1715,7 +1729,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!measureLensTarget()) return;
     if (!active) {
       active = true;
-      radius = minimumRadius;
+      radius = 0;
+      lensPosition = { ...pointer };
       lastTime = 0;
       activeTarget.graphic.classList.add('is-lens-active');
       cursor.classList.add('is-visible');
@@ -1723,21 +1738,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const elapsed = lastTime ? Math.min(time - lastTime, 40) : 16;
     lastTime = time;
-    const desiredRadius = leftHeld ? minimumRadius : targetRadius;
+    const desiredRadius = leftHeld ? Math.min(minimumRadius, targetRadius) : targetRadius;
     // Retain the faster response until a quick retreat has finished shrinking.
     const retreatSpeed = Math.max(0, previousTarget - targetRadius) / elapsed;
     if (!leftHeld && retreatSpeed > 0) {
       shrinkTime = Math.min(shrinkTime, Math.max(40, 140 / (1 + retreatSpeed * 2)));
     }
     if (targetRadius > previousTarget || desiredRadius >= radius) shrinkTime = 140;
-    const responseTime = leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 180;
+    const responseTime = leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 220;
     radius += (desiredRadius - radius) * (1 - Math.exp(-elapsed / responseTime));
     if (Math.abs(desiredRadius - radius) < .15) radius = desiredRadius;
 
+    if (radius === 0 && desiredRadius === 0) {
+      resetPortrait();
+      return;
+    }
+    // Frame-rate-independent trailing motion, with no animation loop at rest.
+    const follow = 1 - Math.exp(-elapsed / followTime);
+    lensPosition.x += (pointer.x - lensPosition.x) * follow;
+    lensPosition.y += (pointer.y - lensPosition.y) * follow;
+    const positionSettled = Math.hypot(pointer.x - lensPosition.x, pointer.y - lensPosition.y) < .1;
+    if (positionSettled) lensPosition = { ...pointer };
+
     cursor.style.width = `${radius * 2}px`;
     cursor.style.height = `${radius * 2}px`;
-    cursor.style.transform = `translate3d(${pointer.x - radius}px, ${pointer.y - radius}px, 0)`;
-    if (radius !== desiredRadius) animationFrame = requestAnimationFrame(renderLens);
+    cursor.style.transform = `translate3d(${lensPosition.x - radius}px, ${lensPosition.y - radius}px, 0)`;
+    if (radius !== desiredRadius || !positionSettled) animationFrame = requestAnimationFrame(renderLens);
   };
 
   const onPointerMove = event => {

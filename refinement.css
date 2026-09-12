@@ -481,10 +481,7 @@
     visibility: visible;
   }
 
-  html.has-about-lens,
-  html.has-about-lens * {
-    cursor: none !important;
-  }
+  /* Keep the native pointer visible while the inversion ball trails behind it. */
 }
 
 /* The service reveal shares the same monochrome palette. */
