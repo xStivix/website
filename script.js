@@ -1602,6 +1602,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const portrait = document.querySelector('.about-portrait');
   const about = document.getElementById('about');
   const quotes = document.getElementById('quotes');
+  const navigation = document.querySelector('.site-nav');
   // Normalized artwork circles exclude the generous padding in the source images.
   const headingCircles = [312, 540, 768].map(x => [x / 1080, .5, 104 / 1080]);
   const targets = [
@@ -1649,6 +1650,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastY = -1;
   let pointer = null;
   let lensPosition = null;
+  let retreatingAtNavigation = false;
 
   const resetPortrait = () => {
     cancelAnimationFrame(animationFrame);
@@ -1656,6 +1658,7 @@ document.addEventListener('DOMContentLoaded', () => {
     active = false;
     pointer = null;
     lensPosition = null;
+    retreatingAtNavigation = false;
     radius = 0;
     targetRadius = 0;
     shrinkTime = 140;
@@ -1677,6 +1680,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const measureLensTarget = () => {
     const underPointer = document.elementFromPoint(pointer.x, pointer.y);
+    retreatingAtNavigation = false;
+    if (underPointer && navigation?.contains(underPointer)) {
+      const area = activeTarget?.section.getBoundingClientRect();
+      if (enabled && visible && active && visibleSections.has(activeTarget.section) &&
+          area?.width && area.height && area.bottom > 0 && area.top < window.innerHeight) {
+        // Finish the existing circle below the nav; never start one on the nav.
+        retreatingAtNavigation = true;
+        targetRadius = 0;
+        return true;
+      }
+      resetPortrait();
+      return false;
+    }
     let insideActiveArea = false;
     if (enabled && visible) {
       for (const target of targets) {
@@ -1727,6 +1743,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!pointer) return;
     const previousTarget = targetRadius;
     if (!measureLensTarget()) return;
+    const navigationBottom = Math.max(0, navigation?.getBoundingClientRect().bottom ?? 0);
     if (!active) {
       active = true;
       radius = 0;
@@ -1745,7 +1762,7 @@ document.addEventListener('DOMContentLoaded', () => {
       shrinkTime = Math.min(shrinkTime, Math.max(40, 140 / (1 + retreatSpeed * 2)));
     }
     if (targetRadius > previousTarget || desiredRadius >= radius) shrinkTime = 140;
-    const responseTime = leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 220;
+    const responseTime = retreatingAtNavigation ? 20 : leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 220;
     radius += (desiredRadius - radius) * (1 - Math.exp(-elapsed / responseTime));
     if (Math.abs(desiredRadius - radius) < .15) radius = desiredRadius;
 
@@ -1755,14 +1772,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Frame-rate-independent trailing motion, with no animation loop at rest.
     const follow = 1 - Math.exp(-elapsed / followTime);
-    lensPosition.x += (pointer.x - lensPosition.x) * follow;
-    lensPosition.y += (pointer.y - lensPosition.y) * follow;
-    const positionSettled = Math.hypot(pointer.x - lensPosition.x, pointer.y - lensPosition.y) < .1;
-    if (positionSettled) lensPosition = { ...pointer };
+    // Let the last visible circle collapse in place instead of following into the clipped nav.
+    if (!retreatingAtNavigation) {
+      lensPosition.x += (pointer.x - lensPosition.x) * follow;
+      lensPosition.y += (pointer.y - lensPosition.y) * follow;
+    }
+    const positionSettled = retreatingAtNavigation || Math.hypot(pointer.x - lensPosition.x, pointer.y - lensPosition.y) < .1;
+    if (positionSettled && !retreatingAtNavigation) lensPosition = { ...pointer };
 
     cursor.style.width = `${radius * 2}px`;
     cursor.style.height = `${radius * 2}px`;
     cursor.style.transform = `translate3d(${lensPosition.x - radius}px, ${lensPosition.y - radius}px, 0)`;
+    // Clip the complete lens, including its trailing edge, below the fixed nav.
+    // Stacking beneath the nav alone would still show through its glass background.
+    const clippedTop = Math.min(radius * 2, Math.max(0, navigationBottom - (lensPosition.y - radius)));
+    cursor.style.clipPath = `inset(${clippedTop}px 0 0 0)`;
     if (radius !== desiredRadius || !positionSettled) animationFrame = requestAnimationFrame(renderLens);
   };
 
