@@ -54,6 +54,10 @@
   });
 })();
 
+// A short touch viewport is a phone in landscape, even below the tablet width.
+const phoneLandscapeQuery = '(orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)';
+const phoneLandscapeMedia = window.matchMedia(phoneLandscapeQuery);
+
 const services = [
     {
       number: '01',
@@ -115,8 +119,8 @@ const services = [
 
   let servicesSwiper = null;
   let swiperAssetsPromise = null;
-  // Keep phone behavior intact; also use the existing carousel on tablets.
-  const servicesSliderMedia = window.matchMedia('(max-width: 639px), (min-width: 768px) and (max-width: 1199px)');
+  let servicesSlideIndex = 0;
+  const servicesSliderMedia = window.matchMedia(`(max-width: 639px), (min-width: 768px) and (max-width: 1199px), ${phoneLandscapeQuery}`);
 
   const loadSwiperAssets = () => {
     if (typeof window.Swiper === 'function') return Promise.resolve();
@@ -162,6 +166,7 @@ const services = [
       if (servicesSwiper || !servicesSliderMedia.matches) return;
       servicesSwiper = new window.Swiper(".mySwiper", {
       direction: "horizontal",
+      initialSlide: servicesSlideIndex,
       slidesPerView: 'auto',
       spaceBetween: 12,
       speed: 420,
@@ -208,7 +213,31 @@ const services = [
   };
 
   prepareServicesSwiper();
-  servicesSliderMedia.addEventListener?.('change', prepareServicesSwiper);
+  let servicesResizeFrame = 0;
+  const refreshServicesLayout = () => {
+    if (servicesResizeFrame) return;
+    servicesResizeFrame = requestAnimationFrame(() => {
+      servicesResizeFrame = 0;
+      if (!servicesSliderMedia.matches) {
+        servicesObserver?.disconnect();
+        servicesObserver = null;
+        if (servicesSwiper) {
+          servicesSlideIndex = servicesSwiper.activeIndex;
+          servicesSwiper.destroy(true, true);
+          servicesSwiper = null;
+        }
+      } else if (servicesSwiper) {
+        const index = servicesSwiper.activeIndex;
+        servicesSwiper.update();
+        servicesSwiper.slideTo(index, 0, false);
+      } else {
+        prepareServicesSwiper();
+      }
+    });
+  };
+  servicesSliderMedia.addEventListener('change', refreshServicesLayout);
+  phoneLandscapeMedia.addEventListener('change', refreshServicesLayout);
+  window.addEventListener('resize', refreshServicesLayout, { passive: true });
 
   const projectPlayerPromises = new WeakMap();
   const selectedWorkThumbnailOverrides = {
@@ -595,8 +624,11 @@ function updateDesktopIframeScale(){
   const TOLERANCE   = 0.05;
   const EXTRA       = 1.0;    // 30% für Tablets/Ultra-Wide
 
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  // On a short landscape phone the hero may be taller than the visible area.
+  // Cover its actual box, including after Safari finishes rotating.
+  const hero = iframe.closest('#home');
+  const vw = phoneLandscapeMedia.matches ? hero.clientWidth : window.innerWidth;
+  const vh = phoneLandscapeMedia.matches ? hero.clientHeight : window.innerHeight;
   const r  = vw / vh;
   const isNearly169 = Math.abs(r - VIDEO_RATIO) < VIDEO_RATIO * TOLERANCE;
 
@@ -761,7 +793,11 @@ function updateDesktopIframeScale(){
       /* --- Desktop‑Iframe skalieren --- */
       updateDesktopIframeScale();                                      // sofort ausführen
       window.addEventListener('resize',            updateDesktopIframeScale, {passive:true});
-      window.addEventListener('orientationchange', updateDesktopIframeScale);
+      window.addEventListener('orientationchange', () => {
+        requestAnimationFrame(updateDesktopIframeScale);
+        setTimeout(updateDesktopIframeScale, 250);
+      });
+      phoneLandscapeMedia.addEventListener('change', updateDesktopIframeScale);
     });
 
 
@@ -785,6 +821,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const introOverlay = document.querySelector('.intro-overlay');
   const heroEditorial = document.querySelector('.hero-editorial');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktopIntroMedia = window.matchMedia('(min-width: 768px)');
+  const isDesktopIntro = () => desktopIntroMedia.matches && !phoneLandscapeMedia.matches;
+
+  function showHeroImmediately() {
+    didReveal = true;
+    document.documentElement.classList.add('intro-skip', 'hero-instant');
+    document.body.classList.remove('intro-active');
+    heroEditorial?.classList.remove('hero-animate');
+    heroEditorial?.classList.add('hero-revealed', 'hero-interactive');
+    introOverlay?.remove();
+  }
+
+  // Also finish a running phone intro immediately if the viewport becomes
+  // desktop/tablet. Resizing back must not replay the entrance animation.
+  const syncIntroLayout = () => {
+    if (isDesktopIntro()) showHeroImmediately();
+  };
+  desktopIntroMedia.addEventListener('change', syncIntroLayout);
+  phoneLandscapeMedia.addEventListener('change', syncIntroLayout);
+
+  if (prefersReducedMotion || isDesktopIntro()) {
+    showHeroImmediately();
+    return;
+  }
 
   if (heroEditorial && !prefersReducedMotion) {
     heroEditorial.classList.add('hero-animate');
@@ -840,6 +900,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const desktopIframe = document.querySelector('.desktop-iframe');
   const mobileIframe = document.querySelector('.mobile-iframe');
   const mobileFallback = document.querySelector('.mobile-fallback');
+  const hero = document.getElementById('home');
   const mobileMedia = window.matchMedia('(max-width: 767px)');
   if (!desktopIframe || !mobileIframe) return;
 
@@ -933,7 +994,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const loadResponsiveHero = () => {
-    const nextState = states[mobileMedia.matches ? 1 : 0];
+    const nextState = states[mobileMedia.matches && !phoneLandscapeMedia.matches ? 1 : 0];
     if (activeState === nextState) return;
     if (revealTimer) {
       clearTimeout(revealTimer);
@@ -945,11 +1006,47 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   loadResponsiveHero();
-  if (mobileMedia.addEventListener) {
-    mobileMedia.addEventListener('change', loadResponsiveHero);
-  } else {
-    mobileMedia.addListener(loadResponsiveHero);
+  for (const media of [mobileMedia, phoneLandscapeMedia]) {
+    if (media.addEventListener) media.addEventListener('change', loadResponsiveHero);
+    else media.addListener(loadResponsiveHero);
   }
+
+  // Orientation events can arrive before Safari updates the viewport. Check
+  // again after layout and on the later resize, without reloading either iframe.
+  let responsiveFrame = 0;
+  let orientationTimer = null;
+  const scheduleResponsiveHero = () => {
+    if (responsiveFrame) return;
+    responsiveFrame = requestAnimationFrame(() => {
+      responsiveFrame = 0;
+      loadResponsiveHero();
+    });
+  };
+  window.addEventListener('resize', scheduleResponsiveHero, { passive: true });
+  window.visualViewport?.addEventListener('resize', scheduleResponsiveHero, { passive: true });
+  window.addEventListener('orientationchange', () => {
+    scheduleResponsiveHero();
+    clearTimeout(orientationTimer);
+    orientationTimer = setTimeout(scheduleResponsiveHero, 250);
+  });
+
+  // iOS can suspend an offscreen video during the switch. Resume the selected
+  // player when the hero returns, including returning from another page/tab.
+  let heroVisible = true;
+  const resumeVisibleHero = () => {
+    loadResponsiveHero();
+    if (heroVisible && !document.hidden && activeState) syncPlayback(activeState);
+  };
+  if (hero && 'IntersectionObserver' in window) {
+    const heroObserver = new IntersectionObserver(entries => {
+      const wasVisible = heroVisible;
+      heroVisible = entries.some(entry => entry.isIntersecting);
+      if (heroVisible && !wasVisible) resumeVisibleHero();
+    });
+    heroObserver.observe(hero);
+  }
+  window.addEventListener('pageshow', resumeVisibleHero);
+  document.addEventListener('visibilitychange', resumeVisibleHero);
 });
 
 

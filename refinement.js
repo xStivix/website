@@ -4,7 +4,7 @@
   const scrollCue = hero?.querySelector('.hero-editorial__desktop-scroll');
   if (!hero || !scrollCue) return;
 
-  const desktop = window.matchMedia('(min-width: 768px)');
+  const desktop = window.matchMedia('(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)');
   let frame = 0;
 
   function updateScrollCue() {

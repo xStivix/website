@@ -66,10 +66,13 @@
     <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
     <link rel="preload" href="fonts/roboto-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/roboto-mono-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/google-sans-700.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
+    <link rel="preload" href="fonts/google-sans-text-latin-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
+    <link rel="preload" href="fonts/google-sans-text-latin-500.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="stylesheet" href="site.min.css?v=20260903-8" />
-    <link rel="stylesheet" href="refinement.css?v=20260912-services-no-sweep" />
+    <link rel="stylesheet" href="refinement.css?v=20260912-ipad-larger-title" />
     <style>
         .name-wrapper {
             display: flex;
@@ -101,8 +104,10 @@
     </style>
     <script>
         const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reducedMotion) {
-            document.documentElement.classList.add('intro-skip');
+        const desktopIntro = matchMedia('(min-width: 768px)').matches &&
+            !matchMedia('(orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)').matches;
+        if (reducedMotion || desktopIntro) {
+            document.documentElement.classList.add('intro-skip', 'hero-instant');
         }
         window.setTimeout(() => {
             const overlay = document.querySelector('.intro-overlay');
@@ -336,7 +341,7 @@
                     <div class="erstes-video-s"></div>
                     <!-- Overlay Texte -->
                     <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1] ">
-                        <p class="font-mono text-sm uppercase mb-1">OpenAI Motion Design Study (2025)</p>
+                        <p class="font-mono text-sm uppercase mb-1">Design Study (2025)</p>
                         <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
                     </div>
                 </div>
@@ -2057,7 +2062,7 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20260912-lens-nav-retreat-20" defer></script>
-    <script src="refinement.js?v=20260905-3" defer></script>
+    <script src="script.js?v=20260912-instant-desktop-hero" defer></script>
+    <script src="refinement.js?v=20260912-phone-orientation" defer></script>
 </body>
 </html>
