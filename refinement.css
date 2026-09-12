@@ -443,7 +443,7 @@
 
   #home .hero-editorial__title {
     top: 28%;
-    font-size: clamp(2.25rem, min(8.8vw, 18svh), 5.5rem);
+    font-size: clamp(2.75rem, min(10.8vw, 22svh), 6.75rem);
   }
 
   #home .hero-editorial__description {

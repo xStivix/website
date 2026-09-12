@@ -627,6 +627,17 @@ function updateDesktopIframeScale(){
   // On a short landscape phone the hero may be taller than the visible area.
   // Cover its actual box, including after Safari finishes rotating.
   const hero = iframe.closest('#home');
+  // A shallow mouse-driven window can be shorter than the hero's minimum
+  // height. Cover that full section with the 16:9 video inside the iframe;
+  // scaling against the viewport alone leaves a hard edge behind the footer.
+  if (hero && window.matchMedia('(min-width: 768px) and (pointer: fine)').matches &&
+      hero.clientHeight > window.innerHeight) {
+    const videoWidth = Math.min(iframe.clientWidth, iframe.clientHeight * VIDEO_RATIO);
+    const videoHeight = videoWidth / VIDEO_RATIO;
+    const coverScale = Math.max((hero.clientWidth + 2) / videoWidth, (hero.clientHeight + 2) / videoHeight);
+    iframe.style.transform = `translate(-50%, -50%) scale(${coverScale})`;
+    return;
+  }
   const vw = phoneLandscapeMedia.matches ? hero.clientWidth : window.innerWidth;
   const vh = phoneLandscapeMedia.matches ? hero.clientHeight : window.innerHeight;
   const r  = vw / vh;
