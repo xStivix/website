@@ -1,6 +1,16 @@
 /* Monochrome refinements to the original website. */
 :root {
   --button-radius: 999px;
+  font-size: 100%;
+}
+
+/* Use the 1920px desktop as the upper end of the existing rem-based design.
+   The 14px floor keeps reading copy usable on smaller laptops. Touch layouts
+   keep their own tablet/phone rules, as do desktop viewports below 1200px. */
+@media (min-width: 1200px) and (max-width: 1919.98px) and (pointer: fine) {
+  :root {
+    font-size: clamp(.875rem, calc(.5rem + .4166667vw), 1rem);
+  }
 }
 
 /* One consistent pill shape for action buttons across all pages. */
@@ -28,6 +38,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* A tiny nonzero duration creates font transitions on otherwise static
+     elements in WebKit, leaving inherited sizes stale after a resize. */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+  }
+
   .hero-instant #home .video-background {
     transition: none;
   }
@@ -454,6 +472,18 @@
   #home .hero-editorial__desktop-break { display: none; }
 }
 
+/* Keep the hero's visual proportions relative to the 1920px composition.
+   Height still limits the text in short browser windows. */
+@media (min-width: 1200px) and (max-width: 1919.98px) and (pointer: fine) {
+  #home {
+    --hero-support-size: clamp(1rem, min(1.25vw, 2.667svh), 1.5rem);
+  }
+
+  #home .hero-editorial__title {
+    font-size: clamp(3.25rem, min(10.208333vw, 26svh), 12.25rem);
+  }
+}
+
 #quotes {
   display: block;
   border-top: 0;
@@ -520,6 +550,17 @@
 @media (max-width: 767px) {
   #quotes {
     display: none;
+  }
+}
+
+/* Keep the footer grid inside the same content edges as its links. Its dots
+   are redrawn at the matching scale, instead of losing rows on small laptops. */
+@media (min-width: 1200px) and (pointer: fine) {
+  .footer-magnet .magnet-grid {
+    --magnet-responsive: 1;
+    width: 100%;
+    max-width: 100%;
+    height: 10rem;
   }
 }
 

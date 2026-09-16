@@ -621,8 +621,6 @@ function updateDesktopIframeScale(){
   if (getComputedStyle(iframe).display === 'none') return;
 
   const VIDEO_RATIO = 16/9;
-  const TOLERANCE   = 0.05;
-  const EXTRA       = 1.0;    // 30% für Tablets/Ultra-Wide
 
   // On a short landscape phone the hero may be taller than the visible area.
   // Cover its actual box, including after Safari finishes rotating.
@@ -641,19 +639,13 @@ function updateDesktopIframeScale(){
   const vw = phoneLandscapeMedia.matches ? hero.clientWidth : window.innerWidth;
   const vh = phoneLandscapeMedia.matches ? hero.clientHeight : window.innerHeight;
   const r  = vw / vh;
-  const isNearly169 = Math.abs(r - VIDEO_RATIO) < VIDEO_RATIO * TOLERANCE;
 
-  if (isNearly169) {
-    // Desktop (16:9 ±5%) jetzt mit 20% Overscan
-    iframe.style.transform = 'translate(-50%, -50%) scale(1.0)';
-  } else {
-    // Alle anderen Geräte weiterhin „dynamisch +30%“
-    const baseScale = r > VIDEO_RATIO
-      ? r / VIDEO_RATIO
-      : VIDEO_RATIO / r;
-    iframe.style.transform =
-      `translate(-50%, -50%) scale(${baseScale * EXTRA})`;
-  }
+  // Cover continuously, even just above or below 16:9. A tolerance around
+  // that ratio leaves visible letterboxing, e.g. in a 1440 x 780 window.
+  const coverScale = r > VIDEO_RATIO
+    ? r / VIDEO_RATIO
+    : VIDEO_RATIO / r;
+  iframe.style.transform = `translate(-50%, -50%) scale(${coverScale})`;
 }
 
       /* Smooth scroll für Anker-Links */
@@ -1186,6 +1178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationFrame = null;
     let isVisible = false;
     let isIntersecting = false;
+    let dotScale = 1;
+    let lastSize = '';
 
     /* Größe & Punkte berechnen --------------------------------- */
     function resize(){
@@ -1193,14 +1187,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (r.width === 0 || r.height === 0) return;  // Seite evtl. noch hidden
 
       const d = window.devicePixelRatio || 1;
+      const centeredGrid = getComputedStyle(canvas).getPropertyValue('--magnet-responsive').trim() === '1';
+      const size = `${r.width}:${r.height}:${d}:${centeredGrid}`;
+      if (size === lastSize) return;
+      lastSize = size;
       canvas.width  = r.width  * d;
       canvas.height = r.height * d;
       ctx.setTransform(d,0,0,d,0,0);
 
+      dotScale = centeredGrid ? r.height / 160 : 1;
+      const step = STEP * dotScale;
+      const columns = Math.floor(r.width / step);
+      const startX = centeredGrid ? (r.width - (columns - 1) * step) / 2 : step / 2;
       dots = [];
-      for (let y = STEP/2; y < r.height; y += STEP){
-        for (let x = STEP/2; x < r.width;  x += STEP){
-          dots.push({ x, y, radius: BASE_R, alpha: BASE_ALPHA });
+      for (let y = step/2; y < r.height; y += step){
+        for (let x = startX; x < r.width; x += step){
+          dots.push({ x, y, radius: BASE_R * dotScale, alpha: BASE_ALPHA });
         }
       }
     }
@@ -1216,8 +1218,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const dx = p.x - mouse.x;
         const dy = p.y - mouse.y;
         const dist = Math.hypot(dx,dy);
-        const t = Math.exp(-dist / FALLOFF);
-        const targetR = BASE_R + (MAX_R - BASE_R) * t;
+        const t = Math.exp(-dist / (FALLOFF * dotScale));
+        const targetR = (BASE_R + (MAX_R - BASE_R) * t) * dotScale;
         const targetAlpha = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * t;
         const radiusEase = targetR > p.radius ? GROW_EASE : RETURN_EASE;
 
@@ -1268,6 +1270,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* Nur zeichnen, wenn das Raster tatsächlich sichtbar ist. */
     resize();
+    // CSS/font-size changes can settle after the window's resize event.
+    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
     if ('IntersectionObserver' in window) {
       const visibilityObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
