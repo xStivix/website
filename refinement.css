@@ -487,6 +487,7 @@
 #quotes {
   display: block;
   border-top: 0;
+  padding-block: .875rem;
 }
 
 /* Hide the logo frames while preserving the existing spacing. */
@@ -510,7 +511,7 @@
     --qt-gap-x: calc(16 * var(--qt-scale-unit));
     --qt-stack-gap: calc(6 * var(--qt-scale-unit));
     --qt-fade-w: calc(72 * var(--qt-scale-unit));
-    padding-block: calc(16 * var(--qt-scale-unit));
+    padding-block: calc(14 * var(--qt-scale-unit));
   }
 
   #quotes .quote-ticker {
@@ -553,53 +554,36 @@
   }
 }
 
-/* Keep the footer grid inside the same content edges as its links. Its dots
-   are redrawn at the matching scale, instead of losing rows on small laptops. */
+/* Keep the grid aligned with the footer, with a small inset for its edge dots
+   so they can grow on hover without clipping. */
+.footer-magnet .magnet-wrapper {
+  margin-inline: 0;
+}
+
+.footer-magnet .magnet-grid {
+  width: 100%;
+  max-width: none;
+}
+
 @media (min-width: 1200px) and (pointer: fine) {
   .footer-magnet .magnet-grid {
     --magnet-responsive: 1;
-    width: 100%;
-    max-width: 100%;
     height: 10rem;
   }
 }
 
-/* The growing cursor inverts the page beneath it, without an image-sized clip. */
-.about-lens-cursor {
-  display: none;
-  pointer-events: none;
+/* Keep the About and page-heading graphics static, including on hover. */
+#about .about-portrait {
+  perspective: none;
 }
 
-@media (min-width: 1200px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  #about .about-portrait.is-lens-ready {
-    perspective: none;
-  }
-
-  #about .is-lens-ready .about-portrait__image,
-  .heading-hover-visual.is-lens-ready {
-    transform: none;
-    filter: none;
-    transition: none;
-    will-change: auto;
-  }
-
-  .about-lens-cursor {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 60;
-    background: #fff;
-    border-radius: 50%;
-    mix-blend-mode: difference;
-    visibility: hidden;
-  }
-
-  .about-lens-cursor.is-visible {
-    visibility: visible;
-  }
-
-  /* Keep the native pointer visible while the inversion ball trails behind it. */
+#about .about-portrait__image,
+.heading-hover-visual,
+.heading-hover-visual:hover {
+  transform: none;
+  filter: none;
+  transition: none;
+  will-change: auto;
 }
 
 /* The service reveal shares the same monochrome palette. */
@@ -826,7 +810,7 @@
     --qt-gap-x: 16px;
     --qt-stack-gap: 6px;
     --qt-fade-w: 36px;
-    padding-block: 16px;
+    padding-block: 14px;
   }
 
   #quotes .quote-text {

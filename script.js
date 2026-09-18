@@ -1187,21 +1187,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (r.width === 0 || r.height === 0) return;  // Seite evtl. noch hidden
 
       const d = window.devicePixelRatio || 1;
-      const centeredGrid = getComputedStyle(canvas).getPropertyValue('--magnet-responsive').trim() === '1';
-      const size = `${r.width}:${r.height}:${d}:${centeredGrid}`;
+      const scaledGrid = getComputedStyle(canvas).getPropertyValue('--magnet-responsive').trim() === '1';
+      const size = `${r.width}:${r.height}:${d}:${scaledGrid}`;
       if (size === lastSize) return;
       lastSize = size;
       canvas.width  = r.width  * d;
       canvas.height = r.height * d;
       ctx.setTransform(d,0,0,d,0,0);
 
-      dotScale = centeredGrid ? r.height / 160 : 1;
+      dotScale = scaledGrid ? r.height / 160 : 1;
       const step = STEP * dotScale;
-      const columns = Math.floor(r.width / step);
-      const startX = centeredGrid ? (r.width - (columns - 1) * step) / 2 : step / 2;
+      // Inset both outer dots enough for their full hover radius, then
+      // distribute the columns evenly between those fixed endpoints.
+      const edge = MAX_R * dotScale;
+      const span = Math.max(0, r.width - 2 * edge);
+      const columns = Math.max(2, Math.round(span / step) + 1);
+      const stepX = span / (columns - 1);
       dots = [];
       for (let y = step/2; y < r.height; y += step){
-        for (let x = startX; x < r.width; x += step){
+        for (let column = 0; column < columns; column++){
+          const x = edge + column * stepX;
           dots.push({ x, y, radius: BASE_R * dotScale, alpha: BASE_ALPHA });
         }
       }
@@ -1709,285 +1714,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `${emailLinkTarget}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 });
-
-(() => {
-  const portrait = document.querySelector('.about-portrait');
-  const about = document.getElementById('about');
-  const quotes = document.getElementById('quotes');
-  const navigation = document.querySelector('.site-nav');
-  // Normalized artwork circles exclude the generous padding in the source images.
-  const headingCircles = [312, 540, 768].map(x => [x / 1080, .5, 104 / 1080]);
-  const targets = [
-    { graphic: portrait, section: about, boundary: quotes, maxRadius: 125, circles: [[.5, 537 / 1080, 244 / 1080]] },
-    {
-      graphic: document.querySelector('#ai-intro .heading-hover-visual'),
-      section: document.getElementById('ai-intro'), circles: headingCircles
-    },
-    {
-      graphic: document.querySelector('#video-editing-page .heading-hover-visual'),
-      section: document.getElementById('Workflow & Tools'), circles: headingCircles
-    },
-    {
-      graphic: document.querySelector('#miscellaneous-page .heading-hover-visual'),
-      section: document.getElementById('Videos, Images & Web'), circles: headingCircles
-    }
-  ].filter(target => target.graphic && target.section);
-  const desktopPointer = window.matchMedia('(min-width: 1200px) and (hover: hover) and (pointer: fine)');
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!targets.length) return;
-
-  // Blend against the whole page so the image's canvas never clips the lens.
-  const cursor = document.createElement('span');
-  cursor.className = 'about-lens-cursor';
-  cursor.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(cursor);
-
-  const minimumRadius = 8;
-  const proximity = 220;
-  const entryDistance = 80;
-  const growthDistance = 72;
-  const followTime = 90;
-  let enabled = false;
-  let visible = false;
-  const visibleSections = new Set();
-  let activeTarget = null;
-  let active = false;
-  let animationFrame = 0;
-  let lastTime = 0;
-  let radius = 0;
-  let targetRadius = 0;
-  let shrinkTime = 140;
-  let leftHeld = false;
-  let lastX = -1;
-  let lastY = -1;
-  let pointer = null;
-  let lensPosition = null;
-  let retreatingAtNavigation = false;
-
-  const resetPortrait = () => {
-    cancelAnimationFrame(animationFrame);
-    animationFrame = 0;
-    active = false;
-    pointer = null;
-    lensPosition = null;
-    retreatingAtNavigation = false;
-    radius = 0;
-    targetRadius = 0;
-    shrinkTime = 140;
-    leftHeld = false;
-    lastTime = 0;
-    cursor.style.width = '0px';
-    cursor.style.height = '0px';
-    activeTarget?.graphic.classList.remove('is-lens-active');
-    activeTarget = null;
-    cursor.classList.remove('is-visible');
-    document.documentElement.classList.remove('has-about-lens');
-  };
-
-  const forgetPointer = () => {
-    lastX = -1;
-    lastY = -1;
-    resetPortrait();
-  };
-
-  const measureLensTarget = () => {
-    const underPointer = document.elementFromPoint(pointer.x, pointer.y);
-    retreatingAtNavigation = false;
-    if (underPointer && navigation?.contains(underPointer)) {
-      const area = activeTarget?.section.getBoundingClientRect();
-      if (enabled && visible && active && visibleSections.has(activeTarget.section) &&
-          area?.width && area.height && area.bottom > 0 && area.top < window.innerHeight) {
-        // Finish the existing circle below the nav; never start one on the nav.
-        retreatingAtNavigation = true;
-        targetRadius = 0;
-        return true;
-      }
-      resetPortrait();
-      return false;
-    }
-    let insideActiveArea = false;
-    if (enabled && visible) {
-      for (const target of targets) {
-        if (!visibleSections.has(target.section)) continue;
-        const area = target.section.getBoundingClientRect();
-        const boundary = target.boundary?.getBoundingClientRect();
-        const areaBottom = boundary?.height ? Math.min(area.bottom, boundary.top) : area.bottom;
-        // Never activate over navigation, overlays or content below the black intro.
-        if (!area.width || !area.height ||
-            pointer.x < area.left || pointer.x >= area.right ||
-            pointer.y < Math.max(0, area.top) || pointer.y >= Math.min(window.innerHeight, areaBottom) ||
-            (underPointer && !target.section.contains(underPointer))) continue;
-        if (target === activeTarget) insideActiveArea = true;
-        const bounds = target.graphic.getBoundingClientRect();
-        if (!bounds.width || !bounds.height) continue;
-        const size = Math.min(bounds.width, bounds.height);
-        const distance = Math.max(0, Math.min(...target.circles.map(([x, y, r]) =>
-          Math.hypot(pointer.x - bounds.left - bounds.width * x,
-            pointer.y - bounds.top - bounds.height * y) - size * r
-        )));
-        if (distance > proximity) continue;
-        if (activeTarget !== target) {
-          activeTarget?.graphic.classList.remove('is-lens-active');
-          activeTarget = target;
-          active = false;
-          shrinkTime = 140;
-        }
-        const maximumRadius = Math.min(target.maxRadius ?? 100, bounds.width * .325, bounds.height * .325);
-        const growth = Math.max(0, 1 - distance / growthDistance);
-        // Ease the small ball in across the outer edge instead of popping in.
-        const entry = Math.min(1, Math.max(0, (proximity - distance) / entryDistance));
-        const entryEase = entry * entry * (3 - 2 * entry);
-        targetRadius = minimumRadius * entryEase + (maximumRadius - minimumRadius) * growth;
-        return true;
-      }
-    }
-    // Shrink away smoothly within the intro; clear immediately over other UI.
-    if (active && insideActiveArea) {
-      targetRadius = 0;
-      return true;
-    }
-    resetPortrait();
-    return false;
-  };
-
-  const renderLens = time => {
-    animationFrame = 0;
-    if (!pointer) return;
-    const previousTarget = targetRadius;
-    if (!measureLensTarget()) return;
-    const navigationBottom = Math.max(0, navigation?.getBoundingClientRect().bottom ?? 0);
-    if (!active) {
-      active = true;
-      radius = 0;
-      lensPosition = { ...pointer };
-      lastTime = 0;
-      activeTarget.graphic.classList.add('is-lens-active');
-      cursor.classList.add('is-visible');
-      document.documentElement.classList.add('has-about-lens');
-    }
-    const elapsed = lastTime ? Math.min(time - lastTime, 40) : 16;
-    lastTime = time;
-    const desiredRadius = leftHeld ? Math.min(minimumRadius, targetRadius) : targetRadius;
-    // Retain the faster response until a quick retreat has finished shrinking.
-    const retreatSpeed = Math.max(0, previousTarget - targetRadius) / elapsed;
-    if (!leftHeld && retreatSpeed > 0) {
-      shrinkTime = Math.min(shrinkTime, Math.max(40, 140 / (1 + retreatSpeed * 2)));
-    }
-    if (targetRadius > previousTarget || desiredRadius >= radius) shrinkTime = 140;
-    const responseTime = retreatingAtNavigation ? 20 : leftHeld ? 220 : desiredRadius < radius ? shrinkTime : 220;
-    radius += (desiredRadius - radius) * (1 - Math.exp(-elapsed / responseTime));
-    if (Math.abs(desiredRadius - radius) < .15) radius = desiredRadius;
-
-    if (radius === 0 && desiredRadius === 0) {
-      resetPortrait();
-      return;
-    }
-    // Frame-rate-independent trailing motion, with no animation loop at rest.
-    const follow = 1 - Math.exp(-elapsed / followTime);
-    // Let the last visible circle collapse in place instead of following into the clipped nav.
-    if (!retreatingAtNavigation) {
-      lensPosition.x += (pointer.x - lensPosition.x) * follow;
-      lensPosition.y += (pointer.y - lensPosition.y) * follow;
-    }
-    const positionSettled = retreatingAtNavigation || Math.hypot(pointer.x - lensPosition.x, pointer.y - lensPosition.y) < .1;
-    if (positionSettled && !retreatingAtNavigation) lensPosition = { ...pointer };
-
-    cursor.style.width = `${radius * 2}px`;
-    cursor.style.height = `${radius * 2}px`;
-    cursor.style.transform = `translate3d(${lensPosition.x - radius}px, ${lensPosition.y - radius}px, 0)`;
-    // Clip the complete lens, including its trailing edge, below the fixed nav.
-    // Stacking beneath the nav alone would still show through its glass background.
-    const clippedTop = Math.min(radius * 2, Math.max(0, navigationBottom - (lensPosition.y - radius)));
-    cursor.style.clipPath = `inset(${clippedTop}px 0 0 0)`;
-    if (radius !== desiredRadius || !positionSettled) animationFrame = requestAnimationFrame(renderLens);
-  };
-
-  const onPointerMove = event => {
-    if (!enabled) return;
-    if (event.pointerType !== 'mouse') {
-      forgetPointer();
-      return;
-    }
-    // Reconcile a release outside the window as soon as the mouse returns.
-    const heldChanged = leftHeld !== Boolean(event.buttons & 1);
-    leftHeld = Boolean(event.buttons & 1);
-    // Ignore synthetic pointer events; scrolling updates the geometry separately.
-    if (event.clientX === lastX && event.clientY === lastY && !heldChanged) return;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    if (!visible || (event.buttons & ~1)) {
-      resetPortrait();
-      return;
-    }
-
-    pointer = { x: lastX, y: lastY };
-    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
-  };
-
-  const updateScrolledPointer = () => {
-    if (!enabled || !visible || lastX < 0 || lastY < 0) return;
-    pointer = { x: lastX, y: lastY };
-    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
-  };
-
-  const configureLens = () => {
-    enabled = desktopPointer.matches && !prefersReducedMotion.matches;
-    targets.forEach(target => target.graphic.classList.toggle('is-lens-ready', enabled));
-    window.removeEventListener('pointermove', onPointerMove);
-    if (enabled) window.addEventListener('pointermove', onPointerMove, { passive: true });
-    forgetPointer();
-  };
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) visibleSections.add(entry.target);
-        else visibleSections.delete(entry.target);
-      });
-      visible = visibleSections.size > 0;
-      if (!visible) resetPortrait();
-      else updateScrolledPointer();
-    });
-    targets.forEach(target => observer.observe(target.section));
-  } else {
-    targets.forEach(target => visibleSections.add(target.section));
-    visible = true;
-  }
-  window.addEventListener('scroll', updateScrolledPointer, { passive: true, capture: true });
-  window.addEventListener('resize', forgetPointer);
-  window.addEventListener('blur', forgetPointer);
-  window.addEventListener('pagehide', forgetPointer);
-  window.addEventListener('pointercancel', forgetPointer);
-  window.addEventListener('pointerdown', event => {
-    if (event.pointerType !== 'mouse') {
-      forgetPointer();
-      return;
-    }
-    if (!enabled || !active || event.button !== 0 || !activeTarget.section.contains(event.target)) return;
-    leftHeld = true;
-    // Keep links and form controls fully usable with the circular cursor.
-    if (!event.target.closest?.('a, button, input, select, textarea, [role="button"], [contenteditable]')) {
-      event.preventDefault();
-    }
-    if (!animationFrame) animationFrame = requestAnimationFrame(renderLens);
-  });
-  window.addEventListener('pointerup', event => {
-    if (event.pointerType !== 'mouse' || event.button !== 0) return;
-    leftHeld = false;
-    if (active && !animationFrame) animationFrame = requestAnimationFrame(renderLens);
-  });
-  targets.forEach(target => target.graphic.addEventListener('dragstart', event => {
-    if (active && leftHeld && activeTarget === target) event.preventDefault();
-  }));
-  window.addEventListener('pointerout', event => {
-    if (!event.relatedTarget) forgetPointer();
-  });
-  window.addEventListener('keydown', forgetPointer);
-  document.addEventListener('visibilitychange', forgetPointer);
-  desktopPointer.addEventListener('change', configureLens);
-  prefersReducedMotion.addEventListener('change', configureLens);
-  configureLens();
-})();
 
 (() => {
   const images = document.querySelectorAll('.content-image-effect');
