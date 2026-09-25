@@ -597,10 +597,14 @@
   will-change: auto;
 }
 
-/* Align the animated artwork slots with the outer content edge. */
+/* Keep About's placement; centre the three page animations in their grid column. */
 @media (min-width: 768px) {
-  :is(#about, #ai-page, #video-editing-page, #miscellaneous-page) .page-artwork-right {
+  #about .page-artwork-right {
     justify-content: flex-end;
+  }
+
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-artwork-right {
+    justify-content: center;
   }
 }
 
