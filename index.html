@@ -72,7 +72,7 @@
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="stylesheet" href="site.min.css?v=20260903-8" />
-    <link rel="stylesheet" href="refinement.css?v=20260918-static-graphics" />
+    <link rel="stylesheet" href="refinement.css?v=20260925-focus-stack" />
     <style>
         .name-wrapper {
             display: flex;
@@ -285,12 +285,10 @@
                         </a>
                     </div>
 
-                    <!-- Dein Bild -->
-                    <div class="flex justify-center about-us pl-18 about-artwork">
-                        <div class="about-portrait">
-                            <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/stayconnectedlel_00000.png"
-                                alt="Portrait of Stefan Aberer"
-                                class="about-portrait__image max-w-sm w-full h-auto rounded-lg" loading="lazy">
+                    <!-- Soft Totality animation -->
+                    <div class="flex justify-center about-us pl-18 about-artwork page-artwork-right">
+                        <div id="about-eclipse" class="about-portrait page-optical" data-motion="eclipse" aria-hidden="true">
+                            <img src="motion/soft-totality.png" alt="" width="720" height="720" loading="lazy">
                         </div>
                     </div>
 
@@ -881,10 +879,11 @@
                             me, AI isn’t just about chasing trends; it’s about staying current in a fast-moving field.
                         </p>
                     </div>
-                    <div class="flex justify-center relative">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/dotsfinalai_00000.webp"
-                            alt="AI Visualisierung" class="max-w-sm w-full h-auto rounded-lg visualisierung-img heading-hover-visual"
-                            loading="lazy">
+                    <div class="flex justify-center relative page-artwork-right">
+                        <div id="ai-optical" class="page-optical visualisierung-img" data-optical-variant="ai" data-motion="focus-stack" aria-hidden="true">
+                            <img src="motion/focus-stack-ai.png?v=20260925-focus-front-restored"
+                                alt="" width="720" height="720" loading="lazy">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1528,10 +1527,10 @@ This proof of concept video was commissioned by a production company for a Chine
                             as well as editing. My main OS is Windows, but I’m also comfortable on macOS.
                         </p>
                     </div>
-                    <div class="flex justify-center">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/update1/videoediting2_00000.webp"
-                            alt="Video Editing Vorschaubild" class="max-w-sm w-full h-auto rounded-lg video-editing-img heading-hover-visual"
-                            loading="lazy">
+                    <div class="flex justify-center page-artwork-right">
+                        <div id="tech-optical" class="page-optical video-editing-img" data-optical-variant="tech" data-motion="focus-stack" aria-hidden="true">
+                            <img src="motion/focus-stack-tech.png?v=20260925-focus-front" alt="" width="720" height="720" loading="lazy">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1732,10 +1731,10 @@ This proof of concept video was commissioned by a production company for a Chine
                             best practices, and practical tips and tricks.
                         </p>
                     </div>
-                    <div class="flex justify-center">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfinal_00000.webp"
-                            alt="AI Masterclass visual" class="max-w-sm w-full h-auto rounded-lg misc-hero-img heading-hover-visual"
-                            loading="lazy">
+                    <div class="flex justify-center page-artwork-right">
+                        <div id="masterclass-optical" class="page-optical misc-hero-img" data-optical-variant="masterclass" data-motion="focus-stack" aria-hidden="true">
+                            <img class="misc-hero-img" src="motion/focus-stack-masterclass.png?v=20260925-focus-front-restored" alt="" width="720" height="720" loading="lazy">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2062,7 +2061,8 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20260918-remove-lens" defer></script>
+    <script src="script.js?v=20260925-higgsfield-treatment-on" defer></script>
     <script src="refinement.js?v=20260912-phone-orientation" defer></script>
+    <script src="ai-optical.js?v=20260925-focus-sync" defer></script>
 </body>
 </html>

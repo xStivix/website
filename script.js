@@ -1424,7 +1424,7 @@ const QUOTES = [
   { initials: "KT", logo: "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Logoassets/martini-icon.png", logoAlt: "Martini", logoClass: "quote-brand-invert", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
   { initials: "PJ", text: "Love the work.", author: "PJ Accetturo (Director)" },
   { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
-  { initials: "ML", text: "Impressed by your work.", author: "(MotherLA)" },
+  { initials: "JL", logo: "Logoassets/higgsfield.svg", logoAlt: "Higgsfield", text: "Revision 55 on a treatment tells me most of what I need to know about how you work.", author: "John Lafizov (Higgsfield CPP)", fullText: true },
   { initials: "OA", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/openai.svg", logoAlt: "OpenAI", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
   { initials: "HO", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/we-are-tilt.svg", logoAlt: "We Are Tilt", text: "Really impressed with what you're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
   { initials: "FN", text: "Absolutely insane stuff...", author: "Frank Nitty (Executive Producer)" }
@@ -1433,6 +1433,7 @@ const QUOTES = [
 function createQuoteItem(q){
   const wrap = document.createElement('div');
   wrap.className = 'quote-item';
+  if (q.fullText) wrap.classList.add('quote-item--full-text');
 
   const logoWrap = document.createElement('div');
   logoWrap.className = 'quote-logo';

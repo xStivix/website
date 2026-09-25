@@ -500,6 +500,17 @@
   border-left-color: transparent !important;
 }
 
+/* Give longer testimonials enough room without reducing the type size. */
+#quotes .quote-item--full-text {
+  width: calc(var(--qt-item-w) + 4rem);
+  grid-template-rows: 1fr max-content max-content 1fr;
+}
+
+#quotes .quote-item--full-text .quote-text {
+  max-width: calc(var(--qt-item-w) + 4rem - var(--qt-logo) - var(--qt-pad-x) * 2 - var(--qt-gap-x));
+  -webkit-line-clamp: unset;
+}
+
 /* Scale the desktop proportions together on tablet-sized screens. */
 @media (min-width: 768px) and (max-width: 1366px) {
   #quotes {
@@ -584,6 +595,56 @@
   filter: none;
   transition: none;
   will-change: auto;
+}
+
+/* Align the animated artwork slots with the outer content edge. */
+@media (min-width: 768px) {
+  :is(#about, #ai-page, #video-editing-page, #miscellaneous-page) .page-artwork-right {
+    justify-content: flex-end;
+  }
+}
+
+/* Animated graphics keep the original square artwork slot and responsive sizing. */
+:is(#about, #ai-intro, #video-editing-page, #miscellaneous-page) .page-optical {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #000;
+  pointer-events: none;
+}
+
+:is(#about, #ai-intro, #video-editing-page, #miscellaneous-page) .page-optical > img,
+:is(#about, #ai-intro, #video-editing-page, #miscellaneous-page) .page-optical > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.page-optical > canvas { opacity: 0; }
+:is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-optical:is([data-motion="static"], [data-motion="focus-stack"]) > :is(img, canvas) {
+  width: 80%;
+  height: 80%;
+  inset: 10%;
+}
+.page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > canvas { opacity: 1; }
+.page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > img { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-optical[data-optical-variant] > canvas { visibility: hidden; }
+  .page-optical[data-optical-variant] > img { visibility: visible !important; }
+}
+
+@media (max-width: 767px) {
+  #about .page-optical { display: none; }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-optical { max-width: 18rem; }
 }
 
 /* The service reveal shares the same monochrome palette. */
