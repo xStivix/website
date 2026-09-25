@@ -597,7 +597,7 @@
   will-change: auto;
 }
 
-/* Keep About's placement; centre the three page animations in their grid column. */
+/* Centre narrow layouts; return to the original outer alignment at 1920px. */
 @media (min-width: 768px) {
   #about .page-artwork-right {
     justify-content: flex-end;
@@ -605,6 +605,16 @@
 
   :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-artwork-right {
     justify-content: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-artwork-right {
+    justify-content: flex-end;
+  }
+
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-artwork-right > .page-optical {
+    margin-inline-end: clamp(0px, calc(288px - 15vw), max(0px, calc((100% - 24rem) / 2)));
   }
 }
 
