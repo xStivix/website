@@ -40,11 +40,11 @@ export function createFocusStack(container,{variant="ai",autoplay=true,timeline=
   const order=variant==='tech'?[dark,glass,white]:variant==='masterclass'?[white,dark,glass]:[dark,white,glass];
   const plates=order.map(mat=>disc(.94,mat));
   animate=t=>{const a=TAU*t/duration,open=.5-.5*Math.cos(a);
-    const yaw=-.34+.08*Math.sin(a);
+    const yaw=-.10+.025*Math.sin(a);
     group.rotation.set(0,yaw,0);
     // Keep every centre level and define the visible spacing independently of yaw.
     const depth=.46+.26*open;
-    const spacing=.38+.28*open;
+    const spacing=.48+.108*open;
     const horizontal=(-spacing/1.6-depth*Math.sin(yaw))/Math.cos(yaw);
     plates.forEach((p,i)=>{p.position.set((i-1)*horizontal,0,(i-1)*depth).multiplyScalar(1.6);p.rotation.y=(i-1)*.025*open;});};
 
