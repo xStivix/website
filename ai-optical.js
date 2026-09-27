@@ -24,7 +24,7 @@ document.querySelectorAll('[data-optical-variant]:not([data-motion="static"]), [
         const { createEclipse } = await import('./motion/soft-totality.js?v=20260925-about');
         create = () => createEclipse(art, 3, { autoplay: true });
       } else {
-        const { createFocusStack, focusTimeline } = await import('./motion/focus-stack.js?v=20260926-max-reduced');
+        const { createFocusStack, focusTimeline } = await import('./motion/focus-stack.js?v=20260927-middle-grey');
         timeline = focusTimeline;
         create = () => createFocusStack(art, {
           autoplay: true,
