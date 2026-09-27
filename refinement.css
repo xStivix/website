@@ -645,6 +645,12 @@
   height: 80%;
   inset: 10%;
 }
+:is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-optical[data-motion="static"] > img {
+  width: 92%;
+  height: 92%;
+  inset: 4%;
+  transform: translateX(-6%);
+}
 .page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > canvas { opacity: 1; }
 .page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > img { visibility: hidden; }
 
@@ -671,7 +677,7 @@
   --service-image-invert: 0;
   position: relative;
   isolation: isolate;
-  border: 0;
+  border: 1px solid #4b4b4b;
   background-color: var(--service-surface);
   box-shadow: 0 14px 40px rgb(0 0 0 / 0);
   transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .2s ease;
