@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Enhancements · 27.09.2026
+   Loaded after refinement.css. Everything added in this pass lives in this
+   file (plus enhance.js), so it can be reviewed or removed in one place.
+   Impressum, AGB and Datenschutz are intentionally left exactly as before.
+   ========================================================================== */
+
+/* --- About + AI intro: one heading element, several lines ---------------- */
+/* The lines keep their original utility classes; this only mirrors the
+   tablet rule from refinement.css, which targeted the former <h1> lines. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  #about .about-heading-group > .about-title > span {
+    margin: 0;
+    font-size: clamp(2.5rem, 4.5vw, 3rem);
+    line-height: 1.12;
+  }
+}
+
+/* --- Selected Work legend: readable contrast for the small mono labels ---- */
+.selected-work-legend {
+  color: rgba(0, 0, 0, .62);
+}
+
+/* --- Project videos: whole tile clickable, visible focus, "Watch" cue ----- */
+/* The title overlay no longer swallows clicks meant for the video. */
+#portfolio .video-hover .absolute,
+#ai-page .video-hover .absolute {
+  pointer-events: none;
+}
+
+/* Above the thumbnail placeholder (z-index 1), below the titles (z-index 3). */
+.video-open-layer {
+  z-index: 2;
+}
+
+.video-open-layer:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -6px;
+}
+
+.video-watch-hint {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem .9rem .55rem .8rem;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .3);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .25s ease, transform .35s var(--ease-out);
+  pointer-events: none;
+}
+
+.video-watch-hint svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.video-open-layer:hover .video-watch-hint,
+.video-open-layer:focus-visible .video-watch-hint {
+  opacity: 1;
+  transform: none;
+}
+
+/* Touch screens have no hover: keep the cue visible. */
+@media (hover: none), (pointer: coarse) {
+  .video-watch-hint {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Phones: a compact round play badge instead of the labelled pill. */
+@media (max-width: 767px) {
+  .video-watch-hint {
+    right: .75rem;
+    bottom: .6rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .video-watch-hint svg {
+    width: 7px;
+    height: 9px;
+    margin-left: 2px;
+  }
+
+  .video-watch-hint__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-watch-hint {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* --- Footer: contact call to action ---------------------------------------- */
+#contact-cta {
+  scroll-margin-top: calc(var(--nav-height, 58px) + 1.5rem);
+}
+
+/* Contact heading and supporting copy share one column. */
+.footer-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "eyebrow"
+    "title"
+    "text";
+  padding-bottom: 3rem;
+}
+
+.footer-cta__copy {
+  display: contents;
+}
+
+/* Match the section labels; override the legacy footer paragraph font. */
+.footer-cta__eyebrow {
+  grid-area: eyebrow;
+  margin: 0 0 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-size: .75rem;
+}
+
+#about .about-heading-group > p,
+.page-intro-eyebrow,
+.footer-cta__eyebrow {
+  color: rgba(255, 255, 255, .72);
+}
+
+@media (max-width: 767px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse) {
+  .footer-cta__eyebrow {
+    font-size: .6875rem;
+  }
+}
+
+.footer-cta__title {
+  grid-area: title;
+  margin: 0;
+  color: #fff;
+}
+
+.footer-cta__text {
+  grid-area: text;
+  max-width: 34rem;
+  margin: 1.25rem 0 0;
+  color: rgba(255, 255, 255, .72);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+  .footer-cta {
+    padding-bottom: 2rem;
+  }
+
+  .footer-cta__break {
+    display: none;
+  }
+
+  .footer-cta__text {
+    font-size: .9375rem;
+  }
+}
+
+/* --- Footer: copyright ----------------------------------------------------- */
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 2rem;
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+.footer-bottom__copy {
+  margin: 0;
+  color: #9ca3af;
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+

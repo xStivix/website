@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google" content="notranslate" />
     <meta name="description" content="Stefan Aberer is an automotive filmmaker, AI specialist and video editor with a focus on post-production, creating AI-driven car commercials, automotive films and hybrid productions for brands worldwide." />
+    <meta name="author" content="Stefan Aberer" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Stefan Aberer" />
     <meta property="og:title" content="Stefan Aberer | Automotive Film &amp; AI Production" />
@@ -34,7 +35,7 @@
         "@id": "https://stefan-aberer.at/#person",
         "name": "Stefan Aberer",
         "url": "https://stefan-aberer.at/",
-        "image": "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/stayconnectedlel_00000.png",
+        "image": "https://stefan-aberer.at/stayconnectedlel_00000.png",
         "jobTitle": "Automotive Filmmaker, AI Specialist and Video Editor",
         "description": "Stefan Aberer is an automotive filmmaker, AI specialist and video editor with a focus on post-production, creating AI-driven car commercials, automotive films and hybrid productions for brands worldwide.",
         "address": {
@@ -60,10 +61,8 @@
     </script>
     <link rel="dns-prefetch" href="https://player.vimeo.com">
     <link rel="dns-prefetch" href="https://vod-adaptive-ak.vimeocdn.com">
-    <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
     <link rel="preconnect" href="https://player.vimeo.com" crossorigin>
     <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com" crossorigin>
-    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
     <link rel="preload" href="fonts/roboto-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/roboto-mono-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/google-sans-700.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
@@ -71,8 +70,10 @@
     <link rel="preload" href="fonts/google-sans-text-latin-500.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="site.min.css?v=20260903-8" />
     <link rel="stylesheet" href="refinement.css?v=20260927-symbol-alignment-cards" />
+    <link rel="stylesheet" href="enhance.css?v=20260927-section-labels-7" />
     <style>
         .name-wrapper {
             display: flex;
@@ -117,7 +118,7 @@
             window.setTimeout(() => overlay.remove(), 1200);
         }, 4000);
     </script>
-    <script src="https://player.vimeo.com/api/player.js" defer importance="high"></script>
+    <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
 
 <body>
@@ -260,16 +261,12 @@
                                 01 Behind the frame
                             </p>
 
-                            <!-- große Headlines -->
-                            <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
-                                Sharp Cuts.
-                            </h1>
-                            <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
-                                Smooth Flow.
-                            </h1>
-                            <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                                AI Enhanced.
-                            </h1>
+                            <!-- große Headlines (eine Überschrift, drei Zeilen) -->
+                            <h2 class="about-title">
+                                <span class="block text-4xl md:text-4xl leading-tight font-normal mb-2">Sharp Cuts.</span>
+                                <span class="block text-4xl md:text-4xl leading-tight font-normal mb-2">Smooth Flow.</span>
+                                <span class="block text-4xl md:text-4xl leading-tight font-bold mb-6">AI Enhanced.</span>
+                            </h2>
                         </div>
 
                         <!-- Fließtext -->
@@ -288,7 +285,7 @@
                     <!-- Soft Totality animation -->
                     <div class="flex justify-center about-us pl-18 about-artwork page-artwork-right">
                         <div id="about-eclipse" class="about-portrait page-optical" data-motion="eclipse" aria-hidden="true">
-                            <img src="motion/soft-totality.png" alt="" width="720" height="720" loading="lazy">
+                            <img src="motion/soft-totality.webp" alt="" width="720" height="720" loading="lazy" decoding="async">
                         </div>
                     </div>
 
@@ -431,7 +428,7 @@
 <!--                <div class="grid md:grid-cols-2 gap-12 items-center">-->
 <!--                    &lt;!&ndash; Bild links &ndash;&gt;-->
 <!--                    <div class="flex justify-center">-->
-<!--                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/conncedted_00000_00000.png"
+<!--                        <img src="conncedted_00000_00000.png"
                             alt="Contact" class="max-w-xs h-auto rounded-lg desktop-icon -mt-8" loading="eager" />-->
 <!--                        </a>-->
 <!--                    </div>-->
@@ -480,8 +477,17 @@
                 <!-- oberer Abstand -->
                 <div class="h-16"></div>
 
+                <!-- Kontakt-CTA -->
+                <div class="footer-cta" id="contact-cta">
+                    <div class="footer-cta__copy">
+                        <p class="font-mono uppercase text-xs tracking-widest footer-cta__eyebrow">03 CONNECT</p>
+                        <h2 class="super-title footer-cta__title">Let’s work together.</h2>
+                        <p class="footer-cta__text">Have a project in mind? Get in touch.<br class="footer-cta__break"> Located in Bregenz, Austria. Available worldwide.</p>
+                    </div>
+                </div>
+
                 <!-- Magnet-Raster -->
-                <div class="magnet-wrapper" class="mb-12">
+                <div class="magnet-wrapper">
                     <canvas class="magnet-grid"></canvas>
                 </div>
 
@@ -495,9 +501,9 @@
 
     <!-- LEGAL -------------------------------------------------->
     <div>
-        <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
             Legal
-        </h4>
+        </h3>
         <ul class="space-y-1">
             <li>
                 <a href="#impressum"
@@ -519,9 +525,9 @@
 
     <!-- SOCIALS ------------------------------------------------>
     <div>
-        <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
             Socials
-        </h4>
+        </h3>
         <ul class="space-y-1">
             <li>
                 <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"
@@ -541,9 +547,9 @@
 
     <!-- CONTACT ----------------------------------------------->
     <div>
-        <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
             Contact
-        </h4>
+        </h3>
         <ul class="space-y-1">
             <li>
                 <a href="https://stefan-aberer.at/#email" data-email-link
@@ -562,9 +568,9 @@
 
     <!-- PARTNER ----------------------------------------------->
     <div>
-        <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
             Partner
-        </h4>
+        </h3>
         <ul class="space-y-1">
             <li>
                 <a href="https://martini.film" target="_blank" rel="noopener noreferrer"
@@ -578,10 +584,20 @@
                     EasyDoesIt
                 </a>
             </li>
+            <li>
+                <a href="https://higgsfield.ai/" target="_blank" rel="noopener noreferrer"
+                    class="text-sm text-gray-300 hover:text-white transition-colors">
+                    Higgsfield
+                </a>
+            </li>
         </ul>
     </div>
 
 </div>
+                    <!-- Copyright -->
+                    <div class="footer-bottom">
+                        <p class="footer-bottom__copy">&copy; <span data-current-year>2026</span> Stefan Aberer. All rights reserved.</p>
+                    </div>
                 </div>
         </footer>
     </div>
@@ -597,148 +613,148 @@
                     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 lg:gap-8">
                         <!-- Lazy Loading für alle Bilder hinzugefügt und Image-Dimensionen angegeben -->
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/jobsterleans_young_black_man_leaning_casually_against_an_urba_e1e79051-4667-44ec-abe6-b4a1a8dfcde5_0.png"
+                                src="jobsterleans_young_black_man_leaning_casually_against_an_urba_e1e79051-4667-44ec-abe6-b4a1a8dfcde5_0.png"
                                 alt="Image 3" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png"
+                                src="ALL%20IMAGES%20WEBSITE/Cute%203D%20robot%20character%20with%20a%20melting%2C%20glitchy%20face%2C%20standing%20in%20the%20center%20of%20a%20chaotic%2C%20digital-i_.png"
                                 alt="Image 4" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png"
+                                src="ALL%20IMAGES%20WEBSITE/Hyperrealistic%20fashion%20concept_%20a%20model%20floating%20in%20deep%20space%2C%20wearing%20a%20garment%20made%20of%20glowing%20ga_.png"
                                 alt="Image 5" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png"
+                                src="ALL%20IMAGES%20WEBSITE/Stylized%203D%20poster%20of%20a%20character%20on%20a%20hoverboard%20with%20a%20jetpack%20and%20heart-shaped%20sunglasses%2C%20racing_.png"
                                 alt="Image 7" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrfs1skvebzvr25cbra89q6s_img_1.webp"
                                 alt="Image 8" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk684yne8ms937bkcmeh1cn_img_0.webp"
                                 alt="Image 9" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk6zeg3fpn9sge1ea2pqm7r_img_0.webp"
                                 alt="Image 10" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk780mheshty3kjw2tbjeqv_img_0.webp"
                                 alt="Image 11" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk7ydj9e1yvx461jgk6yy5q_img_0.webp"
                                 alt="Image 12" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk8rhh0e3y958t6j3hq4a3q_img_0.webp"
                                 alt="Image 13" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk910dje2et7tcnmd6hh6tt_img_0.webp"
                                 alt="Image 14" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrk9vpfqfara8xtprjsqd461_img_0.webp"
                                 alt="Image 15" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrkac6v7ej2bj7cx2yywk12y_img_0.webp"
                                 alt="Image 16" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrkb10v0f6err278dxsm2aa8_img_0.webp"
                                 alt="Image 17" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrn7aaxaetrt9j8yandxn0h2_img_0.webp"
                                 alt="Image 18" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrn7frsmf4pbz9dcg8gq423x_img_0.webp"
                                 alt="Image 19" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrra52tzfa7ar6a8grpv88tn_img_0.png"
                                 alt="Image 20" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrre32mdfsktdpvt6b1vcf5w_img_0.webp"
                                 alt="Image 21" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrrb1g1rft29y76p2j3shfr5_img_0.webp"
                                 alt="Image 22" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp"
+                                src="ALL%20IMAGES%20WEBSITE/assets_task_01jrrabrtmfyj90revknrex3br_img_0.webp"
                                 alt="Image 23" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/lfdy1.png"
+                                src="lfdy1.png"
                                 alt="Image 24" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png"
+                                src="ChatGPT%20Image%2028.%20Apr.%202025%2C%2013_55_45.png"
                                 alt="Image 25" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png"
+                                src="ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_13_38.png"
                                 alt="Image 26" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png"
+                                src="ChatGPT%20Image%2028.%20Apr.%202025%2C%2014_24_02.png"
                                 alt="Image 27" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp"
+                                src="assets_task_01jsy77eeaeq4r9fhcbx4bv3fg_1745844757_img_0.webp"
                                 alt="Image 29" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/Comp%201_00000.png"
+                                src="Comp%201/Comp%201_00000.png"
                                 alt="Image 31" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp"
+                                src="assets_task_01jsy7fh89eqzr1rvqvq78dzwz_1745845019_img_0.webp"
                                 alt="Image 32" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/2_00000.png"
+                                src="Comp%201/2_00000.png"
                                 alt="Image 33" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/3_00000.png"
+                                src="Comp%201/3_00000.png"
                                 alt="Image 34" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Comp%201/4_00000.png"
+                                src="Comp%201/4_00000.png"
                                 alt="Image 35" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/earth.png"
+                                src="Editd/earth.png"
                                 alt="Image 36" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/fragments.png"
+                                src="Editd/fragments.png"
                                 alt="Image 37" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-160-Create%20a%20colorful%20poster%20for%20a%20children%E2%80%99s%20arts%20festival%20titled%20_KUNSTFUNKEL_.U_.png"
+                                src="Editd/jimeng-2025-05-05-160-Create%20a%20colorful%20poster%20for%20a%20children%E2%80%99s%20arts%20festival%20titled%20_KUNSTFUNKEL_.U_.png"
                                 alt="Image 38" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-161-Design%20a%20dark%20poster%20with%20deep%20purple%20and%20black%20gradient%20for%20a%20club%20night%20titl_.png"
+                                src="Editd/jimeng-2025-05-05-161-Design%20a%20dark%20poster%20with%20deep%20purple%20and%20black%20gradient%20for%20a%20club%20night%20titl_.png"
                                 alt="Image 39" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-162-Create%20a%20poster%20with%20a%20black%20background%20and%20a%20central%20image%20of%20a%20glowing%20plane_.png"
+                                src="Editd/jimeng-2025-05-05-162-Create%20a%20poster%20with%20a%20black%20background%20and%20a%20central%20image%20of%20a%20glowing%20plane_.png"
                                 alt="Image 40" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-163-Design%20a%20gritty%20urban%20poster%20with%20a%20concrete%20wall%20texture%20as%20background.%20Event_.png"
+                                src="Editd/jimeng-2025-05-05-163-Design%20a%20gritty%20urban%20poster%20with%20a%20concrete%20wall%20texture%20as%20background.%20Event_.png"
                                 alt="Image 41" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/meisterkonzerte1.png"
+                                src="Editd/meisterkonzerte1.png"
                                 alt="Image 43" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/generation-52194d85-7223-4302-92b8-33cb8b882707.png"
+                                src="generation-52194d85-7223-4302-92b8-33cb8b882707.png"
                                 alt="Image 44" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/premiere2.png"
+                                src="Editd/premiere2.png"
                                 alt="Image 45" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/rawcut.png"
+                                src="Editd/rawcut.png"
                                 alt="Image 46" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Editd/jimeng-2025-05-05-172-Create%20a%20black%20poster%20with%20white%20chalkboard%20texture%20and%20scattered%20handwritten_.png"
+                                src="Editd/jimeng-2025-05-05-172-Create%20a%20black%20poster%20with%20white%20chalkboard%20texture%20and%20scattered%20handwritten_.png"
                                 alt="Image 47" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_A_high_resolution_photography_award_winning_phot_e876f282-2b1a-46cc-bb51-d9418bbe87db_2.png"
+                                src="porsche%20poster/jobsterleans_A_high_resolution_photography_award_winning_phot_e876f282-2b1a-46cc-bb51-d9418bbe87db_2.png"
                                 alt="Image 48" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_e15cecf9-6abb-4c2d-8192-8fcebf9ad33b_00000.png"
+                                src="porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_Por_e15cecf9-6abb-4c2d-8192-8fcebf9ad33b_00000.png"
                                 alt="Image 51" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_mod_76c82e1a-a3d9-40ef-a04a-d81c0a4273b0.png"
+                                src="porsche%20poster/jobsterleans_Ultra-professional_studio_photo_of_a_baby_blue_mod_76c82e1a-a3d9-40ef-a04a-d81c0a4273b0.png"
                                 alt="Image 52" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/jobsterleans_httpss.mj.runU35g9-9KARM_A_1960s-style_family_ad_c67913ca-f93e-45a5-8501-3b8be3c7e1c1_2.png"
+                                src="jobsterleans_httpss.mj.runU35g9-9KARM_A_1960s-style_family_ad_c67913ca-f93e-45a5-8501-3b8be3c7e1c1_2.png"
                                 alt="Image 55" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/midjourneynew0806/jobsterleans_httpss.mj.runNDgIxMAr9ok_An_elderly_bearded_man__36ccb12f-5084-4edd-8bb7-c33fee169d61_1.png"
+                                src="midjourneynew0806/jobsterleans_httpss.mj.runNDgIxMAr9ok_An_elderly_bearded_man__36ccb12f-5084-4edd-8bb7-c33fee169d61_1.png"
                                 alt="Image 53" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/midjourneynew0806/jobsterleans_httpss.mj.runXWW2rhOyfOM_A_stylish_anime-inspire_5e9f28ed-a850-4638-b3d1-80c185880366_0.png"
+                                src="midjourneynew0806/jobsterleans_httpss.mj.runXWW2rhOyfOM_A_stylish_anime-inspire_5e9f28ed-a850-4638-b3d1-80c185880366_0.png"
                                 alt="Image 54" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                         <div class="portfolio-item"><img
-                                src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/jobsterleans_two_young_black_men_standing_on_an_empty_urban_str_8684a07a-3a3a-433c-94bc-c18e8583c62b.png"
+                                src="jobsterleans_two_young_black_men_standing_on_an_empty_urban_str_8684a07a-3a3a-433c-94bc-c18e8583c62b.png"
                                 alt="Image 55" class="w-full h-auto" loading="lazy" width="400" height="300"></div>
                     </div>
                 </div>
@@ -752,7 +768,7 @@
                     <div class="h-16"></div>
 
                     <!-- Magnet-Raster -->
-                    <div class="magnet-wrapper" class="mb-12">
+                    <div class="magnet-wrapper">
                         <canvas class="magnet-grid"></canvas>
                     </div>
 
@@ -766,9 +782,9 @@
 
                             <!-- LEGAL -------------------------------------------------->
                             <div>
-                                <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                                <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                     Legal
-                                </h4>
+                                </h3>
                                 <ul class="space-y-1">
                                     <li>
                                         <a href="#impressum"
@@ -790,9 +806,9 @@
 
                             <!-- SOCIALS ------------------------------------------------>
                             <div>
-                                <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                                <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                     Socials
-                                </h4>
+                                </h3>
                                 <ul class="space-y-1">
                                     <li>
                                         <a href="https://vimeo.com/user77038892" target="_blank"
@@ -813,9 +829,9 @@
 
                             <!-- CONTACT ----------------------------------------------->
                             <div>
-                                <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                                <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                     Contact
-                                </h4>
+                                </h3>
                                 <ul class="space-y-1">
                                     <li>
                                         <a href="https://stefan-aberer.at/#email" data-email-link
@@ -865,14 +881,12 @@
             <div class=" mx-auto max-w-7xl px-6 container">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="pt-8 md:pt-0 ">
-                        <p class="font-mono uppercase text-xs tracking-widest mb-4">
+                        <p class="font-mono uppercase text-xs tracking-widest mb-4 page-intro-eyebrow">
                             AI INSIGHTS
                         </p>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-normal mb-2">
-                            Cutting-Edge
-                        </h1>
-                        <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
-                            Solutions.
+                        <h1 class="ai-intro-heading">
+                            <span class="block text-4xl md:text-4xl leading-tight font-normal mb-2">Cutting-Edge</span>
+                            <span class="block text-4xl md:text-4xl leading-tight font-bold mb-6">Solutions.</span>
                         </h1>
                         <p class="text-base md:text-md max-w-2xl font-light mb-4">
                             If it can be done with AI, whether it’s images, videos, or code, I can make it happen. For
@@ -1089,8 +1103,17 @@ This proof of concept video was commissioned by a production company for a Chine
                 <!-- oberer Abstand -->
                 <div class="h-16"></div>
 
+                <!-- Kontakt-CTA -->
+                <div class="footer-cta">
+                    <div class="footer-cta__copy">
+                        <p class="font-mono uppercase text-xs tracking-widest footer-cta__eyebrow">03 CONNECT</p>
+                        <h2 class="super-title footer-cta__title">Let’s work together.</h2>
+                        <p class="footer-cta__text">Have a project in mind? Get in touch.<br class="footer-cta__break"> Located in Bregenz, Austria. Available worldwide.</p>
+                    </div>
+                </div>
+
                 <!-- Magnet-Raster -->
-                <div class="magnet-wrapper" class="mb-12">
+                <div class="magnet-wrapper">
                     <canvas class="magnet-grid"></canvas>
                 </div>
 
@@ -1104,9 +1127,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- LEGAL -------------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Legal
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="#impressum"
@@ -1128,9 +1151,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- SOCIALS ------------------------------------------------>
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Socials
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"
@@ -1150,9 +1173,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- CONTACT ----------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Contact
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://stefan-aberer.at/#email" data-email-link
@@ -1171,9 +1194,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
 <!-- PARTNER ----------------------------------------------->
 <div>
-    <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+    <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
         Partner
-    </h4>
+    </h3>
     <ul class="space-y-1">
         <li>
             <a href="https://easydoesit.de/" target="_blank" rel="noopener noreferrer"
@@ -1187,9 +1210,19 @@ This proof of concept video was commissioned by a production company for a Chine
                 Martini
             </a>
         </li>
+        <li>
+            <a href="https://higgsfield.ai/" target="_blank" rel="noopener noreferrer"
+                class="text-sm text-gray-300 hover:text-white transition-colors">
+                Higgsfield
+            </a>
+        </li>
     </ul>
 </div>
 
+                    </div>
+                    <!-- Copyright -->
+                    <div class="footer-bottom">
+                        <p class="footer-bottom__copy">&copy; <span data-current-year>2026</span> Stefan Aberer. All rights reserved.</p>
                     </div>
                 </div>
         </footer>
@@ -1515,7 +1548,7 @@ This proof of concept video was commissioned by a production company for a Chine
             <div class="container mx-auto max-w-7xl px-6">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="pt-8 md:pt-0">
-                        <p class="font-mono uppercase text-xs tracking-widest mb-4">
+                        <p class="font-mono uppercase text-xs tracking-widest mb-4 page-intro-eyebrow">
                             Tech Insights
                         </p>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
@@ -1550,24 +1583,24 @@ This proof of concept video was commissioned by a production company for a Chine
                         </p>
                     </div>
                     <div class="flex justify-center">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/colormangementpngfinal_00000.webp"
-                            alt="Color Management Vorschaubild" class="max-w-sm w-full h-auto rounded-lg tech-desk"
-                            loading="lazy">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Finalwebpimages/colormangementpngfinal_00000.webp"
-                            alt="Color Management Vorschaubild" class="max-w-md w-full h-auto rounded-lg tech-mob"
-                            loading="lazy">
+                        <img src="Finalwebpimages/colormangementpngfinal_00000.webp"
+                            alt="Color management illustration" width="1080" height="1080" class="max-w-sm w-full h-auto rounded-lg tech-desk"
+                            loading="lazy" decoding="async">
+                        <img src="Finalwebpimages/colormangementpngfinal_00000.webp"
+                            alt="Color management illustration" width="1080" height="1080" class="max-w-md w-full h-auto rounded-lg tech-mob"
+                            loading="lazy" decoding="async">
                     </div>
                 </div>
 
                 <!-- Zweite Reihe: Bild links, Text rechts -->
                 <div class="grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
                     <div class="flex justify-center switch-posi">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
-                            alt="Programs & Tools Vorschaubild" class="max-w-sm w-full h-auto rounded-lg tech-desk"
-                            loading="lazy">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/AE_00000.png"
-                            alt="Programs & Tools Vorschaubild" class="max-w-md w-full h-auto rounded-lg tech-mob"
-                            loading="lazy">
+                        <img src="technicalspecs/AE_00000.webp"
+                            alt="Adobe After Effects icon" width="800" height="800" class="max-w-sm w-full h-auto rounded-lg tech-desk"
+                            loading="lazy" decoding="async">
+                        <img src="technicalspecs/AE_00000.webp"
+                            alt="Adobe After Effects icon" width="800" height="800" class="max-w-md w-full h-auto rounded-lg tech-mob"
+                            loading="lazy" decoding="async">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-2 md:mb-4">Programs & Tools</h3>
@@ -1589,12 +1622,12 @@ This proof of concept video was commissioned by a production company for a Chine
                         </p>
                     </div>
                     <div class="flex justify-center">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
-                            alt="Platzhalter Bild für drittes Feature"
-                            class="max-w-sm w-full h-auto rounded-lg tech-mob" loading="lazy">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/technicalspecs/422_00000_00000.png"
-                            alt="Platzhalter Bild für drittes Feature"
-                            class="max-w-sm w-full h-auto rounded-lg tech-desk" loading="lazy">
+                        <img src="technicalspecs/422_00000_00000.webp"
+                            alt="ProRes 422 delivery format illustration" width="800" height="800"
+                            class="max-w-sm w-full h-auto rounded-lg tech-mob" loading="lazy" decoding="async">
+                        <img src="technicalspecs/422_00000_00000.webp"
+                            alt="ProRes 422 delivery format illustration" width="800" height="800"
+                            class="max-w-sm w-full h-auto rounded-lg tech-desk" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -1607,8 +1640,17 @@ This proof of concept video was commissioned by a production company for a Chine
                 <!-- oberer Abstand -->
                 <div class="h-16"></div>
 
+                <!-- Kontakt-CTA -->
+                <div class="footer-cta">
+                    <div class="footer-cta__copy">
+                        <p class="font-mono uppercase text-xs tracking-widest footer-cta__eyebrow">03 CONNECT</p>
+                        <h2 class="super-title footer-cta__title">Let’s work together.</h2>
+                        <p class="footer-cta__text">Have a project in mind? Get in touch.<br class="footer-cta__break"> Located in Bregenz, Austria. Available worldwide.</p>
+                    </div>
+                </div>
+
                 <!-- Magnet-Raster -->
-                <div class="magnet-wrapper" class="mb-12">
+                <div class="magnet-wrapper">
                     <canvas class="magnet-grid"></canvas>
                 </div>
 
@@ -1622,9 +1664,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- LEGAL -------------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Legal
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="#impressum"
@@ -1646,9 +1688,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- SOCIALS ------------------------------------------------>
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Socials
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"
@@ -1668,9 +1710,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- CONTACT ----------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Contact
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://stefan-aberer.at/#email" data-email-link
@@ -1688,9 +1730,9 @@ This proof of concept video was commissioned by a production company for a Chine
                         </div>
 <!-- PARTNER ----------------------------------------------->
     <div>
-        <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+        <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
             Partner
-        </h4>
+        </h3>
         <ul class="space-y-1">
             <li>
                 <a href="https://martini.film" target="_blank" rel="noopener noreferrer"
@@ -1704,8 +1746,18 @@ This proof of concept video was commissioned by a production company for a Chine
                     EasyDoesIt
                 </a>
             </li>
+            <li>
+                <a href="https://higgsfield.ai/" target="_blank" rel="noopener noreferrer"
+                    class="text-sm text-gray-300 hover:text-white transition-colors">
+                    Higgsfield
+                </a>
+            </li>
         </ul>
     </div>
+                    </div>
+                    <!-- Copyright -->
+                    <div class="footer-bottom">
+                        <p class="footer-bottom__copy">&copy; <span data-current-year>2026</span> Stefan Aberer. All rights reserved.</p>
                     </div>
                 </div>
         </footer>
@@ -1718,7 +1770,7 @@ This proof of concept video was commissioned by a production company for a Chine
             <div class="container mx-auto max-w-7xl px-6">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="pt-8 md:pt-0">
-                        <p class="font-mono uppercase text-xs tracking-widest mb-4">
+                        <p class="font-mono uppercase text-xs tracking-widest mb-4 page-intro-eyebrow">
                            Learning
                         </p>
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
@@ -1802,24 +1854,24 @@ This proof of concept video was commissioned by a production company for a Chine
                         </div>
                     </div>
                     <div class="flex justify-center masterclass-support-image">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
-                            alt="AI workflow from idea to final output" class="max-w-sm w-full h-auto rounded-lg tech-desk"
-                            loading="lazy">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/idea2finalfinal_00000.webp"
-                            alt="AI workflow from idea to final output" class="md:max-w-lg w-full h-auto rounded-lg tech-mob"
-                            loading="lazy">
+                        <img src="idea2finalfinal_00000.webp"
+                            alt="AI workflow from idea to final output" width="1080" height="1080" class="max-w-sm w-full h-auto rounded-lg tech-desk"
+                            loading="lazy" decoding="async">
+                        <img src="idea2finalfinal_00000.webp"
+                            alt="AI workflow from idea to final output" width="1080" height="1080" class="md:max-w-lg w-full h-auto rounded-lg tech-mob"
+                            loading="lazy" decoding="async">
                     </div>
                 </div>
 
                 <!-- Zweite Reihe: Bild links, Text rechts -->
                 <div class="masterclass-sessions grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-4 md:mb-16 lg:mb-16">
                     <div class="flex justify-center switch-posi masterclass-support-image">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
-                            alt="Individual AI Masterclass consultation" class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
-                            loading="lazy">
-                        <img src="https://raw.githubusercontent.com/xStivix/website/refs/heads/main/miscfox/aboutblank_00000.webp"
-                            alt="Individual AI Masterclass consultation" class="md:max-w-md w-full h-auto rounded-lg tech-mob"
-                            loading="lazy">
+                        <img src="miscfox/aboutblank_00000.webp"
+                            alt="Individual AI Masterclass consultation" width="1080" height="1080" class="md:max-w-sm w-full h-auto rounded-lg tech-desk"
+                            loading="lazy" decoding="async">
+                        <img src="miscfox/aboutblank_00000.webp"
+                            alt="Individual AI Masterclass consultation" width="1080" height="1080" class="md:max-w-md w-full h-auto rounded-lg tech-mob"
+                            loading="lazy" decoding="async">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-2 md:mb-4">Individual Sessions</h3>
@@ -1855,8 +1907,17 @@ This proof of concept video was commissioned by a production company for a Chine
                 <!-- oberer Abstand -->
                 <div class="h-16"></div>
 
+                <!-- Kontakt-CTA -->
+                <div class="footer-cta">
+                    <div class="footer-cta__copy">
+                        <p class="font-mono uppercase text-xs tracking-widest footer-cta__eyebrow">03 CONNECT</p>
+                        <h2 class="super-title footer-cta__title">Let’s work together.</h2>
+                        <p class="footer-cta__text">Have a project in mind? Get in touch.<br class="footer-cta__break"> Located in Bregenz, Austria. Available worldwide.</p>
+                    </div>
+                </div>
+
                 <!-- Magnet-Raster -->
-                <div class="magnet-wrapper" class="mb-12">
+                <div class="magnet-wrapper">
                     <canvas class="magnet-grid"></canvas>
                 </div>
 
@@ -1870,9 +1931,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- LEGAL -------------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Legal
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="#impressum"
@@ -1894,9 +1955,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- SOCIALS ------------------------------------------------>
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Socials
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://vimeo.com/user77038892" target="_blank" rel="noopener noreferrer"
@@ -1916,9 +1977,9 @@ This proof of concept video was commissioned by a production company for a Chine
 
                         <!-- CONTACT ----------------------------------------------->
                         <div>
-                            <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+                            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
                                 Contact
-                            </h4>
+                            </h3>
                             <ul class="space-y-1">
                                 <li>
                                     <a href="https://stefan-aberer.at/#email" data-email-link
@@ -1936,9 +1997,9 @@ This proof of concept video was commissioned by a production company for a Chine
                         </div>
 <!-- PARTNER ----------------------------------------------->
 <div>
-    <h4 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
+    <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400 mb-3">
         Partner
-    </h4>
+    </h3>
     <ul class="space-y-1">
         <li>
             <a href="https://easydoesit.de/" target="_blank" rel="noopener noreferrer"
@@ -1952,8 +2013,18 @@ This proof of concept video was commissioned by a production company for a Chine
                 Martini
             </a>
         </li>
+        <li>
+            <a href="https://higgsfield.ai/" target="_blank" rel="noopener noreferrer"
+                class="text-sm text-gray-300 hover:text-white transition-colors">
+                Higgsfield
+            </a>
+        </li>
     </ul>
 </div>
+                    </div>
+                    <!-- Copyright -->
+                    <div class="footer-bottom">
+                        <p class="footer-bottom__copy">&copy; <span data-current-year>2026</span> Stefan Aberer. All rights reserved.</p>
                     </div>
                 </div>
         </footer>
@@ -2061,8 +2132,9 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20260925-higgsfield-treatment-on" defer></script>
+    <script src="script.js?v=20260927-contact-3" defer></script>
     <script src="refinement.js?v=20260912-phone-orientation" defer></script>
     <script src="ai-optical.js?v=20260927-middle-grey" defer></script>
+    <script src="enhance.js?v=20260927-connect-4" defer></script>
 </body>
 </html>

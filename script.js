@@ -78,7 +78,7 @@ const services = [
       title: 'MASTERCLASS',
       text: 'Want to learn how generative AI can become part of a professional production workflow? In this Masterclass, I share the complete process behind my AI projects, from prompt development and reference preparation to video generation, all the way to post-production integration.',
       imagePanel: 2,
-      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">COMING SOON</a>'
+      button: '<a href="#miscellaneous" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link" data-page="miscellaneous">Coming soon</a>'
     }
   ];
 
@@ -86,7 +86,7 @@ const services = [
     <article class="service-card flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="service-visual relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img
-          src="service-lightstream-connected.png"
+          src="service-lightstream-connected.webp"
           alt=""
           loading="lazy"
           decoding="async"
@@ -137,14 +137,16 @@ const services = [
       };
 
       stylesheet.rel = 'stylesheet';
-      stylesheet.href = 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css';
+      // Pin the major version: an unversioned CDN URL would silently switch to
+      // the next (possibly breaking) Swiper release.
+      stylesheet.href = 'https://cdn.jsdelivr.net/npm/swiper@14/swiper-bundle.min.css';
       stylesheet.onload = () => {
         stylesheetReady = true;
         finish();
       };
       stylesheet.onerror = reject;
 
-      script.src = 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js';
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@14/swiper-bundle.min.js';
       script.async = true;
       script.onload = () => {
         scriptReady = true;
@@ -1352,10 +1354,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* 2) transparente Schicht erzeugen */
     const layer = document.createElement('div');
+    layer.className = 'video-open-layer';
     layer.style.cssText = 'position:absolute;inset:0;cursor:pointer;';
     layer.tabIndex = 0;
     layer.setAttribute('role', 'button');
-    layer.setAttribute('aria-label', 'Play project video');
+    const projectTitle = (wrapper.querySelector('h3')?.textContent || '').replace(/\s+/g, ' ').trim();
+    layer.setAttribute('aria-label', projectTitle ? `Play video: ${projectTitle}` : 'Play project video');
+    // Visible cue that the preview opens the full film (shown on hover/focus, always on touch).
+    const watchHint = document.createElement('span');
+    watchHint.className = 'video-watch-hint';
+    watchHint.setAttribute('aria-hidden', 'true');
+    watchHint.innerHTML = '<svg viewBox="0 0 10 12" width="8" height="10" focusable="false"><path d="M0 0v12l10-6z" fill="currentColor"/></svg><span class="video-watch-hint__label">Watch</span>';
+    layer.appendChild(watchHint);
     wrapper.appendChild(layer);
 
     /* --- Hover: abspielen / pausieren ------------------- */
@@ -1418,15 +1428,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 /* ===== Quote Ticker Data & Init (10 Items) ===== */
 const QUOTES = [
-  { initials: "WB", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/warner-bros.svg", logoAlt: "Warner Bros.", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
+  { initials: "WB", logo: "Logoassets/warner-bros.svg", logoAlt: "Warner Bros.", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
   { initials: "P6", text: "Absolutely lovely stuff.", author: "Eline (Particle6 CEO)" },
-  { initials: "TB", logo: "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Logoassets/dor-brothers.png", logoAlt: "The Dor Brothers", text: "Great attention to detail.", author: "The Dor Brothers" },
-  { initials: "KT", logo: "https://raw.githubusercontent.com/xStivix/website/refs/heads/main/Logoassets/martini-icon.png", logoAlt: "Martini", logoClass: "quote-brand-invert", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
+  { initials: "TB", logo: "Logoassets/dor-brothers-180.webp", logoAlt: "The Dor Brothers", text: "Great attention to detail.", author: "The Dor Brothers" },
+  { initials: "KT", logo: "Logoassets/martini-icon-180.webp", logoAlt: "Martini", logoClass: "quote-brand-invert", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
   { initials: "PJ", text: "Love the work.", author: "PJ Accetturo (Director)" },
   { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
   { initials: "JL", logo: "Logoassets/higgsfield.svg", logoAlt: "Higgsfield", text: "Revision 55 on a treatment tells me most of what I need to know about how you work.", author: "John Lafizov (Higgsfield CPP)", fullText: true },
-  { initials: "OA", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/openai.svg", logoAlt: "OpenAI", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
-  { initials: "HO", logo: "https://raw.githubusercontent.com/xStivix/website/400c625feabb65fa266a6d3d1b8f882e35f608c8/Logoassets/we-are-tilt.svg", logoAlt: "We Are Tilt", text: "Really impressed with what you're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
+  { initials: "OA", logo: "Logoassets/openai.svg", logoAlt: "OpenAI", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
+  { initials: "HO", logo: "Logoassets/we-are-tilt.svg", logoAlt: "We Are Tilt", text: "Really impressed with what you're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
   { initials: "FN", text: "Absolutely insane stuff...", author: "Frank Nitty (Executive Producer)" }
 ];
 

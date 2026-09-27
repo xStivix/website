@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found | Stefan Aberer</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/iconsite_00000.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="preload" href="/fonts/roboto-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300 900;
+            font-display: swap;
+            src: url('/fonts/roboto-latin-variable.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Roboto Mono';
+            font-style: normal;
+            font-weight: 400 600;
+            font-display: swap;
+            src: url('/fonts/roboto-mono-latin-variable.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: 100svh;
+            background: #000;
+            color: #fff;
+            font-family: 'Roboto', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+            background: #050505;
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 80rem;
+            margin: 0 auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        header .wrap {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -.035em;
+            text-decoration: none;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        .eyebrow {
+            margin: 0 0 1rem;
+            font-family: 'Roboto Mono', ui-monospace, monospace;
+            font-size: .75rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .64);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(3rem, 9vw, 7rem);
+            font-weight: 700;
+            line-height: .95;
+            letter-spacing: -.045em;
+        }
+
+        p.lead {
+            max-width: 30rem;
+            margin: 1.5rem 0 0;
+            color: rgba(255, 255, 255, .72);
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+            margin-top: 2.25rem;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            min-height: 2.75rem;
+            padding: .75rem 1.35rem;
+            border: 1px solid rgba(255, 255, 255, .4);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Roboto Mono', ui-monospace, monospace;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            line-height: 1;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+        }
+
+        .button--primary {
+            border-color: #fff;
+            background: #fff;
+            color: #000;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            border-color: #fff;
+            background: #fff;
+            color: #000;
+        }
+
+        .button--primary:hover,
+        .button--primary:focus-visible {
+            background: #000;
+            color: #fff;
+        }
+
+        a:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 3px;
+        }
+
+        footer {
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            color: #9ca3af;
+            font-size: .8125rem;
+        }
+
+        footer a {
+            color: #d1d5db;
+            margin-right: 1.25rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .button { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrap"><a class="logo" href="/">stefan aberer</a></div>
+    </header>
+
+    <main>
+        <p class="eyebrow">Error 404</p>
+        <h1>This page doesn’t exist.</h1>
+        <p class="lead">The link may be outdated, or the page has moved. Everything else is just one click away.</p>
+        <div class="actions">
+            <a class="button button--primary" href="/">Back to home <span aria-hidden="true">→</span></a>
+            <a class="button" href="/#portfolio">Selected work</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <a href="/#impressum">Impressum</a>
+            <a href="/#datenschutz">Datenschutz</a>
+        </div>
+    </footer>
+</body>
+</html>
