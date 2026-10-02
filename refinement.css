@@ -484,86 +484,7 @@
   }
 }
 
-#quotes {
-  display: block;
-  border-top: 0;
-  padding-block: .875rem;
-}
-
-/* Hide the logo frames while preserving the existing spacing. */
-#quotes .quote-logo {
-  border-color: transparent;
-}
-
-#quotes .quote-item,
-#quotes .quote-item.first {
-  border-left-color: transparent !important;
-}
-
-/* Give longer testimonials enough room without reducing the type size. */
-#quotes .quote-item--full-text {
-  width: calc(var(--qt-item-w) + 4rem);
-  grid-template-rows: 1fr max-content max-content 1fr;
-}
-
-#quotes .quote-item--full-text .quote-text {
-  max-width: calc(var(--qt-item-w) + 4rem - var(--qt-logo) - var(--qt-pad-x) * 2 - var(--qt-gap-x));
-  -webkit-line-clamp: unset;
-}
-
-/* Scale the desktop proportions together on tablet-sized screens. */
-@media (min-width: 768px) and (max-width: 1366px) {
-  #quotes {
-    --qt-scale-unit: clamp(.75px, .083333vw, 1px);
-    --qt-height: calc(90 * var(--qt-scale-unit));
-    --qt-item-w: calc(360 * var(--qt-scale-unit));
-    --qt-logo: calc(60 * var(--qt-scale-unit));
-    --qt-pad-x: calc(24 * var(--qt-scale-unit));
-    --qt-gap-x: calc(16 * var(--qt-scale-unit));
-    --qt-stack-gap: calc(6 * var(--qt-scale-unit));
-    --qt-fade-w: calc(72 * var(--qt-scale-unit));
-    padding-block: calc(14 * var(--qt-scale-unit));
-  }
-
-  #quotes .quote-ticker {
-    height: auto;
-    min-height: var(--qt-height);
-    touch-action: pan-y pinch-zoom;
-  }
-
-  #quotes .quote-item {
-    flex-shrink: 0;
-    height: auto;
-    min-height: var(--qt-height);
-    grid-template-columns: var(--qt-logo) minmax(0, 1fr);
-    align-self: stretch;
-  }
-
-  #quotes .quote-logo {
-    padding: calc(6 * var(--qt-scale-unit));
-  }
-
-  #quotes .quote-text {
-    min-width: 0;
-    max-width: none;
-    font-size: clamp(.69rem, 1.226667vw, .92rem);
-    line-height: 1.2;
-  }
-
-  #quotes .quote-author {
-    min-width: 0;
-    font-size: clamp(.54rem, .96vw, .72rem);
-    line-height: 1.3;
-    overflow-wrap: anywhere;
-  }
-}
-
-/* Keep the quote slider off phone layouts. */
-@media (max-width: 767px) {
-  #quotes {
-    display: none;
-  }
-}
+/* The testimonials band (#quotes) is styled in enhance.css. */
 
 /* Keep the grid aligned with the footer, with a small inset for its edge dots
    so they can grow on hover without clipping. */
@@ -574,6 +495,7 @@
 .footer-magnet .magnet-grid {
   width: 100%;
   max-width: none;
+  cursor: default;
 }
 
 @media (min-width: 1200px) and (pointer: fine) {
@@ -640,6 +562,11 @@
 }
 
 .page-optical > canvas { opacity: 0; }
+#about #about-resonance {
+  aspect-ratio: 600 / 560;
+  pointer-events: auto;
+  cursor: default;
+}
 :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-optical:is([data-motion="static"], [data-motion="focus-stack"]) > :is(img, canvas) {
   width: 80%;
   height: 80%;
@@ -669,31 +596,36 @@
 
 /* The service reveal shares the same monochrome palette. */
 #services .service-card {
-  --service-surface: #f5f5f5;
+  --service-light-surface: #f5f5f5;
+  --service-surface: var(--service-light-surface);
   --service-ink: #000;
   --service-muted: #6b7280;
   --service-button-surface: #000;
   --service-button-ink: #fff;
   --service-image-invert: 1;
   --service-visual-surface: #050505;
+  --service-outline: #d6d6d6;
   position: relative;
   isolation: isolate;
-  border: 1px solid #ccc;
+  /* One outer border and one clip keep both panels' corners on the same edge. */
+  border: 1px solid var(--service-outline);
   border-radius: 18px;
-  background-color: var(--service-surface);
+  background-color: transparent;
   background-clip: padding-box;
   box-shadow: 0 14px 40px rgb(0 0 0 / 0);
   transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .2s ease;
 }
 
 #services .service-card__body {
+  border: 0;
+  border-radius: 0;
   background-color: var(--service-surface);
   transition: background-color .2s ease;
 }
 
 #services .service-card .service-visual {
-  /* Clip the image inside the border; do not filter the rounded container. */
-  border-radius: 17px 17px 0 0;
+  /* The card alone supplies the rounded clip and outline. */
+  border-radius: 0;
   background-color: var(--service-visual-surface);
   transition: background-color .2s ease;
 }
@@ -726,7 +658,7 @@
     --service-button-surface: #fff;
     --service-button-ink: #000;
     --service-image-invert: 0;
-    --service-visual-surface: #fafafa;
+    --service-visual-surface: var(--service-light-surface);
   }
 }
 
@@ -737,7 +669,7 @@
   --service-button-surface: #fff;
   --service-button-ink: #000;
   --service-image-invert: 0;
-  --service-visual-surface: #fafafa;
+  --service-visual-surface: var(--service-light-surface);
 }
 
 /* The carousel clips shadows into a gray strip. Keep the lift without a shadow
@@ -904,28 +836,6 @@
 
   #services .super-title {
     margin-bottom: 2.25rem;
-  }
-
-  /* Keep type readable independently of the logo scaling. */
-  #quotes {
-    --qt-height: 90px;
-    --qt-item-w: 340px;
-    --qt-logo: 52px;
-    --qt-pad-x: 20px;
-    --qt-gap-x: 16px;
-    --qt-stack-gap: 6px;
-    --qt-fade-w: 36px;
-    padding-block: 14px;
-  }
-
-  #quotes .quote-text {
-    font-size: .875rem;
-    line-height: 1.35;
-  }
-
-  #quotes .quote-author {
-    font-size: .75rem;
-    line-height: 1.4;
   }
 
   #ai-page > section,

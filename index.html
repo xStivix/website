@@ -72,8 +72,8 @@
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="site.min.css?v=20260903-8" />
-    <link rel="stylesheet" href="refinement.css?v=20261002-signal-fine-clean-corners" />
-    <link rel="stylesheet" href="enhance.css?v=20260927-section-labels-7" />
+    <link rel="stylesheet" href="refinement.css?v=20261002-service-outline" />
+    <link rel="stylesheet" href="enhance.css?v=20261002-testimonials-final" />
     <style>
         .name-wrapper {
             display: flex;
@@ -282,10 +282,11 @@
                         </a>
                     </div>
 
-                    <!-- Soft Totality animation -->
+                    <!-- Resonance particle globe -->
                     <div class="flex justify-center about-us pl-18 about-artwork page-artwork-right">
-                        <div id="about-eclipse" class="about-portrait page-optical" data-motion="eclipse" aria-hidden="true">
-                            <img src="motion/soft-totality.webp" alt="" width="720" height="720" loading="lazy" decoding="async">
+                        <div id="about-resonance" class="about-portrait page-optical" data-motion="resonance" aria-hidden="true">
+                            <img src="artwork/about-resonance.svg?v=20261002-even-highlights" alt="" width="600" height="560" loading="lazy" decoding="async">
+                            <canvas aria-hidden="true"></canvas>
                         </div>
                     </div>
 
@@ -293,16 +294,127 @@
             </div>
         </section>
 
-<!-- QUOTE TICKER -->
-<section id="quotes" class="py-4">
-  <div class="quotes-container">
-    <div class="quote-ticker" aria-label="Client quotes carousel">
-      <div class="quote-track" id="quoteTrack"></div>
-      <div class="quote-fade left"></div>
-      <div class="quote-fade right"></div>
-    </div>
-  </div>
-</section>
+        <!-- Testimonials: the content lives here, script.js only adds the motion.
+             --mark-scale balances the optical size of each logo. -->
+        <section id="quotes" class="testimonials" aria-labelledby="testimonials-heading">
+            <h2 id="testimonials-heading" class="testimonials__heading">Testimonials</h2>
+            <div class="testimonials__viewport" role="group" tabindex="0"
+                aria-label="Testimonials. Use the arrow keys to scroll.">
+                <ul class="testimonials__track" role="list">
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark" style="--mark-scale: .96">
+                                <img src="Logoassets/warner-bros.svg" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>Intrigued by your work.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Curd Zachmeister</span>
+                                <span class="testimonial__org">WBD</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark" style="--mark-scale: .84">
+                                <img src="Logoassets/higgsfield.svg" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>Revision 55 on a treatment tells me most of what I need to know about how you work.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">John Lafizov</span>
+                                <span class="testimonial__org">Higgsfield CPP</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark testimonial__mark--monogram" style="--monogram-x: -.015em" aria-hidden="true"><svg class="testimonial__initials" viewBox="-50 -50 100 100" focusable="false"><text>P6</text></svg></span>
+                            <blockquote class="testimonial__quote"><p>Absolutely lovely stuff.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Eline</span>
+                                <span class="testimonial__org">Particle6 CEO</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark" style="--mark-scale: 1.04">
+                                <img src="Logoassets/dor-brothers-emblem-160.webp" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>Great attention to detail.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">The Dor Brothers</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark testimonial__mark--invert" style="--mark-scale: 1.24">
+                                <img src="Logoassets/martini-icon-180.webp" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>One of the best AI Filmmakers.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Koh Terai</span>
+                                <span class="testimonial__org">Martini</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark testimonial__mark--monogram" aria-hidden="true"><svg class="testimonial__initials" viewBox="-50 -50 100 100" focusable="false"><text>PJ</text></svg></span>
+                            <blockquote class="testimonial__quote"><p>Love the work.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">PJ Accetturo</span>
+                                <span class="testimonial__org">Director</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark testimonial__mark--monogram" style="--monogram-x: .008em" aria-hidden="true"><svg class="testimonial__initials" viewBox="-50 -50 100 100" focusable="false"><text>JS</text></svg></span>
+                            <blockquote class="testimonial__quote"><p>When it comes to AI you seem to be ahead of everyone else.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Johan Sugarev</span>
+                                <span class="testimonial__org">Sound Designer</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark" style="--mark-scale: .92">
+                                <img src="Logoassets/openai.svg" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>Great content.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Souki Mansoor</span>
+                                <span class="testimonial__org">OpenAI</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark" style="--mark-scale: .82">
+                                <img src="Logoassets/we-are-tilt.svg" alt="" width="36" height="36" loading="lazy" decoding="async" draggable="false">
+                            </span>
+                            <blockquote class="testimonial__quote"><p>Really impressed with what you’re doing with AI.</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Harry Osborne</span>
+                                <span class="testimonial__org">WeAreTilt</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                    <li class="testimonial">
+                        <figure class="testimonial__figure">
+                            <span class="testimonial__mark testimonial__mark--monogram" aria-hidden="true"><svg class="testimonial__initials" viewBox="-50 -50 100 100" focusable="false"><text>FN</text></svg></span>
+                            <blockquote class="testimonial__quote"><p>Absolutely insane stuff…</p></blockquote>
+                            <figcaption class="testimonial__cite">
+                                <span class="testimonial__name">Frank Nitty</span>
+                                <span class="testimonial__org">Executive Producer</span>
+                            </figcaption>
+                        </figure>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
 
 
@@ -2132,9 +2244,11 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20261002-signal-fine" defer></script>
+    <script src="script.js?v=20261002-service-gray" defer></script>
     <script src="refinement.js?v=20260912-phone-orientation" defer></script>
     <script src="ai-optical.js?v=20260927-middle-grey" defer></script>
+    <script src="about-resonance.js?v=20261002-proximity-wide" defer></script>
+    <script type="module" src="footer-signal.js?v=20261002-link-fade"></script>
     <script src="enhance.js?v=20260927-connect-4" defer></script>
 </body>
 </html>

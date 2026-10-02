@@ -86,7 +86,7 @@ const services = [
     <article class="service-card flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="service-visual relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img
-          src="artwork/service-signal-fine.svg"
+          src="artwork/service-signal-fine.svg?v=20261002-transparent"
           alt=""
           loading="lazy"
           decoding="async"
@@ -1161,149 +1161,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── Grundeinstellungen ────────────────────────────────────── */
-  const STEP = 20;
-  const BASE_R = 2;
-  const MAX_R = 6;
-  const FALLOFF = 185;
-  const BASE_ALPHA = 0.65;
-  const MAX_ALPHA = 1;
-  const GROW_EASE = 0.16;
-  const RETURN_EASE = 0.075;
-  const BRIGHTNESS_EASE = 0.11;
-
-  /* Initialisiert genau ein Canvas ----------------------------- */
-  function initGrid(canvas){
-    const ctx   = canvas.getContext('2d');
-    let dots    = [];
-    let mouse   = { x: 1e9, y: 1e9 };
-    let animationFrame = null;
-    let isVisible = false;
-    let isIntersecting = false;
-    let dotScale = 1;
-    let lastSize = '';
-
-    /* Größe & Punkte berechnen --------------------------------- */
-    function resize(){
-      const r = canvas.getBoundingClientRect();
-      if (r.width === 0 || r.height === 0) return;  // Seite evtl. noch hidden
-
-      const d = window.devicePixelRatio || 1;
-      const scaledGrid = getComputedStyle(canvas).getPropertyValue('--magnet-responsive').trim() === '1';
-      const size = `${r.width}:${r.height}:${d}:${scaledGrid}`;
-      if (size === lastSize) return;
-      lastSize = size;
-      canvas.width  = r.width  * d;
-      canvas.height = r.height * d;
-      ctx.setTransform(d,0,0,d,0,0);
-
-      dotScale = scaledGrid ? r.height / 160 : 1;
-      const step = STEP * dotScale;
-      // Inset both outer dots enough for their full hover radius, then
-      // distribute the columns evenly between those fixed endpoints.
-      const edge = MAX_R * dotScale;
-      const span = Math.max(0, r.width - 2 * edge);
-      const columns = Math.max(2, Math.round(span / step) + 1);
-      const stepX = span / (columns - 1);
-      dots = [];
-      for (let y = step/2; y < r.height; y += step){
-        for (let column = 0; column < columns; column++){
-          const x = edge + column * stepX;
-          dots.push({ x, y, radius: BASE_R * dotScale, alpha: BASE_ALPHA });
-        }
-      }
-    }
-
-    /* Zeichen-Loop --------------------------------------------- */
-    function draw(){
-      /* Falls das Canvas erst jetzt sichtbar wurde … */
-      if (canvas.width === 0 || canvas.height === 0) resize();
-
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-
-      dots.forEach(p => {
-        const dx = p.x - mouse.x;
-        const dy = p.y - mouse.y;
-        const dist = Math.hypot(dx,dy);
-        const t = Math.exp(-dist / (FALLOFF * dotScale));
-        const targetR = (BASE_R + (MAX_R - BASE_R) * t) * dotScale;
-        const targetAlpha = BASE_ALPHA + (MAX_ALPHA - BASE_ALPHA) * t;
-        const radiusEase = targetR > p.radius ? GROW_EASE : RETURN_EASE;
-
-        p.radius += (targetR - p.radius) * radiusEase;
-        p.alpha += (targetAlpha - p.alpha) * BRIGHTNESS_EASE;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
-        ctx.fill();
-      });
-      animationFrame = isVisible && !document.hidden
-        ? requestAnimationFrame(draw)
-        : null;
-    }
-
-    function startDrawing(){
-      if (animationFrame !== null || document.hidden) return;
-      isVisible = true;
-      animationFrame = requestAnimationFrame(draw);
-    }
-
-    function stopDrawing(){
-      isVisible = false;
-      mouse.x = mouse.y = 1e9;
-      if (animationFrame !== null) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-    }
-
-    /* Maus / Touch global erfassen ------------------------------ */
-    function setMouse(e){
-      if (!isVisible) return;
-      const rect = canvas.getBoundingClientRect();
-      const ev   = e.touches ? e.touches[0] : e;
-      mouse.x = ev.clientX - rect.left;
-      mouse.y = ev.clientY - rect.top;
-    }
-
-    window.addEventListener('mousemove', setMouse, { passive:true });
-    window.addEventListener('touchmove', setMouse, { passive:true });
-    window.addEventListener('mouseleave', () => { mouse.x = mouse.y = 1e9; });
-    window.addEventListener('resize',  resize,   { passive:true });
-
-    /* auch beim Umschalten der Unterseiten neu vermessen */
-    document.addEventListener('pagechange', resize);
-
-    /* Nur zeichnen, wenn das Raster tatsächlich sichtbar ist. */
-    resize();
-    // CSS/font-size changes can settle after the window's resize event.
-    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
-    if ('IntersectionObserver' in window) {
-      const visibilityObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          isIntersecting = entry.isIntersecting;
-          entry.isIntersecting ? startDrawing() : stopDrawing();
-        });
-      }, { rootMargin: '100px 0px' });
-      visibilityObserver.observe(canvas);
-    } else {
-      isIntersecting = true;
-      startDrawing();
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopDrawing();
-      } else if (isIntersecting) {
-        startDrawing();
-      }
-    });
-  }
-
-  /* alle Canvas initialisieren --------------------------------- */
-  document.querySelectorAll('.magnet-grid').forEach(initGrid);
-
   /* ======= Hook an dein bestehendes Page-Switching ============ */
   function firePageChange(){
     /* auf die nächste Paint-Phase warten, damit display:block
@@ -1426,164 +1283,178 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.key === 'Escape' && box.classList.contains('show')) closeBox();
   });
 });
-/* ===== Quote Ticker Data & Init (10 Items) ===== */
-const QUOTES = [
-  { initials: "WB", logo: "Logoassets/warner-bros.svg", logoAlt: "Warner Bros.", text: "Intrigued by your work.", author: "Curd Zachmeister (WBD)" },
-  { initials: "P6", text: "Absolutely lovely stuff.", author: "Eline (Particle6 CEO)" },
-  { initials: "TB", logo: "Logoassets/dor-brothers-180.webp", logoAlt: "The Dor Brothers", text: "Great attention to detail.", author: "The Dor Brothers" },
-  { initials: "KT", logo: "Logoassets/martini-icon-180.webp", logoAlt: "Martini", logoClass: "quote-brand-invert", text: "One of the best AI Filmmakers.", author: "Koh Terai (Martini)" },
-  { initials: "PJ", text: "Love the work.", author: "PJ Accetturo (Director)" },
-  { initials: "JS", text: "When it comes to AI you seem to be ahead of everyone else.", author: "Johan Sugarev (Sound Designer)" },
-  { initials: "JL", logo: "Logoassets/higgsfield.svg", logoAlt: "Higgsfield", text: "Revision 55 on a treatment tells me most of what I need to know about how you work.", author: "John Lafizov (Higgsfield CPP)", fullText: true },
-  { initials: "OA", logo: "Logoassets/openai.svg", logoAlt: "OpenAI", text: "Great content.", author: "Souki Mansoor (OpenAI)" },
-  { initials: "HO", logo: "Logoassets/we-are-tilt.svg", logoAlt: "We Are Tilt", text: "Really impressed with what you're doing with AI.", author: "Harry Osborne (WeAreTilt)" },
-  { initials: "FN", text: "Absolutely insane stuff...", author: "Frank Nitty (Executive Producer)" }
-];
+/* ===== Testimonials ticker =====
+   The testimonials are plain HTML in index.html (#quotes); this only adds the
+   motion. One set of copies keeps the loop seamless. The band glides at the
+   speed set in CSS (--testimonials-speed), eases to a stop under the mouse or
+   while focused by keyboard, and can be dragged, thrown, swiped sideways on a
+   trackpad or moved with the arrow keys. Reduced motion: no automatic motion. */
+(function initTestimonials(){
+  const section = document.getElementById('quotes');
+  const viewport = section && section.querySelector('.testimonials__viewport');
+  const track = viewport && viewport.querySelector('.testimonials__track');
+  if (!track) return;
 
-function createQuoteItem(q){
-  const wrap = document.createElement('div');
-  wrap.className = 'quote-item';
-  if (q.fullText) wrap.classList.add('quote-item--full-text');
+  const originals = Array.from(track.children);
+  if (!originals.length) return;
 
-  const logoWrap = document.createElement('div');
-  logoWrap.className = 'quote-logo';
-
-  if (q.logo){
-    const img = document.createElement('img');
-    img.src = q.logo;
-    img.alt = q.logoAlt || (q.author ? `${q.author} logo` : 'Company logo');
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    img.draggable = false;
-    if (q.logoClass) img.classList.add(q.logoClass);
-    if (q.logoFit === 'wide') logoWrap.classList.add('quote-logo--wide');
-    logoWrap.appendChild(img);
-  } else {
-    const badge = document.createElement('div');
-    badge.className = 'quote-initial';
-    badge.textContent = (q.initials || '?').toUpperCase();
-    logoWrap.appendChild(badge);
-  }
-
-  const textEl = document.createElement('div');
-  textEl.className = 'quote-text';
-  textEl.textContent = q.text;
-
-  const authorEl = document.createElement('div');
-  authorEl.className = 'quote-author';
-  authorEl.textContent = q.author || '';
-
-  wrap.appendChild(logoWrap);
-  wrap.appendChild(textEl);
-  wrap.appendChild(authorEl);
-  return wrap;
-}
-
-(function initQuoteTicker(){
-  const track = document.getElementById('quoteTrack');
-  if(!track) return;
-
-  // Spur füllen
-  const frag = document.createDocumentFragment();
-  QUOTES.forEach(q => frag.appendChild(createQuoteItem(q)));
-  track.appendChild(frag);
-
-  // Erstes Item ohne linke Linie
-  if (track.firstElementChild) track.firstElementChild.classList.add('first');
-
-  // Zweite Spur anhängen, damit das manuell steuerbare Loop nahtlos bleibt
-  const clones = Array.from(track.children).map(n => n.cloneNode(true));
-  clones.forEach(n => {
-    n.setAttribute('aria-hidden', 'true');
-    track.appendChild(n);
-  });
-
-  const ticker = track.closest('.quote-ticker');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const compactLayout = window.matchMedia('(max-width: 1024px), (pointer: coarse)');
-  const AUTO_DURATION = 40;
-  const TOUCH_SPEED = 45;
-  const RETURN_RATE = 1.45;
+  const DEFAULT_SPEED = 40;     // px/s, if the CSS token is missing
+  const STOP_RATE = 3.2;        // easing towards a stop (hover, keyboard focus)
+  const RETURN_RATE = 1.45;     // easing back to cruising speed, and after a throw
   const MAX_THROW_SPEED = 1500;
+  const SETTLE_SPEED = 1.5;     // below this a stopping band rests on whole pixels
 
+  // Without script the row scrolls natively and starts after the edge fade.
+  // Keep that starting position for the animated version.
+  let offset = parseFloat(getComputedStyle(track).paddingLeft) || 0;
   let loopWidth = 0;
-  let offset = 0;
-  let autoVelocity = 0;
   let velocity = 0;
+  let cruise = 0;
+  let frame = null;
+  let lastFrame = 0;
+  let visible = !('IntersectionObserver' in window);
+  let measureFrame = null;
+  const holds = new Set();      // reasons to rest: 'hover', 'focus'
+
+  let pointerId = null;
   let dragging = false;
   let dragStarted = false;
   let dragStartX = 0;
   let dragStartY = 0;
-  let pointerId = null;
   let lastPointerX = 0;
   let lastMoveTime = 0;
   let dragVelocity = 0;
-  let lastFrame = performance.now();
-  let tickerFrame = null;
-  let tickerVisible = false;
+
+  section.classList.add('is-live');
+  viewport.scrollLeft = 0;
 
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+  const targetSpeed = () => (holds.size ? 0 : cruise);
 
-  function measureTrack(){
-    // Hidden pages have no measurable width; preserve the loop until visible.
-    const measuredWidth = track.scrollWidth / 2;
-    if (!measuredWidth) return;
-    const previousWidth = loopWidth;
-    loopWidth = measuredWidth;
+  function readSpeed(){
+    const value = parseFloat(getComputedStyle(section).getPropertyValue('--testimonials-speed'));
+    return value > 0 ? value : DEFAULT_SPEED;
+  }
 
-    if (previousWidth > 0 && loopWidth > 0) {
-      offset = offset / previousWidth * loopWidth;
+  // Copies of the whole set; the copies are hidden from assistive technology.
+  function setCopies(sets){
+    let current = track.children.length / originals.length;
+    while (current < sets) {
+      originals.forEach(item => {
+        const copy = item.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        copy.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+        track.appendChild(copy);
+      });
+      current += 1;
     }
-
-    autoVelocity = reducedMotion.matches
-      ? 0
-      : -(compactLayout.matches ? TOUCH_SPEED : loopWidth / AUTO_DURATION);
-
-    if (reducedMotion.matches) velocity = 0;
-    if (!dragging && velocity === 0) velocity = autoVelocity;
-    wrapOffset();
-    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+    while (current > sets && current > 2) {
+      for (let i = 0; i < originals.length; i += 1) track.lastElementChild.remove();
+      current -= 1;
+    }
   }
 
   function wrapOffset(){
     if (!loopWidth) return;
-    while (offset <= -loopWidth) offset += loopWidth;
-    while (offset > 0) offset -= loopWidth;
+    offset = ((offset % loopWidth) - loopWidth) % loopWidth;   // (-loopWidth, 0]
   }
 
-  function renderTicker(now){
-    if (!tickerVisible || document.hidden) {
-      tickerFrame = null;
-      return;
-    }
+  function render(){
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+  }
+
+  // Rest on device pixels so paused text stays crisp.
+  function settle(){
+    const ratio = window.devicePixelRatio || 1;
+    offset = Math.round(offset * ratio) / ratio;
+  }
+
+  // Distance between a testimonial and its copy, with sub-pixel precision and
+  // in the track's own coordinates (independent of any scaling ancestor).
+  function measurePeriod(){
+    const width = track.offsetWidth;
+    if (!width) return 0;
+    const scale = track.getBoundingClientRect().width / width || 1;
+    const first = originals[0].getBoundingClientRect().left;
+    const copy = track.children[originals.length].getBoundingClientRect().left;
+    return (copy - first) / scale;
+  }
+
+  function measure(){
+    measureFrame = null;
+    // Hidden band (phones, other pages): nothing to measure until it is shown.
+    if (!track.offsetWidth) return;
+    if (track.children.length < originals.length * 2) setCopies(2);
+    const period = measurePeriod();
+    if (!period) return;
+
+    if (loopWidth) offset = offset / loopWidth * period;
+    loopWidth = period;
+    setCopies(1 + Math.ceil(viewport.clientWidth / loopWidth));
+
+    cruise = reducedMotion.matches ? 0 : -readSpeed();
+    if (reducedMotion.matches) velocity = 0;
+    wrapOffset();
+    render();
+    start();
+  }
+
+  function scheduleMeasure(){
+    if (measureFrame === null) measureFrame = requestAnimationFrame(measure);
+  }
+
+  function step(now){
+    frame = null;
+    if (!visible || document.hidden) return;
 
     const deltaTime = Math.min((now - lastFrame) / 1000, 0.05);
     lastFrame = now;
 
     if (!dragging) {
-      const returnBlend = 1 - Math.exp(-RETURN_RATE * deltaTime);
-      velocity += (autoVelocity - velocity) * returnBlend;
-      offset += velocity * deltaTime;
+      // Exact exponential easing, so distances do not depend on the frame rate.
+      const target = targetSpeed();
+      const rate = target === 0 ? STOP_RATE : RETURN_RATE;
+      const decay = Math.exp(-rate * deltaTime);
+      offset += target * deltaTime + (velocity - target) * (1 - decay) / rate;
+      velocity = target + (velocity - target) * decay;
+      if (target === 0 && Math.abs(velocity) < SETTLE_SPEED) {
+        velocity = 0;
+        settle();
+      }
     }
 
     wrapOffset();
-    track.style.transform = `translate3d(${offset}px, 0, 0)`;
-    tickerFrame = requestAnimationFrame(renderTicker);
-  }
+    render();
 
-  function startTicker(){
-    if (tickerFrame !== null || document.hidden || !tickerVisible) return;
-    lastFrame = performance.now();
-    tickerFrame = requestAnimationFrame(renderTicker);
-  }
-
-  function stopTicker(){
-    if (tickerFrame !== null) {
-      cancelAnimationFrame(tickerFrame);
-      tickerFrame = null;
+    // Sleep while resting; any interaction calls start() again.
+    if (dragging || velocity !== 0 || targetSpeed() !== 0) {
+      frame = requestAnimationFrame(step);
     }
   }
 
+  function start(){
+    if (frame !== null || !visible || document.hidden || !loopWidth) return;
+    lastFrame = performance.now();
+    frame = requestAnimationFrame(step);
+  }
+
+  function stop(){
+    if (frame === null) return;
+    cancelAnimationFrame(frame);
+    frame = null;
+  }
+
+  function hold(reason){
+    holds.add(reason);
+    start();
+  }
+
+  function release(reason){
+    if (holds.delete(reason)) start();
+  }
+
+  /* Pointer: drag and throw. Vertical swipes keep scrolling the page. */
   function startDrag(event){
     if (event.isPrimary === false || pointerId !== null) return;
     if (event.pointerType === 'mouse' && event.button !== 0) return;
@@ -1597,14 +1468,14 @@ function createQuoteItem(q){
     lastMoveTime = performance.now();
     dragVelocity = 0;
     velocity = 0;
-    ticker.classList.add('is-dragging');
-    ticker.setPointerCapture(pointerId);
+    if (dragStarted) section.classList.add('is-dragging');
+    viewport.setPointerCapture(pointerId);
+    start();
   }
 
   function moveDrag(event){
     if (!dragging || event.pointerId !== pointerId) return;
 
-    // Let vertical gestures scroll the page without nudging the quote track.
     if (!dragStarted) {
       const distanceX = Math.abs(event.clientX - dragStartX);
       const distanceY = Math.abs(event.clientY - dragStartY);
@@ -1614,6 +1485,7 @@ function createQuoteItem(q){
         return;
       }
       dragStarted = true;
+      section.classList.add('is-dragging');
     }
 
     const now = performance.now();
@@ -1636,47 +1508,103 @@ function createQuoteItem(q){
       ? 0 : clamp(dragVelocity, -MAX_THROW_SPEED, MAX_THROW_SPEED);
     dragging = false;
     dragStarted = false;
-    ticker.classList.remove('is-dragging');
+    section.classList.remove('is-dragging');
 
-    if (ticker.hasPointerCapture(pointerId)) {
-      ticker.releasePointerCapture(pointerId);
+    if (viewport.hasPointerCapture(pointerId)) {
+      viewport.releasePointerCapture(pointerId);
     }
     pointerId = null;
+    start();
   }
 
-  ticker.addEventListener('pointerdown', startDrag);
-  ticker.addEventListener('pointermove', moveDrag);
-  ticker.addEventListener('pointerup', endDrag);
-  ticker.addEventListener('pointercancel', endDrag);
-  ticker.addEventListener('lostpointercapture', endDrag);
-  window.addEventListener('resize', measureTrack, { passive: true });
-  reducedMotion.addEventListener('change', measureTrack);
-  compactLayout.addEventListener('change', measureTrack);
+  viewport.addEventListener('pointerdown', startDrag);
+  viewport.addEventListener('pointermove', moveDrag);
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+  viewport.addEventListener('lostpointercapture', endDrag);
 
+  /* Mouse: ease to a stop while the pointer rests on the band. */
+  viewport.addEventListener('pointerenter', event => {
+    if (event.pointerType === 'mouse') hold('hover');
+  });
+  viewport.addEventListener('pointerleave', event => {
+    if (event.pointerType === 'mouse') release('hover');
+  });
+
+  /* Trackpads: a sideways swipe moves the band; vertical scrolling is untouched. */
+  viewport.addEventListener('wheel', event => {
+    if (event.ctrlKey || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientWidth : 1;
+    offset -= event.deltaX * unit;
+    velocity = 0;
+    wrapOffset();
+    render();
+    start();
+  }, { passive: false });
+
+  /* Keyboard: focus stops the band, the arrow keys move it about one testimonial. */
+  viewport.addEventListener('focus', () => {
+    let keyboardFocus = true;
+    try { keyboardFocus = viewport.matches(':focus-visible'); } catch (error) { /* older browsers */ }
+    if (keyboardFocus) hold('focus');
+  });
+  viewport.addEventListener('blur', () => release('focus'));
+  viewport.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    if (!loopWidth) return;
+    event.preventDefault();
+    hold('focus');
+
+    const direction = event.key === 'ArrowRight' ? -1 : 1;
+    const distance = loopWidth / originals.length;
+    if (reducedMotion.matches) {
+      velocity = 0;
+      offset += direction * distance;
+      settle();
+      wrapOffset();
+      render();
+      return;
+    }
+    // The stop easing travels velocity / STOP_RATE, i.e. one testimonial.
+    velocity += direction * distance * STOP_RATE;
+    start();
+  });
+
+  window.addEventListener('resize', scheduleMeasure, { passive: true });
+  reducedMotion.addEventListener('change', scheduleMeasure);
+
+  // Track size changes when the webfonts arrive or a breakpoint changes the type.
   if ('ResizeObserver' in window) {
-    new ResizeObserver(measureTrack).observe(ticker);
+    const resizeObserver = new ResizeObserver(scheduleMeasure);
+    resizeObserver.observe(viewport);
+    resizeObserver.observe(track);
   }
-
-  measureTrack();
-  velocity = autoVelocity;
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(scheduleMeasure);
+  }
 
   if ('IntersectionObserver' in window) {
-    const tickerObserver = new IntersectionObserver(entries => {
+    new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        tickerVisible = entry.isIntersecting;
-        if (tickerVisible) measureTrack();
-        entry.isIntersecting ? startTicker() : stopTicker();
+        visible = entry.isIntersecting;
+        if (visible) {
+          measure();
+          start();
+        } else {
+          stop();
+        }
       });
-    }, { rootMargin: '120px 0px' });
-    tickerObserver.observe(ticker);
-  } else {
-    tickerVisible = true;
-    startTicker();
+    }, { rootMargin: '120px 0px' }).observe(viewport);
   }
 
   document.addEventListener('visibilitychange', () => {
-    document.hidden ? stopTicker() : startTicker();
+    document.hidden ? stop() : start();
   });
+
+  measure();
+  velocity = cruise;
+  start();
 })();
 
 const emailLinkTarget = ['mail', 'to:stefan.aberer@hotmail.com'].join('');

@@ -201,3 +201,253 @@
   line-height: 1.5;
 }
 
+
+/* --- Testimonials ticker (replaces the former .quote-* slider) ------------- */
+/* Markup in index.html, motion in script.js. The legacy .quote-* rules in
+   site.min.css no longer match anything; only #quotes itself is reset here.
+   Sizes are in rem, so the band scales with the site's fluid desktop type
+   (14px root up to 1440px wide, 16px at 1920px). */
+#quotes {
+  --t-mark: 2.5rem;            /* logo / monogram slot */
+  --t-gap: 1rem;               /* mark to text */
+  --t-space: 5.5rem;           /* between testimonials */
+  --t-quote-size: 1rem;
+  --t-cite-size: .75rem;       /* same size as the section labels */
+  --t-pad-block: 28px;         /* compact band: little black below the quotes */
+  --t-fade: clamp(3rem, 8vw, 9rem);
+  --testimonials-speed: 40;    /* px per second, read by script.js */
+  position: relative;
+  padding: 0;
+  border-top: 0;
+  background: #000;
+  color: #fff;
+}
+
+.testimonials__heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.testimonials__viewport {
+  /* Without script the row can still be scrolled sideways. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  padding-block: var(--t-pad-block);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--t-fade), #000 calc(100% - var(--t-fade)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--t-fade), #000 calc(100% - var(--t-fade)), transparent);
+  outline: none;
+}
+
+.testimonials__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+#quotes.is-live .testimonials__viewport {
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#quotes.is-dragging .testimonials__viewport {
+  cursor: grabbing;
+}
+
+/* The band is masked at its edges, so the focus ring sits on the section. */
+#quotes:has(.testimonials__viewport:focus-visible) {
+  outline: 2px solid #fff;
+  outline-offset: -6px;
+}
+
+@supports not selector(:has(*)) {
+  .testimonials__viewport:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -6px;
+  }
+}
+
+.testimonials__track {
+  display: flex;
+  align-items: center;
+  gap: var(--t-space);
+  width: max-content;
+  margin: 0;
+  padding: 0 var(--t-fade);
+  list-style: none;
+}
+
+#quotes.is-live .testimonials__track {
+  padding: 0;
+  will-change: transform;
+}
+
+.testimonial {
+  flex: none;
+}
+
+.testimonial__figure {
+  display: grid;
+  grid-template-columns: var(--t-mark) max-content;
+  grid-template-rows: auto auto;
+  column-gap: var(--t-gap);
+  row-gap: .375rem;
+  align-items: center;
+  margin: 0;
+}
+
+.testimonial__mark {
+  grid-row: 1 / 3;
+  display: grid;
+  place-items: center;
+  width: var(--t-mark);
+  height: var(--t-mark);
+}
+
+.testimonial__mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(var(--mark-scale, 1));
+  pointer-events: none;
+}
+
+/* Black-on-white source file; the inverted white square disappears on black. */
+.testimonial__mark--invert img {
+  filter: invert(1);
+}
+
+/* Without a logo: the initials, bold and as large as the logos. They are SVG
+   text, placed geometrically on the centre of the logo slot (no line-box
+   rounding): the baseline sits half a capital height below the centre, the
+   x offset removes the trailing letter spacing, and --monogram-x (set per pair
+   in index.html) evens out the letters' side bearings. */
+.testimonial__mark--monogram {
+  position: relative;
+}
+
+.testimonial__initials {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.testimonial__initials text {
+  fill: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 78px;             /* of the 100-unit slot: .78 of the logo size */
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-anchor: middle;
+  text-rendering: geometricPrecision;
+  transform: translate(calc(.03em + var(--monogram-x, 0em)), .3555em);
+}
+
+.testimonial__quote {
+  grid-column: 2;
+  align-self: end;
+  margin: 0;
+}
+
+.testimonial__quote p {
+  position: relative;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: var(--t-quote-size);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Hanging opening quote: the words align with the name below. */
+.testimonial__quote p::before {
+  content: "\201C";
+  content: "\201C" / "";
+  position: absolute;
+  right: 100%;
+}
+
+.testimonial__quote p::after {
+  content: "\201D";
+  content: "\201D" / "";
+}
+
+.testimonial__cite {
+  grid-column: 2;
+  align-self: start;
+  font-family: 'Roboto Mono', monospace;
+  font-size: var(--t-cite-size);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.testimonial__name {
+  color: rgba(255, 255, 255, .66);
+}
+
+.testimonial__org {
+  color: rgba(255, 255, 255, .5);
+}
+
+/* The space before the org comes from the markup; mirror it after the slash. */
+.testimonial__org::before {
+  content: "/";
+  content: "/" / "";
+  margin-right: .6em;
+  color: rgba(255, 255, 255, .26);
+}
+
+/* Pointer devices: the band eases to a stop under the cursor (script.js) and
+   the testimonial being read stays bright while the others step back. */
+@media (hover: hover) and (pointer: fine) {
+  .testimonial {
+    transition: opacity .45s ease;
+  }
+
+  #quotes:not(.is-dragging) .testimonials__track:has(.testimonial:hover) .testimonial:not(:hover) {
+    opacity: .44;
+  }
+}
+
+/* 768–1199px: tablets and large phones in landscape (16px root). */
+@media (min-width: 768px) and (max-width: 1199px) {
+  #quotes {
+    --t-mark: 2.125rem;
+    --t-gap: .875rem;
+    --t-space: 4rem;
+    --t-quote-size: .9375rem;
+    --t-cite-size: .6875rem;
+    --t-pad-block: 30px;
+    --testimonials-speed: 34;
+  }
+}
+
+/* Below 768px (phones) the band stays hidden, as before. */
+@media (max-width: 767px) {
+  #quotes {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial {
+    transition: none;
+  }
+}
+
