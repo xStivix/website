@@ -604,16 +604,28 @@
   --service-button-ink: #fff;
   --service-image-invert: 1;
   --service-visual-surface: #050505;
-  --service-outline: #d6d6d6;
+  --service-outline: #dfdfdf;
   position: relative;
   isolation: isolate;
-  /* One outer border and one clip keep both panels' corners on the same edge. */
-  border: 1px solid var(--service-outline);
+  /* Both panels fill the same outer edge; the outline takes up no layout space. */
+  border: 0;
   border-radius: 18px;
   background-color: transparent;
   background-clip: padding-box;
   box-shadow: 0 14px 40px rgb(0 0 0 / 0);
   transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .2s ease;
+}
+
+#services .service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 1px solid var(--service-outline);
+  border-radius: inherit;
+  pointer-events: none;
+  /* Keep the light panel's subtle contour without a pale inset on black. */
+  mix-blend-mode: multiply;
 }
 
 #services .service-card__body {

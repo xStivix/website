@@ -78,7 +78,7 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
     alpha *= .82 + .18 * p.space;
     // Quieter particles sit behind the normal tones; the wave can light up both.
     const baseTone = .44 + .56 * smooth(.20, .38, p.variation);
-    alpha = clamp(alpha * .67 * baseTone + wave * .62 * fade);
+    alpha = clamp(alpha * .94 * baseTone + wave * .62 * fade);
     let r = 1.58 * (.83 + .17 * perspective) * (.95 + .10 * p.variation);
     r *= 1 + wave * .14;
     const q = { x: cx + x * lift * perspective * radius, y: cy - y * lift * perspective * radius, z: depth, r, alpha };

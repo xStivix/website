@@ -56,7 +56,7 @@
     if (!draw && visible && width > 0 && !pending && !art.dataset.error) {
       pending = true;
       try {
-        const module = await import('./motion/resonance.js?v=20261002-proximity-wide');
+        const module = await import('./motion/resonance.js?v=20261003-brighter-base');
         if (disposed) return;
         draw = module.drawResonance;
         locateTouch = module.resonanceTouchAt;
