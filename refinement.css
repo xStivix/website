@@ -669,16 +669,19 @@
 
 /* The service reveal shares the same monochrome palette. */
 #services .service-card {
-  --service-surface: #f3f4f6;
+  --service-surface: #f5f5f5;
   --service-ink: #000;
   --service-muted: #6b7280;
   --service-button-surface: #000;
   --service-button-ink: #fff;
-  --service-image-invert: 0;
+  --service-image-invert: 1;
+  --service-visual-surface: #050505;
   position: relative;
   isolation: isolate;
-  border: 1px solid #4b4b4b;
+  border: 1px solid #ccc;
+  border-radius: 18px;
   background-color: var(--service-surface);
+  background-clip: padding-box;
   box-shadow: 0 14px 40px rgb(0 0 0 / 0);
   transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .2s ease;
 }
@@ -689,8 +692,10 @@
 }
 
 #services .service-card .service-visual {
-  filter: invert(var(--service-image-invert));
-  transition: filter .2s ease;
+  /* Clip the image inside the border; do not filter the rounded container. */
+  border-radius: 17px 17px 0 0;
+  background-color: var(--service-visual-surface);
+  transition: background-color .2s ease;
 }
 
 #services .service-card__title,
@@ -720,7 +725,8 @@
     --service-muted: #aaa;
     --service-button-surface: #fff;
     --service-button-ink: #000;
-    --service-image-invert: 1;
+    --service-image-invert: 0;
+    --service-visual-surface: #fafafa;
   }
 }
 
@@ -730,7 +736,19 @@
   --service-muted: #aaa;
   --service-button-surface: #fff;
   --service-button-ink: #000;
-  --service-image-invert: 1;
+  --service-image-invert: 0;
+  --service-visual-surface: #fafafa;
+}
+
+/* The carousel clips shadows into a gray strip. Keep the lift without a shadow
+   and leave enough room above it to preserve the rounded top corners. */
+#services .services-carousel .service-card:hover {
+  box-shadow: none;
+}
+
+#services .mySwiper {
+  padding-top: 6px;
+  margin-top: -6px;
 }
 
 #services .service-card__actions .page-link:focus-visible {
@@ -741,6 +759,7 @@
 @media (prefers-reduced-motion: reduce) {
   #services .service-card,
   #services .service-card .service-visual,
+  #services .service-card .service-visual__image,
   #services .service-card__body,
   #services .service-card__title,
   #services .service-card__text,
@@ -750,9 +769,9 @@
   }
 }
 
-/* Consecutive thirds of one panorama make the light continuous at both joins. */
+/* Signal Fine: each card shows one panel of the shared 2D illustration. */
 .service-visual {
-  background: #101010;
+  background: #fafafa;
   height: auto;
   aspect-ratio: 5 / 3;
   flex-shrink: 0;
@@ -765,11 +784,16 @@
   width: 300%;
   max-width: none;
   height: 100%;
-  object-fit: fill;
-  /* Keep the crop fixed while the existing hover transform zooms its center. */
+  object-fit: cover;
+  /* Panel positioning is independent from hover transforms. */
   translate: calc(var(--service-panel) * -100% / 3) 0;
-  transform-origin: calc((var(--service-panel) + .5) * 100% / 3) 50%;
   pointer-events: none;
+}
+
+#services .service-card .service-visual__image {
+  transform: none;
+  filter: invert(var(--service-image-invert));
+  transition: filter .2s ease;
 }
 
 /* Tablet refinements are deliberately bounded: preserve both the phone

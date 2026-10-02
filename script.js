@@ -86,7 +86,7 @@ const services = [
     <article class="service-card flex flex-col bg-neutral-100 shadow-sm border border-gray-200 rounded-md overflow-hidden">
       <div class="service-visual relative h-40 lg:h-56 md:h-40 overflow-hidden">
         <img
-          src="service-lightstream-connected.webp"
+          src="artwork/service-signal-fine.svg"
           alt=""
           loading="lazy"
           decoding="async"
