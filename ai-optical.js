@@ -1,6 +1,6 @@
 /* Load each page's artwork only while its desktop/tablet slot is visible. */
 document.querySelectorAll('[data-optical-variant]:not([data-motion="static"]), [data-motion="eclipse"]').forEach(art => {
-  const desktop = matchMedia('(min-width: 768px)');
+  const desktop = matchMedia('(min-width: 700px)');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let scene = null;
   let timeline = null;

@@ -120,7 +120,9 @@ const services = [
   let servicesSwiper = null;
   let swiperAssetsPromise = null;
   let servicesSlideIndex = 0;
-  const servicesSliderMedia = window.matchMedia(`(max-width: 639px), (min-width: 768px) and (max-width: 1199px), ${phoneLandscapeQuery}`);
+  // Slider on phones and portrait tablets (incl. iPad mini); from 1024px all
+  // three cards fit side by side, so tablets in landscape get the grid.
+  const servicesSliderMedia = window.matchMedia(`(max-width: 1023px), ${phoneLandscapeQuery}`);
 
   const loadSwiperAssets = () => {
     if (typeof window.Swiper === 'function') return Promise.resolve();
@@ -181,7 +183,7 @@ const services = [
       watchOverflow: true,
       roundLengths: true,
       breakpoints: {
-        768: { spaceBetween: 20 }
+        640: { spaceBetween: 20 }
       },
       pagination: {
         el: ".swiper-pagination",
@@ -327,11 +329,11 @@ const services = [
     const projectFrames = document.querySelectorAll(
       '#portfolio iframe[data-src*="vimeo.com"], #ai-page iframe[data-src*="vimeo.com"]'
     );
-    const desktopSelectedWork = window.matchMedia('(min-width: 768px)');
+    const desktopSelectedWork = window.matchMedia('(min-width: 700px)');
 
     const loadFrame = frame => {
       const shouldLoadPlaceholder =
-        !frame.closest('#portfolio') || window.matchMedia('(max-width: 767px)').matches;
+        !frame.closest('#portfolio') || window.matchMedia('(max-width: 699px)').matches;
       if (shouldLoadPlaceholder && typeof frame._loadVideoPlaceholder === 'function') {
         frame._loadVideoPlaceholder();
       }
@@ -411,7 +413,7 @@ let pendingPageScrollTimer = 0;
 let isHandlingPopstate = false;
 
 const isMobilePageNavigation = () =>
-  window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+  window.matchMedia('(max-width: 699px), (pointer: coarse)').matches;
 
 const getPageScroller = () => {
   const body = document.body;
@@ -630,7 +632,7 @@ function updateDesktopIframeScale(){
   // A shallow mouse-driven window can be shorter than the hero's minimum
   // height. Cover that full section with the 16:9 video inside the iframe;
   // scaling against the viewport alone leaves a hard edge behind the footer.
-  if (hero && window.matchMedia('(min-width: 768px) and (pointer: fine)').matches &&
+  if (hero && window.matchMedia('(min-width: 700px) and (pointer: fine)').matches &&
       hero.clientHeight > window.innerHeight) {
     const videoWidth = Math.min(iframe.clientWidth, iframe.clientHeight * VIDEO_RATIO);
     const videoHeight = videoWidth / VIDEO_RATIO;
@@ -826,7 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const introOverlay = document.querySelector('.intro-overlay');
   const heroEditorial = document.querySelector('.hero-editorial');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const desktopIntroMedia = window.matchMedia('(min-width: 768px)');
+  const desktopIntroMedia = window.matchMedia('(min-width: 700px)');
   const isDesktopIntro = () => desktopIntroMedia.matches && !phoneLandscapeMedia.matches;
 
   function showHeroImmediately() {
@@ -906,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const mobileIframe = document.querySelector('.mobile-iframe');
   const mobileFallback = document.querySelector('.mobile-fallback');
   const hero = document.getElementById('home');
-  const mobileMedia = window.matchMedia('(max-width: 767px)');
+  const mobileMedia = window.matchMedia('(max-width: 699px)');
   if (!desktopIframe || !mobileIframe) return;
 
   const states = [desktopIframe, mobileIframe].map(frame => ({
@@ -1133,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (isSelectedWork) {
-      const mobileSelectedWork = window.matchMedia('(max-width: 767px)');
+      const mobileSelectedWork = window.matchMedia('(max-width: 699px)');
       if (mobileSelectedWork.matches) frame._loadVideoPlaceholder();
 
       const loadMobileThumbnail = event => {

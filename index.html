@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#050505" />
     <meta name="color-scheme" content="dark light" />
     <link rel="canonical" href="https://stefan-aberer.at/" />
-    <link rel="preload" as="image" href="hero-mobile-fallback.jpg" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="hero-mobile-fallback.jpg" media="(max-width: 699px)" fetchpriority="high" />
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -65,15 +65,16 @@
     <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com" crossorigin>
     <link rel="preload" href="fonts/roboto-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/roboto-mono-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/google-sans-700.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
-    <link rel="preload" href="fonts/google-sans-text-latin-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
-    <link rel="preload" href="fonts/google-sans-text-latin-500.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 768px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
+    <link rel="preload" href="fonts/google-sans-700.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
+    <link rel="preload" href="fonts/google-sans-text-latin-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
+    <link rel="preload" href="fonts/google-sans-text-latin-500.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
     <link rel="icon" type="image/png" sizes="48x48" href="iconsite_00000.png">
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="site.min.css?v=20260903-8" />
-    <link rel="stylesheet" href="refinement.css?v=20261003-service-flush-edges" />
-    <link rel="stylesheet" href="enhance.css?v=20261002-testimonials-final" />
+    <link rel="stylesheet" href="site.min.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="refinement.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="enhance.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="tablet.css?v=20261003-tablet" />
     <style>
         .name-wrapper {
             display: flex;
@@ -105,7 +106,7 @@
     </style>
     <script>
         const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const desktopIntro = matchMedia('(min-width: 768px)').matches &&
+        const desktopIntro = matchMedia('(min-width: 700px)').matches &&
             !matchMedia('(orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)').matches;
         if (reducedMotion || desktopIntro) {
             document.documentElement.classList.add('intro-skip', 'hero-instant');
@@ -187,7 +188,7 @@
                 title="Background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
             <picture>
-                <source media="(max-width: 767px)" srcset="hero-mobile-fallback.jpg" />
+                <source media="(max-width: 699px)" srcset="hero-mobile-fallback.jpg" />
                 <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt=""
                     class="mobile-fallback" loading="eager" fetchpriority="high" aria-hidden="true" />
             </picture>
@@ -2244,9 +2245,9 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20261002-service-gray" defer></script>
-    <script src="refinement.js?v=20260912-phone-orientation" defer></script>
-    <script src="ai-optical.js?v=20260927-middle-grey" defer></script>
+    <script src="script.js?v=20261003-tablet" defer></script>
+    <script src="refinement.js?v=20261003-tablet" defer></script>
+    <script src="ai-optical.js?v=20261003-tablet" defer></script>
     <script src="about-resonance.js?v=20261003-brighter-base" defer></script>
     <script type="module" src="footer-signal.js?v=20261002-link-fade"></script>
     <script src="enhance.js?v=20260927-connect-4" defer></script>

@@ -8,7 +8,7 @@
 /* --- About + AI intro: one heading element, several lines ---------------- */
 /* The lines keep their original utility classes; this only mirrors the
    tablet rule from refinement.css, which targeted the former <h1> lines. */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 700px) and (max-width: 1199px) {
   #about .about-heading-group > .about-title > span {
     margin: 0;
     font-size: clamp(2.5rem, 4.5vw, 3rem);
@@ -84,7 +84,7 @@
 }
 
 /* Phones: a compact round play badge instead of the labelled pill. */
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   .video-watch-hint {
     right: .75rem;
     bottom: .6rem;
@@ -147,7 +147,7 @@
   color: rgba(255, 255, 255, .72);
 }
 
-@media (max-width: 767px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse) {
+@media (max-width: 699px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse) {
   .footer-cta__eyebrow {
     font-size: .6875rem;
   }
@@ -168,7 +168,7 @@
   line-height: 1.6;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   .footer-cta {
     padding-bottom: 2rem;
   }
@@ -426,7 +426,7 @@
 }
 
 /* 768–1199px: tablets and large phones in landscape (16px root). */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 700px) and (max-width: 1199px) {
   #quotes {
     --t-mark: 2.125rem;
     --t-gap: .875rem;
@@ -438,8 +438,8 @@
   }
 }
 
-/* Below 768px (phones) the band stays hidden, as before. */
-@media (max-width: 767px) {
+/* Below 700px (phones) the band stays hidden, as before. */
+@media (max-width: 699px) {
   #quotes {
     display: none;
   }

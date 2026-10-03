@@ -1,0 +1,334 @@
+/* ==========================================================================
+   Tablet layer · 03.10.2026
+   iPad mini (744px) through iPad Pro / Surface Pro in portrait and the
+   smaller iPads in landscape (up to 1199px). Larger touch screens keep the
+   desktop layout.
+
+   Loaded last. Together with the breakpoint move from 768px to 700px in the
+   other files (so the iPad mini counts as a tablet, not as a phone), this
+   file is the whole tablet pass and can be reviewed or removed in one place.
+
+     700–1199px   tablets: two-column About, Tech and Masterclass
+     700–1023px   services as a slider (portrait tablets)
+    1024–1199px   services as a grid (landscape tablets, iPad Pro portrait)
+    1080–1199px   Masterclass in the desktop composition (landscape)
+   ========================================================================== */
+
+:root {
+  /* One heading size for every page introduction on tablets. */
+  --tablet-intro-title: clamp(2.25rem, 1.75rem + 1vw, 2.5rem);
+  --tablet-intro-text: clamp(1rem, .9rem + .2vw, 1.0625rem);
+  --tablet-column-gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* --- About and the page introductions (AI, Tech, Masterclass) ------------- */
+@media (min-width: 700px) and (max-width: 1199px) {
+  /* About: text on the left, the particle globe on the right, as on desktop. */
+  #about {
+    padding-block: clamp(4rem, 8vw, 6rem) clamp(3.5rem, 6.5vw, 5rem);
+  }
+
+  #about .about-layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    gap: 0 var(--tablet-column-gap);
+    align-items: center;
+  }
+
+  #about .about-copy {
+    display: block;
+  }
+
+  #about .about-heading-group > p {
+    margin: 0 0 1.25rem;
+  }
+
+  #about .about-heading-group > .about-title > span {
+    margin: 0;
+    font-size: var(--tablet-intro-title);
+    line-height: 1.15;
+  }
+
+  #about .about-heading-group > .about-title > span:last-child {
+    margin-bottom: 1.5rem;
+  }
+
+  #about .about-description {
+    max-width: 34rem;
+    margin: 0 0 2rem;
+    font-size: var(--tablet-intro-text);
+    line-height: 1.65;
+  }
+
+  #about .about-ai-link {
+    margin-top: 0;
+  }
+
+  #about .about-artwork {
+    display: flex !important;
+    justify-content: center;
+  }
+
+  #about #about-resonance {
+    display: block;
+    width: 100%;
+    max-width: 25rem;
+  }
+
+  /* Page introductions share the About proportions and heading size. */
+  :is(#ai-intro, #video-editing-page > section:first-child, #miscellaneous-page > section:first-child) > .container > .grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    gap: 0 var(--tablet-column-gap);
+  }
+
+  #ai-intro h1 > span,
+  #video-editing-page > section:first-child h1,
+  #miscellaneous-page > section:first-child h1 {
+    font-size: var(--tablet-intro-title);
+    line-height: 1.15;
+  }
+
+  #ai-intro h1 > span:first-child {
+    margin-bottom: 0;
+  }
+
+  #ai-intro .grid > div:first-child > p:last-child,
+  #video-editing-page > section:first-child .grid > div:first-child > p:last-child,
+  #miscellaneous-page > section:first-child .grid > div:first-child > p:last-child {
+    max-width: 34rem !important;
+    font-size: var(--tablet-intro-text);
+    line-height: 1.65;
+  }
+
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-artwork-right {
+    justify-content: center;
+  }
+
+  :is(#ai-intro, #video-editing-page, #miscellaneous-page) .page-optical,
+  #ai-intro img,
+  #video-editing-page > section:first-child img,
+  #miscellaneous-page > section:first-child img {
+    max-width: clamp(14rem, 25vw, 18rem);
+  }
+}
+
+/* --- Tech: specification rows --------------------------------------------- */
+@media (min-width: 700px) and (max-width: 1199px) {
+  #video-editing-page .tech-specs > .container > .grid {
+    gap: 0 var(--tablet-column-gap);
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  #video-editing-page .tech-specs > .container > .grid:last-child {
+    margin-bottom: 0;
+  }
+
+  #video-editing-page .tech-specs h3 {
+    margin-bottom: .875rem;
+  }
+
+  #video-editing-page .tech-specs .tech-text {
+    max-width: 34rem;
+  }
+
+  #video-editing-page .tech-specs img {
+    max-width: clamp(13rem, 26vw, 18rem);
+  }
+}
+
+/* --- Masterclass: portrait tablets ---------------------------------------- */
+/* Keeps the existing tablet composition (the lesson outline uses the full
+   width), with side images that grow with the screen. */
+@media (min-width: 700px) and (max-width: 1079px) {
+  #miscellaneous-page .masterclass-workflow {
+    grid-template-columns: minmax(0, 1fr) clamp(10rem, 22vw, 13.5rem);
+    gap: 1rem var(--tablet-column-gap);
+  }
+
+  .masterclass-workflow__content > p {
+    max-width: 38rem;
+  }
+
+  #miscellaneous-page .masterclass-sessions {
+    grid-template-columns: clamp(10rem, 22vw, 13.5rem) minmax(0, 1fr);
+    gap: 1.5rem var(--tablet-column-gap);
+  }
+
+  #miscellaneous-page .masterclass-sessions .tech-text {
+    max-width: 38rem;
+  }
+
+  .masterclass-sessions .masterclass-disclaimer {
+    max-width: 44rem;
+  }
+}
+
+/* --- Masterclass: landscape tablets ---------------------------------------- */
+/* From 1080px (iPad 10.2" and larger in landscape) there is room for the
+   desktop composition: copy and outline on the left, the image beside them. */
+@media (min-width: 1080px) and (max-width: 1199px) {
+  #miscellaneous-page .masterclass-workflow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--tablet-column-gap);
+    align-items: center;
+    margin-bottom: 4.5rem;
+  }
+
+  .masterclass-workflow > .masterclass-workflow__content {
+    display: block;
+  }
+
+  .masterclass-workflow__content > h3 {
+    margin: 0 0 .875rem;
+  }
+
+  .masterclass-workflow__content > p {
+    max-width: 36rem;
+  }
+
+  .masterclass-workflow > .masterclass-support-image {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .masterclass-workflow .masterclass-outline {
+    max-width: 36rem;
+    margin-top: 2rem;
+  }
+
+  #miscellaneous-page .masterclass-sessions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem var(--tablet-column-gap);
+  }
+
+  .masterclass-sessions .masterclass-closing {
+    grid-column: 1;
+    max-width: 36rem;
+  }
+
+  .masterclass-sessions .masterclass-disclaimer {
+    max-width: 36rem;
+  }
+
+  #miscellaneous-page .masterclass-support-image img {
+    max-width: 18rem;
+  }
+}
+
+/* --- Services ------------------------------------------------------------- */
+/* Slider up to 1023px (iPad mini included; three cards side by side would be
+   too narrow there). The JS slider query in script.js matches this range. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  #services .services-carousel {
+    display: block;
+  }
+
+  #services #grid-wrapper {
+    display: none;
+  }
+}
+
+/* 640–699px (e.g. iPad split view): the same cards as on tablets. */
+@media (min-width: 640px) and (max-width: 699px) {
+  #services .mySwiper {
+    overflow: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+
+  #services .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  #services .swiper-slide {
+    width: clamp(17rem, calc((100% - 3rem) / 2), 22rem);
+    height: auto;
+  }
+
+  #services .swiper-slide > article {
+    height: 100%;
+  }
+
+  #services .service-card__body {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  #services .service-card__title {
+    margin-bottom: .875rem;
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  #services .service-card__text {
+    min-height: 0 !important;
+    margin-bottom: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  #services .service-card__actions {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  #services .swiper-pagination {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+    transform: none !important;
+    line-height: 1;
+  }
+
+  #services .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 10px;
+  }
+
+  #services .swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 999px;
+  }
+}
+
+/* Landscape tablets: all three cards in one row instead of a slider whose
+   third card was cut off by a few pixels. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  #services .services-carousel {
+    display: none;
+  }
+
+  #services #grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  #services #grid-wrapper > article {
+    height: 100%;
+  }
+}
+
+/* Touch screens have no hover: a tap must not leave a card lifted or a video
+   dimmed until the next tap elsewhere. */
+@media (hover: none) {
+  #services article:hover {
+    transform: none;
+    box-shadow: 0 14px 40px rgb(0 0 0 / 0);
+  }
+
+  #portfolio .video-hover:hover iframe,
+  #ai-page .video-hover:hover iframe {
+    filter: brightness(90%);
+  }
+}
+
+/* --- Hero: the 13" iPad Pro (M4, 1376px) is a large iPad in landscape too -- */
+/* refinement.css enlarges the heading for touch screens up to 1366px. */
+@media (min-width: 1367px) and (max-width: 1376px) and (pointer: coarse) {
+  #home .hero-editorial__title {
+    font-size: clamp(3.25rem, min(12.5vw, 26svh), 12.25rem);
+  }
+}

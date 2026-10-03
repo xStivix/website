@@ -151,7 +151,7 @@ h6 {
   letter-spacing: -.05em;
 }
 
-@media (min-width:768px) {
+@media (min-width:700px) {
   .mega-title {
     font-size: 7rem;
   }
@@ -163,7 +163,7 @@ h6 {
   letter-spacing: -.03em;
 }
 
-@media (min-width:768px) {
+@media (min-width:700px) {
   .super-title {
     font-size: 4rem;
   }
@@ -724,13 +724,13 @@ h6 {
   max-width: 42rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   #ai-page .ai-project-title {
     font-size: calc(1.5rem + 2px);
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   #ai-page .ai-intro-title {
     font-size: calc(2.5rem + 2px) !important;
   }
@@ -742,7 +742,7 @@ h6 {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   #ai-page [data-read-more-ready="true"][data-read-more-expanded="false"] .ai-read-more-rest {
     display: none;
   }
@@ -824,7 +824,7 @@ h6 {
   /*}*/
 }
 
-@media (max-width:767px) {
+@media (max-width:699px) {
   .swiper-wrapper .h-56 {
     height: 10rem !important;
   }
@@ -1343,7 +1343,7 @@ footer p {
   cursor: pointer;
 }
 
-@media (max-width:767px) {
+@media (max-width:699px) {
   #video-lightbox .video-lightbox-stage {
     width: 90vw;
     height: 56.25vw;
@@ -1481,7 +1481,7 @@ footer p {
   display: none;
 }
 
-@media (max-width:767px) {
+@media (max-width:699px) {
 
   .mobile-fallback {
     display: block;
@@ -1507,7 +1507,7 @@ footer p {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   .about-ai-link {
     padding: .36rem .72rem !important;
     font-size: .62rem !important;
@@ -1572,7 +1572,7 @@ body {
   z-index: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   .video-placeholder.selected-work-thumbnail {
     display: none;
   }
@@ -1597,7 +1597,7 @@ body {
   display: none !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   #contact {
     display: none !important;
   }
@@ -1605,8 +1605,8 @@ body {
 
 }
 
-/* Mobile-Ansicht (bis 767px) */
-@media (max-width: 767px) {
+/* Mobile-Ansicht (bis 699px) */
+@media (max-width: 699px) {
 
   /* Button-Container in der Hero-Section ausblenden */
   .content-overlay>.flex.justify-center.space-x-4 {
@@ -1652,7 +1652,7 @@ body {
 /* =========================================
    Mobile-Cropping nur für AI-Workflow-Bilder
    ========================================= */
-@media (max-width: 767px) {
+@media (max-width: 699px) {
 
   /* Wrapper – flacher machen ⇒ oben/unten Crop */
   .ai-img {
@@ -1699,8 +1699,8 @@ body {
   display: none;
 }
 
-/* ab 768px: Fallback unter das Video legen und auf 1.3 skalieren */
-@media (min-width: 768px) {
+/* ab 700px: Fallback unter das Video legen und auf 1.3 skalieren */
+@media (min-width: 700px) {
   .desktop-fallback {
     display: block;
     position: absolute;
@@ -1733,12 +1733,12 @@ body {
   }
 
 }
-@media (max-width: 768px) {
+@media (max-width: 699px) {
   .container:has(.portfolio-item){
     padding-inline: 1.5rem;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   .mobile-hero__title {
     font-size: 5rem !important;
     /* oder 6rem, je nach Geschmack */
@@ -1749,7 +1749,7 @@ body {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
 
   /* Video Editing-Bilder auf Mobile um 30 % vergrößern */
   #video-editing-page img {
@@ -1764,7 +1764,7 @@ body {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
 
   /* Desktop: alle Misc-Bilder skalieren – außer dem Titelbild */
   #miscellaneous-page img:not(.misc-hero-img) {
@@ -1784,14 +1784,14 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   /* statt 6rem */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   .mega-title {
     font-size: 9rem;
     /* statt 7rem */
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
 
   /* Miscellaneous-Hero-Bild auf Mobile verstecken */
   #miscellaneous-page .misc-hero-img {
@@ -1899,15 +1899,15 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   display: none;
   position: relative;
 }
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   #contact {
     display: none !important;
   }
 
 }
 
-/* Mobile-Ansicht (bis 767px) */
-@media (max-width: 767px) {
+/* Mobile-Ansicht (bis 699px) */
+@media (max-width: 699px) {
  footer .h-16{
    height: 2rem;
  }
@@ -1970,10 +1970,10 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
 }
 
 /* Mobil ausblenden */
-@media (max-width:767px){
+@media (max-width:699px){
   #quotes{ display:none; }
 }
-@media (max-width:1024px) and (min-width:767px){
+@media (max-width:1024px) and (min-width:700px){
   .defected-video{
     margin-top: 15px;
   }
@@ -2147,7 +2147,7 @@ iframe:not(.desktop-iframe):not(.mobile-iframe) {
   margin-left: 2px;    /* minimaler Abstand nach dem Text */
 }
 /* Mobile: AI-Workflow-Captions extrem klein */
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   #main-page .ai-img p {
     font-size: 0.25rem !important;  /* SUPER klein zum Testen */
     line-height: 1.1 !important;
@@ -2774,7 +2774,7 @@ section[id] {
   pointer-events: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   .video-container::after {
     background:
       linear-gradient(180deg, rgba(0, 0, 0, .32) 0%, transparent 25%, transparent 43%, rgba(0, 0, 0, .86) 100%),
@@ -2940,7 +2940,7 @@ section[id] {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 699px) {
   #miscellaneous-page .masterclass-support-image {
     display: none !important;
   }
