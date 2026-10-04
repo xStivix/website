@@ -109,6 +109,7 @@
     window.addEventListener('resize', scheduleNav, { passive: true });
     window.addEventListener('pageshow', scheduleNav);
     document.addEventListener('pagechange', scheduleNav);
+    document.addEventListener('navigationchange', syncNav);
     compactNav.addEventListener('change', scheduleNav);
     syncNav();
 

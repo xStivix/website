@@ -215,6 +215,13 @@ body:has(#home > .desktop-iframe.is-ready) .site-nav.is-hero-top .site-nav__cont
 }
 
 @media (max-width: 999px) {
+  /* Keep text and the toggle on a stable layer while the header fades over
+     the playing video and the dropdown changes height. */
+  .site-nav__shell,
+  .mobile-menu__content {
+    transform: translateZ(0);
+  }
+
   .site-nav__row {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 1rem;
@@ -237,8 +244,33 @@ body:has(#home > .desktop-iframe.is-ready) .site-nav.is-hero-top .site-nav__cont
   }
 
   .site-nav #mobileMenu {
+    /* One shared navbar background: no black panel flashing underneath a
+       still-transparent header. The inner grid row animates to its own height. */
+    display: grid;
+    grid-template-rows: 0fr;
     max-height: calc(100svh - var(--nav-height));
+    overflow: hidden;
+    background: transparent;
+    border-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: grid-template-rows .24s cubic-bezier(.22, .61, .36, 1),
+      opacity .18s ease, visibility 0s linear .24s;
+  }
+
+  .site-nav #mobileMenu:not(.hidden) {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .mobile-menu__content {
+    min-height: 0;
     overflow-y: auto;
+    box-shadow: inset 0 1px 0 var(--hairline, rgba(255, 255, 255, .16));
   }
 
   .site-nav #mobileMenu .nav-link {
@@ -271,7 +303,8 @@ body:has(#home > .desktop-iframe.is-ready) .site-nav.is-hero-top .site-nav__cont
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-nav {
+  .site-nav,
+  .site-nav #mobileMenu {
     transition: none;
   }
 }

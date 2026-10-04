@@ -244,6 +244,7 @@ const services = [
   window.addEventListener('resize', refreshServicesLayout, { passive: true });
 
   const projectPlayerPromises = new WeakMap();
+  const projectPlaybackStates = new WeakMap();
   const selectedWorkThumbnailOverrides = {
     '1187212934': 'audi-q5-thumbnail-20260730.jpg'
   };
@@ -287,6 +288,40 @@ const services = [
     return source;
   }
 
+  function projectPlaybackState(frame) {
+    if (!projectPlaybackStates.has(frame)) {
+      projectPlaybackStates.set(frame, {
+        wantsPlayback: new URL(getFrameSource(frame), location.href).searchParams.get('autoplay') === '1',
+        commands: Promise.resolve(),
+        revision: 0
+      });
+    }
+    return projectPlaybackStates.get(frame);
+  }
+
+  function shouldPlayProject(frame) {
+    if (document.hidden || !projectPlaybackState(frame).wantsPlayback) return false;
+    const rect = (frame.closest('.video-hover') || frame).getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 &&
+      rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+  }
+
+  function syncProjectPlayback(frame) {
+    const playerPromise = projectPlayerPromises.get(frame);
+    if (!playerPromise) return;
+    const state = projectPlaybackState(frame);
+    const revision = ++state.revision;
+    state.commands = state.commands.then(async () => {
+      if (revision !== state.revision) return;
+      const player = await playerPromise;
+      if (revision !== state.revision) return;
+      // A background Vimeo player can emit play without resolving play().
+      // Do not let that pending response block a later pause command.
+      if (shouldPlayProject(frame)) player.play().catch(() => {});
+      else await player.pause();
+    }).catch(() => {});
+  }
+
   function getProjectPlayer(frame) {
     if (projectPlayerPromises.has(frame)) {
       return projectPlayerPromises.get(frame);
@@ -296,6 +331,10 @@ const services = [
     const playerPromise = waitForVimeoApi().then(() => {
       const player = new Vimeo.Player(frame);
       player.setVolume(0).catch(() => {});
+      // Autoplay can resolve after a page switch or a quick hover-out.
+      player.on('play', () => {
+        if (!shouldPlayProject(frame)) syncProjectPlayback(frame);
+      });
 
       const placeholder = frame._videoPlaceholder;
       if (placeholder) {
@@ -329,8 +368,6 @@ const services = [
     const projectFrames = document.querySelectorAll(
       '#portfolio iframe[data-src*="vimeo.com"], #ai-page iframe[data-src*="vimeo.com"]'
     );
-    const desktopSelectedWork = window.matchMedia('(min-width: 700px)');
-
     const loadFrame = frame => {
       const shouldLoadPlaceholder =
         !frame.closest('#portfolio') || window.matchMedia('(max-width: 699px)').matches;
@@ -338,42 +375,53 @@ const services = [
         frame._loadVideoPlaceholder();
       }
       assignFrameSource(frame);
-      getProjectPlayer(frame).catch(() => {});
+      getProjectPlayer(frame).then(() => syncProjectPlayback(frame)).catch(() => {});
     };
+
+    const syncProjects = () => projectFrames.forEach(syncProjectPlayback);
+    document.addEventListener('visibilitychange', syncProjects);
+    document.addEventListener('pagechange', syncProjects);
+    window.addEventListener('pageshow', syncProjects);
 
     if (!('IntersectionObserver' in window)) {
       projectFrames.forEach(loadFrame);
       return;
     }
 
+    const frameByCard = new Map(Array.from(projectFrames, frame =>
+      [frame.closest('.video-hover') || frame, frame]
+    ));
+    // The site can scroll inside body. A viewport root would clip its preload
+    // margin at that scroll container and only load cards once already visible.
+    const preloadRoot = /^(auto|scroll)$/.test(getComputedStyle(document.body).overflowY)
+      && document.body !== document.scrollingElement ? document.body : null;
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         observer.unobserve(entry.target);
-        loadFrame(entry.target);
+        loadFrame(frameByCard.get(entry.target));
       });
-    }, { rootMargin: '900px 0px', threshold: 0.01 });
+    }, { root: preloadRoot, rootMargin: '900px 0px', threshold: 0.01 });
 
-    projectFrames.forEach(frame => {
-      if (desktopSelectedWork.matches && frame.closest('#portfolio')) {
-        loadFrame(frame);
-      } else {
-        observer.observe(frame);
-      }
+    // Observe the visible card, not the oversized/cropped iframe inside it.
+    const playbackObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => syncProjectPlayback(frameByCard.get(entry.target)));
+    }, { threshold: 0 });
+    frameByCard.forEach((frame, card) => {
+      observer.observe(card);
+      playbackObserver.observe(card);
     });
 
-    const loadSelectedWorkOnDesktop = event => {
-      if (!event.matches) return;
-      document.querySelectorAll('#portfolio iframe[data-src*="vimeo.com"]').forEach(frame => {
-        observer.unobserve(frame);
-        loadFrame(frame);
-      });
+    // Start the first preview as soon as a visitor intends to jump to Work.
+    const prepareSelectedWork = () => {
+      const first = document.querySelector('#portfolio iframe[data-src*="vimeo.com"]');
+      if (first) loadFrame(first);
     };
-    if (desktopSelectedWork.addEventListener) {
-      desktopSelectedWork.addEventListener('change', loadSelectedWorkOnDesktop);
-    } else {
-      desktopSelectedWork.addListener(loadSelectedWorkOnDesktop);
-    }
+    document.querySelectorAll('a[href="#portfolio"]').forEach(link => {
+      link.addEventListener('pointerenter', prepareSelectedWork, { once: true });
+      link.addEventListener('focus', prepareSelectedWork, { once: true });
+      link.addEventListener('click', prepareSelectedWork, { once: true });
+    });
   });
 
  /* JS bei DOMContentLoaded laden, um Render-Blocking zu reduzieren */
@@ -667,16 +715,23 @@ function updateDesktopIframeScale(){
       const mobileMenu = document.getElementById('mobileMenu');
       function setMobileMenu(open) {
         mobileMenu.classList.toggle('hidden', !open);
+        mobileMenu.inert = !open;
+        mobileMenu.setAttribute('aria-hidden', String(!open));
         mobileMenuButton.setAttribute('aria-expanded', String(open));
         mobileMenuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
         const icon = mobileMenuButton.querySelector('.mobile-menu-icon');
         if (icon) {
           icon.classList.toggle('is-open', open);
         }
+        // Update the transparent header in the same frame as the dropdown.
+        document.dispatchEvent(new Event('navigationchange'));
       }
 
       mobileMenuButton.addEventListener('click', () => {
         setMobileMenu(mobileMenu.classList.contains('hidden'));
+      });
+      window.matchMedia('(min-width: 1000px)').addEventListener('change', event => {
+        if (event.matches) setMobileMenu(false);
       });
       document.querySelectorAll('#mobileMenu a').forEach(link => {
         link.addEventListener('click', () => setMobileMenu(false));
@@ -823,77 +878,6 @@ function updateDesktopIframeScale(){
   });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  let didReveal = false;
-  const introOverlay = document.querySelector('.intro-overlay');
-  const heroEditorial = document.querySelector('.hero-editorial');
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const desktopIntroMedia = window.matchMedia('(min-width: 700px)');
-  const isDesktopIntro = () => desktopIntroMedia.matches && !phoneLandscapeMedia.matches;
-
-  function showHeroImmediately() {
-    didReveal = true;
-    document.documentElement.classList.add('intro-skip', 'hero-instant');
-    document.body.classList.remove('intro-active');
-    heroEditorial?.classList.remove('hero-animate');
-    heroEditorial?.classList.add('hero-revealed', 'hero-interactive');
-    introOverlay?.remove();
-  }
-
-  // Also finish a running phone intro immediately if the viewport becomes
-  // desktop/tablet. Resizing back must not replay the entrance animation.
-  const syncIntroLayout = () => {
-    if (isDesktopIntro()) showHeroImmediately();
-  };
-  desktopIntroMedia.addEventListener('change', syncIntroLayout);
-  phoneLandscapeMedia.addEventListener('change', syncIntroLayout);
-
-  if (prefersReducedMotion || isDesktopIntro()) {
-    showHeroImmediately();
-    return;
-  }
-
-  if (heroEditorial && !prefersReducedMotion) {
-    heroEditorial.classList.add('hero-animate');
-  }
-
-  function revealContent(immediate = false) {
-    if (didReveal) return;
-    didReveal = true;
-    document.body.classList.remove('intro-active');
-
-    if (heroEditorial && !prefersReducedMotion) {
-      const revealHero = () => {
-        heroEditorial.classList.add('hero-revealed');
-        setTimeout(() => heroEditorial.classList.add('hero-interactive'), 1200);
-      };
-      if (immediate) {
-        requestAnimationFrame(() => requestAnimationFrame(revealHero));
-      } else {
-        setTimeout(revealHero, 420);
-      }
-    }
-
-    if (introOverlay) {
-      if (immediate) {
-        introOverlay.remove();
-      } else {
-        introOverlay.classList.add('slide-out');
-        const removeOverlay = () => introOverlay.remove();
-        introOverlay.addEventListener('transitionend', removeOverlay, { once: true });
-        setTimeout(removeOverlay, 1200);
-      }
-    }
-  }
-
-  const skipIntro = prefersReducedMotion || !introOverlay;
-  if (skipIntro) {
-    revealContent(true);
-  } else {
-    document.body.classList.add('intro-active');
-    setTimeout(() => revealContent(), 1200);
-  }
-});
 /*
 layer.addEventListener('click', () => {
   plyr.classList.remove('ready');
@@ -906,7 +890,6 @@ layer.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', function() {
   const desktopIframe = document.querySelector('.desktop-iframe');
   const mobileIframe = document.querySelector('.mobile-iframe');
-  const mobileFallback = document.querySelector('.mobile-fallback');
   const hero = document.getElementById('home');
   const mobileMedia = window.matchMedia('(max-width: 699px)');
   if (!desktopIframe || !mobileIframe) return;
@@ -918,24 +901,23 @@ document.addEventListener('DOMContentLoaded', function() {
     revision: 0
   }));
   let activeState = null;
-  let revealTimer = null;
+  const isHeroInView = () => {
+    if (!hero) return true;
+    const rect = hero.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 &&
+      rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+  };
+  let heroVisible = isHeroInView();
+  const shouldPlayHero = state => activeState === state && heroVisible && !document.hidden;
 
-  const showMobileFallback = () => {
+  const hideMobileVideo = () => {
     if (activeState?.frame !== mobileIframe) return;
-    if (revealTimer) {
-      clearTimeout(revealTimer);
-      revealTimer = null;
-    }
     mobileIframe.classList.remove('is-ready');
-    if (mobileFallback) mobileFallback.classList.remove('is-hidden');
   };
 
   const revealVideo = state => {
     if (activeState !== state) return;
     state.frame.classList.add('is-ready');
-    if (state.frame === mobileIframe && mobileFallback) {
-      mobileFallback.classList.add('is-hidden');
-    }
   };
 
   const getHeroPlayer = state => {
@@ -945,34 +927,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const player = new Vimeo.Player(state.frame);
       player.on('playing', () => {
         // Autoplay may finish loading after this iframe becomes inactive.
-        if (activeState !== state) syncPlayback(state);
-        else if (state.frame === desktopIframe) revealVideo(state);
+        if (!shouldPlayHero(state)) syncPlayback(state);
+        else revealVideo(state);
       });
       player.on('timeupdate', data => {
-        if (activeState !== state || !data || data.seconds <= 0.2) return;
+        if (!shouldPlayHero(state) || !data || data.seconds <= 0.2) return;
         if (state.frame.classList.contains('is-ready')) return;
-        if (state.frame === desktopIframe) {
-          revealVideo(state);
-          return;
-        }
-        if (revealTimer) return;
-        const revision = state.revision;
-        revealTimer = setTimeout(() => {
-          revealTimer = null;
-          player.getPaused().then(paused => {
-            if (activeState !== state || revision !== state.revision) return;
-            if (paused) showMobileFallback();
-            else revealVideo(state);
-          }).catch(() => {
-            if (activeState === state && revision === state.revision) showMobileFallback();
-          });
-        }, 250);
+        revealVideo(state);
       });
-      const handleMobileStop = () => {
-        if (activeState === state && state.frame === mobileIframe) showMobileFallback();
-      };
-      player.on('pause', handleMobileStop);
-      player.on('error', handleMobileStop);
+      // Both layouts retain their last frame when paused. Before the first
+      // playback (or on a mobile playback failure), the hero stays black.
+      player.on('error', () => {
+        if (shouldPlayHero(state) && state.frame === mobileIframe) hideMobileVideo();
+      });
       return player.ready().then(() => player);
     });
     return state.playerPromise;
@@ -981,21 +948,29 @@ document.addEventListener('DOMContentLoaded', function() {
   const syncPlayback = state => {
     const revision = ++state.revision;
     // Only load a second video if that layout is actually visited.
-    if (activeState !== state && !state.playerPromise) return;
+    if (!shouldPlayHero(state) && !state.playerPromise) return;
     state.commands = state.commands.then(async () => {
       if (revision !== state.revision) return;
       const player = await getHeroPlayer(state);
       if (revision !== state.revision) return;
-      // Serialize commands so a delayed pause cannot overtake a newer play.
-      if (activeState === state) {
-        await player.play();
-        if (revision === state.revision && state.frame === desktopIframe) revealVideo(state);
+      // Serialize dispatch and pauses, but not the play acknowledgement:
+      // Vimeo background playback can begin without resolving play().
+      if (shouldPlayHero(state)) {
+        player.play().then(() => {
+          if (revision === state.revision && shouldPlayHero(state)) {
+            revealVideo(state);
+          }
+        }).catch(() => {
+          if (revision === state.revision && shouldPlayHero(state) && state.frame === mobileIframe) {
+            hideMobileVideo();
+          }
+        });
       } else {
         await player.pause();
       }
     }).catch(() => {
-      if (activeState === state && revision === state.revision && state.frame === mobileIframe) {
-        showMobileFallback();
+      if (shouldPlayHero(state) && revision === state.revision && state.frame === mobileIframe) {
+        hideMobileVideo();
       }
     });
   };
@@ -1003,10 +978,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const loadResponsiveHero = () => {
     const nextState = states[mobileMedia.matches && !phoneLandscapeMedia.matches ? 1 : 0];
     if (activeState === nextState) return;
-    if (revealTimer) {
-      clearTimeout(revealTimer);
-      revealTimer = null;
-    }
     activeState = nextState;
     // Keep the last rendered frame during a switch instead of flashing black.
     states.forEach(syncPlayback);
@@ -1037,23 +1008,24 @@ document.addEventListener('DOMContentLoaded', function() {
     orientationTimer = setTimeout(scheduleResponsiveHero, 250);
   });
 
-  // iOS can suspend an offscreen video during the switch. Resume the selected
-  // player when the hero returns, including returning from another page/tab.
-  let heroVisible = true;
-  const resumeVisibleHero = () => {
+  // Pause outside the viewport/active tab, retaining the same iframe and frame.
+  // Returning resumes in place, including after iOS suspends the page.
+  const syncHeroVisibility = () => {
+    heroVisible = isHeroInView();
     loadResponsiveHero();
-    if (heroVisible && !document.hidden && activeState) syncPlayback(activeState);
+    states.forEach(syncPlayback);
   };
   if (hero && 'IntersectionObserver' in window) {
     const heroObserver = new IntersectionObserver(entries => {
       const wasVisible = heroVisible;
       heroVisible = entries.some(entry => entry.isIntersecting);
-      if (heroVisible && !wasVisible) resumeVisibleHero();
+      if (heroVisible !== wasVisible) states.forEach(syncPlayback);
     });
     heroObserver.observe(hero);
   }
-  window.addEventListener('pageshow', resumeVisibleHero);
-  document.addEventListener('visibilitychange', resumeVisibleHero);
+  window.addEventListener('pageshow', syncHeroVisibility);
+  document.addEventListener('visibilitychange', syncHeroVisibility);
+  document.addEventListener('pagechange', syncHeroVisibility);
 });
 
 
@@ -1209,8 +1181,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const frame = wrapper.querySelector('iframe');
     if (!frame) return;
 
-    let hoverPlayer = null;
-
     /* 2) transparente Schicht erzeugen */
     const layer = document.createElement('div');
     layer.className = 'video-open-layer';
@@ -1230,13 +1200,13 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- Hover: abspielen / pausieren ------------------- */
     layer.addEventListener('mouseenter', () => {
       if (!hoverPlayback.matches) return;
-      getProjectPlayer(frame).then(player => {
-        hoverPlayer = player;
-        player.play().catch(() => {});
-      }).catch(() => {});
+      projectPlaybackState(frame).wantsPlayback = true;
+      getProjectPlayer(frame).then(() => syncProjectPlayback(frame)).catch(() => {});
     });
     layer.addEventListener('mouseleave', () => {
-      if (hoverPlayer) hoverPlayer.pause().catch(() => {});
+      if (!hoverPlayback.matches) return;
+      projectPlaybackState(frame).wantsPlayback = false;
+      syncProjectPlayback(frame);
     });
 
     /* --- Klick: Lightbox öffnen ------------------------- */

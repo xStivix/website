@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" translate="no" class="notranslate">
+<html lang="en" translate="no" class="notranslate intro-skip hero-instant">
 <head>
     <title>Stefan Aberer - Automotive Film &amp; AI Production</title>
     <meta charset="UTF-8" />
@@ -27,7 +27,6 @@
     <meta name="theme-color" content="#050505" />
     <meta name="color-scheme" content="dark light" />
     <link rel="canonical" href="https://stefan-aberer.at/" />
-    <link rel="preload" as="image" href="hero-mobile-fallback.jpg" media="(max-width: 699px)" fetchpriority="high" />
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -74,66 +73,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="site.min.css?v=20261003-tablet" />
     <link rel="stylesheet" href="refinement.css?v=20261004-intro-symbol-centering" />
-    <link rel="stylesheet" href="enhance.css?v=20261004-mobile-hero-two-lines" />
+    <link rel="stylesheet" href="enhance.css?v=20261004-mobile-menu-transition" />
     <link rel="stylesheet" href="tablet.css?v=20261003-tablet" />
     <link rel="stylesheet" href="hero-responsive.css?v=20261004-nav-underline" />
-    <style>
-        .name-wrapper {
-            display: flex;
-            gap: 0.35rem;
-            overflow: hidden;
-        }
-
-        .name-part {
-            display: inline-block;
-            transform: translateY(110%);
-            opacity: 0;
-            animation: slideUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-
-        .name-part.first {
-            animation-delay: 0.2s;
-        }
-
-        .name-part.second {
-            animation-delay: 0.5s;
-        }
-
-        @keyframes slideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-    </style>
-    <script>
-        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const desktopIntro = matchMedia('(min-width: 700px)').matches &&
-            !matchMedia('(orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)').matches;
-        if (reducedMotion || desktopIntro) {
-            document.documentElement.classList.add('intro-skip', 'hero-instant');
-        }
-        window.setTimeout(() => {
-            const overlay = document.querySelector('.intro-overlay');
-            if (!overlay) return;
-            document.body.classList.remove('intro-active');
-            overlay.classList.add('slide-out');
-            window.setTimeout(() => overlay.remove(), 1200);
-        }, 4000);
-    </script>
     <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
 
 <body>
     <a class="skip-link" href="#main-page">Skip to content</a>
-
-    <!-- Intro Overlay -->
-    <div class="intro-overlay" aria-hidden="true">
-        <div class="name-wrapper text-xl md:text-2xl font-bold text-white leading-tight">
-            <span class="name-part first">stefan</span>
-            <span class="name-part second">aberer</span>
-        </div>
-    </div>
 
     <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 site-nav" aria-label="Primary navigation">
@@ -191,7 +138,8 @@
             </div>
         </div>
         <!-- Mobile-Links (base size, bold) -->
-        <div id="mobileMenu" class="hidden bg-black px-6" aria-label="Mobile navigation">
+        <div id="mobileMenu" class="hidden bg-black px-6" aria-label="Mobile navigation" aria-hidden="true" inert>
+          <div class="mobile-menu__content">
             <a href="#ai" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="ai">AI</a>
             <!-- <a href="#images" class="block text-white nav-link text-sm font-medium page-link py-2"
                 data-page="images">Images</a> -->
@@ -199,6 +147,7 @@
                 data-page="videoEditing">Tech</a>
             <a href="#misc" class="block text-white nav-link text-sm font-medium page-link py-3"
                 data-page="miscellaneous">Masterclass</a>
+          </div>
         </div>
     </nav>
 
@@ -211,18 +160,13 @@
                 data-src="https://player.vimeo.com/video/1154250384?h=1e34e019ce&dnt=1&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1&transparent=0"
                 title="Background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            <picture>
-                <source media="(max-width: 699px)" srcset="hero-mobile-fallback.jpg" />
-                <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt=""
-                    class="mobile-fallback" loading="eager" fetchpriority="high" aria-hidden="true" />
-            </picture>
             <iframe loading="eager" class="video-background fade-in mobile-iframe"
                 data-src="https://player.vimeo.com/video/873205791?dnt=1&background=1&autoplay=1&muted=1&playsinline=1&autopause=0&loop=1&transparent=0"
                 title="Mobile background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
 
-            <div class="content-overlay hero-editorial">
+            <div class="content-overlay hero-editorial hero-revealed hero-interactive">
                 <div class="hero-editorial__inner">
                     <div class="hero-editorial__content">
                         <p class="hero-editorial__eyebrow">Automotive Film / AI Production</p>
@@ -2274,11 +2218,11 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20261004-live-video-render" defer></script>
+    <script src="script.js?v=20261004-mobile-menu-transition" defer></script>
     <script src="refinement.js?v=20261003-tablet" defer></script>
     <script src="ai-optical.js?v=20261003-tablet" defer></script>
-    <script src="about-resonance.js?v=20261004-larger-dots" defer></script>
+    <script src="about-resonance.js?v=20261004-performance" defer></script>
     <script type="module" src="footer-signal.js?v=20261002-link-fade"></script>
-    <script src="enhance.js?v=20261004-contact-reveal-mobile" defer></script>
+    <script src="enhance.js?v=20261004-mobile-menu-transition" defer></script>
 </body>
 </html>

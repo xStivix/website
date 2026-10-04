@@ -33,6 +33,10 @@ for (let row = 1; row < 46; row++) {
   }
 }
 const particles = points.concat(extraPoints);
+// Reuse projection objects; particle positions, sizes and draw order stay exact.
+const projections = particles.map(() => ({ x: 0, y: 0, z: 0, r: 0, alpha: 0 }));
+const projected = [];
+const waves = origins.map(() => ({ center: 0, strength: 0 }));
 
 // Extend contact lighting around the existing globe silhouette. Outside
 // pointers are projected onto its rim so the echo still reaches the particles.
@@ -55,13 +59,32 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
   const yaw = .06 + time * .055, tilt = .14;
   const ca = Math.cos(yaw), sa = Math.sin(yaw), ct = Math.cos(tilt), st = Math.sin(tilt);
   const camera = 4.4, radius = 191, cx = 300, cy = 262;
-  const projected = [];
+  projected.length = 0;
+  for (let i = 0; i < waves.length; i++) {
+    const phase = (time / 6.8 + i / 3) % 1;
+    waves[i].center = phase * 1.55;
+    waves[i].strength = Math.sin(Math.PI * phase);
+  }
+  const echo = touchEcho && touchEcho.pointer.strength > 0 ? {
+    pointer: touchEcho.pointer,
+    ripples: touchEcho.ripples.map(pulse => {
+      const progress = (time - pulse.time) / 1.65;
+      return {
+        ...pulse, progress,
+        radius: progress * 245,
+        echoRadius: Math.max(0, progress - .17) * 245,
+        decay: Math.pow(1 - progress, .65),
+        strength: Math.min(pulse.strength ?? 1, touchEcho.pointer.strength)
+      };
+    }).filter(pulse => pulse.progress >= 0 && pulse.progress <= 1)
+  } : null;
 
-  for (const p of particles) {
-    const wave = p.distances.reduce((value, distance, i) => {
-      const phase = (time / 6.8 + i / 3) % 1;
-      return value + Math.exp(-Math.pow((distance - phase * 1.55) / .11, 2)) * Math.sin(Math.PI * phase);
-    }, 0);
+  for (let index = 0; index < particles.length; index++) {
+    const p = particles[index];
+    let wave = 0;
+    for (let i = 0; i < waves.length; i++) {
+      wave += Math.exp(-Math.pow((p.distances[i] - waves[i].center) / .11, 2)) * waves[i].strength;
+    }
     const lift = 1 + wave * .021;
     let x = p.x * ca + p.z * sa;
     const z = p.z * ca - p.x * sa;
@@ -85,14 +108,16 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
     alpha = clamp(alpha * .94 * baseTone + wave * .62 * fade);
     let r = 1.82 * (.83 + .17 * perspective) * (.95 + .10 * p.variation);
     r *= 1 + wave * .14;
-    const q = { x: cx + x * lift * perspective * radius, y: cy - y * lift * perspective * radius, z: depth, r, alpha };
-    if (touchEcho) applyTouchEcho(q, touchEcho, time, fade);
-    projected.push(q);
+    const q = projections[index];
+    q.x = cx + x * lift * perspective * radius;
+    q.y = cy - y * lift * perspective * radius;
+    q.z = depth; q.r = r; q.alpha = alpha;
+    if (echo) applyTouchEcho(q, echo, fade);
+    if (q.alpha >= .002 && q.r > 0) projected.push(q);
   }
 
   projected.sort((a, b) => a.z - b.z);
   for (const p of projected) {
-    if (p.alpha < .002 || p.r <= 0) continue;
     ctx.globalAlpha = p.alpha;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, TAU);
@@ -102,19 +127,16 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
 }
 
 // Additional light only: the original rotation, waves and point sizes stay intact.
-function applyTouchEcho(q, state, time, fade) {
+function applyTouchEcho(q, state, fade) {
   const { pointer, ripples } = state;
   const front = smooth(-.08, .42, q.z);
   const distance = Math.hypot(q.x - pointer.x, q.y - pointer.y);
   const contact = Math.exp(-Math.pow(distance / 34, 2)) * pointer.strength * front;
   q.alpha = clamp(q.alpha + contact * .88 * fade);
   for (const pulse of ripples) {
-    const progress = (time - pulse.time) / 1.65;
-    if (progress < 0 || progress > 1) continue;
     const d = Math.hypot(q.x - pulse.x, q.y - pulse.y);
-    const band = Math.exp(-Math.pow((d - progress * 245) / 10, 2));
-    const echo = Math.exp(-Math.pow((d - Math.max(0, progress - .17) * 245) / 7, 2)) * .42;
-    const strength = Math.min(pulse.strength ?? 1, pointer.strength);
-    q.alpha = clamp(q.alpha + (band + echo) * Math.pow(1 - progress, .65) * front * fade * 1.05 * strength);
+    const band = Math.exp(-Math.pow((d - pulse.radius) / 10, 2));
+    const echo = Math.exp(-Math.pow((d - pulse.echoRadius) / 7, 2)) * .42;
+    q.alpha = clamp(q.alpha + (band + echo) * pulse.decay * front * fade * 1.05 * pulse.strength);
   }
 }
