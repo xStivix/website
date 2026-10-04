@@ -32,7 +32,7 @@
   color-scheme: dark;
 }
 
-/* The text stays immediate; only the ready video fades up from black. */
+/* Use the published video's single reveal, without an extra fading cover. */
 .hero-instant #home .video-background {
   transition: opacity .3s ease;
 }
@@ -79,7 +79,7 @@
   /* Finish the mobile video in solid black so it blends into About. */
   #home::after {
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, .32) 0%, transparent 25%, transparent 43%, rgba(0, 0, 0, .35) 65%, rgba(0, 0, 0, .76) 82%, #000 96%),
+      linear-gradient(180deg, rgba(0, 0, 0, .24) 0%, transparent 28%, transparent 43%, rgba(0, 0, 0, .35) 65%, rgba(0, 0, 0, .76) 82%, #000 96%),
       linear-gradient(90deg, rgba(0, 0, 0, .38), transparent 78%);
   }
 }
@@ -152,20 +152,19 @@
     background: #000;
   }
 
-  /* Same gradient stops as Flow, fitted to this full-bleed video.
-     Both edges finish at opaque black, matching the About section. */
+  /* Blend the lower edge into About; the upper fade stays subtle. */
   #home::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(#000 0%, transparent 10%, transparent 90%, #000 100%);
+    background: linear-gradient(0deg, #000 0%, transparent 10%);
   }
 
   #home::after {
     background:
-      linear-gradient(#000 0%, rgba(0, 0, 0, .85) 6%, rgba(0, 0, 0, .4) 14%, transparent 22%),
+      linear-gradient(180deg, rgba(0, 0, 0, .24) 0%, rgba(0, 0, 0, .12) 10%, transparent 28%),
       linear-gradient(0deg, #000 0%, rgba(0, 0, 0, .85) 6%, rgba(0, 0, 0, .4) 14%, transparent 22%),
       rgba(0, 0, 0, .2);
   }
@@ -578,6 +577,23 @@
   inset: 4%;
   transform: translateX(-6%);
 }
+
+/* Centre only the three introduction symbols around the requested 1280px
+   window width; retain the established placement at other viewport sizes. */
+@media (min-width: 1240px) and (max-width: 1319.98px) {
+  :is(#ai-intro, #video-editing-page > section:first-child, #miscellaneous-page > section:first-child) .page-artwork-right {
+    justify-content: center;
+  }
+
+  :is(#ai-optical, #tech-optical, #masterclass-optical).page-optical[data-motion="static"] {
+    margin-inline-end: 0;
+  }
+
+  :is(#ai-optical, #tech-optical, #masterclass-optical).page-optical[data-motion="static"] > img {
+    transform: none;
+  }
+}
+
 .page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > canvas { opacity: 1; }
 .page-optical[data-ready="true"]:not([data-context-lost]):not([data-error]) > img { visibility: hidden; }
 

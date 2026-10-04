@@ -1,0 +1,103 @@
+/* Hero and navigation sizing, shared by mouse, pen and touch devices.
+   Keep these dimensions independent of the site's rem breakpoint at 1200px.
+   The video layers, their fade and the phone composition stay unchanged. */
+@media (min-width: 700px) {
+  :root {
+    --nav-height: 64px;
+  }
+
+  .site-nav__shell {
+    padding-left: max(clamp(20px, 2vw, 40px), env(safe-area-inset-left));
+    padding-right: max(clamp(20px, 2vw, 40px), env(safe-area-inset-right));
+  }
+
+  .site-nav__row {
+    gap: clamp(12px, 1.5vw, 24px);
+  }
+
+  .site-nav #homeLink {
+    font-size: 20px;
+  }
+
+  .site-nav__links {
+    gap: clamp(16px, 2vw, 36px);
+  }
+
+  .site-nav__links .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  /* Follow the centered text line, not the enlarged touch target's edge. */
+  .site-nav__links .nav-link::after {
+    top: calc(50% + .7em + 2px);
+    bottom: auto;
+  }
+
+  .site-nav__actions {
+    gap: 10px;
+  }
+
+  .site-nav__contact {
+    min-height: 44px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  #home {
+    --hero-support-size: clamp(18px, min(max(20px, calc(12px + .625vw)), 2.7svh), 28px);
+    --hero-bottom-space: max(clamp(40px, 5svh, 72px), clamp(0px, calc(32svh - 24vw), 192px));
+    --hero-action-gap: clamp(16px, 2.4svh, 32px);
+    --hero-button-size: clamp(16px, calc(var(--hero-support-size) - 2px), 24px);
+    --hero-button-height: calc(2 * var(--hero-support-size) + 12px);
+    --hero-details-gap: clamp(12px, 2.2svh, 24px);
+    height: 100svh;
+    min-height: 480px;
+  }
+
+  #home .content-overlay.hero-editorial {
+    top: 0;
+    height: 100%;
+  }
+
+  #home .hero-editorial__inner {
+    padding: calc(var(--nav-height) + 24px) clamp(24px, 4vw, 64px)
+      calc(var(--hero-bottom-space) + env(safe-area-inset-bottom));
+  }
+
+  #home .hero-editorial__title {
+    /* Match the current 1920 x 1080 heading, while allowing larger displays
+       to scale up. Height limits the heading in shallow browser windows. */
+    top: clamp(40%, calc(50vw - 20svh), 50%);
+    width: min(90%, 1840px);
+    font-size: clamp(64px, min(12.5vw, 18.15svh), 272px);
+  }
+
+  #home .hero-editorial__description {
+    max-width: min(100%, calc(var(--hero-support-size) * 27));
+    padding-inline: 0;
+    font-size: var(--hero-support-size);
+    line-height: 1.25;
+  }
+
+  #home .hero-editorial__primary--desktop {
+    max-width: 100%;
+    padding: 12px clamp(24px, 2vw, 40px);
+    font-size: var(--hero-button-size);
+    min-height: 48px;
+    height: var(--hero-button-height);
+  }
+
+  #home .hero-editorial__desktop-details p {
+    font-size: clamp(12px, calc(var(--hero-support-size) * .125 + 9px), 14px);
+    line-height: 1.5;
+  }
+
+  #home .hero-editorial__desktop-scroll {
+    width: 44px;
+    height: 44px;
+    bottom: calc(12px - var(--hero-bottom-space));
+  }
+}

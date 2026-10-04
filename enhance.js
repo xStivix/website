@@ -82,6 +82,36 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Transparent only at the very top of the visible home video. Capturing
+    // scroll events also supports this site's body-based scroll container.
+    const nav = document.querySelector('.site-nav');
+    const hero = document.getElementById('home');
+    const main = document.getElementById('main-page');
+    const menuButton = document.getElementById('mobileMenuButton');
+    const compactNav = matchMedia('(max-width: 999px)');
+    let navFrame = 0;
+    const syncNav = () => {
+      navFrame = 0;
+      const heroRect = hero.getBoundingClientRect();
+      const menuOpen = compactNav.matches && menuButton.getAttribute('aria-expanded') === 'true';
+      const isHeroTop = heroRect.height > 0 &&
+        heroRect.top >= -2 && heroRect.top <= 2 && !menuOpen;
+      nav.classList.toggle('is-hero-top', isHeroTop);
+      nav.classList.toggle('is-solid', !isHeroTop);
+    };
+    const scheduleNav = () => {
+      if (!navFrame) navFrame = requestAnimationFrame(syncNav);
+    };
+    const navObserver = new MutationObserver(scheduleNav);
+    navObserver.observe(main, { attributes: true, attributeFilter: ['style', 'class'] });
+    navObserver.observe(menuButton, { attributes: true, attributeFilter: ['aria-expanded'] });
+    window.addEventListener('scroll', scheduleNav, { passive: true, capture: true });
+    window.addEventListener('resize', scheduleNav, { passive: true });
+    window.addEventListener('pageshow', scheduleNav);
+    document.addEventListener('pagechange', scheduleNav);
+    compactNav.addEventListener('change', scheduleNav);
+    syncNav();
+
     const year = String(new Date().getFullYear());
     document.querySelectorAll('[data-current-year]').forEach(node => {
       node.textContent = year;

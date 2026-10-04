@@ -65,6 +65,7 @@
     <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com" crossorigin>
     <link rel="preload" href="fonts/roboto-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/roboto-mono-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/google-sans-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/google-sans-700.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
     <link rel="preload" href="fonts/google-sans-text-latin-400.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
     <link rel="preload" href="fonts/google-sans-text-latin-500.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 700px), (orientation: landscape) and (min-width: 480px) and (max-height: 500px) and (pointer: coarse)">
@@ -72,9 +73,10 @@
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="site.min.css?v=20261003-tablet" />
-    <link rel="stylesheet" href="refinement.css?v=20261003-tablet" />
-    <link rel="stylesheet" href="enhance.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="refinement.css?v=20261004-intro-symbol-centering" />
+    <link rel="stylesheet" href="enhance.css?v=20261004-mobile-hero-two-lines" />
     <link rel="stylesheet" href="tablet.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="hero-responsive.css?v=20261004-nav-underline" />
     <style>
         .name-wrapper {
             display: flex;
@@ -134,40 +136,62 @@
     </div>
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-50 bg-black site-nav" aria-label="Primary navigation">
-        <div class="mx-auto max-w-7xl px-6 py-3">
-            <div class="flex justify-between items-center">
+    <nav class="fixed w-full z-50 site-nav" aria-label="Primary navigation">
+        <script>
+            // Set the home colors before the first paint, without waiting for
+            // deferred scripts (including the external video player) to load.
+            if (!location.hash || location.hash === '#home') {
+                document.currentScript.parentElement.classList.add('is-hero-top');
+            } else {
+                document.currentScript.parentElement.classList.add('is-solid');
+            }
+        </script>
+        <div class="site-nav__shell">
+            <div class="site-nav__row">
                 <!-- Logo links (bold, 2xl) -->
                 <a href="#home" id="homeLink" class="text-white font-bold text-xl" aria-label="Stefan Aberer, back to home"><span>stefan aberer</span></a>
                 <!-- Desktop-Links (base size, medium) -->
-                <div class="hidden md:flex space-x-8">
+                <div class="site-nav__links">
                     <a href="#about" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="main">ABOUT</a>
+                        data-page="main">About</a>
                     <a href="#portfolio" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="main">WORK</a>
+                        data-page="main">Work</a>
                     <a href="#services" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="main">SERVICES</a>
+                        data-page="main">Services</a>
                     <a href="#videoEditing" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="videoEditing">TECH</a>
+                        data-page="videoEditing">Tech</a>
                     <a href="#ai" class="nav-link text-white text-xs font-base page-link font-mono-custom"
                         data-page="ai">AI</a>
                     <a href="#misc" class="nav-link text-white text-xs font-base page-link font-mono-custom"
-                        data-page="miscellaneous">MASTERCLASS</a>
+                        data-page="miscellaneous">Masterclass</a>
                 </div>
-                <!-- Mobile-Button -->
-                <div class="md:hidden">
-                    <button id="mobileMenuButton" class="mobile-menu-button text-white text-2xl focus:outline-none"
-                        type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
-                        <span class="mobile-menu-icon" aria-hidden="true"></span>
-                    </button>
+                <div class="site-nav__actions">
+                    <a href="https://wa.me/4369911110970" target="_blank" rel="noopener noreferrer" class="site-nav__contact site-nav__contact--secondary">
+                        <svg class="site-nav__contact-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M20.6 11.7a8.6 8.6 0 0 1-12.8 7.5L3 20.5l1.3-4.7a8.6 8.6 0 1 1 16.3-4.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                            <path d="M8.1 6.9h.7c.2 0 .3.1.4.4l.8 1.9c.1.2.1.4-.1.6l-.6.8c-.1.2-.1.3 0 .5.5 1 1.6 2.1 2.8 2.7.2.1.4.1.5-.1l.9-1c.2-.2.4-.2.6-.1l1.9.9c.3.1.4.2.4.4 0 .5-.2 1.3-.6 1.6-.5.4-1.2.7-1.9.6-1.1-.2-2.7-.8-4.3-2.2-1.6-1.5-2.6-3.2-2.8-4.3-.2-1.1.2-2 .7-2.5.2-.2.4-.2.6-.2Z" fill="currentColor"/>
+                        </svg>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="https://stefan-aberer.at/#email" data-email-link class="site-nav__contact">
+                        <svg class="site-nav__contact-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <rect x="3" y="5" width="18" height="14" rx="2"/>
+                            <path d="m3 7 9 6 9-6"/>
+                        </svg>
+                        <span>Email</span>
+                    </a>
+                    <!-- Mobile-Button -->
+                    <div class="site-nav__toggle">
+                        <button id="mobileMenuButton" class="mobile-menu-button text-white text-2xl focus:outline-none"
+                            type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+                            <span class="mobile-menu-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Mobile-Links (base size, bold) -->
-        <div id="mobileMenu" class="hidden md:hidden bg-black px-6 pb-5" aria-label="Mobile navigation">
-            <a href="#about" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">About</a>
-            <a href="#portfolio" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">Work</a>
-            <a href="#services" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="main">Services</a>
+        <div id="mobileMenu" class="hidden bg-black px-6" aria-label="Mobile navigation">
             <a href="#ai" class="block text-white nav-link text-sm font-medium page-link py-3" data-page="ai">AI</a>
             <!-- <a href="#images" class="block text-white nav-link text-sm font-medium page-link py-2"
                 data-page="images">Images</a> -->
@@ -197,6 +221,7 @@
                 title="Mobile background showreel" tabindex="-1" aria-hidden="true"
                 frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
+
             <div class="content-overlay hero-editorial">
                 <div class="hero-editorial__inner">
                     <div class="hero-editorial__content">
@@ -219,10 +244,10 @@
 
                         <div class="hero-editorial__actions">
                             <a href="https://stefan-aberer.at/#email" data-email-link class="hero-editorial__primary hero-editorial__primary--mobile">
-                                Contact Me <span aria-hidden="true">→</span>
+                                Contact me <span aria-hidden="true">→</span>
                             </a>
-                            <a href="https://stefan-aberer.at/#email" data-email-link class="hero-editorial__primary hero-editorial__primary--desktop">
-                                <span>Start a conversation</span>
+                            <a href="#portfolio" data-page="main" class="hero-editorial__primary hero-editorial__primary--desktop page-link">
+                                <span>View selected work</span>
                             </a>
                         </div>
                     </div>
@@ -271,8 +296,12 @@
                         </div>
 
                         <!-- Fließtext -->
-                        <p class="about-description text-base md:text-md max-w-2xl font-light mb-4">
-                           I’m a Video Editor and Generative AI Specialist focused on post-production and automotive filmmaking. With over 5 years of industry experience, I focus on short-form content including ads, trailers, brand films, and commercial visuals. My foundation lies in traditional filmmaking, further refined in recent years through the integration of AI-driven workflows. In 2026, I joined OpenAI’s Artist Program.
+                        <p class="about-description page-intro-copy text-base md:text-md max-w-2xl font-light mb-4">
+                           I’m a Video Editor and Generative AI Specialist focused on post-production and automotive filmmaking. With over 5 years of industry experience, I focus on short-form content including ads, trailers, brand films, and commercial visuals. My foundation lies in traditional filmmaking, further refined in recent years through the integration of AI-driven workflows.
+                        </p>
+
+                        <p class="about-program-note">
+                            2026 <span aria-hidden="true">·</span> Higgsfield Creative Partner <span aria-hidden="true">·</span> OpenAI Artist Program
                         </p>
 
                         <!-- Weißer Mono-Button mit Pfeil und echtem Link -->
@@ -286,7 +315,7 @@
                     <!-- Resonance particle globe -->
                     <div class="flex justify-center about-us pl-18 about-artwork page-artwork-right">
                         <div id="about-resonance" class="about-portrait page-optical" data-motion="resonance" aria-hidden="true">
-                            <img src="artwork/about-resonance.svg?v=20261003-brighter-base" alt="" width="600" height="560" loading="lazy" decoding="async">
+                            <img src="artwork/about-resonance.svg?v=20261004-larger-dots" alt="" width="600" height="560" loading="lazy" decoding="async">
                             <canvas aria-hidden="true"></canvas>
                         </div>
                     </div>
@@ -971,7 +1000,7 @@
         <!-- Blur & Popup -->
         <div id="blur-overlay"></div>
         <div id="popup-overlay">
-            <div id="popup-box" style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+            <div id="popup-box">
                 <div class="popup-content">
                     <h3 class="text-3xl font-bold mb-4">Note</h3>
                     <p>Creating high-quality videos – whether traditional or AI-generated – still requires a lot of
@@ -1001,7 +1030,7 @@
                             <span class="block text-4xl md:text-4xl leading-tight font-normal mb-2">Cutting-Edge</span>
                             <span class="block text-4xl md:text-4xl leading-tight font-bold mb-6">Solutions.</span>
                         </h1>
-                        <p class="text-base md:text-md max-w-2xl font-light mb-4">
+                        <p class="page-intro-copy text-base md:text-md max-w-2xl font-light mb-4">
                             If it can be done with AI, whether it’s images, videos, or code, I can make it happen. For
                             me, AI isn’t just about chasing trends; it’s about staying current in a fast-moving field.
                         </p>
@@ -1025,14 +1054,14 @@
                 <h2 class="ai-intro-title super-title mb-4 md:mb-8 lg:mb-8  text-black text-center">Generative AI</h2>
                 <p class="container text-sm mx-auto font-light text-black  max-w-2xl mb-4 md:mb-12 ai-text"
                     data-ai-read-more="Generative AI"
-                    data-read-more-preview="Since early 2023, I have been working with generative AI, starting with Stable Diffusion and early versions of Midjourney and continuously adapting as the technology evolved. Now generative AI has become one of the most transformative tools in video production, fundamentally changing how videos and visual effects are produced. I primarily use an image-to-video approach because it provides greater control over composition, lighting, and art direction. With carefully prepared">
-                    Since early 2023, I have been working with generative AI, starting with Stable Diffusion and early
-                    versions of Midjourney and continuously adapting as the technology evolved. Now generative AI has
-                    become one of the most transformative tools in video production, fundamentally changing how videos
-                    and visual effects are produced. I primarily use an image-to-video approach because it provides
-                    greater control over composition, lighting, and art direction. With carefully prepared reference
-                    material and detailed refinement, today’s tools can create near-photorealistic visuals and sequences
-                    that closely resemble traditionally produced footage.
+                    data-read-more-preview="Since early 2023, I’ve been working with generative AI, starting with Stable Diffusion and early versions of Midjourney and refining my workflow as the technology evolved. In 2026, I joined OpenAI’s Artist Program and became a Higgsfield Creative Partner. Generative AI is now a core part of my video production workflow. I primarily use an image-to-video approach for greater control over composition, lighting, and art direction.">
+                    Since early 2023, I’ve been working with generative AI, starting with Stable Diffusion and early
+                    versions of Midjourney and refining my workflow as the technology evolved. In 2026, I joined
+                    OpenAI’s Artist Program and became a Higgsfield Creative Partner. Generative AI is now a core part
+                    of my video production workflow. I primarily use an image-to-video approach for greater control
+                    over composition, lighting, and art direction. With carefully prepared reference material and
+                    detailed refinement, today’s tools make it possible to create near-photorealistic visuals and sequences that closely resemble
+                    traditionally produced footage.
                 </p>
 
                 <!-- Non-interactive Generative AI loop previews -->
@@ -1350,7 +1379,7 @@ This proof of concept video was commissioned by a production company for a Chine
                 <div class="placeholder-content">
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ANGABEN GEMÄSS §
                         5 ECG & § 24 MEDIENG</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Stefan Aberer<br>
                             Kuhn 102 123<br>
                             6934 Sulzberg<br>
@@ -1360,7 +1389,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">
                         UNTERNEHMENSDETAILS</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Unternehmensform: Einzelunternehmen (freies Gewerbe)<br>
                             Gewerbe: Multimediadienstleistungen / Filmproduktion<br>
                             Mitglied bei: Wirtschaftskammer Österreich (WKO)<br>
@@ -1370,14 +1399,14 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">STEUERN & RECHT
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG<br>
                         </span><br>
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">MEDIENINHABER &
                         BLATTLINIE</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Medieninhaber: Stefan Aberer<br>
                             Diese Website informiert über die beruflichen Tätigkeiten, Projekte und Angebote von Stefan
                             Aberer im Bereich Filmproduktion, Postproduktion und Mediengestaltung. Unter Umständen
@@ -1388,7 +1417,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">
                         HAFTUNGSAUSSCHLUSS & URHEBERRECHT</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Trotz sorgfältiger Kontrolle übernehme ich keine Haftung für Inhalte externer Links. Für den
                             Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich. Die auf
                             dieser Website veröffentlichten Inhalte sind urheberrechtlich geschützt. Jegliche Verwendung
@@ -1430,7 +1459,7 @@ This proof of concept video was commissioned by a production company for a Chine
                 <div class="placeholder-content">
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">GELTUNGSBEREICH
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen Stefan Aberer
                             (nachfolgend „Dienstleister“) und seinen Kunden (nachfolgend „Kunde“) über Dienstleistungen
                             im Bereich Video-Produktion, Video-Editing sowie Mediengestaltung und verwandte Leistungen,
@@ -1440,7 +1469,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERTRAGSABSCHLUSS
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Ein Vertrag kommt zustande, wenn der Kunde ein Angebot des Dienstleisters schriftlich oder
                             mündlich annimmt oder wenn der Dienstleister eine schriftliche Auftragsbestätigung
                             versendet.
@@ -1449,7 +1478,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">LEISTUNGEN &
                         MITWIRKUNGSPFLICHTEN</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Der genaue Umfang der zu erbringenden Leistungen ergibt sich aus dem jeweiligen Angebot
                             oder der Auftragsbestätigung.<br>
                             (2) Der Kunde verpflichtet sich, alle zur Durchführung des Auftrags erforderlichen Inhalte,
@@ -1462,7 +1491,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERGÜTUNG &
                         ZAHLUNGSBEDINGUNGEN</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Die Vergütung richtet sich nach dem im Angebot vereinbarten Preis. Alle Preise verstehen
                             sich als Nettopreise gemäß § 6 Abs 1 Z 27 UStG (Kleinunternehmerregelung – keine
                             Umsatzsteuer).<br>
@@ -1475,7 +1504,7 @@ This proof of concept video was commissioned by a production company for a Chine
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ABNAHME</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Nach Fertigstellung wird das Arbeitsergebnis zur Abnahme vorgelegt.<br>
                             (2) Der Kunde ist verpflichtet, das Werk innerhalb von 10 Werktagen zu prüfen und etwaige
                             Mängel schriftlich mitzuteilen. Erfolgt innerhalb dieser Frist keine Rückmeldung, gilt das
@@ -1485,7 +1514,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">
                         NUTZUNGSRECHTE</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Mit vollständiger Zahlung erhält der Kunde die einfachen Nutzungsrechte am gelieferten
                             Werk für den vereinbarten Zweck.<br>
                             (2) Eine Weitergabe an Dritte oder die Bearbeitung durch Dritte bedarf der vorherigen
@@ -1497,7 +1526,7 @@ This proof of concept video was commissioned by a production company for a Chine
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">HAFTUNG</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Der Dienstleister haftet nur für Schäden, die auf vorsätzlicher oder grob fahrlässiger
                             Pflichtverletzung beruhen.<br>
                             (2) Keine Haftung wird übernommen für Inhalte, die vom Kunden bereitgestellt werden (z.B.
@@ -1509,7 +1538,7 @@ This proof of concept video was commissioned by a production company for a Chine
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">LIEFERUNG</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Lieferfristen gelten nur als verbindlich, wenn sie ausdrücklich schriftlich zugesagt wurden.
                             Bei unvorhergesehenen Ereignissen (z.B. Krankheit, höhere Gewalt) kann sich die Frist
                             angemessen verlängern.
@@ -1517,7 +1546,7 @@ This proof of concept video was commissioned by a production company for a Chine
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">DATENSCHUTZ</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Personenbezogene Daten werden ausschließlich zur Abwicklung des jeweiligen Auftrags
                             verarbeitet und nicht an Dritte weitergegeben, sofern dies nicht zur Vertragserfüllung
                             erforderlich ist.
@@ -1526,7 +1555,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">
                         SCHLUSSBESTIMMUNGEN</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.<br>
                             (2) Gerichtsstand für alle Streitigkeiten ist Dornbirn.<br>
                             (3) Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, bleibt die
@@ -1567,7 +1596,7 @@ This proof of concept video was commissioned by a production company for a Chine
                 <div class="placeholder-content">
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">VERANTWORTLICHER
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Stefan Aberer<br>
                             Kuhn 102<br>
                             6934 Sulzberg, Österreich
@@ -1576,7 +1605,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">ERHEBUNG &
                         SPEICHERUNG VON DATEN</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             (1) IP-Adresse<br>
                             (2) Datum und Uhrzeit des Zugriffs<br>
                             (3) aufgerufene Seite (URL)<br>
@@ -1589,7 +1618,7 @@ This proof of concept video was commissioned by a production company for a Chine
                     </p>
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">COOKIES</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Diese Website verwendet nur technisch notwendige Cookies, um grundlegende Funktionen wie die
                             Seitendarstellung zu ermöglichen.
                             Es werden keine Cookies zu Analyse- oder Marketingzwecken gesetzt.
@@ -1598,7 +1627,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">EINGEBETTETE
                         VIMEO-VIDEOS</h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Auf manchen Seiten sind Videos des Anbieters Vimeo (Vimeo LLC, 555 West 18th Street, New
                             York, NY 10011, USA) eingebettet.
                             Die eingebetteten Player werden im sogenannten „Do Not Track“-Modus geladen (?dnt=1).
@@ -1611,7 +1640,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">KONTAKTAUFNAHME
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Wenn Sie per E-Mail Kontakt mit mir aufnehmen, werden Ihre angegebenen Daten (z. B. Name,
                             E-Mail-Adresse, Inhalt der Nachricht) zur Bearbeitung Ihrer Anfrage verwendet.
                             Rechtsgrundlage dafür ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
@@ -1622,7 +1651,7 @@ This proof of concept video was commissioned by a production company for a Chine
 
                     <h3 style="font-size: 2rem; line-height: 1.2;" class="text-xl font-bold mt-8 mb-4">DATENSICHERHEIT
                     </h3>
-                    <p> <span style="font-family: 'Circular STD Light', sans-serif; font-weight: 300;">
+                    <p> <span>
                             Diese Website nutzt SSL-Verschlüsselung (https), um Ihre Daten sicher zu übertragen. Es
                             werden darüber hinaus alle zumutbaren technischen und organisatorischen Maßnahmen getroffen,
                             um Ihre Daten zu schützen.
@@ -1667,7 +1696,7 @@ This proof of concept video was commissioned by a production company for a Chine
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
                             Video Editing.
                         </h1>
-                        <p class="text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
+                        <p class="page-intro-copy text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
                             My workflow is built mainly around industry-standard Adobe programs. <br class="break-sm">
                             For AI-assisted tasks, I use a wide range of tools for image & video generation
                             as well as editing.
@@ -1889,7 +1918,7 @@ This proof of concept video was commissioned by a production company for a Chine
                         <h1 class="text-4xl md:text-4xl leading-tight font-bold mb-6">
                             AI Masterclass.
                         </h1>
-                        <p class="text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
+                        <p class="page-intro-copy text-base md:text-md max-w-2xl font-light mb-4" style="max-width: 37rem;">
                             In this Masterclass, I share my complete AI production workflow. From prompt development and
                             reference preparation to image generation, video creation, refinement, and final
                             post-production integration. The course covers the latest tools, proven industry-standard
@@ -2245,11 +2274,11 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20261003-tablet" defer></script>
+    <script src="script.js?v=20261004-live-video-render" defer></script>
     <script src="refinement.js?v=20261003-tablet" defer></script>
     <script src="ai-optical.js?v=20261003-tablet" defer></script>
-    <script src="about-resonance.js?v=20261003-brighter-base" defer></script>
+    <script src="about-resonance.js?v=20261004-larger-dots" defer></script>
     <script type="module" src="footer-signal.js?v=20261002-link-fade"></script>
-    <script src="enhance.js?v=20260927-connect-4" defer></script>
+    <script src="enhance.js?v=20261004-contact-reveal-mobile" defer></script>
 </body>
 </html>

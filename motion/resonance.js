@@ -17,9 +17,10 @@ const random = () => { seed = (Math.imul(1664525, seed) + 1013904223) >>> 0; ret
 const extraRandom = () => { extraSeed = (Math.imul(1664525, extraSeed) + 1013904223) >>> 0; return extraSeed / 4294967296; };
 const points = [], extraPoints = [];
 
-for (let row = 1; row < 31; row++) {
-  const lat = -Math.PI / 2 + row / 31 * Math.PI;
-  const count = Math.max(4, Math.round(TAU * Math.cos(lat) / .105));
+// A finer spherical grid gives the left side enough detail to dissolve gradually.
+for (let row = 1; row < 46; row++) {
+  const lat = -Math.PI / 2 + row / 46 * Math.PI;
+  const count = Math.max(4, Math.round(TAU * Math.cos(lat) / .070));
   for (let j = 0; j < count; j++) {
     const occupancy = random();
     if (occupancy > .90) continue;
@@ -66,11 +67,14 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
     const z = p.z * ca - p.x * sa;
     let y = p.y * ct - z * st;
     const depth = p.y * st + z * ct;
-    const edge = Math.max(0, (x + .22) / 1.22);
+    // Evaluate density before the drift, in view space, so the gradient stays
+    // left-to-right while the globe rotates. Smooth fades avoid popping dots.
+    const densityFalloff = Math.pow(smooth(-.95, .95, x), .8);
+    const edge = Math.max(0, (x + .38) / 1.38);
     const dissolve = edge * edge * (.25 + p.variation * .75);
-    x += dissolve * (.18 + .09 * Math.sin(time * .30 + p.phase));
-    y += dissolve * .10 * Math.sin(time * .22 + p.phase);
-    const fade = (1 - dissolve * .35) * smooth(0, .22, p.space - edge * .56);
+    x += dissolve * (.36 + .16 * Math.sin(time * .30 + p.phase));
+    y += dissolve * .16 * Math.sin(time * .22 + p.phase);
+    const fade = (1 - dissolve * .35) * smooth(0, .18, p.space - densityFalloff * .86);
     const perspective = camera / (camera - depth * lift);
     const front = smooth(.10, .47, depth);
     const rear = smooth(.02, .65, -depth) * smooth(.40, .80, p.variation);
@@ -79,7 +83,7 @@ export function drawResonance(ctx, { width, dpr = 1, time = 0, touchEcho = null 
     // Quieter particles sit behind the normal tones; the wave can light up both.
     const baseTone = .44 + .56 * smooth(.20, .38, p.variation);
     alpha = clamp(alpha * .94 * baseTone + wave * .62 * fade);
-    let r = 1.58 * (.83 + .17 * perspective) * (.95 + .10 * p.variation);
+    let r = 1.82 * (.83 + .17 * perspective) * (.95 + .10 * p.variation);
     r *= 1 + wave * .14;
     const q = { x: cx + x * lift * perspective * radius, y: cy - y * lift * perspective * radius, z: depth, r, alpha };
     if (touchEcho) applyTouchEcho(q, touchEcho, time, fade);
