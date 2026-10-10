@@ -23,7 +23,7 @@
 
 /* --- About and the page introductions (AI, Tech, Masterclass) ------------- */
 @media (min-width: 700px) and (max-width: 1199px) {
-  /* About: text on the left, the particle globe on the right, as on desktop. */
+  /* About: text on the left, the Eclipse on the right, as on desktop. */
   #about {
     padding-block: clamp(4rem, 8vw, 6rem) clamp(3.5rem, 6.5vw, 5rem);
   }
@@ -68,7 +68,7 @@
     justify-content: center;
   }
 
-  #about #about-resonance {
+  #about #about-eclipse {
     display: block;
     width: 100%;
     max-width: 25rem;

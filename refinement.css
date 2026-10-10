@@ -629,7 +629,7 @@
   background-color: transparent;
   background-clip: padding-box;
   box-shadow: 0 14px 40px rgb(0 0 0 / 0);
-  transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .2s ease;
+  transition: transform .4s var(--ease-out), box-shadow .4s ease, background-color .16s ease;
 }
 
 #services .service-card::after {
@@ -648,32 +648,32 @@
   border: 0;
   border-radius: 0;
   background-color: var(--service-surface);
-  transition: background-color .2s ease;
+  transition: background-color .16s ease;
 }
 
 #services .service-card .service-visual {
   /* The card alone supplies the rounded clip and outline. */
   border-radius: 0;
   background-color: var(--service-visual-surface);
-  transition: background-color .2s ease;
+  transition: background-color .16s ease;
 }
 
 #services .service-card__title,
 #services .service-card__text {
   color: var(--service-ink);
-  transition: color .2s ease;
+  transition: color .16s ease;
 }
 
 #services .service-card__number {
   color: var(--service-muted);
-  transition: color .2s ease;
+  transition: color .16s ease;
 }
 
 #services .service-card__actions .page-link {
   color: var(--service-button-ink);
   background-color: var(--service-button-surface);
   border-color: var(--service-button-surface);
-  transition: color .6s ease, background-color .6s ease, border-color .6s ease;
+  transition: color .48s ease, background-color .48s ease, border-color .48s ease;
 }
 
 /* Touch scrolling never leaves a card stuck in its hover appearance. */
@@ -753,7 +753,7 @@
 #services .service-card .service-visual__image {
   transform: none;
   filter: invert(var(--service-image-invert));
-  transition: filter .2s ease;
+  transition: filter .16s ease;
 }
 
 /* Tablet refinements are deliberately bounded: preserve both the phone

@@ -72,9 +72,9 @@
     <link rel="shortcut icon" href="iconsite_00000.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="site.min.css?v=20261003-tablet" />
-    <link rel="stylesheet" href="refinement.css?v=20261004-intro-symbol-centering" />
+    <link rel="stylesheet" href="refinement.css?v=20261010-service-hover" />
     <link rel="stylesheet" href="enhance.css?v=20261004-mobile-menu-transition" />
-    <link rel="stylesheet" href="tablet.css?v=20261003-tablet" />
+    <link rel="stylesheet" href="tablet.css?v=20261010-about-eclipse" />
     <link rel="stylesheet" href="hero-responsive.css?v=20261004-nav-underline" />
     <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
@@ -256,11 +256,10 @@
                         </a>
                     </div>
 
-                    <!-- Resonance particle globe -->
+                    <!-- Soft Totality animation -->
                     <div class="flex justify-center about-us pl-18 about-artwork page-artwork-right">
-                        <div id="about-resonance" class="about-portrait page-optical" data-motion="resonance" aria-hidden="true">
-                            <img src="artwork/about-resonance.svg?v=20261004-larger-dots" alt="" width="600" height="560" loading="lazy" decoding="async">
-                            <canvas aria-hidden="true"></canvas>
+                        <div id="about-eclipse" class="about-portrait page-optical" data-motion="eclipse" aria-hidden="true">
+                            <img src="motion/soft-totality.webp" alt="" width="720" height="720" loading="lazy" decoding="async">
                         </div>
                     </div>
 
@@ -411,26 +410,6 @@
             </div>
 
 
-            <!-- Erstes Video -->
-            <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
-                <div class="erstes-video">
-                    <iframe loading="lazy"
-                        data-src="https://player.vimeo.com/video/1104258791?dnt=1&muted=1&background=1&autopause=0&loop=1&autoplay=0&cache_bust=20260730-1"
-                        title="Project preview: stefan-aberer.at"
-                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
-                        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
-                    <div class="erstes-video-s"></div>
-                    <!-- Overlay Texte -->
-                    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1] ">
-                        <p class="font-mono text-sm uppercase mb-1">Design Study (2025)</p>
-                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">stefan-aberer.at</h3>
-                    </div>
-                </div>
-            </div> 
-
-
-
-
   <!-- Zweites Video (ohne Autoplay) -->
             <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover ">
                 <div class="erstes-video">
@@ -479,6 +458,23 @@
                     <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1]">
                         <p class="font-mono text-sm uppercase mb-1">Commercial (2026) [Hybrid]</p>
                         <h3 class="text-xl :text-3xl lg:text-2xl font-bold">10.000 Hours</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tokyo: letztes Projekt -->
+            <div class=" mx-auto max-w-7xl mb-4 md:mb-12 lg:mb-12 video-hover">
+                <div class="erstes-video">
+                    <iframe loading="lazy"
+                        data-src="https://player.vimeo.com/video/810713423?dnt=1&muted=1&background=1&autopause=0&loop=1&autoplay=0&cache_bust=20260730-1"
+                        title="Project preview: Tokyo 2022"
+                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                        style="position:absolute;top:0;left:0;width:100%;height:225%;transform:translateY(-27.778%);border:0;"></iframe>
+                    <div class="erstes-video-s"></div>
+                    <!-- Overlay Texte -->
+                    <div class="absolute bottom-2 md:bottom-6 left-6 text-white z-[1] ">
+                        <p class="font-mono text-sm uppercase mb-1">MOOD Film (2022)</p>
+                        <h3 class="text-xl :text-3xl lg:text-2xl font-bold">Tokyo 2022</h3>
                     </div>
                 </div>
             </div>
@@ -2221,7 +2217,6 @@ This proof of concept video was commissioned by a production company for a Chine
     <script src="script.js?v=20261004-mobile-menu-transition" defer></script>
     <script src="refinement.js?v=20261003-tablet" defer></script>
     <script src="ai-optical.js?v=20261003-tablet" defer></script>
-    <script src="about-resonance.js?v=20261004-performance" defer></script>
     <script type="module" src="footer-signal.js?v=20261002-link-fade"></script>
     <script src="enhance.js?v=20261004-mobile-menu-transition" defer></script>
 </body>
