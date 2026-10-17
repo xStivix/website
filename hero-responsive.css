@@ -27,7 +27,7 @@
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    font-size: 16px;
+    font-size: 15px;
   }
 
   /* Follow the centered text line, not the enlarged touch target's edge. */
@@ -41,9 +41,9 @@
   }
 
   .site-nav__contact {
-    min-height: 44px;
-    padding: 10px 20px;
-    font-size: 16px;
+    min-height: 40px;
+    padding: 9px 18px;
+    font-size: 15px;
   }
 
   #home {

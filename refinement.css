@@ -560,6 +560,10 @@
   max-width: none;
 }
 
+#about #about-original {
+  max-width: 26.4rem;
+}
+
 .page-optical > canvas { opacity: 0; }
 #about #about-resonance {
   aspect-ratio: 600 / 560;
@@ -637,7 +641,8 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  border: 1px solid var(--service-outline);
+  /* An inset stroke preserves fractional width on standard-density screens. */
+  box-shadow: inset 0 0 0 .75px var(--service-outline);
   border-radius: inherit;
   pointer-events: none;
   /* Keep the light panel's subtle contour without a pale inset on black. */

@@ -23,7 +23,7 @@
 
 /* --- About and the page introductions (AI, Tech, Masterclass) ------------- */
 @media (min-width: 700px) and (max-width: 1199px) {
-  /* About: text on the left, the Eclipse on the right, as on desktop. */
+  /* About: text on the left, the original artwork on the right, as on desktop. */
   #about {
     padding-block: clamp(4rem, 8vw, 6rem) clamp(3.5rem, 6.5vw, 5rem);
   }
@@ -68,10 +68,10 @@
     justify-content: center;
   }
 
-  #about #about-eclipse {
+  #about #about-original {
     display: block;
     width: 100%;
-    max-width: 25rem;
+    max-width: 27.5rem;
   }
 
   /* Page introductions share the About proportions and heading size. */
