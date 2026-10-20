@@ -62,7 +62,7 @@ const services = [
     {
       number: '01',
       title: 'AI EXPERTISE',
-      text: "I use AI to create images, videos, and effects, enhancing footage with smart upscaling and frame interpolation. From visual effects (VFX) to fully AI-generated videos, I've developed a workflow that allows for fully customizable visuals tailored to any product or individual.",
+      text: "I use AI to create images, videos, and effects, enhancing footage, replacing backgrounds or objects, and transforming entire scenes. From visual effects (VFX) to fully AI-generated videos, my workflow allows for highly customizable visuals tailored to each project.",
       imagePanel: 0,
       button: '<a href="#ai" data-page="ai" class="inline-block px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-black bg-black text-white hover:bg-white hover:text-black transition rounded page-link">AI Insights</a>'
     },
