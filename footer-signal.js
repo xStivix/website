@@ -1,4 +1,4 @@
-import { mountFooterSignal } from './motion/footer-cross-signal.js?v=20261002-link-fade';
+import { mountFooterSignal } from './motion/footer-cross-signal.js?v=20261020-smaller-circles';
 
 const fields = Array.from(document.querySelectorAll('.footer-magnet .magnet-grid'), canvas => {
   canvas.setAttribute('aria-hidden', 'true');

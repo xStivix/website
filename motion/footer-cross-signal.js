@@ -1,5 +1,7 @@
 const bell = (distance, radius) => Math.exp(-Math.pow(distance / radius, 2));
 const ease = (rate, dt) => 1 - Math.exp(-rate * dt);
+// Reduce interaction growth while preserving the resting radius and brightness.
+const interactionGrowth = .75;
 
 // Above and beside the grid, keep the gentle distance falloff. Below it,
 // follow the actual link rows and reach zero at the copyright text.
@@ -41,7 +43,7 @@ export function crossSignalTarget(point, state, scale, time) {
   const distance = Math.hypot(dx, dy);
   if (state.reduced) {
     const focus = bell(distance, 84) * state.strength;
-    return { r: (2 + 2.1 * focus) * scale, a: Math.min(1, .65 + .35 * focus) };
+    return { r: (2 + 2.1 * focus * interactionGrowth) * scale, a: Math.min(1, .65 + .35 * focus) };
   }
   const core = bell(distance, 32) * state.strength;
   let radius = 2 + 2.35 * core, alpha = .65 + .35 * core;
@@ -57,7 +59,7 @@ export function crossSignalTarget(point, state, scale, time) {
     radius += 2.7 * signal;
     alpha += .4 * signal;
   }
-  return { r: Math.min(5.8, radius) * scale, a: Math.min(1, alpha) };
+  return { r: (2 + (Math.min(5.8, radius) - 2) * interactionGrowth) * scale, a: Math.min(1, alpha) };
 }
 
 export function mountFooterSignal(canvas) {
