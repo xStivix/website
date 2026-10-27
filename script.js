@@ -1166,7 +1166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const thumbnailObservers = [];
   let videoTrigger = null;
   let playbackSession = 0;
-  let revealTimer = null;
   let lightboxPlayer = null;
   let activeVideo = null;
   let finished = false;
@@ -1280,14 +1279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function revealPlayer(session) {
     if (session !== playbackSession || !box.classList.contains('show')) return;
-    clearTimeout(revealTimer);
-    revealTimer = null;
     stage.classList.add('is-ready');
-  }
-
-  function schedulePlayerReveal(session, delay) {
-    clearTimeout(revealTimer);
-    revealTimer = setTimeout(() => revealPlayer(session), delay);
   }
 
   function clearThumbnailObservers() {
@@ -1313,7 +1305,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const poster = document.createElement('span');
       poster.className = 'video-endscreen__poster';
-      if (entry.videoId === '810713423') poster.classList.add('video-endscreen__poster--cinema');
       poster.setAttribute('aria-hidden', 'true');
       if (index === 0) {
         const next = document.createElement('span');
@@ -1363,15 +1354,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Replace first: Vimeo.destroy() can synchronously remove its iframe.
     previousFrame.replaceWith(plyr);
     if (previousPlayer) {
-      ['ended', 'playing', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => previousPlayer.off(event));
+      ['ended', 'playing', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => previousPlayer.off(event));
       previousPlayer.destroy().catch(() => {});
     }
     previousFrame.src = 'about:blank';
-    const frame = plyr;
-    frame.addEventListener('load', () => {
-      if (frame.src.includes('player.vimeo.com/video/')) revealPlayer(session);
-    });
-    return frame;
+    // An iframe load only means Vimeo's UI is ready; its poster may still be showing.
+    // Keep the cover until the actual playing event, even on a slow connection.
+    return plyr;
   }
 
   function isCurrentPlayback(session, frame) {
@@ -1385,8 +1374,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function showEndscreen(session, player, frame) {
     if (!isCurrentPlayback(session, frame) || finished) return;
     finished = true;
-    clearTimeout(revealTimer);
-    revealTimer = null;
     frame.tabIndex = -1;
     frame.setAttribute('aria-hidden', 'true');
     stage.classList.add('is-ready', 'is-finished');
@@ -1404,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bindPlayerEvents(player, session, frame) {
-    ['ended', 'playing', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => player.off(event));
+    ['ended', 'playing', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => player.off(event));
     player.on('ended', () => showEndscreen(session, player, frame));
     player.on('playing', () => {
       if (!isCurrentPlayback(session, frame) || finished) {
@@ -1413,6 +1400,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       revealPlayer(session);
     });
+    // Keep Vimeo's controls/error message accessible if playback cannot start.
+    player.on('error', () => revealPlayer(session));
     player.on('fullscreenchange', event => {
       if (!event.fullscreen) focusEndscreen(session, frame);
     });
@@ -1425,7 +1414,6 @@ document.addEventListener('DOMContentLoaded', () => {
     activeVideo = entry;
     finished = false;
     const session = ++playbackSession;
-    clearTimeout(revealTimer);
     endscreen.hidden = true;
     stage.classList.remove('is-ready', 'is-finished');
     box.classList.add('show');
@@ -1444,7 +1432,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (entry.videoHash) url.searchParams.set('h', entry.videoHash);
     Object.entries({ dnt: 1, autoplay: waitForAudioPreference ? 0 : 1, muted: audioPreference.muted ? 1 : 0, transparent: 0, playsinline: 1, loop: 0 })
       .forEach(([key, value]) => url.searchParams.set(key, value));
-    schedulePlayerReveal(session, 2500);
     renderRecommendations(entry);
     close.focus();
 
@@ -1474,7 +1461,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isCurrentPlayback(session, frame)) return;
         // Restore the chosen level on all devices; 67% is only the first-visit default.
         await restoreAudioPreference(player, session, frame);
-        if (waitForAudioPreference && isCurrentPlayback(session, frame)) {
+        if (isCurrentPlayback(session, frame)) {
+          // Calling play on an already-playing touch player does not restart it.
+          // Its rejection also uncovers native controls when autoplay is blocked.
           await player.play().catch(() => revealPlayer(session));
         }
       }).catch(() => revealPlayer(session));
@@ -1551,8 +1540,6 @@ document.addEventListener('DOMContentLoaded', () => {
     stopCountdown();
     autoplay.hidden = true;
     playbackSession += 1;
-    clearTimeout(revealTimer);
-    revealTimer = null;
     box.classList.remove('show');
     box.setAttribute('aria-hidden', 'true');
     box.setAttribute('aria-label', 'Video player');

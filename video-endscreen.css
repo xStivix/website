@@ -1,3 +1,8 @@
+/* Cover the next player immediately, without exposing its poster during a fade. */
+#video-lightbox .video-lightbox-stage:not(.is-ready) .video-lightbox-loader {
+  transition: none;
+}
+
 /* The film ends in the same quiet, monochrome language as Selected Work. */
 .video-endscreen[hidden] {
   display: none;
@@ -100,14 +105,6 @@
   background: #111 center / contain no-repeat;
   background-image: var(--endscreen-poster, none);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
-}
-
-/* Tokyo's thumbnail has no baked-in bars. Match the other films' ~2.35:1
-   picture area without stretching the image or changing the video player. */
-.video-endscreen__poster--cinema {
-  background-image: linear-gradient(#000, #000), linear-gradient(#000, #000), var(--endscreen-poster, none);
-  background-size: 100% 12.2%, 100% 12.2%, contain;
-  background-position: center top, center bottom, center;
 }
 
 .video-endscreen__next {
