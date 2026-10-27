@@ -1172,6 +1172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let nextVideo = null;
   let countdown = null;
   let countdownFrame = null;
+  let pendingRevealFrame = null;
   const autoplayDelay = 10000;
   const audioPreferenceKey = 'stefan-aberer.video-audio';
   let audioPreference = { volume: 0.67, muted: false };
@@ -1279,6 +1280,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function revealPlayer(session) {
     if (session !== playbackSession || !box.classList.contains('show')) return;
+    cancelAnimationFrame(pendingRevealFrame);
+    pendingRevealFrame = null;
     stage.classList.add('is-ready');
   }
 
@@ -1354,12 +1357,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Replace first: Vimeo.destroy() can synchronously remove its iframe.
     previousFrame.replaceWith(plyr);
     if (previousPlayer) {
-      ['ended', 'playing', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => previousPlayer.off(event));
+      ['ended', 'playing', 'timeupdate', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => previousPlayer.off(event));
       previousPlayer.destroy().catch(() => {});
     }
     previousFrame.src = 'about:blank';
     // An iframe load only means Vimeo's UI is ready; its poster may still be showing.
-    // Keep the cover until the actual playing event, even on a slow connection.
+    // Keep the cover until playback has advanced beyond Vimeo's initial poster.
     return plyr;
   }
 
@@ -1374,6 +1377,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function showEndscreen(session, player, frame) {
     if (!isCurrentPlayback(session, frame) || finished) return;
     finished = true;
+    cancelAnimationFrame(pendingRevealFrame);
+    pendingRevealFrame = null;
     frame.tabIndex = -1;
     frame.setAttribute('aria-hidden', 'true');
     stage.classList.add('is-ready', 'is-finished');
@@ -1391,25 +1396,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bindPlayerEvents(player, session, frame) {
-    ['ended', 'playing', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => player.off(event));
+    let sourceReady = false;
+    let hasStarted = false;
+    ['ended', 'playing', 'timeupdate', 'error', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => player.off(event));
     player.on('ended', () => showEndscreen(session, player, frame));
     player.on('playing', () => {
       if (!isCurrentPlayback(session, frame) || finished) {
         player.pause().catch(() => {});
         return;
       }
-      revealPlayer(session);
+      hasStarted = true;
     });
-    // Keep Vimeo's controls/error message accessible if playback cannot start.
-    player.on('error', () => revealPlayer(session));
+    player.on('timeupdate', data => {
+      if (!isCurrentPlayback(session, frame) || finished || stage.classList.contains('is-ready')) return;
+      // Vimeo can emit playing one frame before replacing its poster. Wait for
+      // actual media progress, then let both iframe and parent finish a paint.
+      if (!sourceReady || !hasStarted || !Number.isFinite(data.seconds) || data.seconds < .12 || pendingRevealFrame !== null) return;
+      pendingRevealFrame = requestAnimationFrame(() => {
+        pendingRevealFrame = requestAnimationFrame(() => {
+          pendingRevealFrame = null;
+          if (isCurrentPlayback(session, frame) && !finished) revealPlayer(session);
+        });
+      });
+    });
+    // Volume/fullscreen API errors must not expose an initial poster.
+    // Genuine playback failures still expose Vimeo's native controls/message.
+    player.on('error', error => {
+      if (!error?.method || error.method === 'play' || error.method === 'loadVideo') revealPlayer(session);
+    });
     player.on('fullscreenchange', event => {
       if (!event.fullscreen) focusEndscreen(session, frame);
     });
     player.on('leavepictureinpicture', () => focusEndscreen(session, frame));
+    return () => { sourceReady = true; };
   }
 
   function startVideo(entry, continuePlayback = false) {
     stopCountdown();
+    cancelAnimationFrame(pendingRevealFrame);
+    pendingRevealFrame = null;
     autoplay.hidden = true;
     activeVideo = entry;
     finished = false;
@@ -1436,10 +1461,11 @@ document.addEventListener('DOMContentLoaded', () => {
     close.focus();
 
     if (existingPlayer) {
-      bindPlayerEvents(existingPlayer, session, frame);
+      const markSourceReady = bindPlayerEvents(existingPlayer, session, frame);
       const source = entry.videoHash ? { url: url.href } : Number(entry.videoId);
       existingPlayer.loadVideo(source).then(async () => {
         if (!isCurrentPlayback(session, frame)) return;
+        markSourceReady();
         await restoreAudioPreference(existingPlayer, session, frame);
         if (isCurrentPlayback(session, frame)) {
           await existingPlayer.play().catch(() => revealPlayer(session));
@@ -1456,9 +1482,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isCurrentPlayback(session, frame)) return;
       const player = new Vimeo.Player(frame);
       lightboxPlayer = player;
-      bindPlayerEvents(player, session, frame);
+      const markSourceReady = bindPlayerEvents(player, session, frame);
       player.ready().then(async () => {
         if (!isCurrentPlayback(session, frame)) return;
+        markSourceReady();
         // Restore the chosen level on all devices; 67% is only the first-visit default.
         await restoreAudioPreference(player, session, frame);
         if (isCurrentPlayback(session, frame)) {
@@ -1538,6 +1565,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeBox(){
     if (!box.classList.contains('show')) return;
     stopCountdown();
+    cancelAnimationFrame(pendingRevealFrame);
+    pendingRevealFrame = null;
     autoplay.hidden = true;
     playbackSession += 1;
     box.classList.remove('show');

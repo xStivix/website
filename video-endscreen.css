@@ -1,5 +1,8 @@
 /* Cover the next player immediately, without exposing its poster during a fade. */
 #video-lightbox .video-lightbox-stage:not(.is-ready) .video-lightbox-loader {
+  /* Keep the iframe painting underneath: an entirely opaque cover can leave
+     its compositor surface stuck on Vimeo's poster until the first reveal. */
+  opacity: .999;
   transition: none;
 }
 
