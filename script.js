@@ -1151,12 +1151,132 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const box   = document.getElementById('video-lightbox');
   const close = box.querySelector('.close-btn');
-  const plyr  = document.getElementById('lightbox-player');
+  let plyr    = document.getElementById('lightbox-player');
   const stage = box.querySelector('.video-lightbox-stage');
+  const frameTemplate = plyr.cloneNode(false);
+  const endscreen = box.querySelector('.video-endscreen');
+  const endscreenTitle = document.getElementById('video-endscreen-title');
+  const recommendations = box.querySelector('.video-endscreen__projects');
+  const replay = box.querySelector('.video-endscreen__replay');
+  const autoplay = box.querySelector('.video-endscreen__autoplay');
+  const autoplayStatus = box.querySelector('.video-endscreen__autoplay-status');
+  const autoplayFill = box.querySelector('.video-endscreen__progress-fill');
   const hoverPlayback = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const selectedWork = [];
+  const thumbnailObservers = [];
   let videoTrigger = null;
   let playbackSession = 0;
   let revealTimer = null;
+  let lightboxPlayer = null;
+  let activeVideo = null;
+  let finished = false;
+  let nextVideo = null;
+  let countdown = null;
+  let countdownFrame = null;
+  const autoplayDelay = 10000;
+  const audioPreferenceKey = 'stefan-aberer.video-audio';
+  let audioPreference = { volume: 0.67, muted: false };
+  try {
+    const stored = JSON.parse(localStorage.getItem(audioPreferenceKey));
+    if (stored && Number.isFinite(stored.volume) && stored.volume >= 0 && stored.volume <= 1) {
+      audioPreference = { volume: stored.volume, muted: stored.muted === true };
+    }
+  } catch {
+    // The preference still works for this visit when browser storage is unavailable.
+  }
+
+  async function restoreAudioPreference(player, session, frame) {
+    if (!isCurrentPlayback(session, frame)) return;
+    const preference = { ...audioPreference };
+    // Subscribe only after restoring, so startup values don't overwrite a user's choice.
+    player.off('volumechange');
+    await player.setVolume(preference.volume).catch(() => {});
+    if (!isCurrentPlayback(session, frame)) return;
+    const appliedVolume = await player.getVolume().catch(() => null);
+    if (!isCurrentPlayback(session, frame)) return;
+    // iOS and some mobile players always report 1 because volume belongs to the OS.
+    // Never replace a saved listening level with that unsupported-device fallback.
+    const independentVolume = Number.isFinite(appliedVolume) && Math.abs(appliedVolume - preference.volume) < 0.0001;
+    await player.setMuted(preference.muted).catch(() => {});
+    if (!isCurrentPlayback(session, frame)) return;
+    player.on('volumechange', data => {
+      if (!isCurrentPlayback(session, frame) || !Number.isFinite(data.volume) || data.volume < 0 || data.volume > 1) return;
+      const muted = typeof data.muted === 'boolean' ? data.muted : audioPreference.muted;
+      // Keep the listening level when muting, so unmuting can restore it later.
+      const volume = !independentVolume || (muted && data.volume === 0) ? audioPreference.volume : data.volume;
+      if (Math.abs(volume - audioPreference.volume) < 0.0001 && muted === audioPreference.muted) return;
+      audioPreference = { volume, muted };
+      try {
+        localStorage.setItem(audioPreferenceKey, JSON.stringify(audioPreference));
+      } catch {
+        // Retain the in-memory preference even when storage is blocked or full.
+      }
+    });
+  }
+
+  function stopCountdown() {
+    cancelAnimationFrame(countdownFrame);
+    countdownFrame = null;
+    countdown = null;
+  }
+
+  function cancelCountdown() {
+    if (!countdown) return;
+    stopCountdown();
+    autoplayStatus.textContent = 'Choose a video to continue';
+  }
+
+  function advanceCountdown(now) {
+    const state = countdown;
+    if (!state || !finished || !isCurrentPlayback(state.session, state.frame)) {
+      stopCountdown();
+      return;
+    }
+    if (document.hidden) {
+      state.lastTick = null;
+      countdownFrame = null;
+      return;
+    }
+    if (state.lastTick !== null) state.elapsed += now - state.lastTick;
+    state.lastTick = now;
+    const progress = Math.min(1, state.elapsed / autoplayDelay);
+    autoplayFill.style.transform = `scaleX(${progress})`;
+    const seconds = Math.ceil((autoplayDelay - state.elapsed) / 1000);
+    if (seconds !== state.seconds) {
+      state.seconds = seconds;
+      autoplayStatus.textContent = `Next video in ${Math.max(0, seconds)}s`;
+    }
+    if (progress === 1) {
+      const entry = state.next;
+      stopCountdown();
+      startVideo(entry, true);
+      return;
+    }
+    countdownFrame = requestAnimationFrame(advanceCountdown);
+  }
+
+  function startCountdown(session, frame) {
+    stopCountdown();
+    autoplay.hidden = !nextVideo;
+    if (!nextVideo) return;
+    autoplayFill.style.transform = 'scaleX(0)';
+    const seconds = Math.ceil(autoplayDelay / 1000);
+    autoplayStatus.textContent = `Next video in ${seconds}s`;
+    countdown = { session, frame, next: nextVideo, elapsed: 0, lastTick: null, seconds };
+    countdownFrame = requestAnimationFrame(advanceCountdown);
+  }
+
+  endscreen.addEventListener('keydown', event => {
+    // Give keyboard users time to reach and compare the choices.
+    if (event.key === 'Tab') cancelCountdown();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!countdown) return;
+    cancelAnimationFrame(countdownFrame);
+    countdownFrame = null;
+    countdown.lastTick = null;
+    if (!document.hidden) countdownFrame = requestAnimationFrame(advanceCountdown);
+  });
 
   function revealPlayer(session) {
     if (session !== playbackSession || !box.classList.contains('show')) return;
@@ -1170,10 +1290,199 @@ document.addEventListener('DOMContentLoaded', () => {
     revealTimer = setTimeout(() => revealPlayer(session), delay);
   }
 
-  /* Uncover Vimeo as soon as the iframe loads; audio must not run behind a timed cover. */
-  plyr.addEventListener('load', () => {
-    if (!plyr.src.includes('player.vimeo.com/video/')) return;
-    revealPlayer(playbackSession);
+  function clearThumbnailObservers() {
+    thumbnailObservers.splice(0).forEach(observer => observer.disconnect());
+  }
+
+  function renderRecommendations(current) {
+    clearThumbnailObservers();
+    recommendations.replaceChildren();
+    const currentIndex = selectedWork.findIndex(entry => entry.videoId === current.videoId);
+    const ordered = currentIndex < 0 ? selectedWork : [
+      ...selectedWork.slice(currentIndex + 1),
+      ...selectedWork.slice(0, currentIndex)
+    ];
+
+    const choices = ordered.filter(entry => entry.videoId !== current.videoId).slice(0, 3);
+    nextVideo = choices[0] || null;
+    choices.forEach((entry, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'video-endscreen__project';
+      button.setAttribute('aria-label', `${index === 0 ? 'Watch next' : 'Watch'}: ${entry.title}`);
+
+      const poster = document.createElement('span');
+      poster.className = 'video-endscreen__poster';
+      if (entry.videoId === '810713423') poster.classList.add('video-endscreen__poster--cinema');
+      poster.setAttribute('aria-hidden', 'true');
+      if (index === 0) {
+        const next = document.createElement('span');
+        next.className = 'video-endscreen__next';
+        next.textContent = 'Up next';
+        poster.appendChild(next);
+      }
+      const play = document.createElement('span');
+      play.className = 'video-endscreen__play';
+      play.innerHTML = '<svg viewBox="0 0 10 12" width="8" height="10" focusable="false"><path d="M0 0v12l10-6z" fill="currentColor"/></svg>';
+      poster.appendChild(play);
+
+      const caption = document.createElement('span');
+      caption.className = 'video-endscreen__caption';
+      const meta = document.createElement('span');
+      meta.className = 'video-endscreen__meta';
+      meta.textContent = entry.label;
+      const name = document.createElement('span');
+      name.className = 'video-endscreen__name';
+      name.textContent = entry.title;
+      caption.append(meta, name);
+      button.append(poster, caption);
+      button.addEventListener('click', () => startVideo(entry));
+      recommendations.appendChild(button);
+
+      // Share the portfolio's existing thumbnail loader; don't create preview players here.
+      const placeholder = entry.frame._videoPlaceholder;
+      if (placeholder) {
+        const syncThumbnail = () => {
+          poster.style.setProperty('--endscreen-poster', placeholder.style.backgroundImage);
+        };
+        const observer = new MutationObserver(syncThumbnail);
+        observer.observe(placeholder, { attributes: true, attributeFilter: ['style'] });
+        thumbnailObservers.push(observer);
+        entry.frame._loadVideoPlaceholder?.();
+        syncThumbnail();
+      }
+    });
+  }
+
+  function resetPlayerFrame(session) {
+    const previousFrame = plyr;
+    const previousPlayer = lightboxPlayer;
+    lightboxPlayer = null;
+    plyr = frameTemplate.cloneNode(false);
+    plyr.removeAttribute('src');
+    // Replace first: Vimeo.destroy() can synchronously remove its iframe.
+    previousFrame.replaceWith(plyr);
+    if (previousPlayer) {
+      ['ended', 'playing', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => previousPlayer.off(event));
+      previousPlayer.destroy().catch(() => {});
+    }
+    previousFrame.src = 'about:blank';
+    const frame = plyr;
+    frame.addEventListener('load', () => {
+      if (frame.src.includes('player.vimeo.com/video/')) revealPlayer(session);
+    });
+    return frame;
+  }
+
+  function isCurrentPlayback(session, frame) {
+    return session === playbackSession && frame === plyr && box.classList.contains('show');
+  }
+
+  function focusEndscreen(session, frame) {
+    if (finished && isCurrentPlayback(session, frame)) endscreenTitle.focus({ preventScroll: true });
+  }
+
+  function showEndscreen(session, player, frame) {
+    if (!isCurrentPlayback(session, frame) || finished) return;
+    finished = true;
+    clearTimeout(revealTimer);
+    revealTimer = null;
+    frame.tabIndex = -1;
+    frame.setAttribute('aria-hidden', 'true');
+    stage.classList.add('is-ready', 'is-finished');
+    endscreen.hidden = false;
+    box.setAttribute('aria-label', 'More selected work');
+    focusEndscreen(session, frame);
+    startCountdown(session, frame);
+
+    // The recommendation UI lives on the site, outside Vimeo's fullscreen/PiP surface.
+    player.exitFullscreen().then(() => focusEndscreen(session, frame)).catch(() => {});
+    player.exitPictureInPicture?.().catch(() => {});
+    if (document.fullscreenElement && box.contains(document.fullscreenElement)) {
+      document.exitFullscreen?.().then(() => focusEndscreen(session, frame)).catch(() => {});
+    }
+  }
+
+  function bindPlayerEvents(player, session, frame) {
+    ['ended', 'playing', 'fullscreenchange', 'leavepictureinpicture', 'volumechange'].forEach(event => player.off(event));
+    player.on('ended', () => showEndscreen(session, player, frame));
+    player.on('playing', () => {
+      if (!isCurrentPlayback(session, frame) || finished) {
+        player.pause().catch(() => {});
+        return;
+      }
+      revealPlayer(session);
+    });
+    player.on('fullscreenchange', event => {
+      if (!event.fullscreen) focusEndscreen(session, frame);
+    });
+    player.on('leavepictureinpicture', () => focusEndscreen(session, frame));
+  }
+
+  function startVideo(entry, continuePlayback = false) {
+    stopCountdown();
+    autoplay.hidden = true;
+    activeVideo = entry;
+    finished = false;
+    const session = ++playbackSession;
+    clearTimeout(revealTimer);
+    endscreen.hidden = true;
+    stage.classList.remove('is-ready', 'is-finished');
+    box.classList.add('show');
+    box.setAttribute('aria-hidden', 'false');
+    box.setAttribute('aria-label', 'Video player');
+    document.body.classList.add('modal-open');
+    // Continue automatic playback in the same Vimeo player, retaining its audio settings.
+    const existingPlayer = continuePlayback ? lightboxPlayer : null;
+    // Keep native touch autoplay, while desktop waits for its volume to be restored.
+    // Preference restoration and tracking run on every device.
+    const waitForAudioPreference = hoverPlayback.matches;
+    const frame = existingPlayer ? plyr : resetPlayerFrame(session);
+    frame.removeAttribute('tabindex');
+    frame.removeAttribute('aria-hidden');
+    const url = new URL(`https://player.vimeo.com/video/${entry.videoId}`);
+    if (entry.videoHash) url.searchParams.set('h', entry.videoHash);
+    Object.entries({ dnt: 1, autoplay: waitForAudioPreference ? 0 : 1, muted: audioPreference.muted ? 1 : 0, transparent: 0, playsinline: 1, loop: 0 })
+      .forEach(([key, value]) => url.searchParams.set(key, value));
+    schedulePlayerReveal(session, 2500);
+    renderRecommendations(entry);
+    close.focus();
+
+    if (existingPlayer) {
+      bindPlayerEvents(existingPlayer, session, frame);
+      const source = entry.videoHash ? { url: url.href } : Number(entry.videoId);
+      existingPlayer.loadVideo(source).then(async () => {
+        if (!isCurrentPlayback(session, frame)) return;
+        await restoreAudioPreference(existingPlayer, session, frame);
+        if (isCurrentPlayback(session, frame)) {
+          await existingPlayer.play().catch(() => revealPlayer(session));
+        }
+      }).catch(() => {
+        if (isCurrentPlayback(session, frame)) startVideo(entry);
+      });
+      return;
+    }
+
+    frame.src = url.href;
+
+    waitForVimeoApi().then(() => {
+      if (!isCurrentPlayback(session, frame)) return;
+      const player = new Vimeo.Player(frame);
+      lightboxPlayer = player;
+      bindPlayerEvents(player, session, frame);
+      player.ready().then(async () => {
+        if (!isCurrentPlayback(session, frame)) return;
+        // Restore the chosen level on all devices; 67% is only the first-visit default.
+        await restoreAudioPreference(player, session, frame);
+        if (waitForAudioPreference && isCurrentPlayback(session, frame)) {
+          await player.play().catch(() => revealPlayer(session));
+        }
+      }).catch(() => revealPlayer(session));
+    }).catch(() => revealPlayer(session));
+  }
+
+  replay.addEventListener('click', () => {
+    if (activeVideo) startVideo(activeVideo);
   });
 
   /* === Klick- & Hover-Layer über jedes Portfolio-Video === */
@@ -1213,19 +1522,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const frameUrl = new URL(getFrameSource(frame), window.location.href);
     const videoId = frame.dataset.vimeoId || frameUrl.pathname.split('/').filter(Boolean).pop();
     const videoHash = frame.dataset.vimeoHash || frameUrl.searchParams.get('h') || '';
-    const id = videoHash ? `${videoId}?h=${encodeURIComponent(videoHash)}` : videoId;
+    const entry = {
+      videoId,
+      videoHash,
+      title: projectTitle,
+      label: (wrapper.querySelector('p')?.textContent || '').replace(/\s+/g, ' ').trim(),
+      frame
+    };
+    if (wrapper.closest('#portfolio') && !selectedWork.some(item => item.videoId === videoId)) {
+      selectedWork.push(entry);
+    }
     const openVideo = () => {
       videoTrigger = layer;
-      playbackSession += 1;
-      clearTimeout(revealTimer);
-      stage.classList.remove('is-ready');
-      const separator = id.includes('?') ? '&' : '?';
-      box.classList.add('show');
-      box.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('modal-open');
-      schedulePlayerReveal(playbackSession, 2500);
-      plyr.src = `https://player.vimeo.com/video/${id}${separator}dnt=1&autoplay=1&transparent=0&playsinline=1`;
-      close.focus();
+      startVideo(entry);
     };
     layer.addEventListener('click', openVideo);
     layer.addEventListener('keydown', event => {
@@ -1239,20 +1548,41 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Lightbox schließen */
   function closeBox(){
     if (!box.classList.contains('show')) return;
+    stopCountdown();
+    autoplay.hidden = true;
     playbackSession += 1;
     clearTimeout(revealTimer);
     revealTimer = null;
     box.classList.remove('show');
     box.setAttribute('aria-hidden', 'true');
+    box.setAttribute('aria-label', 'Video player');
     document.body.classList.remove('modal-open');
-    stage.classList.remove('is-ready');
-    plyr.src = '';
+    stage.classList.remove('is-ready', 'is-finished');
+    endscreen.hidden = true;
+    activeVideo = null;
+    finished = false;
+    clearThumbnailObservers();
+    resetPlayerFrame(playbackSession);
     if (videoTrigger) videoTrigger.focus();
   }
   close.addEventListener('click', closeBox);
   box.addEventListener('click', e => { if (e.target === box) closeBox(); });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && box.classList.contains('show')) closeBox();
+    if (!box.classList.contains('show')) return;
+    if (event.key === 'Escape') closeBox();
+    if (event.key === 'Tab') {
+      const focusable = Array.from(box.querySelectorAll('button, iframe:not([tabindex="-1"])'))
+        .filter(element => !element.disabled && element.getClientRects().length && !element.closest('[hidden]'));
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === endscreenTitle)) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    }
   });
 });
 /* ===== Testimonials ticker =====
