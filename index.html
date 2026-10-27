@@ -76,7 +76,6 @@
     <link rel="stylesheet" href="enhance.css?v=20261004-mobile-menu-transition" />
     <link rel="stylesheet" href="tablet.css?v=20261017-about-size-10" />
     <link rel="stylesheet" href="hero-responsive.css?v=20261017-smaller-nav" />
-    <link rel="stylesheet" href="video-endscreen.css?v=20261027-stable-video-frame" />
     <script src="https://player.vimeo.com/api/player.js" defer></script>
 </head>
 
@@ -2178,27 +2177,6 @@ This proof of concept video was commissioned by a production company for a Chine
                 <span class="video-lightbox-spinner" aria-hidden="true"></span>
                 <span class="video-lightbox-loader-text">Loading video</span>
             </div>
-            <section class="video-endscreen" aria-labelledby="video-endscreen-title" hidden>
-                <div class="video-endscreen__header">
-                    <div>
-                        <p class="video-endscreen__eyebrow">Selected work</p>
-                        <h2 id="video-endscreen-title" tabindex="-1">Watch next</h2>
-                    </div>
-                    <button class="video-endscreen__replay" type="button">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10a8 8 0 1 1 .6 6M4 4v6h6"/></svg>
-                        <span>Replay</span>
-                    </button>
-                </div>
-                <div class="video-endscreen__projects"></div>
-                <div class="video-endscreen__autoplay" hidden>
-                    <div class="video-endscreen__autoplay-controls">
-                        <span class="video-endscreen__autoplay-status">Next video in 10s</span>
-                    </div>
-                    <div class="video-endscreen__progress" aria-hidden="true">
-                        <span class="video-endscreen__progress-fill"></span>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
 
@@ -2220,7 +2198,7 @@ This proof of concept video was commissioned by a production company for a Chine
         </div>
     </div>
 
-    <script src="script.js?v=20261027-autoplay-fallback" defer></script>
+    <script src="script.js?v=20261027-original-player" defer></script>
     <script src="refinement.js?v=20261003-tablet" defer></script>
     <script src="ai-optical.js?v=20261003-tablet" defer></script>
     <script type="module" src="footer-signal.js?v=20261020-smaller-circles"></script>
