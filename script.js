@@ -1173,6 +1173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let countdown = null;
   let countdownFrame = null;
   let pendingRevealFrame = null;
+  let playbackFallbackTimer = null;
   const autoplayDelay = 10000;
   const audioPreferenceKey = 'stefan-aberer.video-audio';
   let audioPreference = { volume: 0.67, muted: false };
@@ -1280,9 +1281,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function revealPlayer(session) {
     if (session !== playbackSession || !box.classList.contains('show')) return;
+    clearTimeout(playbackFallbackTimer);
+    playbackFallbackTimer = null;
     cancelAnimationFrame(pendingRevealFrame);
     pendingRevealFrame = null;
     stage.classList.add('is-ready');
+  }
+
+  function armPlaybackFallback(session, frame) {
+    clearTimeout(playbackFallbackTimer);
+    // Power-saving/autoplay policies can leave play() pending without an error.
+    // Always make Vimeo's native play button reachable, independently of its SDK,
+    // ready(), volume calls, playing events or browser/device identification.
+    playbackFallbackTimer = setTimeout(() => {
+      if (!isCurrentPlayback(session, frame) || finished) return;
+      playbackFallbackTimer = null;
+      revealPlayer(session);
+    }, 3500);
   }
 
   function clearThumbnailObservers() {
@@ -1377,6 +1392,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function showEndscreen(session, player, frame) {
     if (!isCurrentPlayback(session, frame) || finished) return;
     finished = true;
+    clearTimeout(playbackFallbackTimer);
+    playbackFallbackTimer = null;
     cancelAnimationFrame(pendingRevealFrame);
     pendingRevealFrame = null;
     frame.tabIndex = -1;
@@ -1433,6 +1450,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startVideo(entry, continuePlayback = false) {
     stopCountdown();
+    clearTimeout(playbackFallbackTimer);
+    playbackFallbackTimer = null;
     cancelAnimationFrame(pendingRevealFrame);
     pendingRevealFrame = null;
     autoplay.hidden = true;
@@ -1453,6 +1472,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const frame = existingPlayer ? plyr : resetPlayerFrame(session);
     frame.removeAttribute('tabindex');
     frame.removeAttribute('aria-hidden');
+    armPlaybackFallback(session, frame);
     const url = new URL(`https://player.vimeo.com/video/${entry.videoId}`);
     if (entry.videoHash) url.searchParams.set('h', entry.videoHash);
     Object.entries({ dnt: 1, autoplay: waitForAudioPreference ? 0 : 1, muted: audioPreference.muted ? 1 : 0, transparent: 0, playsinline: 1, loop: 0 })
@@ -1565,6 +1585,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeBox(){
     if (!box.classList.contains('show')) return;
     stopCountdown();
+    clearTimeout(playbackFallbackTimer);
+    playbackFallbackTimer = null;
     cancelAnimationFrame(pendingRevealFrame);
     pendingRevealFrame = null;
     autoplay.hidden = true;
