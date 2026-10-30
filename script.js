@@ -896,11 +896,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const states = [desktopIframe, mobileIframe].map(frame => ({
     frame,
+    player: null,
     playerPromise: null,
-    commands: Promise.resolve(),
-    revision: 0
+    revision: 0,
+    generation: 0,
+    recoveryTimer: null,
+    recoveryAttempt: 0,
+    lastSeconds: null,
+    resumeAt: null,
+    hasPlayed: false
   }));
   let activeState = null;
+  let pageSuspended = false;
   const isHeroInView = () => {
     if (!hero) return true;
     const rect = hero.getBoundingClientRect();
@@ -908,11 +915,11 @@ document.addEventListener('DOMContentLoaded', function() {
       rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
   };
   let heroVisible = isHeroInView();
-  const shouldPlayHero = state => activeState === state && heroVisible && !document.hidden;
+  const shouldPlayHero = state => activeState === state && heroVisible && !document.hidden && !pageSuspended;
 
   const hideMobileVideo = () => {
-    if (activeState?.frame !== mobileIframe) return;
-    mobileIframe.classList.remove('is-ready');
+    if (activeState !== states[1]) return;
+    activeState.frame.classList.remove('is-ready');
   };
 
   const revealVideo = state => {
@@ -920,56 +927,126 @@ document.addEventListener('DOMContentLoaded', function() {
     state.frame.classList.add('is-ready');
   };
 
+  const clearRecovery = state => {
+    clearTimeout(state.recoveryTimer);
+    state.recoveryTimer = null;
+    state.recoveryAttempt = 0;
+  };
+
+  const rebuildHeroPlayer = state => {
+    // A suspended/discarded iframe can keep a resolved SDK ready promise while
+    // its message channel no longer responds. Replace it only after retrying.
+    const previousFrame = state.frame;
+    const previousPlayer = state.player;
+    const freshFrame = previousFrame.cloneNode(false);
+    freshFrame.removeAttribute('src');
+    freshFrame.classList.remove('is-ready', 'is-loaded');
+    state.generation += 1;
+    state.revision += 1;
+    state.resumeAt = state.lastSeconds;
+    state.lastSeconds = null;
+    state.player = null;
+    state.playerPromise = null;
+    state.frame = freshFrame;
+    previousFrame.replaceWith(freshFrame);
+    previousPlayer?.destroy().catch(() => {});
+    previousFrame.src = 'about:blank';
+    syncPlayback(state);
+  };
+
+  const watchPlayback = (state, delay = state.hasPlayed ? 4000 : 10000) => {
+    if (!shouldPlayHero(state) || navigator.onLine === false ||
+        state.recoveryTimer !== null || state.recoveryAttempt >= 2) return;
+    const generation = state.generation;
+    state.recoveryTimer = setTimeout(() => {
+      state.recoveryTimer = null;
+      if (generation !== state.generation || !shouldPlayHero(state) || navigator.onLine === false) return;
+      state.recoveryAttempt += 1;
+      if (state.recoveryAttempt === 1) {
+        syncPlayback(state);
+      } else {
+        rebuildHeroPlayer(state);
+      }
+    }, delay);
+  };
+
   const getHeroPlayer = state => {
     if (state.playerPromise) return state.playerPromise;
+    const generation = state.generation;
+    const frame = state.frame;
     assignFrameSource(state.frame);
     state.playerPromise = waitForVimeoApi().then(() => {
-      const player = new Vimeo.Player(state.frame);
+      if (generation !== state.generation) return null;
+      const player = new Vimeo.Player(frame);
+      state.player = player;
+      const isCurrent = () => generation === state.generation && state.player === player;
       player.on('playing', () => {
+        if (!isCurrent()) return;
         // Autoplay may finish loading after this iframe becomes inactive.
         if (!shouldPlayHero(state)) syncPlayback(state);
         else revealVideo(state);
       });
       player.on('timeupdate', data => {
-        if (!shouldPlayHero(state) || !data || data.seconds <= 0.2) return;
-        if (state.frame.classList.contains('is-ready')) return;
-        revealVideo(state);
+        if (!isCurrent() || !shouldPlayHero(state) || !Number.isFinite(data?.seconds)) return;
+        const progressed = state.lastSeconds === null ? data.seconds > .2 : Math.abs(data.seconds - state.lastSeconds) > .01;
+        state.lastSeconds = data.seconds;
+        if (!progressed) return;
+        state.hasPlayed = true;
+        // Actual moving frames, rather than play() resolving, confirm recovery.
+        clearRecovery(state);
+        if (!state.frame.classList.contains('is-ready')) revealVideo(state);
+      });
+      player.on('pause', () => {
+        if (isCurrent() && shouldPlayHero(state)) watchPlayback(state, 500);
       });
       // Both layouts retain their last frame when paused. Before the first
       // playback (or on a mobile playback failure), the hero stays black.
       player.on('error', () => {
-        if (shouldPlayHero(state) && state.frame === mobileIframe) hideMobileVideo();
+        if (!isCurrent() || !shouldPlayHero(state)) return;
+        if (state === states[1]) hideMobileVideo();
+        watchPlayback(state);
       });
-      return player.ready().then(() => player);
+      return player.ready().then(() => {
+        if (!isCurrent()) return null;
+        if (Number.isFinite(state.resumeAt) && state.resumeAt > 0) {
+          player.setCurrentTime(state.resumeAt).catch(() => {});
+          state.resumeAt = null;
+        }
+        return player;
+      });
+    }).catch(error => {
+      if (generation === state.generation) state.playerPromise = null;
+      throw error;
     });
     return state.playerPromise;
   };
 
   const syncPlayback = state => {
     const revision = ++state.revision;
+    const generation = state.generation;
+    if (shouldPlayHero(state)) watchPlayback(state);
+    else clearRecovery(state);
     // Only load a second video if that layout is actually visited.
     if (!shouldPlayHero(state) && !state.playerPromise) return;
-    state.commands = state.commands.then(async () => {
-      if (revision !== state.revision) return;
-      const player = await getHeroPlayer(state);
-      if (revision !== state.revision) return;
-      // Serialize dispatch and pauses, but not the play acknowledgement:
-      // Vimeo background playback can begin without resolving play().
+    // Dispatch in order without waiting for play/pause acknowledgements: a
+    // frozen background iframe may never answer an earlier pause request.
+    getHeroPlayer(state).then(player => {
+      if (!player || revision !== state.revision || generation !== state.generation) return;
       if (shouldPlayHero(state)) {
         player.play().then(() => {
           if (revision === state.revision && shouldPlayHero(state)) {
             revealVideo(state);
           }
         }).catch(() => {
-          if (revision === state.revision && shouldPlayHero(state) && state.frame === mobileIframe) {
+          if (revision === state.revision && shouldPlayHero(state) && state === states[1]) {
             hideMobileVideo();
           }
         });
       } else {
-        await player.pause();
+        player.pause().catch(() => {});
       }
     }).catch(() => {
-      if (shouldPlayHero(state) && revision === state.revision && state.frame === mobileIframe) {
+      if (shouldPlayHero(state) && revision === state.revision && state === states[1]) {
         hideMobileVideo();
       }
     });
@@ -1023,9 +1100,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     heroObserver.observe(hero);
   }
-  window.addEventListener('pageshow', syncHeroVisibility);
   document.addEventListener('visibilitychange', syncHeroVisibility);
   document.addEventListener('pagechange', syncHeroVisibility);
+  window.addEventListener('focus', syncHeroVisibility);
+  const suspendHero = () => {
+    pageSuspended = true;
+    states.forEach(syncPlayback);
+  };
+  const resumeHero = () => {
+    pageSuspended = false;
+    syncHeroVisibility();
+  };
+  window.addEventListener('pagehide', suspendHero);
+  document.addEventListener('freeze', suspendHero);
+  document.addEventListener('resume', resumeHero);
+  window.addEventListener('pageshow', resumeHero);
+  window.addEventListener('online', () => {
+    states.forEach(clearRecovery);
+    syncHeroVisibility();
+  });
 });
 
 
