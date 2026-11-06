@@ -1,7 +1,7 @@
 const bell = (distance, radius) => Math.exp(-Math.pow(distance / radius, 2));
 const ease = (rate, dt) => 1 - Math.exp(-rate * dt);
 // Reduce interaction growth while preserving the resting radius and brightness.
-const interactionGrowth = .75;
+const interactionGrowth = .45;
 
 // Above and beside the grid, keep the gentle distance falloff. Below it,
 // follow the actual link rows and reach zero at the copyright text.
