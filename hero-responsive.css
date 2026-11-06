@@ -1,6 +1,15 @@
 /* Hero and navigation sizing, shared by mouse, pen and touch devices.
    Keep these dimensions independent of the site's rem breakpoint at 1200px.
    The video layers, their fade and the phone composition stay unchanged. */
+/* Keep the heading on the same composited layer before and during the video
+   reveal, so its glyph smoothing does not switch when the iframe fades in. */
+#home .hero-editorial__title {
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+}
+
 @media (min-width: 700px) {
   :root {
     --nav-height: 64px;
