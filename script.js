@@ -984,7 +984,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isCurrent()) return;
         // Autoplay may finish loading after this iframe becomes inactive.
         if (!shouldPlayHero(state)) syncPlayback(state);
-        else revealVideo(state);
       });
       player.on('timeupdate', data => {
         if (!isCurrent() || !shouldPlayHero(state) || !Number.isFinite(data?.seconds)) return;
@@ -1033,11 +1032,9 @@ document.addEventListener('DOMContentLoaded', function() {
     getHeroPlayer(state).then(player => {
       if (!player || revision !== state.revision || generation !== state.generation) return;
       if (shouldPlayHero(state)) {
-        player.play().then(() => {
-          if (revision === state.revision && shouldPlayHero(state)) {
-            revealVideo(state);
-          }
-        }).catch(() => {
+        // Vimeo can acknowledge play before a frame is rendered. Revealing
+        // here spends the fade on an empty player; timeupdate owns the reveal.
+        player.play().catch(() => {
           if (revision === state.revision && shouldPlayHero(state) && state === states[1]) {
             hideMobileVideo();
           }
