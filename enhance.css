@@ -48,9 +48,13 @@ body p:not(:where(.font-mono, .font-mono-custom, .hero-editorial__eyebrow, .hero
 }
 
 @media (max-width: 699px) {
+  #home .hero-editorial__eyebrow {
+    font-size: .5625rem;
+  }
+
   #home .hero-editorial__description {
     max-width: 100%;
-    font-size: clamp(.75rem, 3.2vw, .875rem);
+    font-size: clamp(.75rem, 3vw, .8125rem);
     line-height: 1.45;
     text-wrap: balance;
   }
@@ -58,7 +62,7 @@ body p:not(:where(.font-mono, .font-mono-custom, .hero-editorial__eyebrow, .hero
 
 /* Full-width navigation: brand left, links centered, contact right. */
 :root {
-  --nav-height: 4rem;
+  --nav-height: 54px;
 }
 
 .site-nav {

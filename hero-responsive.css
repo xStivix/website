@@ -11,10 +11,6 @@
 }
 
 @media (min-width: 700px) {
-  :root {
-    --nav-height: 64px;
-  }
-
   .site-nav__shell {
     padding-left: max(clamp(20px, 2vw, 40px), env(safe-area-inset-left));
     padding-right: max(clamp(20px, 2vw, 40px), env(safe-area-inset-right));
@@ -29,14 +25,14 @@
   }
 
   .site-nav__links {
-    gap: clamp(16px, 2vw, 36px);
+    gap: clamp(16px, 2vw, 32px);
   }
 
   .site-nav__links .nav-link {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   /* Follow the centered text line, not the enlarged touch target's edge. */
@@ -50,17 +46,17 @@
   }
 
   .site-nav__contact {
-    min-height: 40px;
-    padding: 9px 18px;
-    font-size: 15px;
+    min-height: 36px;
+    padding: 8px 15px;
+    font-size: 14px;
   }
 
   #home {
-    --hero-support-size: clamp(18px, min(max(20px, calc(12px + .625vw)), 2.7svh), 28px);
+    --hero-support-size: clamp(16px, min(max(18px, calc(10px + .625vw)), 2.45svh), 26px);
     --hero-bottom-space: max(clamp(40px, 5svh, 72px), clamp(0px, calc(32svh - 24vw), 192px));
     --hero-action-gap: clamp(16px, 2.4svh, 32px);
-    --hero-button-size: clamp(16px, calc(var(--hero-support-size) - 2px), 24px);
-    --hero-button-height: calc(2 * var(--hero-support-size) + 12px);
+    --hero-button-size: clamp(15px, calc(var(--hero-support-size) - 2px), 22px);
+    --hero-button-height: calc(2 * var(--hero-support-size) + 10px);
     --hero-details-gap: clamp(12px, 2.2svh, 24px);
     height: 100svh;
     min-height: 480px;
@@ -93,14 +89,14 @@
 
   #home .hero-editorial__primary--desktop {
     max-width: 100%;
-    padding: 12px clamp(24px, 2vw, 40px);
+    padding: 10px clamp(22px, 1.8vw, 36px);
     font-size: var(--hero-button-size);
-    min-height: 48px;
+    min-height: 44px;
     height: var(--hero-button-height);
   }
 
   #home .hero-editorial__desktop-details p {
-    font-size: clamp(12px, calc(var(--hero-support-size) * .125 + 9px), 14px);
+    font-size: clamp(11px, calc(var(--hero-support-size) * .125 + 8.5px), 13px);
     line-height: 1.5;
   }
 
